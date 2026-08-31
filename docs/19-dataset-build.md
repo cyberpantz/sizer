@@ -102,6 +102,8 @@ That's the line between "we read some reviews" and "we measured it ourselves," a
 
 **4 · Widen the review corpus.** Not for dimensions — for corroboration and conflicts, both of which are thin. Non-US sources especially: a European or Asian outlet reviews against a different bin.
 
+**4b · Fees.** Gate price and online price for a carry-on, per carrier. Two reasons, one page: `check.html` needs them to tell a traveller what a mistake costs, and `fee_asymmetry` — weight 3, one of only two tier-1 strictness components — is computed from the ratio. Currently `null` everywhere. Collect during step 5; they are on the same page as the allowance.
+
 **5 · Carriers.** The 50-carrier audit. Independent of all of the above and the blocker on every published number ([04](04-data-sources.md)). **Collect the personal-item envelope while you're on each page** — it costs nothing extra there and it's what unblocks step 6.
 
 **6 · Under-seat, post-launch.** Cabin Max Metz, Narwey, Bagsmart and the ULCC-compliant set, scored against the personal-item envelope rather than the carry-on one. Its own shelf, its own page. Two bags today, and deliberately last.

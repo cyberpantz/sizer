@@ -246,32 +246,590 @@ const ALTS=[
  {n:'Travelpro Platinum Elite 20"',d:"54 × 36 × 21 cm",cov:15,p:260},
  {n:"Cabin Max Metz under-seat",d:"40 × 20 × 25 cm",cov:24,p:45},
 ];
-const AIR=[
- {n:"Ryanair",r:"Europe",st:9,d:[40,30,20],fare:"cheapest ticket"},
- {n:"Wizz Air",r:"Europe",st:9,d:[40,30,20],fare:"cheapest ticket"},
- {n:"easyJet",r:"Europe",st:8,d:[45,36,20],fare:"standard"},
- {n:"Vueling",r:"Europe",st:8,d:[40,30,20],fare:"cheapest ticket"},
- {n:"Air France",r:"Europe",st:7,d:[55,35,25],fare:"economy"},
- {n:"KLM",r:"Europe",st:7,d:[55,35,25],fare:"economy"},
- {n:"Lufthansa",r:"Europe",st:7,d:[55,40,23],fare:"economy"},
- {n:"Iberia",r:"Europe",st:7,d:[56,40,25],fare:"economy"},
- {n:"British Airways",r:"Europe",st:7,d:[56,45,25],fare:"economy"},
- {n:"American",r:"United States",st:5,d:[56,36,23],fare:"economy"},
- {n:"United",r:"United States",st:6,d:[56,35,22],fare:"economy"},
- {n:"Delta",r:"United States",st:5,d:[56,35,23],fare:"economy"},
- {n:"Southwest",r:"United States",st:3,d:[61,41,25],fare:"economy"},
- {n:"JetBlue",r:"United States",st:5,d:[56,36,23],fare:"economy"},
- {n:"Spirit",r:"United States",st:9,d:[56,46,25],fare:"with carry-on"},
- {n:"Frontier",r:"United States",st:9,d:[61,46,25],fare:"with carry-on"},
- {n:"Singapore",r:"Asia",st:6,d:[55,40,20],fare:"economy"},
- {n:"Cathay Pacific",r:"Asia",st:6,d:[56,36,23],fare:"economy"},
- {n:"Japan Airlines",r:"Asia",st:5,d:[55,40,25],fare:"economy"},
- {n:"ANA",r:"Asia",st:5,d:[55,40,25],fare:"economy"},
- {n:"Scoot",r:"Asia",st:8,d:[54,38,23],fare:"economy"},
- {n:"Emirates",r:"Middle East",st:7,d:[55,38,20],fare:"economy"},
- {n:"Qatar",r:"Middle East",st:7,d:[50,37,25],fare:"economy"},
- {n:"Turkish",r:"Middle East",st:7,d:[55,40,23],fare:"economy"},
+/* CARRIERS:START — generated from data/carriers/, do not edit */
+const AIR = [
+ {
+  "c": "AA",
+  "n": "American",
+  "st": 5,
+  "e": "They took the measuring frames out of every gate in October 2025 and told staff to give passengers the benefit of the doubt. A bag slightly over is usually fine.",
+  "f": {
+   "basic": {
+    "d": [
+     56,
+     36,
+     23
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Unlike United, American's Basic Economy still includes a full carry-on. Worth knowing — the same words mean different things at different airlines."
+   },
+   "economy": {
+    "d": [
+     56,
+     36,
+     23
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Carry-on plus a personal item. Checked bags cost extra on domestic routes."
+   }
+  }
+ },
+ {
+  "c": "AF",
+  "n": "Air France",
+  "st": 7,
+  "e": "If your bag looks big, staff will ask you to drop it into the metal frame at the gate to check it fits.",
+  "f": {
+   "basic": {
+    "d": [
+     55,
+     35,
+     25
+    ],
+    "kg": 12,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Includes a full cabin bag — unusual for a basic fare. No checked bag."
+   },
+   "economy": {
+    "d": [
+     55,
+     35,
+     25
+    ],
+    "kg": 12,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Cabin bag plus one checked bag."
+   }
+  }
+ },
+ {
+  "c": "B6",
+  "n": "JetBlue",
+  "st": 5,
+  "e": "Occasional checks, mostly when bins are full.",
+  "f": {
+   "basic": {
+    "d": [
+     56,
+     36,
+     23
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Blue Basic did once restrict you to a personal item, but a carry-on is included again on most routes. Worth re-checking at booking, since this one has changed twice."
+   },
+   "economy": {
+    "d": [
+     56,
+     36,
+     23
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Carry-on plus a personal item."
+   }
+  }
+ },
+ {
+  "c": "BA",
+  "n": "British Airways",
+  "st": 7,
+  "e": "There are measuring frames at the gate, but staff will usually wave through a bag that is only slightly over.",
+  "f": {
+   "basic": {
+    "d": [
+     56,
+     45,
+     25
+    ],
+    "kg": 23,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Hand-baggage-only fare. You still get a generous cabin bag — BA's is one of the largest — but nothing in the hold."
+   },
+   "economy": {
+    "d": [
+     56,
+     45,
+     25
+    ],
+    "kg": 23,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Cabin bag plus one checked bag."
+   }
+  }
+ },
+ {
+  "c": "CX",
+  "n": "Cathay Pacific",
+  "st": 6,
+  "e": "Weighs cabin bags at check-in — 7 kg.",
+  "f": {
+   "economy": {
+    "d": [
+     56,
+     36,
+     23
+    ],
+    "kg": 7,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Generous on size, strict on weight."
+   }
+  }
+ },
+ {
+  "c": "DL",
+  "n": "Delta",
+  "st": 5,
+  "e": "Relaxed in practice. There are measuring frames at the check-in desks, but they are rarely used.",
+  "f": {
+   "basic": {
+    "d": [
+     56,
+     35,
+     23
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Delta's Basic Economy does include a full carry-on — unlike United's."
+   },
+   "economy": {
+    "d": [
+     56,
+     35,
+     23
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Carry-on plus a personal item."
+   }
+  }
+ },
+ {
+  "c": "EK",
+  "n": "Emirates",
+  "st": 7,
+  "e": "Weighs cabin bags — 7 kg in economy.",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     38,
+     20
+    ],
+    "kg": 7,
+    "ovh": 1,
+    "chk": 1,
+    "note": "7 kg in the cabin. A hard-shell suitcase uses half of that empty."
+   }
+  }
+ },
+ {
+  "c": "F9",
+  "n": "Frontier",
+  "st": 9,
+  "e": "Frontier personnel can earn as much as $10 for each bag a passenger is forced to check at the gate.",
+  "f": {
+   "basic": {
+    "d": [
+     46,
+     36,
+     20
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Personal item only. Adding a carry-on at the gate is the most expensive way to do it."
+   },
+   "economy": {
+    "d": [
+     61,
+     46,
+     25
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Carry-on bundled into the fare, and a notably generous size limit. Adding it later, especially at the gate, is far more expensive."
+   }
+  }
+ },
+ {
+  "c": "FR",
+  "n": "Ryanair",
+  "st": 9,
+  "e": "They measure bags at the gate and pay staff a bonus for spotting oversize ones.",
+  "f": {
+   "basic": {
+    "d": [
+     40,
+     30,
+     20
+    ],
+    "kg": 10,
+    "ovh": 0,
+    "chk": 0,
+    "note": "No overhead locker at any size. A wheeled cabin bag is simply not allowed on this fare — you'd need to add Priority when booking."
+   },
+   "priority": {
+    "d": [
+     55,
+     40,
+     20
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Adds one overhead bag on top of the under-seat item."
+   }
+  }
+ },
+ {
+  "c": "IB",
+  "n": "Iberia",
+  "st": 7,
+  "e": "Checks are fairly common at Spanish airports.",
+  "f": {
+   "economy": {
+    "d": [
+     56,
+     40,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Cabin bag plus one checked bag."
+   }
+  }
+ },
+ {
+  "c": "JL",
+  "n": "Japan Airlines",
+  "st": 5,
+  "e": "Generally relaxed on size, but bags are weighed.",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 1,
+    "note": "A 10 kg cabin allowance — more forgiving than most Asian carriers."
+   }
+  }
+ },
+ {
+  "c": "KL",
+  "n": "KLM",
+  "st": 7,
+  "e": "If your bag looks big, staff will ask you to drop it into the metal frame at the gate to check it fits.",
+  "f": {
+   "basic": {
+    "d": [
+     55,
+     35,
+     25
+    ],
+    "kg": 12,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Includes a full cabin bag. No checked bag."
+   },
+   "economy": {
+    "d": [
+     55,
+     35,
+     25
+    ],
+    "kg": 12,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Cabin bag plus one checked bag."
+   }
+  }
+ },
+ {
+  "c": "LH",
+  "n": "Lufthansa",
+  "st": 7,
+  "e": "Checks are common, and the cheapest fare has no overhead bin at all.",
+  "f": {
+   "basic": {
+    "d": [
+     40,
+     30,
+     15
+    ],
+    "kg": 8,
+    "ovh": 0,
+    "chk": 0,
+    "note": "From May 2026 this fare has no wheeled cabin bag at any size — only a small personal item, and the 15 cm depth limit rules out most backpacks too."
+   },
+   "economy": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Full cabin bag plus one checked bag."
+   }
+  }
+ },
+ {
+  "c": "NH",
+  "n": "ANA",
+  "st": 5,
+  "e": "Generally relaxed on size, but bags are weighed.",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 1,
+    "note": "A 10 kg cabin allowance and a checked bag included — among the more forgiving carriers in Asia on both counts."
+   }
+  }
+ },
+ {
+  "c": "QR",
+  "n": "Qatar",
+  "st": 7,
+  "e": "Weighs cabin bags — 7 kg in economy.",
+  "f": {
+   "economy": {
+    "d": [
+     50,
+     37,
+     25
+    ],
+    "kg": 7,
+    "ovh": 1,
+    "chk": 1,
+    "note": "One of the shortest length limits we track, at 50 cm."
+   }
+  }
+ },
+ {
+  "c": "SQ",
+  "n": "Singapore",
+  "st": 6,
+  "e": "Weighs cabin bags at check-in — 7 kg, and they do enforce it.",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     20
+    ],
+    "kg": 7,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Cabin bag plus a checked bag — but the 7 kg cabin limit is the real constraint, not the size."
+   }
+  }
+ },
+ {
+  "c": "TK",
+  "n": "Turkish",
+  "st": 7,
+  "e": "Checks both size and weight at the gate.",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Cabin bag plus a checked bag, 8 kg in the cabin."
+   }
+  }
+ },
+ {
+  "c": "TR",
+  "n": "Scoot",
+  "st": 8,
+  "e": "Budget carrier — weighs and measures, and charges a lot at the gate.",
+  "f": {
+   "economy": {
+    "d": [
+     54,
+     38,
+     23
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Cabin bag only. Checked bags are an add-on, cheapest when bought at booking."
+   }
+  }
+ },
+ {
+  "c": "U2",
+  "n": "easyJet",
+  "st": 8,
+  "e": "Staff check bag sizes at the gate regularly, especially when the flight is full and the lockers are filling up.",
+  "f": {
+   "basic": {
+    "d": [
+     45,
+     36,
+     20
+    ],
+    "kg": 15,
+    "ovh": 1,
+    "chk": 0,
+    "note": "A small bag under the seat only. Bigger than most budget under-seat limits, but still not an overhead bag."
+   },
+   "plus": {
+    "d": [
+     56,
+     45,
+     25
+    ],
+    "kg": 15,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Adds a large overhead cabin bag."
+   }
+  }
+ },
+ {
+  "c": "UA",
+  "n": "United",
+  "st": 6,
+  "e": "Staff do check bags at the gate on busy flights, though rarely over a centimetre or two.",
+  "f": {
+   "basic": {
+    "d": [
+     43,
+     25,
+     22
+    ],
+    "kg": null,
+    "ovh": 0,
+    "chk": 0,
+    "note": "On domestic routes this fare gives you a personal item only — no full-size carry-on. This catches people out constantly, because American and Delta's basic fares do include one."
+   },
+   "economy": {
+    "d": [
+     56,
+     35,
+     22
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Full carry-on plus a personal item."
+   }
+  }
+ },
+ {
+  "c": "VY",
+  "n": "Vueling",
+  "st": 8,
+  "e": "Strict, and the basic fare is under-seat only.",
+  "f": {
+   "basic": {
+    "d": [
+     40,
+     30,
+     20
+    ],
+    "kg": 10,
+    "ovh": 0,
+    "chk": 0,
+    "note": "Under-seat only. No overhead locker on this fare."
+   },
+   "economy": {
+    "d": [
+     55,
+     40,
+     20
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Adds an overhead cabin bag to the under-seat item. Checked bags are still an extra on this fare."
+   }
+  }
+ },
+ {
+  "c": "W6",
+  "n": "Wizz Air",
+  "st": 9,
+  "e": "One of the strictest airlines in Europe. Bags are checked at the gate as a matter of routine, not just when they look oversized.",
+  "f": {
+   "basic": {
+    "d": [
+     40,
+     30,
+     20
+    ],
+    "kg": 10,
+    "ovh": 0,
+    "chk": 0,
+    "note": "Under-seat bag only. No overhead locker unless you buy WIZZ Priority."
+   },
+   "priority": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "WIZZ Priority adds an overhead cabin bag alongside the under-seat item, and gets you on the plane earlier so there is still bin space left."
+   }
+  }
+ },
+ {
+  "c": "WN",
+  "n": "Southwest",
+  "st": 3,
+  "e": "Rarely measures anything. The most forgiving airline we track.",
+  "f": {
+   "economy": {
+    "d": [
+     61,
+     41,
+     25
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 2,
+    "note": "The most generous allowance we track — a large carry-on and, historically, two free checked bags."
+   }
+  }
+ }
 ];
+/* CARRIERS:END */
 
 /* ENGINE:START — generated by scripts/build-mockups.mjs, do not edit */
 // ---- src/engine/constants.mjs ----

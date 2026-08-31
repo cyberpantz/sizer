@@ -347,25 +347,604 @@ footer{background:var(--surface);border-top:1px solid var(--rule);padding:36px 0
 </div></footer>
 
 <script>
-const BAGS=[
- {s:"away-bigger",b:"Away",m:"The Bigger Carry-On",c:[56,39,24],x:[57,40,25],soft:0,kg:3.4},
- {s:"monos-pro",b:"Monos",m:"Carry-On Pro",c:[55,40,20],x:[56,40,23],soft:0,kg:3.5},
- {s:"samsonite-w3",b:"Samsonite",m:"Winfield 3",c:[56,40,23],x:[57,41,25],soft:0,kg:3.2},
- {s:"travelpro-pe",b:"Travelpro",m:'Platinum Elite 21"',c:[56,36,23],x:[57,37,24],soft:0,kg:3.9},
- {s:"beis-roller",b:"Béis",m:"The Carry-On Roller",c:[56,36,23],x:[57,37,24],soft:0,kg:3.6},
- {s:"calpak-ambeur",b:"Calpak",m:"Ambeur Carry-On",c:[56,36,23],x:[57,38,25],soft:0,kg:3.3},
- {s:"july-carryon",b:"July",m:"Carry On",c:[55,36,23],x:[56,37,24],soft:0,kg:3.5},
- {s:"rimowa-cabin",b:"Rimowa",m:"Essential Cabin",c:[55,40,23],x:[56,40,23],soft:0,kg:4.3},
- {s:"amazon-21",b:"Amazon Basics",m:'21" Hardside',c:[55,38,25],x:[55.5,38,25.5],soft:0,kg:3.1},
- {s:"tortuga-40",b:"Tortuga",m:"Travel Backpack 40L",c:[55,35,23],x:[55,35,23],soft:1,kg:1.9},
- {s:"osprey-fp40",b:"Osprey",m:"Farpoint 40",c:[54,35,23],x:[55,36,24],soft:1,kg:1.6},
- {s:"peak-45",b:"Peak Design",m:"Travel 45L",c:[56,33,24],x:[57,34,25],soft:1,kg:2.1},
- {s:"away-carryon",b:"Away",m:"The Carry-On",c:[55,35,23],x:[56,36,24],soft:0,kg:3.2},
- {s:"travelpro-intl",b:"Travelpro",m:'Platinum Elite 20" International',c:[53,35,20],x:[54,36,21],soft:0,kg:3.4},
- {s:"monos-cabin",b:"Monos",m:"Cabin",c:[53,35,21],x:[54,35,22],soft:0,kg:3.1},
- {s:"cabinmax-metz",b:"Cabin Max",m:"Metz under-seat",c:[40,20,25],x:[40,20,25],soft:1,kg:0.7},
- {s:"narwey-underseat",b:"Narwey",m:"Foldable under-seat",c:[40,30,20],x:[40,30,20],soft:1,kg:0.5},
+/* BAGS:START — generated from data/bags/, do not edit */
+const BAGS = [
+ {
+  "s": "amazon-21-expandable",
+  "b": "Amazon Basics",
+  "m": "Expandable Hardside 21\" Spinner",
+  "c": [
+   55.1,
+   37.6,
+   25.4
+  ],
+  "x": [
+   55.1,
+   37.6,
+   25.4
+  ],
+  "soft": 0,
+  "kg": 3.49,
+  "measured": false
+ },
+ {
+  "s": "away-aluminum",
+  "b": "Away",
+  "m": "The Carry-On",
+  "c": [
+   54.6,
+   34.3,
+   22.9
+  ],
+  "x": [
+   54.6,
+   34.3,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 4.58,
+  "measured": false
+ },
+ {
+  "s": "away-carryon-flex",
+  "b": "Away",
+  "m": "The Carry-On Flex",
+  "c": [
+   55.1,
+   36.6,
+   22.9
+  ],
+  "x": [
+   55.1,
+   36.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 3.58,
+  "measured": false
+ },
+ {
+  "s": "bagsmart-roamer",
+  "b": "Bagsmart",
+  "m": "Roamer Expandable Carry-On",
+  "c": [
+   55.1,
+   35.3,
+   22.9
+  ],
+  "x": [
+   55.1,
+   35.3,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 3.2,
+  "measured": false
+ },
+ {
+  "s": "beis-hybrid-roller",
+  "b": "Béis",
+  "m": "The Hybrid Carry-On Roller",
+  "c": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 3.81,
+  "measured": false
+ },
+ {
+  "s": "beis-small-carryon-roller",
+  "b": "Béis",
+  "m": "The Small Carry-On Roller",
+  "c": [
+   53.3,
+   33,
+   22.9
+  ],
+  "x": [
+   53.3,
+   33,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 3.25,
+  "measured": false
+ },
+ {
+  "s": "bellroy-lite",
+  "b": "Bellroy",
+  "m": "Lite Carry-On",
+  "c": [
+   51.1,
+   34.5,
+   23.1
+  ],
+  "x": [
+   51.1,
+   34.5,
+   23.1
+  ],
+  "soft": 0,
+  "kg": 2.1,
+  "measured": false
+ },
+ {
+  "s": "bellroy-transit",
+  "b": "Bellroy",
+  "m": "Transit Carry-On",
+  "c": [
+   55.6,
+   35.1,
+   22.6
+  ],
+  "x": [
+   55.6,
+   35.1,
+   22.6
+  ],
+  "soft": 0,
+  "kg": 3.1,
+  "measured": false
+ },
+ {
+  "s": "brics-xbag-rolling-duffel",
+  "b": "Bric's",
+  "m": "X-Bag 21\" Rolling Carry-On Duffle",
+  "c": [
+   55.9,
+   31.8,
+   25.4
+  ],
+  "x": [
+   55.9,
+   31.8,
+   25.4
+  ],
+  "soft": 1,
+  "kg": 2.49,
+  "measured": false
+ },
+ {
+  "s": "calpak-luka",
+  "b": "Calpak",
+  "m": "Luka Carry-On",
+  "c": [
+   53.3,
+   34.9,
+   22.9
+  ],
+  "x": [
+   53.3,
+   34.9,
+   22.9
+  ],
+  "soft": 1,
+  "kg": 2.9,
+  "measured": false
+ },
+ {
+  "s": "dagne-dover-smaller-seattle",
+  "b": "Dagne Dover",
+  "m": "Smaller Seattle Carry-on",
+  "c": [
+   52.1,
+   33,
+   22.2
+  ],
+  "x": [
+   52.1,
+   33,
+   22.2
+  ],
+  "soft": 1,
+  "kg": 4.14,
+  "measured": false
+ },
+ {
+  "s": "delsey-chatelet-air-2",
+  "b": "Delsey",
+  "m": "Chatelet Air 2.0 21-inch Spinner",
+  "c": [
+   57.8,
+   38.1,
+   25.4
+  ],
+  "x": [
+   57.8,
+   38.1,
+   25.4
+  ],
+  "soft": 0,
+  "kg": 3.49,
+  "measured": false
+ },
+ {
+  "s": "hartmann-reserve",
+  "b": "Hartmann",
+  "m": "Reserve Carry-On",
+  "c": [
+   58.4,
+   38.1,
+   25.4
+  ],
+  "x": [
+   58.4,
+   38.1,
+   25.4
+  ],
+  "soft": 0,
+  "kg": 4.31,
+  "measured": false
+ },
+ {
+  "s": "herschel-heritage",
+  "b": "Herschel",
+  "m": "Heritage Hardshell Carry-On",
+  "c": [
+   50.2,
+   33,
+   22.9
+  ],
+  "x": [
+   50.2,
+   33,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 2.8,
+  "measured": false
+ },
+ {
+  "s": "july-carryon-max",
+  "b": "July",
+  "m": "Carry-on Max",
+  "c": [
+   58.4,
+   40.6,
+   22.9
+  ],
+  "x": [
+   58.4,
+   40.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 3.7,
+  "measured": false
+ },
+ {
+  "s": "lojel-cubo-small-lite",
+  "b": "Lojel",
+  "m": "Cubo Small Lite",
+  "c": [
+   53.6,
+   36.1,
+   19.8
+  ],
+  "x": [
+   53.6,
+   36.1,
+   19.8
+  ],
+  "soft": 0,
+  "kg": 2.9,
+  "measured": false
+ },
+ {
+  "s": "monos-hybrid",
+  "b": "Monos",
+  "m": "Hybrid Carry-On",
+  "c": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 3.99,
+  "measured": false
+ },
+ {
+  "s": "pacsafe-venturesafe-exp45",
+  "b": "Pacsafe",
+  "m": "Venturesafe EXP45 ECONYL",
+  "c": [
+   55.1,
+   33,
+   19.1
+  ],
+  "x": [
+   55.1,
+   33,
+   19.1
+  ],
+  "soft": 1,
+  "kg": 1.81,
+  "measured": false
+ },
+ {
+  "s": "patagonia-black-hole-40",
+  "b": "Patagonia",
+  "m": "Black Hole Duffel 40L",
+  "c": [
+   50,
+   31.8,
+   21.6
+  ],
+  "x": [
+   50,
+   31.8,
+   21.6
+  ],
+  "soft": 1,
+  "kg": 1.22,
+  "measured": false
+ },
+ {
+  "s": "ricksteves-rolling-carryon",
+  "b": "Rick Steves",
+  "m": "Rolling Carry-On",
+  "c": [
+   50.8,
+   34.3,
+   22.9
+  ],
+  "x": [
+   53.3,
+   34.3,
+   22.9
+  ],
+  "soft": 1,
+  "kg": 2.95,
+  "measured": false
+ },
+ {
+  "s": "ricksteves-spinner-carryon",
+  "b": "Rick Steves",
+  "m": "Spinner Carry-On",
+  "c": [
+   49.5,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.2,
+   35.6,
+   25.4
+  ],
+  "soft": 1,
+  "kg": 3.04,
+  "measured": false
+ },
+ {
+  "s": "samsonite-freeform",
+  "b": "Samsonite",
+  "m": "Freeform Carry-on Spinner",
+  "c": [
+   58.4,
+   38.1,
+   25.4
+  ],
+  "x": [
+   58.4,
+   38.1,
+   25.4
+  ],
+  "soft": 0,
+  "kg": 2.95,
+  "measured": false
+ },
+ {
+  "s": "samsonite-proxis",
+  "b": "Samsonite",
+  "m": "Proxis Global Carry-On Spinner",
+  "c": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 2.13,
+  "measured": false
+ },
+ {
+  "s": "samsonite-uplift",
+  "b": "Samsonite",
+  "m": "Uplift Hardside Carry-On",
+  "c": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 2.3,
+  "measured": false
+ },
+ {
+  "s": "thule-aion",
+  "b": "Thule",
+  "m": "Aion Carry-On Spinner",
+  "c": [
+   55.1,
+   35.1,
+   23.1
+  ],
+  "x": [
+   55.1,
+   35.1,
+   23.1
+  ],
+  "soft": 1,
+  "kg": 3.25,
+  "measured": false
+ },
+ {
+  "s": "travelers-choice-maxporter-ii",
+  "b": "Traveler's Choice",
+  "m": "Maxporter II Carry-On Spinner",
+  "c": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 3.69,
+  "measured": false
+ },
+ {
+  "s": "travelpro-maxlite5-21",
+  "b": "Travelpro",
+  "m": "Maxlite 5 21\" Expandable Spinner",
+  "c": [
+   58.4,
+   36.8,
+   22.9
+  ],
+  "x": [
+   58.4,
+   36.8,
+   22.9
+  ],
+  "soft": 1,
+  "kg": 2.45,
+  "measured": false
+ },
+ {
+  "s": "travelpro-maxlite5-compact",
+  "b": "Travelpro",
+  "m": "Maxlite 5 Compact Carry-On Spinner",
+  "c": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "soft": 1,
+  "kg": 2.31,
+  "measured": false
+ },
+ {
+  "s": "travelpro-maxlite5-international",
+  "b": "Travelpro",
+  "m": "Maxlite 5 International Expandable Carry-On Spinner",
+  "c": [
+   48.3,
+   38.1,
+   19.7
+  ],
+  "x": [
+   55.2,
+   40,
+   19.7
+  ],
+  "soft": 1,
+  "kg": 2.4,
+  "measured": false
+ },
+ {
+  "s": "travelpro-versapack",
+  "b": "Travelpro",
+  "m": "VersaPack+ Carry-On Spinner",
+  "c": [
+   58.4,
+   36.8,
+   24.1
+  ],
+  "x": [
+   58.4,
+   36.8,
+   24.1
+  ],
+  "soft": 1,
+  "kg": 3.49,
+  "measured": false
+ },
+ {
+  "s": "tumi-19-degree-lite",
+  "b": "Tumi",
+  "m": "19 Degree Lite Carry-On",
+  "c": [
+   55.4,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.4,
+   35.6,
+   22.9
+  ],
+  "soft": 0,
+  "kg": 2.86,
+  "measured": false
+ },
+ {
+  "s": "tumi-alpha-dual-access",
+  "b": "Tumi",
+  "m": "Alpha International Dual Access Carry-on",
+  "c": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "x": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "soft": 1,
+  "kg": 4.85,
+  "measured": false
+ },
+ {
+  "s": "vera-bradley-adair-duffel",
+  "b": "Vera Bradley",
+  "m": "Adair Rolling Duffel",
+  "c": [
+   53.3,
+   33,
+   25.4
+  ],
+  "x": [
+   53.3,
+   33,
+   25.4
+  ],
+  "soft": 1,
+  "kg": 2.19,
+  "measured": false
+ }
 ];
+/* BAGS:END */
 /* Per-fare: d=size limit · kg=weight · ovh=overhead bag included? · chk=free checked bags
    note = what this fare actually means, in plain words. "Basic" means opposite
    things at different airlines, which is the single biggest source of wrong answers. */

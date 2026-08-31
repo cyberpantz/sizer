@@ -384,6 +384,14 @@ The real answer to *"could it get stuffed in the sizer"* is that gate frames are
 
 `EPS_CM` is 0.3 because that is roughly where our own precision ends. Revisit after the first fifty bags are measured, not before.
 
+### Regional operators are legs, not carriers
+
+`check.html` carried a hand-written `UAX: United Express` entry, which contradicts this schema: American Eagle, Delta Connection, United Express and Alaska Horizon publish the **mainline** limits, so they are `operates_regional_jets: true` flags, not records.
+
+The mockup invented a carrier because its leg picker needed something selectable. The right model is that **regional-ness is a property of the leg**, not of the airline — the same United flight number is mainline on one route and an ERJ-145 on another. A leg is `{ carrier, regional?: true }`, and the flag drives the [regional-jet advisory](#advisories--orthogonal-to-the-bands) without duplicating an allowance.
+
+⚠️ The generated block now emits only real carriers, so `check.html`'s picker has lost its regional option until the leg shape is implemented. Deliberate: better a missing option than a fictional airline.
+
 ### Carrier lifecycle — airlines stop existing
 
 ```jsonc
