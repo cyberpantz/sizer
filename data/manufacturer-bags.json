@@ -597,68 +597,7 @@
      "note": "Same page publishes two capacities. Neither selected as authoritative."
     }
    ],
-   "notes": "Original source units retained. Metric dimensions and weight derived with exact decimal factors, as authorized by the user; no rounding. Exterior includes handles and wheels. Capacity remains disputed (49 L versus 47.9 L); existing review capacity remains attributed to its review. No expansion amount or numeric SKU found. No distinct sale price shown; displayed and crossed-out prices are both $295. Smaller The Carry-On is a different product.",
-   "intake_status": "researched_with_exact_metric_conversions",
-   "external_cm": {
-    "v": [
-     57.658,
-     39.116,
-     24.384
-    ],
-    "src": "manufacturer",
-    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
-    "at": "2026-08-31",
-    "unit": "cm",
-    "conversion": {
-     "from_field": "external_in",
-     "factor": "2.54",
-     "exact_values": [
-      "57.658",
-      "39.116",
-      "24.384"
-     ],
-     "rounded": false
-    },
-    "note": "Derived from manufacturer-published in using exact factor 2.54; not manufacturer-published metric figures. No rounding applied. Overall exterior includes handles and wheels; not measured by us."
-   },
-   "claimed_packing_cm": {
-    "v": [
-     53.086,
-     38.1,
-     20.066
-    ],
-    "src": "manufacturer",
-    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
-    "at": "2026-08-31",
-    "unit": "cm",
-    "conversion": {
-     "from_field": "claimed_packing_in",
-     "factor": "2.54",
-     "exact_values": [
-      "53.086",
-      "38.10",
-      "20.066"
-     ],
-     "rounded": false
-    },
-    "note": "Derived from manufacturer-published in using exact factor 2.54; not manufacturer-published metric figures. No rounding applied."
-   },
-   "weight_kg": {
-    "v": 3.583379723,
-    "src": "manufacturer",
-    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
-    "at": "2026-08-31",
-    "unit": "kg",
-    "conversion": {
-     "from_field": "weight_lb",
-     "factor": "0.45359237",
-     "exact_values": [
-      "3.583379723"
-     ],
-     "rounded": false
-    },
-    "note": "Derived from manufacturer-published lbs using exact factor 0.45359237; not manufacturer-published metric figures. No rounding applied."
-   }
+   "notes": "Original source units retained; metric conversion belongs to data/build-bags.mjs. Exterior includes handles and wheels. Capacity remains disputed (49 L versus 47.9 L); existing review capacity remains attributed to its review. No expansion amount or numeric SKU found. No distinct sale price shown; displayed and crossed-out prices are both $295. Smaller The Carry-On is a different product."
   }
  ]
 }

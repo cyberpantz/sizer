@@ -158,7 +158,8 @@ const pct = cov.of ? Math.round((cov.pass / cov.of) * 100) : 0;
 const tone = pct >= 80 ? 'green' : pct >= 40 ? 'amber' : 'red';
 const TAG = {
   clears: 'bg-green-wash text-green',
-  line: 'bg-amber-wash text-amber',
+  line: 'bg-lime-wash text-lime',
+  likely: 'bg-amber-wash text-amber',
   gamble: 'bg-orange-wash text-orange',
   wont: 'bg-red-wash text-red',
 };

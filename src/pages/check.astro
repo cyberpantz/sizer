@@ -173,29 +173,33 @@ const RISK = [
 
   const TAG = {
     clears: 'bg-green-wash text-green',
-    line: 'bg-amber-wash text-amber',
+    line: 'bg-lime-wash text-lime',
+    likely: 'bg-amber-wash text-amber',
     gamble: 'bg-orange-wash text-orange',
     wont: 'bg-red-wash text-red',
   };
   const EDGE = {
     clears: 'border-l-green',
-    line: 'border-l-amber',
+    line: 'border-l-lime',
+    likely: 'border-l-amber',
     gamble: 'border-l-orange',
     wont: 'border-l-red',
   };
   const WORD = {
     clears: 'text-green',
-    line: 'text-amber',
+    line: 'text-lime',
+    likely: 'text-amber',
     gamble: 'text-orange',
     wont: 'text-red',
   };
   const UNKNOWN_TAG = 'bg-surface-2 text-muted';
   const RISK_LABEL = { strict: 'Strict', balanced: 'Balanced', chance: "I'll chance it" };
-  /* The same four bands as CSS custom properties, for SVG attributes — which
+  /* The same five bands as CSS custom properties, for SVG attributes — which
      take colours, not utility classes. */
   const INK = {
     clears: 'var(--color-green)',
-    line: 'var(--color-amber)',
+    line: 'var(--color-lime)',
+    likely: 'var(--color-amber)',
     gamble: 'var(--color-orange)',
     wont: 'var(--color-red)',
   };

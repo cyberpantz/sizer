@@ -30,6 +30,20 @@ export function gambleCeiling(strictness) {
   return 0; // measured as routine — over is over
 }
 
+/** How much of the gamble zone is shallow enough to call "Probably fine".
+ *
+ *  A fraction of the airline's OWN ceiling, never an absolute distance — so it
+ *  scales with enforcement for free and disappears at a carrier that measures
+ *  every bag, where the ceiling is 0 and there is no zone to split.
+ *
+ *  Half is where the data is quiet. Across the current catalogue the gamble
+ *  zone's overage/ceiling ratios cluster hard at 0.6 (181 of 385 verdicts);
+ *  cutting there would put the boundary on top of the cluster, where a
+ *  millimetre of rounding reclassifies a fifth of the zone. 0.5 sits in the
+ *  valley beside it — 18 verdicts — so the band is stable under small changes
+ *  to any single dimension. */
+export const LIKELY_SHARE = 0.5;
+
 /** What an unresearched carrier scores. Used when a record has no strictness
  *  we can derive and no override — deliberately at the strict end, and paired
  *  with a UI obligation to say the score is provisional rather than silently

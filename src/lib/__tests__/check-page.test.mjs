@@ -14,6 +14,7 @@ import { readFileSync } from 'node:fs';
 import { describe, test } from 'node:test';
 import { createEngine, engine as DEFAULT, desc } from '../../engine/fit.mjs';
 import { toBag, toCarrier } from '../../engine/normalize.mjs';
+import { BAND_ORDER } from '../../ui/verdict.mjs';
 
 const D = JSON.parse(readFileSync('public/catalogue.json', 'utf8'));
 
@@ -95,7 +96,11 @@ describe('check page — the trip model', () => {
     /* The three modes change ONE number. If a bag ever cleared under `strict`
        while failing under `chance`, the control would be lying about what it
        does. */
-    const RANK = { clears: 0, line: 1, gamble: 2, wont: 3 };
+    /* Ranked from BAND_ORDER, never from a local map. This test kept its own
+       and silently broke the moment a fifth band was added — `RANK[likely]`
+       came back undefined and every comparison against it was false, so a
+       correct ladder reported as broken. One ordering, imported. */
+    const RANK = Object.fromEntries(BAND_ORDER.map((id, i) => [id, BAND_ORDER.length - 1 - i]));
     for (const b of D.bags.slice(0, 12)) {
       const bag = toBag({ ...b, external_cm: { v: b.external_cm } });
       for (const c of D.carriers.slice(0, 12)) {

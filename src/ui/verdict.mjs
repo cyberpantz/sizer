@@ -26,12 +26,40 @@
    it — "2.5 cm too deep" — rather than by asserting what a gate agent will do.
    Note that `gamble` is also over the limit: the two differ on enforcement,
    and "Risky" is where that judgement is expressed. */
+/* THE FIFTH BAND, and why "Risky" alone was doing too much work.
+ *
+ * `gamble` spans everything from a hair over the limit to the edge of what the
+ * airline tolerates. At a carrier that effectively never measures, that is
+ * 0.3 cm to 5 cm under one word. Being 0.4 cm over at an airline nobody has
+ * ever seen check a bag is not the same proposition as being 4.9 cm over, and
+ * calling both "Risky" overstates the first and understates the second.
+ *
+ * `likely` is the shallow half of that zone — see LIKELY_SHARE in
+ * engine/constants.mjs. It is expressed as a fraction of the airline's OWN
+ * ceiling, so it scales with enforcement automatically and vanishes entirely
+ * at a carrier that measures every bag. Ryanair has no "Probably fine".
+ *
+ * TWO WORDS, deliberately, against a ladder of one-word labels. "Likely" alone
+ * does not say likely WHAT, and a reader could as easily take it for likely to
+ * be stopped. The reassurance has to be unambiguous or it is worse than the
+ * word it replaced.
+ *
+ * ORDERING. `line` (Tight) is LEGAL — inside the published limit with no
+ * margin. `likely` is OVER it. So Tight outranks Probably fine, which is why
+ * Tight moves up the colour ramp to lime and Probably fine takes amber: the
+ * tint has to agree with the order or the wall of cards stops being readable
+ * at a glance. */
 export const BAND_COPY = {
   clears: { label: 'Fits', tone: 'good', token: 'var(--green)' },
-  line: { label: 'Tight', tone: 'caution', token: 'var(--amber)' },
+  line: { label: 'Tight', tone: 'edge', token: 'var(--lime)' },
+  likely: { label: 'Probably fine', tone: 'caution', token: 'var(--amber)' },
   gamble: { label: 'Risky', tone: 'warn', token: 'var(--orange)' },
   wont: { label: 'Over', tone: 'bad', token: 'var(--red)' },
 };
+
+/** Worst-first, so any surface needing a ranking uses this one and not its own.
+ *  A second ordering somewhere else is a second chance to disagree. */
+export const BAND_ORDER = ['wont', 'gamble', 'likely', 'line', 'clears'];
 
 /* Editorial policy 16: we report measurements, not accusations. "Turned away",
    never "refused". Kept as a test, because this wording slipped once already. */

@@ -18,17 +18,15 @@ The US purchase section repeats $295 as both current and crossed-out comparison 
 ## Findings and missing information
 
 - Two manufacturer capacity claims conflict. Both are retained; neither is silently selected.
-- No metric dimension or weight equivalents found in the reviewed specification. Exact conversions are now stored separately with user authorization.
+- No metric dimension or weight equivalents found in the reviewed specification. Published units are retained; the build owns metric conversion.
 - No quantified expansion found for this model. Do not borrow figures from Flex.
 - No numeric SKU found in the opened page text. Exact product/color URL identifies the selection.
 - Interior is explicitly labelled; axis ordering and a separate empty-weight qualifier are not explicit.
 
 ## Integration status
 
-Original-unit provenance remains in `data/manufacturer-bags.json` as `external_in`, `claimed_packing_in`, and `weight_lb`. The user authorized clearly labelled metric conversions on 2026-08-31. Calculations used decimal arithmetic and exact factors, without rounding:
+Original-unit provenance remains in `data/manufacturer-bags.json` as `external_in`, `claimed_packing_in`, and `weight_lb`. The user authorized metric conversion, but research intake must not introduce hand-derived metric fields or conversion metadata. Those additions were removed; `data/build-bags.mjs` owns generated metric values and their provenance.
 
-- Exterior: 22.7 × 15.4 × 9.6 in → 57.658 × 39.116 × 24.384 cm.
-- Interior: 20.9 × 15 × 7.9 in → 53.086 × 38.10 × 20.066 cm.
-- Weight: 7.9 lb → 3.583379723 kg.
+Reference arithmetic (not additional schema fields): exterior 57.658 × 39.116 × 24.384 cm; interior 53.086 × 38.10 × 20.066 cm; weight 3.583379723 kg, using exact factors 2.54 cm/in and 0.45359237 kg/lb. These results add no measurement precision to the published figures.
 
-One inch equals exactly 2.54 cm; one pound equals exactly 0.45359237 kg. These are converted manufacturer claims, not separately published metric specifications or more precise measurements. Each converted field retains its original-field reference, exact factor, and decimal result. The bag now has dimensions the fit engine can consume. Its capacity conflict remains unresolved.
+The build currently uses a shortened pound factor (0.45359) and six decimal places. That implementation is maintained separately and should not be described as exact, unrounded conversion for every field. The research intake does not override it. Capacity conflict remains unresolved.

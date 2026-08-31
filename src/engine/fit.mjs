@@ -26,6 +26,7 @@ import { DEFAULT_ADVISORIES } from './advisories.mjs';
 import {
   EPS_CM,
   gambleCeiling,
+  LIKELY_SHARE,
   PERSONAL_ITEM_CM,
   SOFT_COMPRESS_CM,
   SQUISH_CM,
@@ -44,6 +45,7 @@ export function createEngine(overrides = {}) {
   const config = {
     EPS_CM,
     gambleCeiling,
+    LIKELY_SHARE,
     SQUISH_CM,
     SOFT_COMPRESS_CM,
     WEIGHT_TIGHT_RATIO,
@@ -79,10 +81,29 @@ export function createEngine(overrides = {}) {
 
   /** Exhaustive by construction: every finite delta lands in exactly one band
    *  at every strictness, with no fall-through. */
-  function band(deltaCm, strictness) {
+  function band(deltaCm, strictness, enforcementResearched = false) {
     const ceiling = config.gambleCeiling(strictness);
     if (deltaCm > ceiling && deltaCm > config.EPS_CM) return 'wont';
-    if (deltaCm > config.EPS_CM) return 'gamble';
+    if (deltaCm > config.EPS_CM) {
+      /* THE SHALLOW HALF OF THE GAMBLE ZONE — "Probably fine".
+       *
+       * Gated on someone having actually researched how this airline behaves,
+       * NOT merely on it having a strictness number. Every score in the
+       * dataset today is a type/region prior; 23 carriers additionally carry
+       * an evidence claim about what staff do at the gate.
+       *
+       * The gate exists because this is the first band whose job is to
+       * REASSURE, and the two ways of being wrong are not symmetric — the
+       * same asymmetry gambleCeiling() already fails safe on. Telling someone
+       * their oversize bag is probably fine, on the strength of a number
+       * nobody researched, costs them a gate fee and their bag. Leaving it at
+       * "Risky" costs them some convenience.
+       *
+       * It also makes the research pay: a carrier moves into this band only
+       * once somebody reads how it actually behaves. */
+      if (enforcementResearched && deltaCm <= ceiling * config.LIKELY_SHARE) return 'likely';
+      return 'gamble';
+    }
     if (deltaCm > 0) return 'line'; // over, but inside our own error
     if (deltaCm > -2 && strictness >= 6) return 'line'; // legal, no margin, they measure
     return 'clears';
@@ -138,7 +159,7 @@ export function createEngine(overrides = {}) {
     }
     const d = delta(bag, carrier.allowance.max_cm);
     return {
-      band: band(d.cm, carrier.strictness),
+      band: band(d.cm, carrier.strictness, carrier.enforcement_researched),
       delta_cm: d.cm,
       dimension: d.dimension,
       no_cabin_bag: false,

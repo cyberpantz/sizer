@@ -33,6 +33,13 @@
   /* Status. Never interactive. */
   --color-green: #14713d;
   --color-green-wash: #e9f3ec;
+  /* Lime — the rung between "Fits" and "Probably fine".
+     Added with the fifth verdict band: five bands cannot share four colours
+     without two ADJACENT ones colliding, which is exactly where a colour ramp
+     stops being readable at a glance. Carries "Tight", which is the last band
+     still inside the published limit. 5.5:1 on its wash. */
+  --color-lime: #5c7000;
+  --color-lime-wash: #f1f5e3;
   --color-amber: #8a5d00;
   --color-amber-wash: #fbf3e2;
   --color-orange: #b4530f;

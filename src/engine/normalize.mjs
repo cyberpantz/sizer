@@ -415,6 +415,16 @@ export function toCarrier(record, fareClass) {
     /* The allowance depends on where they are flying and we were not told. */
     route_dependent: Boolean(resolved.route_dependent),
     strictness,
+    /* Has anyone actually READ how this airline behaves at the gate, as
+       opposed to us assigning it a type/region prior?
+
+       Every strictness score in the dataset is currently a prior, so the score
+       alone cannot answer this. An evidence claim — "they measure bags at the
+       gate and pay staff a bonus for spotting oversize ones" — is somebody
+       having looked. The engine uses it to decide whether it may offer the
+       reassuring "Probably fine" band, which is the one place a guess would
+       cost a reader money rather than convenience. */
+    enforcement_researched: (record.strictness?.evidence ?? []).some((e) => e?.claim),
     /* Never a zero-size row — a naive comparison would let one pass. */
     allowance: cabin ? buildAllowance(cabin, subject, rows) : null,
     /* Only an EXPLICIT finding means "no cabin bag". Everything else is unknown:

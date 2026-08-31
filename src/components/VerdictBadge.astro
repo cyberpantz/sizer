@@ -13,8 +13,11 @@ const { result } = Astro.props;
 const band = result?.band ?? null;
 const copy = band ? BAND_COPY[band] : null;
 
+/* Five bands, five tones. Written out in full — Tailwind scans source text, so
+   an interpolated class compiles to nothing and ships the badge unstyled. */
 const TONE = {
   good: 'bg-green-wash text-green border-green/20',
+  edge: 'bg-lime-wash text-lime border-lime/20',
   caution: 'bg-amber-wash text-amber border-amber/20',
   warn: 'bg-orange-wash text-orange border-orange/20',
   bad: 'bg-red-wash text-red border-red/20',
