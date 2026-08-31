@@ -158,6 +158,7 @@ footer p{max-width:70ch;margin:0}
     <button class="pill" data-t="spinner" aria-pressed="false">Spinners</button>
     <button class="pill" data-t="roller" aria-pressed="false">2-wheel rollers</button>
     <button class="pill" data-t="backpack" aria-pressed="false">Backpacks</button>
+    <button class="pill" data-t="duffel" aria-pressed="false">Duffels</button>
     <button class="pill" data-t="underseat" aria-pressed="false">Under-seat</button>
     <span class="count" id="count"></span>
   </div>
@@ -171,13 +172,15 @@ footer p{max-width:70ch;margin:0}
 </div></footer>
 
 <script>
-const AIRLINES=24;
 /* BAGS:START — generated from data/bags/, do not edit */
+const AIRLINES = 55;
 const BAGS = [
  {
   "s": "amazon-21-expandable",
   "b": "Amazon Basics",
   "m": "Expandable Hardside 21\" Spinner",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    55.1,
    37.6,
@@ -196,6 +199,8 @@ const BAGS = [
   "s": "away-aluminum",
   "b": "Away",
   "m": "The Carry-On",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    54.6,
    34.3,
@@ -214,6 +219,8 @@ const BAGS = [
   "s": "away-carryon-flex",
   "b": "Away",
   "m": "The Carry-On Flex",
+  "t": "spinner",
+  "cov": 28,
   "c": [
    55.1,
    36.6,
@@ -232,6 +239,8 @@ const BAGS = [
   "s": "bagsmart-roamer",
   "b": "Bagsmart",
   "m": "Roamer Expandable Carry-On",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    55.1,
    35.3,
@@ -250,6 +259,8 @@ const BAGS = [
   "s": "beis-hybrid-roller",
   "b": "Béis",
   "m": "The Hybrid Carry-On Roller",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -268,6 +279,8 @@ const BAGS = [
   "s": "beis-small-carryon-roller",
   "b": "Béis",
   "m": "The Small Carry-On Roller",
+  "t": "spinner",
+  "cov": 43,
   "c": [
    53.3,
    33,
@@ -286,6 +299,8 @@ const BAGS = [
   "s": "bellroy-lite",
   "b": "Bellroy",
   "m": "Lite Carry-On",
+  "t": "roller",
+  "cov": 43,
   "c": [
    51.1,
    34.5,
@@ -304,6 +319,8 @@ const BAGS = [
   "s": "bellroy-transit",
   "b": "Bellroy",
   "m": "Transit Carry-On",
+  "t": "spinner",
+  "cov": 17,
   "c": [
    55.6,
    35.1,
@@ -322,6 +339,8 @@ const BAGS = [
   "s": "brics-xbag-rolling-duffel",
   "b": "Bric's",
   "m": "X-Bag 21\" Rolling Carry-On Duffle",
+  "t": "roller",
+  "cov": 6,
   "c": [
    55.9,
    31.8,
@@ -340,6 +359,8 @@ const BAGS = [
   "s": "briggs-riley-baseline-global-2-wheel",
   "b": "Briggs & Riley",
   "m": "Baseline Global 21\" 2-Wheel Expandable Carry-On",
+  "t": "roller",
+  "cov": 29,
   "c": [
    50.8,
    38,
@@ -358,6 +379,8 @@ const BAGS = [
   "s": "briggs-riley-baseline-global-spinner",
   "b": "Briggs & Riley",
   "m": "Baseline Global 21\" Carry-On Expandable Spinner",
+  "t": "spinner",
+  "cov": 29,
   "c": [
    48.26,
    38,
@@ -376,6 +399,8 @@ const BAGS = [
   "s": "briggs-riley-zdx-global-spinner",
   "b": "Briggs & Riley",
   "m": "ZDX Global 21\" Carry-On Expandable Spinner",
+  "t": "spinner",
+  "cov": 29,
   "c": [
    48.9,
    38.1,
@@ -394,6 +419,8 @@ const BAGS = [
   "s": "calpak-luka",
   "b": "Calpak",
   "m": "Luka Carry-On",
+  "t": "spinner",
+  "cov": 43,
   "c": [
    53.3,
    34.9,
@@ -412,6 +439,8 @@ const BAGS = [
   "s": "dagne-dover-smaller-seattle",
   "b": "Dagne Dover",
   "m": "Smaller Seattle Carry-on",
+  "t": "spinner",
+  "cov": 54,
   "c": [
    52.1,
    33,
@@ -430,6 +459,8 @@ const BAGS = [
   "s": "delsey-chatelet-air-2",
   "b": "Delsey",
   "m": "Chatelet Air 2.0 21-inch Spinner",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    57.8,
    38.1,
@@ -448,6 +479,8 @@ const BAGS = [
   "s": "hartmann-reserve",
   "b": "Hartmann",
   "m": "Reserve Carry-On",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    58.4,
    38.1,
@@ -466,6 +499,8 @@ const BAGS = [
   "s": "herschel-heritage",
   "b": "Herschel",
   "m": "Heritage Hardshell Carry-On",
+  "t": "spinner",
+  "cov": 44,
   "c": [
    50.2,
    33,
@@ -484,6 +519,8 @@ const BAGS = [
   "s": "july-carryon-max",
   "b": "July",
   "m": "Carry-on Max",
+  "t": "spinner",
+  "cov": 2,
   "c": [
    58.4,
    40.6,
@@ -502,6 +539,8 @@ const BAGS = [
   "s": "lojel-cubo-small-lite",
   "b": "Lojel",
   "m": "Cubo Small Lite",
+  "t": "spinner",
+  "cov": 49,
   "c": [
    53.6,
    36.1,
@@ -520,6 +559,8 @@ const BAGS = [
   "s": "monos-hybrid",
   "b": "Monos",
   "m": "Hybrid Carry-On",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -538,6 +579,8 @@ const BAGS = [
   "s": "pacsafe-venturesafe-exp45",
   "b": "Pacsafe",
   "m": "Venturesafe EXP45 ECONYL",
+  "t": "backpack",
+  "cov": 53,
   "c": [
    55.1,
    33,
@@ -556,6 +599,8 @@ const BAGS = [
   "s": "patagonia-black-hole-40",
   "b": "Patagonia",
   "m": "Black Hole Duffel 40L",
+  "t": "duffel",
+  "cov": 55,
   "c": [
    50,
    31.8,
@@ -574,6 +619,8 @@ const BAGS = [
   "s": "ricksteves-rolling-carryon",
   "b": "Rick Steves",
   "m": "Rolling Carry-On",
+  "t": "roller",
+  "cov": 43,
   "c": [
    50.8,
    34.3,
@@ -592,6 +639,8 @@ const BAGS = [
   "s": "ricksteves-spinner-carryon",
   "b": "Rick Steves",
   "m": "Spinner Carry-On",
+  "t": "spinner",
+  "cov": 13,
   "c": [
    49.5,
    35.6,
@@ -610,6 +659,8 @@ const BAGS = [
   "s": "samsonite-freeform",
   "b": "Samsonite",
   "m": "Freeform Carry-on Spinner",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    58.4,
    38.1,
@@ -628,6 +679,8 @@ const BAGS = [
   "s": "samsonite-proxis",
   "b": "Samsonite",
   "m": "Proxis Global Carry-On Spinner",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -646,6 +699,8 @@ const BAGS = [
   "s": "samsonite-uplift",
   "b": "Samsonite",
   "m": "Uplift Hardside Carry-On",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -664,6 +719,8 @@ const BAGS = [
   "s": "thule-aion",
   "b": "Thule",
   "m": "Aion Carry-On Spinner",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    55.1,
    35.1,
@@ -682,6 +739,8 @@ const BAGS = [
   "s": "travelers-choice-maxporter-ii",
   "b": "Traveler's Choice",
   "m": "Maxporter II Carry-On Spinner",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -700,6 +759,8 @@ const BAGS = [
   "s": "travelpro-maxlite-air-v2-international",
   "b": "Travelpro",
   "m": "Maxlite Air V2 International Carry-On Hardside Spinner",
+  "t": "spinner",
+  "cov": 38,
   "c": [
    46.4,
    39.4,
@@ -718,6 +779,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-21",
   "b": "Travelpro",
   "m": "Maxlite 5 21\" Expandable Spinner",
+  "t": "spinner",
+  "cov": 2,
   "c": [
    58.4,
    36.8,
@@ -736,6 +799,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-compact",
   "b": "Travelpro",
   "m": "Maxlite 5 Compact Carry-On Spinner",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -754,6 +819,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-international",
   "b": "Travelpro",
   "m": "Maxlite 5 International Expandable Carry-On Spinner",
+  "t": "spinner",
+  "cov": 38,
   "c": [
    48.3,
    38.1,
@@ -772,6 +839,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-international-rollaboard",
   "b": "Travelpro",
   "m": "Maxlite 5 International Expandable Carry-On Rollaboard",
+  "t": "roller",
+  "cov": 38,
   "c": [
    50.8,
    38.1,
@@ -790,6 +859,8 @@ const BAGS = [
   "s": "travelpro-platinum-elite-international-rollaboard",
   "b": "Travelpro",
   "m": "Platinum Elite International Carry-On Rollaboard",
+  "t": "roller",
+  "cov": 38,
   "c": [
    50.8,
    38.1,
@@ -808,6 +879,8 @@ const BAGS = [
   "s": "travelpro-versapack",
   "b": "Travelpro",
   "m": "VersaPack+ Carry-On Spinner",
+  "t": "spinner",
+  "cov": 2,
   "c": [
    58.4,
    36.8,
@@ -826,6 +899,8 @@ const BAGS = [
   "s": "tumi-19-degree-lite",
   "b": "Tumi",
   "m": "19 Degree Lite Carry-On",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.4,
    35.6,
@@ -844,6 +919,8 @@ const BAGS = [
   "s": "tumi-alpha-dual-access",
   "b": "Tumi",
   "m": "Alpha International Dual Access Carry-on",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -862,6 +939,8 @@ const BAGS = [
   "s": "vera-bradley-adair-duffel",
   "b": "Vera Bradley",
   "m": "Adair Rolling Duffel",
+  "t": "roller",
+  "cov": 16,
   "c": [
    53.3,
    33,
@@ -909,6 +988,12 @@ const SIL={
    <path d="M12 52h56" opacity=".45"/>
    <rect x="26" y="60" width="28" height="18" rx="5" opacity=".45"/>
  </svg>`,
+ duffel:`<svg viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="2.2">
+   <path d="M26 40c0-7 6-11 14-11s14 4 14 11" stroke-linecap="round" opacity=".7"/>
+   <rect x="8" y="40" width="64" height="36" rx="18"/>
+   <path d="M22 40v36M58 40v36" opacity=".45"/>
+   <path d="M30 32h20" stroke-linecap="round"/>
+ </svg>`,
  underseat:`<svg viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="2.2">
    <path d="M30 34h20" stroke-linecap="round"/>
    <rect x="12" y="34" width="56" height="42" rx="7"/>
@@ -917,6 +1002,7 @@ const SIL={
 };
 
 const FNOTE={
+ duffel:"<b>The most forgiving shape under a sizer.</b> A soft duffel compresses into a frame in a way a hard shell never will, which is why the one bag in our catalogue that clears every airline has no wheels at all. It is also the least convenient thing to move any real distance.",
  spinner:"<b>What most people want, and for good reason.</b> You push a spinner alongside you instead of dragging it behind — which is the difference between a pleasant walk and a miserable one across a long terminal or a crowded jetway. The trade-off: the wheels sit below the shell, so a spinner tends to stand 1–2 cm taller than the same bag on two wheels. Worth knowing before you buy, not a reason to avoid them.",
  roller:"<b>You drag these rather than push them</b>, which is more work across a terminal — but on anything rougher than a polished floor they win. Pack Hacker rolled every bag over cobblestones and grass and found the second pair of wheels stops helping the moment the surface does; their highest brick score went to a two-wheeler. For old European streets that matters more than airport glide. The wheels are also recessed into the corners and add almost nothing to the height, so a roller sometimes clears a limit the spinner version of the same bag fails.",
  backpack:"<b>No wheels, soft sides.</b> Nothing protrudes, and a soft bag squashes into a frame that a hard shell will not. The most forgiving thing to carry onto a strict airline.",
@@ -991,7 +1077,6 @@ document.querySelectorAll(".pill").forEach(p=>p.onclick=()=>{
   render();
 });
 function rerender(){ render(); }
-render();
 
 /* ---- units: metric default for everyone, never locale-inferred ----
    The data is metric (airlines publish cm). Imperial-only would tell an EU or
@@ -1019,6 +1104,12 @@ const U = {
 };
 document.querySelectorAll('.units button').forEach(b=>b.onclick=()=>U.set(b.dataset.u));
 document.querySelectorAll('.units button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.u===U.unit));
+
+/* Render only after the generated catalogue AND the unit formatter exist.
+   Calling it above the `const U` block threw a TDZ ReferenceError that killed
+   the whole script, so the page rendered no bags at all — see check.html. */
+render();
+
 </script>
 </body>
 </html>

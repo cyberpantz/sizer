@@ -102,5 +102,78 @@ for (const f of walkAll('src')) {
   }
 }
 
-console.log(failed ? `\n${failed} page(s) broken` : '\nall pages parse and run one shared engine');
+/* Does the page actually RENDER?
+
+   Everything above this line parses the source. Parsing is not running, and the
+   gap between them cost us three pages at once:
+
+     - bags.html drew zero bags. The generated catalogue stopped carrying `cov`,
+       every group filtered on `cov >= 0`, and `undefined >= 0` is false. No
+       error, no warning, an empty page.
+     - every card lost its luggage drawing, because `SIL[b.t]` with no `t` is
+       `undefined` rather than a failure.
+     - bag.html and bags.html both threw a TDZ ReferenceError at load: the first
+       render ran above the `const U` that formats every dimension.
+
+   This script said "all pages parse and run one shared engine" throughout. It
+   was true and it was useless. A missing property is not a syntax error, so the
+   only thing that finds this class of bug is executing the page and looking.
+
+   jsdom is optional on purpose — the check degrades to a warning rather than
+   blocking anyone who has not installed it. Install it to turn this on:
+     pnpm add -D jsdom */
+let JSDOM;
+try {
+  ({ JSDOM } = await import('jsdom'));
+} catch {
+  console.log('\n  skip  render check — jsdom not installed (pnpm add -D jsdom)');
+}
+
+if (JSDOM) {
+  /* What each page must put on screen. A number, not a boolean: "renders
+     something" was true of the empty page too. */
+  const MUST_RENDER = {
+    'mockup/bags.html': { sel: '.bag', min: 20, what: 'bag cards' },
+    'mockup/bag.html': { sel: '.tr', min: 20, what: 'airline rows' },
+    'mockup/check.html': { sel: '.item', min: 1, what: 'a chosen bag' },
+    'mockup/index.html': { sel: '.item, .scen, .chip', min: 1, what: 'the scenario picker' },
+  };
+
+  console.log('');
+  for (const [page, want] of Object.entries(MUST_RENDER)) {
+    const errors = [];
+    const dom = new JSDOM(readFileSync(new URL(page, root), 'utf8'), {
+      runScripts: 'dangerously',
+      pretendToBeVisual: true,
+      url: 'https://sizer.test/',
+      /* jsdom has no matchMedia. Without this the page dies on a gap in the
+         test harness and we would "find" a bug that does not exist. */
+      beforeParse(w) {
+        w.matchMedia = () => ({
+          matches: false,
+          addEventListener() {},
+          removeEventListener() {},
+          addListener() {},
+          removeListener() {},
+        });
+      },
+    });
+    dom.virtualConsole.on('jsdomError', (e) => errors.push(e.message));
+    await new Promise((r) => setTimeout(r, 250));
+
+    const n = dom.window.document.querySelectorAll(want.sel).length;
+    if (errors.length) fail(page, `threw while loading — ${errors[0]}`);
+    else if (n < want.min) fail(page, `rendered ${n} ${want.what}, expected at least ${want.min}`);
+    else console.log(`  ok    ${page} — ${n} ${want.what}`);
+    dom.window.close();
+  }
+}
+
+console.log(
+  failed
+    ? `\n${failed} page(s) broken`
+    : JSDOM
+      ? '\nall pages parse, run one shared engine, and render'
+      : '\nall pages parse and run one shared engine (not executed — no jsdom)'
+);
 process.exit(failed ? 1 : 0);

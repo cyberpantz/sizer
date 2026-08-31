@@ -348,11 +348,14 @@ footer{background:var(--surface);border-top:1px solid var(--rule);padding:36px 0
 
 <script>
 /* BAGS:START — generated from data/bags/, do not edit */
+const AIRLINES = 55;
 const BAGS = [
  {
   "s": "amazon-21-expandable",
   "b": "Amazon Basics",
   "m": "Expandable Hardside 21\" Spinner",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    55.1,
    37.6,
@@ -371,6 +374,8 @@ const BAGS = [
   "s": "away-aluminum",
   "b": "Away",
   "m": "The Carry-On",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    54.6,
    34.3,
@@ -389,6 +394,8 @@ const BAGS = [
   "s": "away-carryon-flex",
   "b": "Away",
   "m": "The Carry-On Flex",
+  "t": "spinner",
+  "cov": 28,
   "c": [
    55.1,
    36.6,
@@ -407,6 +414,8 @@ const BAGS = [
   "s": "bagsmart-roamer",
   "b": "Bagsmart",
   "m": "Roamer Expandable Carry-On",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    55.1,
    35.3,
@@ -425,6 +434,8 @@ const BAGS = [
   "s": "beis-hybrid-roller",
   "b": "Béis",
   "m": "The Hybrid Carry-On Roller",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -443,6 +454,8 @@ const BAGS = [
   "s": "beis-small-carryon-roller",
   "b": "Béis",
   "m": "The Small Carry-On Roller",
+  "t": "spinner",
+  "cov": 43,
   "c": [
    53.3,
    33,
@@ -461,6 +474,8 @@ const BAGS = [
   "s": "bellroy-lite",
   "b": "Bellroy",
   "m": "Lite Carry-On",
+  "t": "roller",
+  "cov": 43,
   "c": [
    51.1,
    34.5,
@@ -479,6 +494,8 @@ const BAGS = [
   "s": "bellroy-transit",
   "b": "Bellroy",
   "m": "Transit Carry-On",
+  "t": "spinner",
+  "cov": 17,
   "c": [
    55.6,
    35.1,
@@ -497,6 +514,8 @@ const BAGS = [
   "s": "brics-xbag-rolling-duffel",
   "b": "Bric's",
   "m": "X-Bag 21\" Rolling Carry-On Duffle",
+  "t": "roller",
+  "cov": 6,
   "c": [
    55.9,
    31.8,
@@ -515,6 +534,8 @@ const BAGS = [
   "s": "briggs-riley-baseline-global-2-wheel",
   "b": "Briggs & Riley",
   "m": "Baseline Global 21\" 2-Wheel Expandable Carry-On",
+  "t": "roller",
+  "cov": 29,
   "c": [
    50.8,
    38,
@@ -533,6 +554,8 @@ const BAGS = [
   "s": "briggs-riley-baseline-global-spinner",
   "b": "Briggs & Riley",
   "m": "Baseline Global 21\" Carry-On Expandable Spinner",
+  "t": "spinner",
+  "cov": 29,
   "c": [
    48.26,
    38,
@@ -551,6 +574,8 @@ const BAGS = [
   "s": "briggs-riley-zdx-global-spinner",
   "b": "Briggs & Riley",
   "m": "ZDX Global 21\" Carry-On Expandable Spinner",
+  "t": "spinner",
+  "cov": 29,
   "c": [
    48.9,
    38.1,
@@ -569,6 +594,8 @@ const BAGS = [
   "s": "calpak-luka",
   "b": "Calpak",
   "m": "Luka Carry-On",
+  "t": "spinner",
+  "cov": 43,
   "c": [
    53.3,
    34.9,
@@ -587,6 +614,8 @@ const BAGS = [
   "s": "dagne-dover-smaller-seattle",
   "b": "Dagne Dover",
   "m": "Smaller Seattle Carry-on",
+  "t": "spinner",
+  "cov": 54,
   "c": [
    52.1,
    33,
@@ -605,6 +634,8 @@ const BAGS = [
   "s": "delsey-chatelet-air-2",
   "b": "Delsey",
   "m": "Chatelet Air 2.0 21-inch Spinner",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    57.8,
    38.1,
@@ -623,6 +654,8 @@ const BAGS = [
   "s": "hartmann-reserve",
   "b": "Hartmann",
   "m": "Reserve Carry-On",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    58.4,
    38.1,
@@ -641,6 +674,8 @@ const BAGS = [
   "s": "herschel-heritage",
   "b": "Herschel",
   "m": "Heritage Hardshell Carry-On",
+  "t": "spinner",
+  "cov": 44,
   "c": [
    50.2,
    33,
@@ -659,6 +694,8 @@ const BAGS = [
   "s": "july-carryon-max",
   "b": "July",
   "m": "Carry-on Max",
+  "t": "spinner",
+  "cov": 2,
   "c": [
    58.4,
    40.6,
@@ -677,6 +714,8 @@ const BAGS = [
   "s": "lojel-cubo-small-lite",
   "b": "Lojel",
   "m": "Cubo Small Lite",
+  "t": "spinner",
+  "cov": 49,
   "c": [
    53.6,
    36.1,
@@ -695,6 +734,8 @@ const BAGS = [
   "s": "monos-hybrid",
   "b": "Monos",
   "m": "Hybrid Carry-On",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -713,6 +754,8 @@ const BAGS = [
   "s": "pacsafe-venturesafe-exp45",
   "b": "Pacsafe",
   "m": "Venturesafe EXP45 ECONYL",
+  "t": "backpack",
+  "cov": 53,
   "c": [
    55.1,
    33,
@@ -731,6 +774,8 @@ const BAGS = [
   "s": "patagonia-black-hole-40",
   "b": "Patagonia",
   "m": "Black Hole Duffel 40L",
+  "t": "duffel",
+  "cov": 55,
   "c": [
    50,
    31.8,
@@ -749,6 +794,8 @@ const BAGS = [
   "s": "ricksteves-rolling-carryon",
   "b": "Rick Steves",
   "m": "Rolling Carry-On",
+  "t": "roller",
+  "cov": 43,
   "c": [
    50.8,
    34.3,
@@ -767,6 +814,8 @@ const BAGS = [
   "s": "ricksteves-spinner-carryon",
   "b": "Rick Steves",
   "m": "Spinner Carry-On",
+  "t": "spinner",
+  "cov": 13,
   "c": [
    49.5,
    35.6,
@@ -785,6 +834,8 @@ const BAGS = [
   "s": "samsonite-freeform",
   "b": "Samsonite",
   "m": "Freeform Carry-on Spinner",
+  "t": "spinner",
+  "cov": 0,
   "c": [
    58.4,
    38.1,
@@ -803,6 +854,8 @@ const BAGS = [
   "s": "samsonite-proxis",
   "b": "Samsonite",
   "m": "Proxis Global Carry-On Spinner",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -821,6 +874,8 @@ const BAGS = [
   "s": "samsonite-uplift",
   "b": "Samsonite",
   "m": "Uplift Hardside Carry-On",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -839,6 +894,8 @@ const BAGS = [
   "s": "thule-aion",
   "b": "Thule",
   "m": "Aion Carry-On Spinner",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    55.1,
    35.1,
@@ -857,6 +914,8 @@ const BAGS = [
   "s": "travelers-choice-maxporter-ii",
   "b": "Traveler's Choice",
   "m": "Maxporter II Carry-On Spinner",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -875,6 +934,8 @@ const BAGS = [
   "s": "travelpro-maxlite-air-v2-international",
   "b": "Travelpro",
   "m": "Maxlite Air V2 International Carry-On Hardside Spinner",
+  "t": "spinner",
+  "cov": 38,
   "c": [
    46.4,
    39.4,
@@ -893,6 +954,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-21",
   "b": "Travelpro",
   "m": "Maxlite 5 21\" Expandable Spinner",
+  "t": "spinner",
+  "cov": 2,
   "c": [
    58.4,
    36.8,
@@ -911,6 +974,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-compact",
   "b": "Travelpro",
   "m": "Maxlite 5 Compact Carry-On Spinner",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -929,6 +994,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-international",
   "b": "Travelpro",
   "m": "Maxlite 5 International Expandable Carry-On Spinner",
+  "t": "spinner",
+  "cov": 38,
   "c": [
    48.3,
    38.1,
@@ -947,6 +1014,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-international-rollaboard",
   "b": "Travelpro",
   "m": "Maxlite 5 International Expandable Carry-On Rollaboard",
+  "t": "roller",
+  "cov": 38,
   "c": [
    50.8,
    38.1,
@@ -965,6 +1034,8 @@ const BAGS = [
   "s": "travelpro-platinum-elite-international-rollaboard",
   "b": "Travelpro",
   "m": "Platinum Elite International Carry-On Rollaboard",
+  "t": "roller",
+  "cov": 38,
   "c": [
    50.8,
    38.1,
@@ -983,6 +1054,8 @@ const BAGS = [
   "s": "travelpro-versapack",
   "b": "Travelpro",
   "m": "VersaPack+ Carry-On Spinner",
+  "t": "spinner",
+  "cov": 2,
   "c": [
    58.4,
    36.8,
@@ -1001,6 +1074,8 @@ const BAGS = [
   "s": "tumi-19-degree-lite",
   "b": "Tumi",
   "m": "19 Degree Lite Carry-On",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.4,
    35.6,
@@ -1019,6 +1094,8 @@ const BAGS = [
   "s": "tumi-alpha-dual-access",
   "b": "Tumi",
   "m": "Alpha International Dual Access Carry-on",
+  "t": "spinner",
+  "cov": 15,
   "c": [
    55.9,
    35.6,
@@ -1037,6 +1114,8 @@ const BAGS = [
   "s": "vera-bradley-adair-duffel",
   "b": "Vera Bradley",
   "m": "Adair Rolling Duffel",
+  "t": "roller",
+  "cov": 16,
   "c": [
    53.3,
    33,
@@ -1063,6 +1142,13 @@ const AIR = [
   "n": "Aegean Airlines",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   56,
+   45,
+   25
+  ],
+  "fare": "Flex",
   "f": {
    "basic": {
     "d": [
@@ -1115,6 +1201,13 @@ const AIR = [
   "n": "American",
   "st": 5,
   "e": "They took the measuring frames out of every gate in October 2025 and told staff to give passengers the benefit of the doubt. A bag slightly over is usually fine.",
+  "r": "United States",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1145,6 +1238,13 @@ const AIR = [
   "n": "Air France",
   "st": 7,
   "e": "If your bag looks big, staff will ask you to drop it into the metal frame at the gate to check it fits.",
+  "r": "Europe",
+  "d": [
+   55,
+   35,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1175,6 +1275,13 @@ const AIR = [
   "n": "Air India",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1194,6 +1301,13 @@ const AIR = [
   "n": "Finnair",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1224,6 +1338,13 @@ const AIR = [
   "n": "ITA Airways",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1254,6 +1375,13 @@ const AIR = [
   "n": "JetBlue",
   "st": 5,
   "e": "Occasional checks, mostly when bins are full.",
+  "r": "United States",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1284,6 +1412,13 @@ const AIR = [
   "n": "British Airways",
   "st": 7,
   "e": "There are measuring frames at the gate, but staff will usually wave through a bag that is only slightly over.",
+  "r": "Europe",
+  "d": [
+   56,
+   45,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1314,6 +1449,13 @@ const AIR = [
   "n": "EVA Air",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1333,6 +1475,13 @@ const AIR = [
   "n": "Air China",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1352,6 +1501,13 @@ const AIR = [
   "n": "China Airlines",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1371,6 +1527,13 @@ const AIR = [
   "n": "Cathay Pacific",
   "st": 6,
   "e": "Weighs cabin bags at check-in — 7 kg.",
+  "r": "Asia",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1390,6 +1553,13 @@ const AIR = [
   "n": "China Southern Airlines",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1409,6 +1579,13 @@ const AIR = [
   "n": "Condor",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1428,6 +1605,13 @@ const AIR = [
   "n": "Delta",
   "st": 5,
   "e": "Relaxed in practice. There are measuring frames at the check-in desks, but they are rarely used.",
+  "r": "United States",
+  "d": [
+   56,
+   35,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1458,6 +1642,13 @@ const AIR = [
   "n": "Norwegian",
   "st": 9,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "LowFare+",
   "f": {
    "economy": {
     "d": [
@@ -1488,6 +1679,13 @@ const AIR = [
   "n": "Aer Lingus",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   24
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1518,6 +1716,13 @@ const AIR = [
   "n": "Emirates",
   "st": 7,
   "e": "Weighs cabin bags — 7 kg in economy.",
+  "r": "Middle East",
+  "d": [
+   55,
+   38,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1537,6 +1742,13 @@ const AIR = [
   "n": "Eurowings",
   "st": 9,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "SMART",
   "f": {
    "economy": {
     "d": [
@@ -1567,6 +1779,13 @@ const AIR = [
   "n": "Frontier",
   "st": 9,
   "e": "Frontier personnel can earn as much as $10 for each bag a passenger is forced to check at the gate.",
+  "r": "United States",
+  "d": [
+   61,
+   46,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1597,6 +1816,13 @@ const AIR = [
   "n": "Icelandair",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1627,6 +1853,13 @@ const AIR = [
   "n": "Ryanair",
   "st": 9,
   "e": "They measure bags at the gate and pay staff a bonus for spotting oversize ones.",
+  "r": "Europe",
+  "d": [
+   40,
+   30,
+   20
+  ],
+  "fare": "basic",
   "f": {
    "basic": {
     "d": [
@@ -1657,6 +1890,13 @@ const AIR = [
   "n": "Transavia",
   "st": 9,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   25
+  ],
+  "fare": "Smart",
   "f": {
    "economy": {
     "d": [
@@ -1687,6 +1927,13 @@ const AIR = [
   "n": "Iberia",
   "st": 7,
   "e": "Checks are fairly common at Spanish airports.",
+  "r": "Europe",
+  "d": [
+   56,
+   40,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1706,6 +1953,13 @@ const AIR = [
   "n": "Japan Airlines",
   "st": 5,
   "e": "Generally relaxed on size, but bags are weighed.",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1725,6 +1979,13 @@ const AIR = [
   "n": "Air Serbia",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1744,6 +2005,13 @@ const AIR = [
   "n": "STARLUX Airlines",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1763,6 +2031,13 @@ const AIR = [
   "n": "Korean Air",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1782,6 +2057,13 @@ const AIR = [
   "n": "KLM",
   "st": 7,
   "e": "If your bag looks big, staff will ask you to drop it into the metal frame at the gate to check it fits.",
+  "r": "Europe",
+  "d": [
+   55,
+   35,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1812,6 +2094,13 @@ const AIR = [
   "n": "Lufthansa",
   "st": 7,
   "e": "Checks are common, and the cheapest fare has no overhead bin at all.",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -1842,6 +2131,13 @@ const AIR = [
   "n": "LOT Polish Airlines",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1872,6 +2168,13 @@ const AIR = [
   "n": "Jet2.com",
   "st": 9,
   "e": "",
+  "r": "Europe",
+  "d": [
+   56,
+   45,
+   25
+  ],
+  "fare": "Flight-only",
   "f": {
    "basic": {
     "d": [
@@ -1902,6 +2205,13 @@ const AIR = [
   "n": "SWISS",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1921,6 +2231,13 @@ const AIR = [
   "n": "China Eastern Airlines",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1951,6 +2268,13 @@ const AIR = [
   "n": "ANA",
   "st": 5,
   "e": "Generally relaxed on size, but bags are weighed.",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1970,6 +2294,13 @@ const AIR = [
   "n": "Austrian Airlines",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -1989,6 +2320,13 @@ const AIR = [
   "n": "Asiana Airlines",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2008,6 +2346,13 @@ const AIR = [
   "n": "Pegasus Airlines",
   "st": 9,
   "e": "",
+  "r": "Middle East",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "Saver",
   "f": {
    "economy": {
     "d": [
@@ -2027,6 +2372,13 @@ const AIR = [
   "n": "Philippine Airlines",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2046,6 +2398,13 @@ const AIR = [
   "n": "Qatar",
   "st": 7,
   "e": "Weighs cabin bags — 7 kg in economy.",
+  "r": "Middle East",
+  "d": [
+   50,
+   37,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2065,6 +2424,13 @@ const AIR = [
   "n": "Azores Airlines",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2084,6 +2450,13 @@ const AIR = [
   "n": "SAS",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2103,6 +2476,13 @@ const AIR = [
   "n": "Brussels Airlines",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2133,6 +2513,13 @@ const AIR = [
   "n": "Singapore",
   "st": 6,
   "e": "Weighs cabin bags at check-in — 7 kg, and they do enforce it.",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2152,6 +2539,13 @@ const AIR = [
   "n": "Turkish",
   "st": 7,
   "e": "Checks both size and weight at the gate.",
+  "r": "Middle East",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2171,6 +2565,13 @@ const AIR = [
   "n": "TAP Air Portugal",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2190,6 +2591,13 @@ const AIR = [
   "n": "Scoot",
   "st": 8,
   "e": "Budget carrier — weighs and measures, and charges a lot at the gate.",
+  "r": "Asia",
+  "d": [
+   54,
+   38,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2209,6 +2617,13 @@ const AIR = [
   "n": "easyJet",
   "st": 8,
   "e": "Staff check bag sizes at the gate regularly, especially when the flight is full and the lockers are filling up.",
+  "r": "Europe",
+  "d": [
+   45,
+   36,
+   20
+  ],
+  "fare": "basic",
   "f": {
    "basic": {
     "d": [
@@ -2239,6 +2654,13 @@ const AIR = [
   "n": "United",
   "st": 6,
   "e": "Staff do check bags at the gate on busy flights, though rarely over a centimetre or two.",
+  "r": "United States",
+  "d": [
+   56,
+   35,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -2269,6 +2691,13 @@ const AIR = [
   "n": "Air Europa",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   35,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2288,6 +2717,13 @@ const AIR = [
   "n": "Volotea",
   "st": 9,
   "e": "",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   25
+  ],
+  "fare": "Standard + Priority Boarding",
   "f": {
    "economy": {
     "d": [
@@ -2307,6 +2743,13 @@ const AIR = [
   "n": "Vietnam Airlines",
   "st": 6,
   "e": "",
+  "r": "Asia",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2326,6 +2769,13 @@ const AIR = [
   "n": "Virgin Atlantic",
   "st": 7,
   "e": "",
+  "r": "Europe",
+  "d": [
+   56,
+   36,
+   23
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2356,6 +2806,13 @@ const AIR = [
   "n": "Vueling",
   "st": 8,
   "e": "Strict, and the basic fare is under-seat only.",
+  "r": "Europe",
+  "d": [
+   55,
+   40,
+   20
+  ],
+  "fare": "economy",
   "f": {
    "basic": {
     "d": [
@@ -2386,6 +2843,13 @@ const AIR = [
   "n": "Wizz Air",
   "st": 9,
   "e": "One of the strictest airlines in Europe. Bags are checked at the gate as a matter of routine, not just when they look oversized.",
+  "r": "Europe",
+  "d": [
+   40,
+   30,
+   20
+  ],
+  "fare": "basic",
   "f": {
    "basic": {
     "d": [
@@ -2416,6 +2880,13 @@ const AIR = [
   "n": "Southwest",
   "st": 3,
   "e": "Rarely measures anything. The most forgiving airline we track.",
+  "r": "United States",
+  "d": [
+   61,
+   41,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2435,6 +2906,13 @@ const AIR = [
   "n": "SunExpress",
   "st": 9,
   "e": "",
+  "r": "Middle East",
+  "d": [
+   55,
+   40,
+   23
+  ],
+  "fare": "SunValue",
   "f": {
    "economy": {
     "d": [
@@ -2454,6 +2932,13 @@ const AIR = [
   "n": "ZIPAIR",
   "st": 8,
   "e": "",
+  "r": "Asia",
+  "d": [
+   55,
+   40,
+   25
+  ],
+  "fare": "economy",
   "f": {
    "economy": {
     "d": [
@@ -2808,9 +3293,10 @@ function createEngine(overrides = {}) {
       delta_cm: d.cm,
       dimension: d.dimension,
       no_cabin_bag: false,
-      /* Surfaced so a caller can refuse to promote a bag we haven't measured.
-         The release gate depends on it. */
-      measured: bag.measured,
+      /* The release gate: may this bag be RECOMMENDED, not merely displayed?
+         See isPromotable — manufacturer's own overall figure, or ours. */
+      promotable: isPromotable(bag),
+      dim_source: bag.dim_source,
       advisories: runAdvisories({ bag, carrier, deltaCm: d.cm }),
     };
   }
@@ -2983,6 +3469,58 @@ const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'first'])
    convenience; the other direction costs them a gate fee. */
 const IN_TO_CM = 2.54;
 
+/* Where a dimension came from, ranked by how much it can be trusted.
+
+   The original plan was "we measure every bag ourselves". That is not
+   happening, and it was load-bearing — the release gate, the tier table and the
+   moat argument all rested on it.
+
+   The replacement is narrower and actually achievable: **go to the
+   manufacturer, never the reseller.** A marketplace listing is the weakest
+   source in this whole category — the same bag carries different dimensions
+   across sellers, usually with no note of which figure is being quoted — and it
+   is also the easiest one to scrape, which is why every competitor uses it.
+
+   The distinction that matters is not who measured, it is WHICH FIGURE:
+   the overall size, wheels and handle included, is the one an airline checks. */
+const DIM_SOURCE = {
+  /* Manufacturer states an overall / with-wheels figure explicitly.
+     Travelpro: "the overall dimensions, which include wheels and carry handles".
+     This is what we build on. */
+  MAKER_OVERALL: 'maker_overall',
+  /* Manufacturer publishes one figure without saying which it is. Usable, and
+     flagged — it is probably the packing body, which runs small. */
+  MAKER_UNSPECIFIED: 'maker_unspecified',
+  /* Manufacturer's packing/case figure, explicitly labelled as such. Never
+     compared against an airline limit on its own. */
+  MAKER_PACKING: 'maker_packing',
+  /* A publication measured it. Attributed, and second to the maker's own
+     overall figure because their method is rarely stated. */
+  REVIEW: 'review',
+  /* Reseller or marketplace. NOT TRUSTED — recorded for conflict detection
+     only, never used as the operative dimension. */
+  RESELLER: 'reseller',
+  /* We put a tape on it. Still supported; nobody is planning to. */
+  MEASURED: 'measured',
+};
+
+/** Sources we will compute a published verdict from, best first. */
+const TRUSTED_DIM_SOURCES = [
+  DIM_SOURCE.MEASURED,
+  DIM_SOURCE.MAKER_OVERALL,
+  DIM_SOURCE.REVIEW,
+  DIM_SOURCE.MAKER_UNSPECIFIED,
+];
+
+/** The release gate. A bag may only be PROMOTED — recommended, shelved, put in
+ *  front of someone as an answer — on a dimension we can stand behind.
+ *  Browsing and comparison are fine on weaker sources, as long as the page says
+ *  so; a recommendation is us putting our name to it. */
+function isPromotable(bag) {
+  const src = bag?.dim_source;
+  return src === DIM_SOURCE.MEASURED || src === DIM_SOURCE.MAKER_OVERALL;
+}
+
 /* Route regions. An allowance can depend on where you are flying, not just what
    you bought: United Basic Economy includes no carry-on domestically and DOES
    include one transatlantic. Same fare, same passenger, opposite answers.
@@ -3096,8 +3634,9 @@ function toBag(record) {
     model: record.model,
     external_cm: assertDims(external, subject),
     provenance: provenanceOf(record.measured_cm ?? record.external_cm ?? record.claimed_cm),
-    /* Whether the number is ours is a first-class fact, not a footnote: nothing
-       may ship as a promoted recommendation on someone else's tape measure. */
+    /* Which figure this is, and therefore what we may do with it. A first-class
+       fact rather than a footnote — see DIM_SOURCE. */
+    dim_source: dimSourceOf(record),
     measured: Boolean(unwrap(record.measured_cm)),
     weight_kg: unwrap(record.weight_kg) ?? null,
     soft: Boolean(record.soft),
@@ -3105,6 +3644,22 @@ function toBag(record) {
     shell: shellOf(record),
     expands_cm: unwrap(record.expands_cm) ?? 0,
   };
+}
+
+/** Classify a bag record's operative dimension.
+ *
+ *  Explicit `dim_source` wins. Otherwise infer, conservatively: a record that
+ *  carries BOTH a packing figure and an external one is a manufacturer that
+ *  published both, which is the good case. A bare `claimed_cm` is unspecified —
+ *  assume the worse reading rather than the flattering one. */
+function dimSourceOf(record) {
+  if (record?.dim_source) return record.dim_source;
+  if (unwrap(record?.measured_cm)) return DIM_SOURCE.MEASURED;
+  const ext = record?.external_cm;
+  if (ext?.src === 'review') return DIM_SOURCE.REVIEW;
+  if (unwrap(record?.claimed_packing_cm) && unwrap(ext)) return DIM_SOURCE.MAKER_OVERALL;
+  if (unwrap(ext) || unwrap(record?.claimed_cm)) return DIM_SOURCE.MAKER_UNSPECIFIED;
+  return null;
 }
 
 /** True when a record can be evaluated at all. Cheaper than try/catch in a loop. */
@@ -3650,7 +4205,6 @@ function answer(){
   </div>`;
 }
 function rerender(){ paint(); drawScen(); }
-paint();
 
 /* ---- units: metric default for everyone, never locale-inferred ----
    The data is metric (airlines publish cm). Imperial-only would tell an EU or
@@ -3686,6 +4240,12 @@ const U = {
 };
 document.querySelectorAll('.units button').forEach(b=>b.onclick=()=>U.set(b.dataset.u));
 document.querySelectorAll('.units button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.u===U.unit));
+
+/* Render only after the generated catalogue AND the unit formatter exist.
+   Calling it above the `const U` block threw a TDZ ReferenceError that killed
+   the whole script, so the page rendered no bags at all — see check.html. */
+paint();
+
 </script>
 </body>
 </html>

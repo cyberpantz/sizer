@@ -12,6 +12,9 @@
    Astro will import the module properly and this script retires. Until then
    the marker block is GENERATED: never hand-edit between the markers. */
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { coverage } from '../src/engine/fit.mjs';
+import { shapeOf } from '../src/lib/bag-shape.mjs';
+import { loadBags, loadCarriers } from '../src/lib/data.mjs';
 
 const root = new URL('../', import.meta.url);
 const MODULES = ['constants.mjs', 'advisories.mjs', 'fit.mjs', 'normalize.mjs'];
@@ -69,6 +72,11 @@ function inlineEngine() {
    The projection is lossy on purpose — the JSON holds provenance, evidence and
    verification fields the mockups have no use for. It is one-directional:
    edit the JSON, never the generated block. */
+/* The four buckets bag.html groups its table by. Kept beside the projection
+   that uses them rather than in the page, so a new region shows up here as a
+   raw code we have to name, not as a silently empty section. */
+const REGION = { EU: 'Europe', NA: 'United States', AS: 'Asia', ME: 'Middle East' };
+
 function inlineCarriers() {
   const dir = new URL('data/carriers/', root);
   const files = readdirSync(dir).filter((f) => f.endsWith('.json') && f !== '_index.json');
@@ -87,11 +95,24 @@ function inlineCarriers() {
           note: a.note ?? '',
         };
       }
+      /* A flattened "what you get on a normal ticket" view, alongside the
+         nested fares. bag.html groups a whole table by region and prints one
+         limit per airline; it was written against a flat shape, and when this
+         generator started emitting the nested one it began reading `a.d` as
+         undefined. `U.dims(undefined)` throws "a is not iterable" and the page
+         died before drawing anything. Additive, so nothing that reads `f`
+         changes. */
+      const primary =
+        c.allowances.find((x) => x.type === 'cabin' && x.fare_class === 'economy') ??
+        c.allowances.find((x) => x.type === 'cabin');
       return {
         c: c.iata,
         n: c.name,
         st: c.strictness.score,
         e: c.strictness.evidence?.[0]?.claim ?? '',
+        r: REGION[c.region] ?? c.region,
+        d: primary?.max_cm ?? null,
+        fare: primary?.fare_name ?? primary?.fare_class ?? null,
         f: fares,
       };
     });
@@ -101,28 +122,45 @@ function inlineCarriers() {
 /* Bags, projected from data/bags/ into the terse shape the pages use.
    Only SIZED, OVERHEAD bags: a page cannot render a verdict for a bag with no
    dimensions, and under-seat is a separate category (docs/19). */
-function inlineBags() {
-  const dir = new URL('data/bags/', root);
-  const rows = readdirSync(dir)
-    .filter((f) => f.endsWith('.json') && f !== '_index.json')
-    .map((f) => JSON.parse(readFileSync(new URL(f, dir))))
-    .filter((b) => b.external_cm && b.role === 'overhead')
-    .sort((a, b) => a.slug.localeCompare(b.slug))
-    .map((b) => ({
-      s: b.slug,
-      b: b.brand,
-      m: b.model,
-      /* Manufacturer packing figure where we have it, else the external one —
-         the pages show "claimed vs actual" and need something in both slots. */
-      c: b.claimed_packing_cm?.v ?? b.external_cm.v,
-      x: b.external_cm.v,
-      soft: b.soft ? 1 : 0,
-      kg: b.weight_kg?.v ?? null,
-      /* Carried so the UI can mark a figure as not ours. Every bag is `false`
-         today; nothing may be promoted until that changes. */
-      measured: Boolean(b.measured_cm),
-    }));
-  return `${BSTART}\nconst BAGS = ${JSON.stringify(rows, null, 1)};\n${BEND}`;
+async function inlineBags() {
+  /* Read through the same loaders the site uses, not readdirSync — the audit
+     learned this the hard way: two readers of data/ drift, and the one nobody
+     is looking at is the one that lies. */
+  const bags = await loadBags();
+  const carriers = await loadCarriers();
+
+  const rows = bags.map(({ record: b, ...bag }) => ({
+    s: b.slug,
+    b: b.brand,
+    m: b.model,
+    /* The SHAPE, not the raw catalogue type. The pages key both their
+       silhouettes and their filter pills on "spinner", while the catalogue
+       says "hardside spinner". This field was not emitted at all until now,
+       and emitting the raw type would have been the same bug wearing a
+       different hat — a missing key is `undefined`, not an error. */
+    t: shapeOf(b.type),
+    /* Airlines this bag clears, and how many were answerable. `cov` gates which
+       group a bag falls into on bags.html, and `undefined >= 0` is FALSE, so a
+       missing count did not misplace bags — it made every group empty and the
+       page render nothing at all. Both bugs were one absent field. */
+    cov: coverage(bag, carriers).pass,
+    /* Manufacturer packing figure where we have it, else the external one —
+       the pages show "claimed vs actual" and need something in both slots. */
+    c: b.claimed_packing_cm?.v ?? b.external_cm.v,
+    x: b.external_cm.v,
+    soft: b.soft ? 1 : 0,
+    kg: b.weight_kg?.v ?? null,
+    /* Carried so the UI can mark a figure as not ours. Every bag is `false`
+       today; nothing may be promoted until that changes. */
+    measured: Boolean(b.measured_cm),
+  }));
+
+  /* Emitted rather than hand-written. bags.html carried `const AIRLINES=24`
+     from the placeholder era and was still dividing by it, so every coverage
+     bar on the page was scaled against a number that had not been true for
+     weeks. A denominator is data. */
+  const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+  return `${BSTART}\nconst AIRLINES = ${answerable};\nconst BAGS = ${JSON.stringify(rows, null, 1)};\n${BEND}`;
 }
 
 function inlineCarriersKeyed() {
@@ -156,7 +194,7 @@ function inlineCarriersKeyed() {
 const block = inlineEngine();
 const carriers = inlineCarriers();
 const carriersKeyed = inlineCarriersKeyed();
-const bags = inlineBags();
+const bags = await inlineBags();
 const check = process.argv.includes('--check');
 let drifted = 0,
   written = 0;
