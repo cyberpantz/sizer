@@ -85,6 +85,37 @@ Being wrong toward caution costs a reader some convenience. The other direction 
 
 `validate-carriers.mjs` rejects a `max_in` that isn't three numbers, and flags a `max_cm`/`max_in` pair differing by more than 2 cm — that is a transcription error, not a unit disagreement.
 
+### An allowance can depend on the route
+
+United Basic Economy, from their own page:
+
+> "You can't bring a carry-on bag unless you're flying to South America, across the Atlantic or across the Pacific."
+
+Same fare, same passenger, opposite answers. **The transatlantic case is precisely our audience** — a US flyer connecting to Europe — and before this we told them they had no carry-on.
+
+```jsonc
+{ "type": "personal", "fare_class": "basic", "cabin_absence": "not_permitted",
+  "applies_to": { "except": ["SA", "TATL", "TPAC"] } },
+{ "type": "cabin",    "fare_class": "basic", "max_cm": [56, 35, 23],
+  "applies_to": { "regions": ["SA", "TATL", "TPAC"] } }
+```
+
+Regions are coarse on purpose — `domestic`, `shorthaul`, `TATL`, `TPAC`, `SA`, `ME`, `AF`, `international`. These are the buckets carriers use in their own baggage copy; anything finer would invent precision the source lacks.
+
+Three rules:
+
+1. **A row with no `applies_to` applies everywhere.** Most allowances are unconditional and requiring the field would make every record noisier for no gain.
+2. **Route filtering runs before fare matching**, so a domestic booking cannot reach a transatlantic-only row.
+3. **No route given is `route_dependent`, not `not_permitted`.** A gap in the *question* is distinct from a gap in our *data*, and both are distinct from a finding. The page should say "this depends on where you're flying" and ask.
+
+| Booking | Verdict |
+|---|---|
+| Basic, domestic | **won't fit** — no cabin bag |
+| Basic, transatlantic | at the line — 55.88 × 35 × 22.86 |
+| Basic, route not asked | **no verdict** — `route_dependent` |
+
+`validate-carriers.mjs` rejects an unknown region name, an empty `applies_to`, and a row carrying both `regions[]` and `except[]`. A typo in a region silently makes a row apply nowhere, which reads as "no allowance" — the expensive direction again.
+
 ### Fares are three axes, not one string
 
 Across the researched set, `fare_class` held all of:

@@ -1430,6 +1430,17 @@ const AIR = [
   "st": 6,
   "e": "Staff do check bags at the gate on busy flights, though rarely over a centimetre or two.",
   "f": {
+   "basic": {
+    "d": [
+     56,
+     35,
+     23
+    ],
+    "kg": null,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Basic Economy DOES include a carry-on to South America, across the Atlantic and across the Pacific."
+   },
    "economy": {
     "d": [
      56,
@@ -2159,6 +2170,43 @@ const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'first'])
    convenience; the other direction costs them a gate fee. */
 const IN_TO_CM = 2.54;
 
+/* Route regions. An allowance can depend on where you are flying, not just what
+   you bought: United Basic Economy includes no carry-on domestically and DOES
+   include one transatlantic. Same fare, same passenger, opposite answers.
+
+   Coarse on purpose. These are the buckets carriers themselves use in their
+   baggage copy; anything finer would be inventing precision the source lacks. */
+const ROUTE_REGIONS = new Set([
+  'domestic', // within the carrier's home country
+  'shorthaul', // regional/continental — intra-Europe, intra-Asia
+  'TATL', // transatlantic
+  'TPAC', // transpacific
+  'SA', // to/from South America
+  'ME', // to/from the Middle East
+  'AF', // to/from Africa
+  'international', // catch-all when a carrier says no more than that
+]);
+
+/** Does this row apply to the route being asked about?
+ *
+ *  A row with no `applies_to` applies everywhere — most allowances are
+ *  unconditional and requiring the field would make every record noisier.
+ *  A row WITH one applies only where stated, and a route we were not told
+ *  about resolves to "we do not know", never to a silent yes or no. */
+function routeApplies(row, route) {
+  const a = row?.applies_to;
+  if (!a) return { applies: true, conditional: false };
+  if (!route) return { applies: null, conditional: true, reason: 'route_not_given' };
+
+  if (Array.isArray(a.except)) {
+    return { applies: !a.except.includes(route), conditional: true };
+  }
+  if (Array.isArray(a.regions)) {
+    return { applies: a.regions.includes(route), conditional: true };
+  }
+  return { applies: true, conditional: false };
+}
+
 /** Reconcile a published inch figure with a published centimetre figure.
  *  Returns the effective limit plus whether the source contradicts itself. */
 function reconcileUnits(cm, inches, epsCm = 0.3) {
@@ -2198,6 +2246,9 @@ const CABIN_ABSENCE = {
   NOT_PUBLISHED: 'not_published',
   /* Deliberately outside scope — a cargo or charter fare we do not model. */
   OUT_OF_SCOPE: 'out_of_scope',
+  /* We know the answer, but it depends on a route we were not given. Distinct
+     from not_researched: this is a gap in the QUESTION, not in our data. */
+  ROUTE_DEPENDENT: 'route_dependent',
 };
 
 const SHELLS = new Set(['aluminium', 'hardside', 'softside', 'backpack', 'duffel']);
@@ -2255,7 +2306,17 @@ const isSized = (record) =>
  *  Add-ons are applied last and win, because that is what buying one does. */
 function resolveFare(record, booking) {
   const b = typeof booking === 'string' ? { fare: booking } : (booking ?? {});
-  const rows = (record.allowances ?? []).filter((a) => a.type === 'cabin');
+  const all = (record.allowances ?? []).filter((a) => a.type === 'cabin');
+
+  /* Route filtering happens BEFORE fare matching, so a conditional row cannot
+     be selected for a route it does not cover. United Basic Economy has a
+     carry-on row that applies only transatlantic; a domestic booking must not
+     reach it. */
+  const applicable = all.map((a) => ({ row: a, r: routeApplies(a, b.route) }));
+  const rows = applicable.filter((x) => x.r.applies === true).map((x) => x.row);
+  /* Rows we could not decide on, because no route was supplied. Reported so the
+     caller can say "this depends on where you are flying" instead of guessing. */
+  const undecidable = applicable.filter((x) => x.r.applies === null).map((x) => x.row);
 
   /* Every comparison guards against undefined on BOTH sides. Without that,
      `a.cabin_class === b.class` is `undefined === undefined` and matches the
@@ -2280,6 +2341,12 @@ function resolveFare(record, booking) {
   if (byFare) return { row: byFare, matched: 'fare' };
   const byClass = reachable.find((a) => eq(a.cabin_class, b.class) || eq(a.fare_class, b.class));
   if (byClass) return { row: byClass, matched: 'class' };
+
+  /* Nothing matched — but if a route-conditional row exists that we could not
+     evaluate, the honest answer is "it depends", not "no". */
+  if (undecidable.length) {
+    return { row: null, matched: null, route_dependent: true, candidates: undecidable.length };
+  }
   return { row: null, matched: null };
 }
 
@@ -2310,7 +2377,9 @@ function toCarrier(record, fareClass) {
   const fareRow = rows.find((a) => a.fare_class === key);
   const absence = cabin
     ? null
-    : (fareRow?.cabin_absence ?? record.cabin_absence ?? CABIN_ABSENCE.NOT_RESEARCHED);
+    : resolved.route_dependent
+      ? CABIN_ABSENCE.ROUTE_DEPENDENT
+      : (fareRow?.cabin_absence ?? record.cabin_absence ?? CABIN_ABSENCE.NOT_RESEARCHED);
   const strictness = unwrap(record.strictness?.score ?? record.strictness);
   if (typeof strictness !== 'number' || strictness < 1 || strictness > 10) {
     throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
@@ -2322,6 +2391,8 @@ function toCarrier(record, fareClass) {
     /* Which axis actually matched, so a page can say "we answered for your fare"
        versus "we fell back to your cabin class". */
     matched_on: resolved.matched,
+    /* The allowance depends on where they are flying and we were not told. */
+    route_dependent: Boolean(resolved.route_dependent),
     strictness,
     /* Never a zero-size row — a naive comparison would let one pass. */
     allowance: cabin ? buildAllowance(cabin, subject) : null,

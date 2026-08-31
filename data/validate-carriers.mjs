@@ -82,6 +82,28 @@ for (const { file, rec } of records) {
     }
   }
 
+  /* Route conditions. A typo in a region name silently makes a row apply
+     nowhere, which reads as "no allowance" — the expensive direction again. */
+  const REGIONS = ['domestic', 'shorthaul', 'TATL', 'TPAC', 'SA', 'ME', 'AF', 'international'];
+  for (const a of rec.allowances ?? []) {
+    const at = a.applies_to;
+    if (!at) continue;
+    const list = at.regions ?? at.except;
+    if (!Array.isArray(list) || !list.length) {
+      bad(`${id}/${a.fare_class ?? a.addon}: applies_to needs a non-empty regions[] or except[]`);
+      continue;
+    }
+    for (const r of list) {
+      if (!REGIONS.includes(r))
+        bad(`${id}/${a.fare_class ?? a.addon}: unknown route region "${r}"`);
+    }
+    if (at.regions && at.except) {
+      bad(
+        `${id}/${a.fare_class ?? a.addon}: applies_to has both regions[] and except[] — pick one`
+      );
+    }
+  }
+
   const CLASSES = ['economy', 'premium_economy', 'business', 'first'];
   for (const a of rec.allowances ?? []) {
     if (a.cabin_class && !CLASSES.includes(a.cabin_class)) {

@@ -113,7 +113,7 @@ Low priority for the verdict, useful on a carrier page.
 | | Why |
 |---|---|
 | ~~1 · units conflict + `max_in`~~ | **Done.** `reconcileUnits()`, stricter-per-axis, both figures kept. UA record corrected and re-read from source. |
-| **2 · route conditions** | Changes the answer for transatlantic Basic Economy — our exact reader |
+| ~~2 · route conditions~~ | **Done.** `applies_to.regions[]` / `except[]`, filtered before fare matching. UA carries the real United condition. |
 | **3 · fees, three points + effective date** | Feeds `fee_asymmetry`, and the 3× threshold looks wrong against real data |
 | **4 · per-operator regional flags** | CommutAir differs from other United Express |
 | 5 · passenger attributes | Decide advisory vs allowance before building |

@@ -70,6 +70,7 @@ amazon-21-expandable|TP|economy|gamble|0.4|deep
 amazon-21-expandable|TR|economy|wont|2.4|deep
 amazon-21-expandable|U2|basic|wont|10.1|long
 amazon-21-expandable|U2|plus|wont|0.4|deep
+amazon-21-expandable|UA|basic|wont|2.6|wide
 amazon-21-expandable|UA|economy|wont|2.6|wide
 amazon-21-expandable|UX|economy|wont|2.6|wide
 amazon-21-expandable|V7|economy|wont|0.4|deep
@@ -155,6 +156,7 @@ away-aluminum|TP|economy|line|-0.4|long
 away-aluminum|TR|economy|wont|0.6|long
 away-aluminum|U2|basic|wont|9.6|long
 away-aluminum|U2|plus|line|-1.4|long
+away-aluminum|UA|basic|line|-0.1|deep
 away-aluminum|UA|economy|line|-0.1|deep
 away-aluminum|UX|economy|line|-0.4|long
 away-aluminum|V7|economy|line|-0.4|long
@@ -240,6 +242,7 @@ away-carryon-flex|TP|economy|line|0.1|long
 away-carryon-flex|TR|economy|wont|1.1|long
 away-carryon-flex|U2|basic|wont|10.1|long
 away-carryon-flex|U2|plus|line|-0.9|long
+away-carryon-flex|UA|basic|wont|1.6|wide
 away-carryon-flex|UA|economy|wont|1.6|wide
 away-carryon-flex|UX|economy|wont|1.6|wide
 away-carryon-flex|V7|economy|line|0.1|long
@@ -325,6 +328,7 @@ bagsmart-roamer|TP|economy|line|0.1|long
 bagsmart-roamer|TR|economy|wont|1.1|long
 bagsmart-roamer|U2|basic|wont|10.1|long
 bagsmart-roamer|U2|plus|line|-0.9|long
+bagsmart-roamer|UA|basic|line|0.3|wide
 bagsmart-roamer|UA|economy|line|0.3|wide
 bagsmart-roamer|UX|economy|line|0.3|wide
 bagsmart-roamer|V7|economy|line|0.1|long
@@ -410,6 +414,7 @@ beis-hybrid-roller|TP|economy|gamble|0.9|long
 beis-hybrid-roller|TR|economy|wont|1.9|long
 beis-hybrid-roller|U2|basic|wont|10.9|long
 beis-hybrid-roller|U2|plus|line|-0.1|long
+beis-hybrid-roller|UA|basic|gamble|0.6|wide
 beis-hybrid-roller|UA|economy|gamble|0.6|wide
 beis-hybrid-roller|UX|economy|gamble|0.9|long
 beis-hybrid-roller|V7|economy|wont|0.9|long
@@ -495,6 +500,7 @@ beis-small-carryon-roller|TP|economy|line|-1.7|long
 beis-small-carryon-roller|TR|economy|line|-0.1|deep
 beis-small-carryon-roller|U2|basic|wont|8.3|long
 beis-small-carryon-roller|U2|plus|clears|-2.1|deep
+beis-small-carryon-roller|UA|basic|line|-0.1|deep
 beis-small-carryon-roller|UA|economy|line|-0.1|deep
 beis-small-carryon-roller|UX|economy|line|-1.7|long
 beis-small-carryon-roller|V7|economy|line|-1.7|long
@@ -580,6 +586,7 @@ bellroy-lite|TP|economy|line|-1.9|deep
 bellroy-lite|TR|economy|line|0.1|deep
 bellroy-lite|U2|basic|wont|6.1|long
 bellroy-lite|U2|plus|line|-1.9|deep
+bellroy-lite|UA|basic|line|0.1|deep
 bellroy-lite|UA|economy|line|0.1|deep
 bellroy-lite|UX|economy|line|-0.5|wide
 bellroy-lite|V7|economy|line|-1.9|deep
@@ -665,6 +672,7 @@ bellroy-transit|TP|economy|gamble|0.6|long
 bellroy-transit|TR|economy|wont|1.6|long
 bellroy-transit|U2|basic|wont|10.6|long
 bellroy-transit|U2|plus|line|-0.4|long
+bellroy-transit|UA|basic|line|0.1|wide
 bellroy-transit|UA|economy|line|0.1|wide
 bellroy-transit|UX|economy|gamble|0.6|long
 bellroy-transit|V7|economy|wont|0.6|long
@@ -750,6 +758,7 @@ brics-xbag-rolling-duffel|TP|economy|gamble|0.9|long
 brics-xbag-rolling-duffel|TR|economy|wont|1.9|long
 brics-xbag-rolling-duffel|U2|basic|wont|10.9|long
 brics-xbag-rolling-duffel|U2|plus|line|-0.1|long
+brics-xbag-rolling-duffel|UA|basic|gamble|0.4|deep
 brics-xbag-rolling-duffel|UA|economy|gamble|0.4|deep
 brics-xbag-rolling-duffel|UX|economy|gamble|0.9|long
 brics-xbag-rolling-duffel|V7|economy|wont|0.9|long
@@ -835,6 +844,7 @@ briggs-riley-baseline-global-2-wheel|TP|economy|line|-1.7|long
 briggs-riley-baseline-global-2-wheel|TR|economy|line|0.1|wide
 briggs-riley-baseline-global-2-wheel|U2|basic|wont|8.3|long
 briggs-riley-baseline-global-2-wheel|U2|plus|clears|-2.7|long
+briggs-riley-baseline-global-2-wheel|UA|basic|wont|3.1|wide
 briggs-riley-baseline-global-2-wheel|UA|economy|wont|3.1|wide
 briggs-riley-baseline-global-2-wheel|UX|economy|wont|3.1|wide
 briggs-riley-baseline-global-2-wheel|V7|economy|line|-1.7|long
@@ -920,6 +930,7 @@ briggs-riley-baseline-global-spinner|TP|economy|line|-1.7|long
 briggs-riley-baseline-global-spinner|TR|economy|line|0.1|wide
 briggs-riley-baseline-global-spinner|U2|basic|wont|8.3|long
 briggs-riley-baseline-global-spinner|U2|plus|clears|-2.7|long
+briggs-riley-baseline-global-spinner|UA|basic|wont|3.1|wide
 briggs-riley-baseline-global-spinner|UA|economy|wont|3.1|wide
 briggs-riley-baseline-global-spinner|UX|economy|wont|3.1|wide
 briggs-riley-baseline-global-spinner|V7|economy|line|-1.7|long
@@ -1005,6 +1016,7 @@ briggs-riley-zdx-global-spinner|TP|economy|line|-1.7|long
 briggs-riley-zdx-global-spinner|TR|economy|line|0.1|wide
 briggs-riley-zdx-global-spinner|U2|basic|wont|8.3|long
 briggs-riley-zdx-global-spinner|U2|plus|clears|-2.7|long
+briggs-riley-zdx-global-spinner|UA|basic|wont|3.1|wide
 briggs-riley-zdx-global-spinner|UA|economy|wont|3.1|wide
 briggs-riley-zdx-global-spinner|UX|economy|wont|3.1|wide
 briggs-riley-zdx-global-spinner|V7|economy|line|-1.7|long
@@ -1090,6 +1102,7 @@ calpak-luka|TP|economy|line|-1.7|long
 calpak-luka|TR|economy|line|-0.7|long
 calpak-luka|U2|basic|wont|8.3|long
 calpak-luka|U2|plus|clears|-2.7|long
+calpak-luka|UA|basic|line|-0.1|wide
 calpak-luka|UA|economy|line|-0.1|wide
 calpak-luka|UX|economy|line|-0.1|wide
 calpak-luka|V7|economy|line|-1.7|long
@@ -1175,6 +1188,7 @@ dagne-dover-smaller-seattle|TP|economy|clears|-2.9|long
 dagne-dover-smaller-seattle|TR|economy|line|-1.9|long
 dagne-dover-smaller-seattle|U2|basic|wont|7.1|long
 dagne-dover-smaller-seattle|U2|plus|clears|-3.9|long
+dagne-dover-smaller-seattle|UA|basic|clears|-2|wide
 dagne-dover-smaller-seattle|UA|economy|clears|-2|wide
 dagne-dover-smaller-seattle|UX|economy|clears|-2|wide
 dagne-dover-smaller-seattle|V7|economy|clears|-2.9|long
@@ -1260,6 +1274,7 @@ delsey-chatelet-air-2|TP|economy|wont|2.8|long
 delsey-chatelet-air-2|TR|economy|wont|3.8|long
 delsey-chatelet-air-2|U2|basic|wont|12.8|long
 delsey-chatelet-air-2|U2|plus|wont|1.8|long
+delsey-chatelet-air-2|UA|basic|wont|3.1|wide
 delsey-chatelet-air-2|UA|economy|wont|3.1|wide
 delsey-chatelet-air-2|UX|economy|wont|3.1|wide
 delsey-chatelet-air-2|V7|economy|wont|2.8|long
@@ -1345,6 +1360,7 @@ hartmann-reserve|TP|economy|wont|3.4|long
 hartmann-reserve|TR|economy|wont|4.4|long
 hartmann-reserve|U2|basic|wont|13.4|long
 hartmann-reserve|U2|plus|wont|2.4|long
+hartmann-reserve|UA|basic|wont|3.1|wide
 hartmann-reserve|UA|economy|wont|3.1|wide
 hartmann-reserve|UX|economy|wont|3.4|long
 hartmann-reserve|V7|economy|wont|3.4|long
@@ -1430,6 +1446,7 @@ herschel-heritage|TP|economy|clears|-2.1|deep
 herschel-heritage|TR|economy|line|-0.1|deep
 herschel-heritage|U2|basic|wont|5.2|long
 herschel-heritage|U2|plus|clears|-2.1|deep
+herschel-heritage|UA|basic|line|-0.1|deep
 herschel-heritage|UA|economy|line|-0.1|deep
 herschel-heritage|UX|economy|clears|-2|wide
 herschel-heritage|V7|economy|clears|-2.1|deep
@@ -1515,6 +1532,7 @@ july-carryon-max|TP|economy|wont|3.4|long
 july-carryon-max|TR|economy|wont|4.4|long
 july-carryon-max|U2|basic|wont|13.4|long
 july-carryon-max|U2|plus|wont|2.4|long
+july-carryon-max|UA|basic|wont|5.6|wide
 july-carryon-max|UA|economy|wont|5.6|wide
 july-carryon-max|UX|economy|wont|5.6|wide
 july-carryon-max|V7|economy|wont|3.4|long
@@ -1600,6 +1618,7 @@ lojel-cubo-small-lite|TP|economy|line|-1.4|long
 lojel-cubo-small-lite|TR|economy|line|-0.4|long
 lojel-cubo-small-lite|U2|basic|wont|8.6|long
 lojel-cubo-small-lite|U2|plus|clears|-2.4|long
+lojel-cubo-small-lite|UA|basic|gamble|1.1|wide
 lojel-cubo-small-lite|UA|economy|gamble|1.1|wide
 lojel-cubo-small-lite|UX|economy|gamble|1.1|wide
 lojel-cubo-small-lite|V7|economy|line|-1.4|long
@@ -1685,6 +1704,7 @@ monos-hybrid|TP|economy|gamble|0.9|long
 monos-hybrid|TR|economy|wont|1.9|long
 monos-hybrid|U2|basic|wont|10.9|long
 monos-hybrid|U2|plus|line|-0.1|long
+monos-hybrid|UA|basic|gamble|0.6|wide
 monos-hybrid|UA|economy|gamble|0.6|wide
 monos-hybrid|UX|economy|gamble|0.9|long
 monos-hybrid|V7|economy|wont|0.9|long
@@ -1770,6 +1790,7 @@ pacsafe-venturesafe-exp45|TP|economy|line|0.1|long
 pacsafe-venturesafe-exp45|TR|economy|wont|1.1|long
 pacsafe-venturesafe-exp45|U2|basic|wont|10.1|long
 pacsafe-venturesafe-exp45|U2|plus|line|-0.9|long
+pacsafe-venturesafe-exp45|UA|basic|line|-0.9|long
 pacsafe-venturesafe-exp45|UA|economy|line|-0.9|long
 pacsafe-venturesafe-exp45|UX|economy|line|0.1|long
 pacsafe-venturesafe-exp45|V7|economy|line|0.1|long
@@ -1855,6 +1876,7 @@ patagonia-black-hole-40|TP|economy|clears|-5|long
 patagonia-black-hole-40|TR|economy|clears|-3.4|deep
 patagonia-black-hole-40|U2|basic|wont|5|long
 patagonia-black-hole-40|U2|plus|clears|-5.4|deep
+patagonia-black-hole-40|UA|basic|clears|-3.2|wide
 patagonia-black-hole-40|UA|economy|clears|-3.2|wide
 patagonia-black-hole-40|UX|economy|clears|-3.2|wide
 patagonia-black-hole-40|V7|economy|clears|-5|long
@@ -1940,6 +1962,7 @@ ricksteves-rolling-carryon|TP|economy|line|-1.7|long
 ricksteves-rolling-carryon|TR|economy|line|-0.7|long
 ricksteves-rolling-carryon|U2|basic|wont|8.3|long
 ricksteves-rolling-carryon|U2|plus|clears|-2.7|long
+ricksteves-rolling-carryon|UA|basic|line|-0.7|wide
 ricksteves-rolling-carryon|UA|economy|line|-0.7|wide
 ricksteves-rolling-carryon|UX|economy|line|-0.7|wide
 ricksteves-rolling-carryon|V7|economy|line|-1.7|long
@@ -2025,6 +2048,7 @@ ricksteves-spinner-carryon|TP|economy|line|0.2|long
 ricksteves-spinner-carryon|TR|economy|wont|1.2|long
 ricksteves-spinner-carryon|U2|basic|wont|10.2|long
 ricksteves-spinner-carryon|U2|plus|line|-0.8|long
+ricksteves-spinner-carryon|UA|basic|gamble|0.6|wide
 ricksteves-spinner-carryon|UA|economy|gamble|0.6|wide
 ricksteves-spinner-carryon|UX|economy|gamble|0.6|wide
 ricksteves-spinner-carryon|V7|economy|line|0.2|long
@@ -2110,6 +2134,7 @@ samsonite-freeform|TP|economy|wont|3.4|long
 samsonite-freeform|TR|economy|wont|4.4|long
 samsonite-freeform|U2|basic|wont|13.4|long
 samsonite-freeform|U2|plus|wont|2.4|long
+samsonite-freeform|UA|basic|wont|3.1|wide
 samsonite-freeform|UA|economy|wont|3.1|wide
 samsonite-freeform|UX|economy|wont|3.4|long
 samsonite-freeform|V7|economy|wont|3.4|long
@@ -2195,6 +2220,7 @@ samsonite-proxis|TP|economy|gamble|0.9|long
 samsonite-proxis|TR|economy|wont|1.9|long
 samsonite-proxis|U2|basic|wont|10.9|long
 samsonite-proxis|U2|plus|line|-0.1|long
+samsonite-proxis|UA|basic|gamble|0.6|wide
 samsonite-proxis|UA|economy|gamble|0.6|wide
 samsonite-proxis|UX|economy|gamble|0.9|long
 samsonite-proxis|V7|economy|wont|0.9|long
@@ -2280,6 +2306,7 @@ samsonite-uplift|TP|economy|gamble|0.9|long
 samsonite-uplift|TR|economy|wont|1.9|long
 samsonite-uplift|U2|basic|wont|10.9|long
 samsonite-uplift|U2|plus|line|-0.1|long
+samsonite-uplift|UA|basic|gamble|0.6|wide
 samsonite-uplift|UA|economy|gamble|0.6|wide
 samsonite-uplift|UX|economy|gamble|0.9|long
 samsonite-uplift|V7|economy|wont|0.9|long
@@ -2365,6 +2392,7 @@ thule-aion|TP|economy|line|0.1|long
 thule-aion|TR|economy|wont|1.1|long
 thule-aion|U2|basic|wont|10.1|long
 thule-aion|U2|plus|line|-0.9|long
+thule-aion|UA|basic|line|0.1|wide
 thule-aion|UA|economy|line|0.1|wide
 thule-aion|UX|economy|line|0.1|long
 thule-aion|V7|economy|line|0.1|long
@@ -2450,6 +2478,7 @@ travelers-choice-maxporter-ii|TP|economy|gamble|0.9|long
 travelers-choice-maxporter-ii|TR|economy|wont|1.9|long
 travelers-choice-maxporter-ii|U2|basic|wont|10.9|long
 travelers-choice-maxporter-ii|U2|plus|line|-0.1|long
+travelers-choice-maxporter-ii|UA|basic|gamble|0.6|wide
 travelers-choice-maxporter-ii|UA|economy|gamble|0.6|wide
 travelers-choice-maxporter-ii|UX|economy|gamble|0.9|long
 travelers-choice-maxporter-ii|V7|economy|wont|0.9|long
@@ -2535,6 +2564,7 @@ travelpro-maxlite-air-v2-international|TP|economy|line|0|long
 travelpro-maxlite-air-v2-international|TR|economy|wont|2|wide
 travelpro-maxlite-air-v2-international|U2|basic|wont|10|long
 travelpro-maxlite-air-v2-international|U2|plus|line|-1|long
+travelpro-maxlite-air-v2-international|UA|basic|wont|5|wide
 travelpro-maxlite-air-v2-international|UA|economy|wont|5|wide
 travelpro-maxlite-air-v2-international|UX|economy|wont|5|wide
 travelpro-maxlite-air-v2-international|V7|economy|line|0|long
@@ -2620,6 +2650,7 @@ travelpro-maxlite5-21|TP|economy|wont|3.4|long
 travelpro-maxlite5-21|TR|economy|wont|4.4|long
 travelpro-maxlite5-21|U2|basic|wont|13.4|long
 travelpro-maxlite5-21|U2|plus|wont|2.4|long
+travelpro-maxlite5-21|UA|basic|wont|2.4|long
 travelpro-maxlite5-21|UA|economy|wont|2.4|long
 travelpro-maxlite5-21|UX|economy|wont|3.4|long
 travelpro-maxlite5-21|V7|economy|wont|3.4|long
@@ -2705,6 +2736,7 @@ travelpro-maxlite5-compact|TP|economy|gamble|0.9|long
 travelpro-maxlite5-compact|TR|economy|wont|1.9|long
 travelpro-maxlite5-compact|U2|basic|wont|10.9|long
 travelpro-maxlite5-compact|U2|plus|line|-0.1|long
+travelpro-maxlite5-compact|UA|basic|gamble|0.6|wide
 travelpro-maxlite5-compact|UA|economy|gamble|0.6|wide
 travelpro-maxlite5-compact|UX|economy|gamble|0.9|long
 travelpro-maxlite5-compact|V7|economy|wont|0.9|long
@@ -2790,6 +2822,7 @@ travelpro-maxlite5-international-rollaboard|TP|economy|line|0.2|long
 travelpro-maxlite5-international-rollaboard|TR|economy|wont|2|wide
 travelpro-maxlite5-international-rollaboard|U2|basic|wont|10.2|long
 travelpro-maxlite5-international-rollaboard|U2|plus|line|-0.8|long
+travelpro-maxlite5-international-rollaboard|UA|basic|wont|5|wide
 travelpro-maxlite5-international-rollaboard|UA|economy|wont|5|wide
 travelpro-maxlite5-international-rollaboard|UX|economy|wont|5|wide
 travelpro-maxlite5-international-rollaboard|V7|economy|line|0.2|long
@@ -2875,6 +2908,7 @@ travelpro-maxlite5-international|TP|economy|line|0.2|long
 travelpro-maxlite5-international|TR|economy|wont|2|wide
 travelpro-maxlite5-international|U2|basic|wont|10.2|long
 travelpro-maxlite5-international|U2|plus|line|-0.8|long
+travelpro-maxlite5-international|UA|basic|wont|5|wide
 travelpro-maxlite5-international|UA|economy|wont|5|wide
 travelpro-maxlite5-international|UX|economy|wont|5|wide
 travelpro-maxlite5-international|V7|economy|line|0.2|long
@@ -2960,6 +2994,7 @@ travelpro-platinum-elite-international-rollaboard|TP|economy|line|0.2|long
 travelpro-platinum-elite-international-rollaboard|TR|economy|wont|2|wide
 travelpro-platinum-elite-international-rollaboard|U2|basic|wont|10.2|long
 travelpro-platinum-elite-international-rollaboard|U2|plus|line|-0.8|long
+travelpro-platinum-elite-international-rollaboard|UA|basic|wont|5|wide
 travelpro-platinum-elite-international-rollaboard|UA|economy|wont|5|wide
 travelpro-platinum-elite-international-rollaboard|UX|economy|wont|5|wide
 travelpro-platinum-elite-international-rollaboard|V7|economy|line|0.2|long
@@ -3045,6 +3080,7 @@ travelpro-versapack|TP|economy|wont|3.4|long
 travelpro-versapack|TR|economy|wont|4.4|long
 travelpro-versapack|U2|basic|wont|13.4|long
 travelpro-versapack|U2|plus|wont|2.4|long
+travelpro-versapack|UA|basic|wont|2.4|long
 travelpro-versapack|UA|economy|wont|2.4|long
 travelpro-versapack|UX|economy|wont|3.4|long
 travelpro-versapack|V7|economy|wont|3.4|long
@@ -3130,6 +3166,7 @@ tumi-19-degree-lite|TP|economy|gamble|0.4|long
 tumi-19-degree-lite|TR|economy|wont|1.4|long
 tumi-19-degree-lite|U2|basic|wont|10.4|long
 tumi-19-degree-lite|U2|plus|line|-0.6|long
+tumi-19-degree-lite|UA|basic|gamble|0.6|wide
 tumi-19-degree-lite|UA|economy|gamble|0.6|wide
 tumi-19-degree-lite|UX|economy|gamble|0.6|wide
 tumi-19-degree-lite|V7|economy|wont|0.4|long
@@ -3215,6 +3252,7 @@ tumi-alpha-dual-access|TP|economy|gamble|0.9|long
 tumi-alpha-dual-access|TR|economy|wont|1.9|long
 tumi-alpha-dual-access|U2|basic|wont|10.9|long
 tumi-alpha-dual-access|U2|plus|line|-0.1|long
+tumi-alpha-dual-access|UA|basic|gamble|0.6|wide
 tumi-alpha-dual-access|UA|economy|gamble|0.6|wide
 tumi-alpha-dual-access|UX|economy|gamble|0.9|long
 tumi-alpha-dual-access|V7|economy|wont|0.9|long
@@ -3300,6 +3338,7 @@ vera-bradley-adair-duffel|TP|economy|line|-1.6|deep
 vera-bradley-adair-duffel|TR|economy|wont|0.4|deep
 vera-bradley-adair-duffel|U2|basic|wont|8.3|long
 vera-bradley-adair-duffel|U2|plus|line|-1.6|deep
+vera-bradley-adair-duffel|UA|basic|gamble|0.4|deep
 vera-bradley-adair-duffel|UA|economy|gamble|0.4|deep
 vera-bradley-adair-duffel|UX|economy|line|-1.6|deep
 vera-bradley-adair-duffel|V7|economy|line|-1.6|deep

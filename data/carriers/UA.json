@@ -41,8 +41,43 @@
    "max_kg": null,
    "includes_wheels": true,
    "count": 1,
-   "note": "Basic Economy: personal item only on most routes.",
+   "note": "Basic Economy on most routes: personal item only.",
    "cabin_absence": "not_permitted",
+   "applies_to": {
+    "except": [
+     "SA",
+     "TATL",
+     "TPAC"
+    ]
+   },
+   "source_url": "https://www.united.com/en/us/fly/baggage/carry-on-bags.html",
+   "verified_at": "2026-08-30"
+  },
+  {
+   "fare_class": "basic",
+   "cabin_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    56,
+    35,
+    23
+   ],
+   "max_in": [
+    22,
+    14,
+    9
+   ],
+   "max_kg": null,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Basic Economy DOES include a carry-on to South America, across the Atlantic and across the Pacific.",
+   "applies_to": {
+    "regions": [
+     "SA",
+     "TATL",
+     "TPAC"
+    ]
+   },
    "source_url": "https://www.united.com/en/us/fly/baggage/carry-on-bags.html",
    "verified_at": "2026-08-30"
   },
@@ -93,7 +128,7 @@
  "verified_by": "claude (page read in full via browser)",
  "placeholder": false,
  "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish.",
- "audit_note": "Allowances read from united.com 2026-08-30. NOT yet modelled: Basic Economy includes a carry-on on South America / transatlantic / transpacific routes (route conditions unsupported); status and credit-card exemptions; three-point fee schedule with an April 2026 purchase-date cutoff; CommutAir is personal-item-only unlike other United Express operators. See docs/21-schema-gaps.md.",
+ "audit_note": "Allowances and route conditions read from united.com 2026-08-30. Still NOT modelled: status and credit-card exemptions; three-point fee schedule with an April 2026 purchase-date cutoff; CommutAir is personal-item-only unlike other United Express operators. See docs/21-schema-gaps.md.",
  "research_status": "official_allowances_researched",
  "publication_ready": false,
  "research_dossier": "resources/carriers/UA-united.md"
