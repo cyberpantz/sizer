@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import BagCard from '../../components/BagCard.astro';
 import BagFilters, { GROUPS } from '../../components/BagFilters.astro';
+import { facetCounts, facetsFor } from '../../lib/bag-facets.mjs';
 import { loadBags, loadCarriers, coverageStats } from '../../lib/data.mjs';
 import { shelve } from '../../lib/shelves.mjs';
 
@@ -16,6 +17,14 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
 const counts = Object.fromEntries(
   GROUPS.map((g) => [g.id, bags.filter((b) => g.types.includes(b.record.type)).length])
 );
+
+/* Facet values, computed once and stamped onto each card.
+   Every shelf entry, not just the ones a shelf happens to show — the counts in
+   the panel have to describe the page, and a bag can sit on more than one
+   shelf. */
+const entries = shelves.flatMap((s) => s.bags);
+const facets = facetsFor(entries);
+const facetTotals = facetCounts(facets);
 
 /* "Last updated" has to mean something: the most recent day anyone read a
    source, not the day the site was rebuilt. */
@@ -60,7 +69,7 @@ const lastUpdated = dates.length
       </p>
     </section>
 
-    <BagFilters counts={counts} total={bags.length} />
+    <BagFilters counts={counts} facetCounts={facetTotals} total={bags.length} />
 
     {shelves.map((shelf) => shelf.bags.length > 0 && (
       <section data-shelf class="border-b border-rule py-10">
@@ -74,7 +83,12 @@ const lastUpdated = dates.length
 
         <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {shelf.bags.map(({ bag, coverage }) => (
-            <div data-bag-type={bag.record.type}>
+            <div
+              data-bag-type={bag.record.type}
+              data-bag-role={facets.get(bag.slug)?.role ?? ''}
+              data-bag-price={facets.get(bag.slug)?.price ?? ''}
+              data-bag-cov={facets.get(bag.slug)?.cov ?? ''}
+            >
               <BagCard bag={bag} coverage={coverage} />
             </div>
           ))}

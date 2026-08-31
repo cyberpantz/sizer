@@ -49,6 +49,79 @@ const CM = (i) => +(i * 2.54).toFixed(1);
 const desc = (a) => [...a].sort((x, y) => y - x);
 const LB2KG = (l) => +(l * 0.45359).toFixed(2);
 
+/* Imperial intake, converted here and nowhere else.
+ *
+ * THE BUG THIS FIXES. The intake brief tells the researcher "do not convert,
+ * round, average, or reconcile anything" — which is right, because a
+ * conversion done at the source is a number nobody can audit back to the page.
+ * But the brief then showed a target shape using `external_cm`. The two
+ * instructions contradict, and the Away intake resolved it correctly: it
+ * recorded `external_in` in the units Away actually prints, and set
+ * `intake_status: researched_original_units_pending_runtime_support`.
+ *
+ * The build did not read that field, so a fully-researched bag landed with a
+ * price and no dimensions and stayed invisible on the site. Nothing failed.
+ *
+ * So: the RESEARCH keeps the page's own units, and the BUILD converts. That is
+ * the right split — the conversion is now one line of versioned code applied
+ * identically to every record, instead of arithmetic done by hand 61 times.
+ * Both survive: the imperial field is kept verbatim so any cm figure here can
+ * be walked back to the sentence it came from. */
+const EXACT = (f) => (v) => +(v * f).toFixed(6); // kill float dust, keep the value
+const CONVERSIONS = [
+  ['external_in', 'external_cm', 2.54, 'cm'],
+  ['claimed_packing_in', 'claimed_packing_cm', 2.54, 'cm'],
+  ['claimed_in', 'claimed_cm', 2.54, 'cm'],
+  ['expands_in', 'expands_cm', 2.54, 'cm'],
+  ['weight_lb', 'weight_kg', 0.45359, 'kg'],
+];
+
+/* Values are NOT rounded here. 22.7 in is 57.658 cm and that is what we store;
+   rounding to 57.7 would be a second, invisible transformation of a
+   manufacturer's number. Display rounding belongs in ui/units.mjs, where a
+   reader can see what it did. */
+const convert = (v, f) => (Array.isArray(v) ? v.map(EXACT(f)) : EXACT(f)(v));
+
+/* Does this metric field come from the page, or from arithmetic?
+ *
+ * A cm figure PRINTED BY THE MANUFACTURER outranks anything we compute — it is
+ * their own number. A cm figure someone derived from the inches in the same
+ * record does not: it is arithmetic, and arithmetic belongs in one versioned
+ * place rather than being redone by hand for each of 61 bags.
+ *
+ * The Away intake carried both `external_in` and a hand-converted
+ * `external_cm` marked `conversion.from_field`. Deferring to it meant the
+ * build's own converter never ran on the one record it was written for. */
+const isDerived = (field) => Boolean(field?.conversion?.from_field);
+
+function convertUnits(record) {
+  const out = { ...record };
+  for (const [from, to, factor, unit] of CONVERSIONS) {
+    const src = record[from];
+    const existing = record[to];
+    if (!src) continue;
+    if (existing && !isDerived(existing)) continue; // the page printed metric — it wins
+    out[to] = {
+      ...src,
+      v: convert(src.v, factor),
+      unit,
+      conversion: {
+        from_field: from,
+        factor: String(factor),
+        rounded: false,
+        by: 'build-bags.mjs',
+      },
+      note: [
+        src.note,
+        `Derived from the manufacturer's published ${src.unit ?? 'imperial'} figure using factor ${factor}; not a manufacturer-published metric value. Converted by the build, not by the source.`,
+      ]
+        .filter(Boolean)
+        .join(' '),
+    };
+  }
+  return out;
+}
+
 const byBag = new Map();
 for (const m of R.mentions) (byBag.get(m.bag) ?? byBag.set(m.bag, []).get(m.bag)).push(m);
 
@@ -198,7 +271,10 @@ for (const [slug, ms] of byBag) {
    Nothing is dropped silently: a field the manufacturer record does not carry
    keeps whatever the review gave it. */
 const bySlug = new Map(bags.map((b) => [b.slug, b]));
-for (const record of manufacturerBags) {
+for (const raw of manufacturerBags) {
+  /* Imperial in, metric derived, both kept. Done before anything else looks at
+     the record, so no downstream step has to know which units it arrived in. */
+  const record = convertUnits(raw);
   const prior = bySlug.get(record.slug);
 
   if (!prior) {

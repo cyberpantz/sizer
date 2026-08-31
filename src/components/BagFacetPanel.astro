@@ -1,0 +1,133 @@
+---
+/* The Filters button and its popover.
+ *
+ * The shape pills stay on the page. This holds the axes that don't deserve
+ * permanent real estate — the Airbnb split Frank designs against: a visible
+ * category row, plus a Filters button for everything else.
+ *
+ * THE RULE THAT MATTERS HERE: a filter you cannot see is a filter you forget
+ * you set. A reader who picks "Budget", closes the panel and scrolls into a
+ * near-empty page has no way to tell a filtered page from a broken one. So
+ * hidden state is never only hidden:
+ *
+ *   1. the button carries a count badge while anything is active, and
+ *   2. every active facet also renders as a removable chip in the open,
+ *      beside the shape pills.
+ *
+ * An axis only renders when at least two of its values have bags behind them
+ * (axisLive) — see bag-facets.mjs. Today that means Price and Under-seat are
+ * absent, and they appear on their own when the intake lands.
+ */
+import { COVERAGE_FACETS, PRICE_HINTS, ROLE_FACETS, axisLive } from '../lib/bag-facets.mjs';
+import { BANDS } from '../lib/price-band.mjs';
+
+const { counts } = Astro.props;
+
+const SECTIONS = [
+  {
+    axis: 'cov',
+    legend: 'How many airlines it clears',
+    options: COVERAGE_FACETS.map((f) => ({ ...f, n: counts.cov?.[f.id] ?? 0 })),
+  },
+  {
+    axis: 'price',
+    legend: 'Price',
+    note: 'Bands, not prices — a bag on sale is still the same kind of bag.',
+    options: BANDS.map((b) => ({
+      id: b.id,
+      label: b.label,
+      hint: PRICE_HINTS[b.id],
+      n: counts.price?.[b.id] ?? 0,
+    })),
+  },
+  {
+    axis: 'role',
+    legend: 'Where it goes',
+    options: ROLE_FACETS.map((f) => ({ ...f, n: counts.role?.[f.id] ?? 0 })),
+  },
+]
+  .map((s) => ({ ...s, options: s.options.filter((o) => o.n > 0) }))
+  .filter((s) => axisLive(Object.fromEntries(s.options.map((o) => [o.id, o.n]))));
+
+const live = SECTIONS.length > 0;
+---
+{live && (
+  <div data-facets class="relative">
+    <button
+      type="button"
+      data-facet-toggle
+      aria-expanded="false"
+      aria-controls="facet-panel"
+      class="flex cursor-pointer items-center gap-2 rounded-full border-2 border-rule-strong bg-surface
+             px-4 py-2 text-[0.9375rem] font-medium text-ink hover:border-blue
+             aria-expanded:border-blue"
+    >
+      {/* Three sliders — the settled idiom for "filters". Decorative: the
+          button already has a text label, so announcing it twice is noise. */}
+      <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" class="shrink-0">
+        <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="1.5" y1="4" x2="14.5" y2="4" />
+          <line x1="1.5" y1="8" x2="14.5" y2="8" />
+          <line x1="1.5" y1="12" x2="14.5" y2="12" />
+        </g>
+        <g fill="var(--color-surface)" stroke="currentColor" stroke-width="1.5">
+          <circle cx="5.5" cy="4" r="1.9" />
+          <circle cx="10.5" cy="8" r="1.9" />
+          <circle cx="4" cy="12" r="1.9" />
+        </g>
+      </svg>
+      Filters
+      <span
+        data-facet-count
+        hidden
+        class="grid h-5 min-w-5 place-items-center rounded-full bg-blue px-1.5 font-mono text-[0.75rem] text-on-blue"
+      ></span>
+    </button>
+
+    <div
+      id="facet-panel"
+      data-facet-panel
+      hidden
+      class="absolute left-0 z-30 mt-2 w-[min(22rem,calc(100vw-3rem))] rounded-card border border-rule
+             bg-surface p-5 shadow-panel"
+    >
+      {SECTIONS.map((s) => (
+        <fieldset class="mb-5 last:mb-0 border-0 p-0">
+          <legend class="mb-1 text-[0.9375rem] font-semibold text-ink">{s.legend}</legend>
+          {s.note && <p class="mb-2 text-[0.8125rem] leading-snug text-muted">{s.note}</p>}
+
+          {s.options.map((o) => (
+            <label class="flex cursor-pointer items-start gap-2.5 rounded-chip py-1.5 hover:bg-surface-2">
+              <input
+                type="checkbox"
+                data-facet={s.axis}
+                value={o.id}
+                class="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-blue"
+              />
+              <span class="min-w-0">
+                <span class="text-[0.9375rem] text-ink">{o.label}</span>
+                <span class="ml-1.5 font-mono text-[0.8125rem] text-muted">{o.n}</span>
+                {o.hint && (
+                  <span class="block text-[0.8125rem] leading-snug text-muted">{o.hint}</span>
+                )}
+              </span>
+            </label>
+          ))}
+        </fieldset>
+      ))}
+
+      <div class="mt-4 flex items-center justify-between border-t border-rule pt-4">
+        <button
+          type="button"
+          data-facet-clear
+          class="cursor-pointer rounded-chip px-2 py-1 text-[0.875rem] text-blue hover:bg-blue-wash"
+        >Clear all</button>
+        <button
+          type="button"
+          data-facet-done
+          class="cursor-pointer rounded-full bg-blue px-4 py-1.5 text-[0.875rem] font-medium text-on-blue"
+        >Done</button>
+      </div>
+    </div>
+  </div>
+)}

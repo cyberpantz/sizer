@@ -1,22 +1,31 @@
 ---
-/* Filter pills.
+/* Filter pills, plus the Filters popover.
+ *
+ * Matching the approved mockup: a "Show" label, pill-shaped buttons, a solid
+ * blue selected state with a ring, and a blue-wash panel underneath carrying a
+ * note about the shape you just picked.
+ *
+ * The note is the point. A pill labelled "2-wheel rollers" tells you nothing;
+ * the note tells you what that shape costs you at an airport. It is editorial
+ * that appears only when it is relevant, which beats a wall of prose at the
+ * bottom of the page nobody scrolls to.
+ *
+ * Groups, not raw types: a reader thinks "spinner", not "hardside spinner" and
+ * "softside spinner" as separate ideas. The catalogue keeps the finer types;
+ * this maps several onto one pill.
+ *
+ * TWO CONTROLS, ONE STATE. The shape pills stay visible because they carry the
+ * editorial notes and they are the axis people actually browse by. Everything
+ * else lives behind the Filters button (BagFacetPanel). Both feed one apply(),
+ * because two filtering code paths over one grid is how you get a card that is
+ * hidden by one control and shown by the other.
+ *
+ * Progressive enhancement — every bag is already in the HTML. Without
+ * JavaScript nothing is hidden and no filter lies about what is on the page.
+ */
+import BagFacetPanel from './BagFacetPanel.astro';
 
-   Matching the approved mockup: a "Show" label, pill-shaped buttons, a solid
-   blue selected state with a ring, and a blue-wash panel underneath carrying a
-   note about the shape you just picked.
-
-   The note is the point. A pill labelled "2-wheel rollers" tells you nothing;
-   the note tells you what that shape costs you at an airport. It is editorial
-   that appears only when it is relevant, which beats a wall of prose at the
-   bottom of the page nobody scrolls to.
-
-   Groups, not raw types: a reader thinks "spinner", not "hardside spinner" and
-   "softside spinner" as separate ideas. The catalogue keeps the finer types;
-   this maps several onto one pill.
-
-   Progressive enhancement — every bag is already in the HTML. Without
-   JavaScript the pills don't filter and nothing is hidden. */
-const { counts, total } = Astro.props;
+const { counts, facetCounts } = Astro.props;
 
 export const GROUPS = [
   { id: 'spinner', label: 'Spinners', types: ['hardside spinner', 'softside spinner'] },
@@ -52,29 +61,37 @@ const NOTES = {
 const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
 ---
 <div data-filters class="border-y border-rule py-4">
-  <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by bag type">
-    <span class="mr-1 text-[0.9375rem] text-muted">Show</span>
+  <div class="flex flex-wrap items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by bag type">
+      <span class="mr-1 text-[0.9375rem] text-muted">Show</span>
 
-    <button
-      type="button"
-      data-filter="all"
-      aria-pressed="true"
-      class="cursor-pointer rounded-full border-2 px-5 py-2 text-[0.9375rem] font-medium
-             border-rule-strong bg-surface text-ink hover:border-blue
-             aria-pressed:border-blue aria-pressed:bg-blue aria-pressed:text-on-blue"
-    >Everything</button>
-
-    {groups.map((g) => (
       <button
         type="button"
-        data-filter={g.id}
-        aria-pressed="false"
+        data-filter="all"
+        aria-pressed="true"
         class="cursor-pointer rounded-full border-2 px-5 py-2 text-[0.9375rem] font-medium
                border-rule-strong bg-surface text-ink hover:border-blue
                aria-pressed:border-blue aria-pressed:bg-blue aria-pressed:text-on-blue"
-      >{g.label}</button>
-    ))}
+      >Everything</button>
+
+      {groups.map((g) => (
+        <button
+          type="button"
+          data-filter={g.id}
+          aria-pressed="false"
+          class="cursor-pointer rounded-full border-2 px-5 py-2 text-[0.9375rem] font-medium
+                 border-rule-strong bg-surface text-ink hover:border-blue
+                 aria-pressed:border-blue aria-pressed:bg-blue aria-pressed:text-on-blue"
+        >{g.label}</button>
+      ))}
+    </div>
+
+    <div class="ml-auto"><BagFacetPanel counts={facetCounts} /></div>
   </div>
+
+  {/* Active facets, in the open. The panel closes over its own state, so
+      without this a filtered page is indistinguishable from an empty one. */}
+  <div data-facet-chips hidden class="mt-3 flex flex-wrap items-center gap-2"></div>
 
   <div data-filter-note hidden class="mt-4 rounded-card bg-blue-wash p-5 text-[0.9375rem] leading-relaxed text-ink-2">
     <strong class="font-semibold text-ink" data-note-lead></strong>{' '}
@@ -89,21 +106,50 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
   const body = root.querySelector('[data-note-body]');
   const pills = [...root.querySelectorAll('[data-filter]')];
 
+  const facetRoot = root.querySelector('[data-facets]');
+  const toggle = facetRoot?.querySelector('[data-facet-toggle]');
+  const facetPanel = facetRoot?.querySelector('[data-facet-panel]');
+  const badge = facetRoot?.querySelector('[data-facet-count]');
+  const boxes = [...(facetRoot?.querySelectorAll('[data-facet]') ?? [])];
+  const chips = root.querySelector('[data-facet-chips]');
+
+  let shape = 'all';
+
   const typesFor = (id) => GROUPS.find((g) => g.id === id)?.types ?? [];
+  const checked = () => boxes.filter((b) => b.checked);
 
-  function apply(id) {
-    for (const p of pills) p.setAttribute('aria-pressed', String(p.dataset.filter === id));
+  /* Selected values grouped by axis. Within an axis the test is OR (budget
+     OR midrange); across axes it is AND (budget AND clears most airlines).
+     That is what every faceted search does, and getting it backwards makes
+     every additional tick return fewer results until nothing is left. */
+  function selection() {
+    const sel = {};
+    for (const b of checked()) (sel[b.dataset.facet] ??= new Set()).add(b.value);
+    return sel;
+  }
 
-    const note = NOTES[id];
+  function matches(card, sel) {
+    if (shape !== 'all' && !typesFor(shape).includes(card.dataset.bagType)) return false;
+    for (const [axis, wanted] of Object.entries(sel)) {
+      const key = { cov: 'bagCov', price: 'bagPrice', role: 'bagRole' }[axis];
+      if (!wanted.has(card.dataset[key] ?? '')) return false;
+    }
+    return true;
+  }
+
+  function apply() {
+    for (const p of pills) p.setAttribute('aria-pressed', String(p.dataset.filter === shape));
+
+    const note = NOTES[shape];
     panel.hidden = !note;
     if (note) {
       lead.textContent = note.lead;
       body.textContent = note.body;
     }
 
-    const wanted = typesFor(id);
+    const sel = selection();
     for (const card of document.querySelectorAll('[data-bag-type]')) {
-      card.hidden = id !== 'all' && !wanted.includes(card.dataset.bagType);
+      card.hidden = !matches(card, sel);
     }
 
     /* A shelf whose bags are all filtered out leaves an empty heading with a
@@ -120,7 +166,97 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
     const any = [...document.querySelectorAll('[data-shelf]')].some((s) => !s.hidden);
     const empty = document.querySelector('[data-empty]');
     if (empty) empty.hidden = any;
+
+    renderChips();
   }
 
-  for (const p of pills) p.addEventListener('click', () => apply(p.dataset.filter));
+  /* Active facets rendered as removable chips. textContent, never innerHTML —
+     these strings come from the DOM and building markup out of them is how a
+     label turns into an injection. */
+  function renderChips() {
+    if (!chips) return;
+    chips.textContent = '';
+    const on = checked();
+
+    if (badge) {
+      badge.hidden = on.length === 0;
+      badge.textContent = String(on.length);
+    }
+    chips.hidden = on.length === 0;
+    if (!on.length) return;
+
+    for (const b of on) {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className =
+        'flex cursor-pointer items-center gap-1.5 rounded-full border border-blue bg-blue-wash ' +
+        'px-3 py-1 text-[0.875rem] text-blue hover:bg-surface-2';
+      const label = b.closest('label')?.querySelector('span > span')?.textContent ?? b.value;
+      chip.textContent = label;
+      chip.setAttribute('aria-label', `Remove filter: ${label}`);
+
+      const x = document.createElement('span');
+      x.textContent = '×';
+      x.setAttribute('aria-hidden', 'true');
+      x.className = 'text-[1.125rem] leading-none';
+      chip.append(x);
+
+      chip.addEventListener('click', () => {
+        b.checked = false;
+        apply();
+        toggle?.focus();
+      });
+      chips.append(chip);
+    }
+  }
+
+  /* ---------- the popover ---------- */
+
+  function openPanel(open) {
+    if (!toggle || !facetPanel) return;
+    facetPanel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  }
+
+  if (toggle && facetPanel) {
+    toggle.addEventListener('click', () =>
+      openPanel(toggle.getAttribute('aria-expanded') !== 'true')
+    );
+
+    for (const b of boxes) b.addEventListener('change', apply);
+
+    facetRoot.querySelector('[data-facet-done]')?.addEventListener('click', () => {
+      openPanel(false);
+      toggle.focus();
+    });
+
+    facetRoot.querySelector('[data-facet-clear]')?.addEventListener('click', () => {
+      for (const b of boxes) b.checked = false;
+      apply();
+    });
+
+    /* Escape closes and RETURNS FOCUS to the button. Without the second half a
+       keyboard user is dumped at the top of the document and has to tab back
+       through the whole page to where they were. */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        openPanel(false);
+        toggle.focus();
+      }
+    });
+
+    /* Click outside closes. Not focusout: a click on a label inside the panel
+       moves focus in a way that closes the panel mid-interaction. */
+    document.addEventListener('pointerdown', (e) => {
+      if (!facetRoot.contains(e.target)) openPanel(false);
+    });
+  }
+
+  for (const p of pills)
+    p.addEventListener('click', () => {
+      shape = p.dataset.filter;
+      apply();
+    });
+
+  renderChips();
 </script>

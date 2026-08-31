@@ -306,7 +306,7 @@
     "unit": "cm"
    },
    "conflicts": [],
-   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 37–49 L. Global name does not overcome the 38.1 cm width or 22.9 cm depth; exceeds 35 cm width and 20 cm depth envelopes."
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 37\u201349 L. Global name does not overcome the 38.1 cm width or 22.9 cm depth; exceeds 35 cm width and 20 cm depth envelopes."
   },
   {
    "slug": "briggs-riley-baseline-global-2-wheel",
@@ -377,7 +377,7 @@
     "unit": "cm"
    },
    "conflicts": [],
-   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 39–52 L. Different wheel configuration and packing space from the spinner. Exceeds 35 cm width and 20 cm depth envelopes."
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 39\u201352 L. Different wheel configuration and packing space from the spinner. Exceeds 35 cm width and 20 cm depth envelopes."
   },
   {
    "slug": "briggs-riley-zdx-global-spinner",
@@ -448,7 +448,7 @@
     "unit": "cm"
    },
    "conflicts": [],
-   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 27.9 cm; capacity 37.9–47.3 L. Exceeds 35 cm width and 20 cm depth envelopes; do not infer universal compliance from Global."
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 27.9 cm; capacity 37.9\u201347.3 L. Exceeds 35 cm width and 20 cm depth envelopes; do not infer universal compliance from Global."
   },
   {
    "slug": "samsonite-uplift",
@@ -463,7 +463,7 @@
    "manufacturer_source": {
     "url": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
     "retrieved": "2026-08-31",
-    "title": "UpLIFT Hardside Carry-On Spinner — Samsonite US",
+    "title": "UpLIFT Hardside Carry-On Spinner \u2014 Samsonite US",
     "sku": "1520295963"
    },
    "external_cm": {
@@ -516,6 +516,149 @@
     }
    ],
    "notes": "Polycarbonate. Already in the catalogue on Travel + Leisure's measurement, which agreed with Samsonite to within a millimetre. Upgraded to the maker's own overall figure so it can be recommended rather than only displayed."
+  },
+  {
+   "slug": "away-bigger",
+   "brand": "Away",
+   "model": "The Bigger Carry-On",
+   "line": "away-carryon",
+   "variant": "Bigger Carry-On \u2014 Jet Black (Classic polycarbonate)",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "retrieved": "2026-08-31",
+    "title": "The Bigger Carry-On in Jet Black | Away",
+    "local": "resources/bags/2026-08-31-away-bigger.md"
+   },
+   "external_in": {
+    "v": [
+     22.7,
+     15.4,
+     9.6
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "in",
+    "quote": "Exterior measurements",
+    "note": "Measurements include handles and wheels. Manufacturer exterior specification, not measured by us. Page does not explicitly label axis order; triple preserved in printed order."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.9,
+     15,
+     7.9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "in",
+    "quote": "Interior measurements"
+   },
+   "weight_lb": {
+    "v": 7.9,
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "lbs",
+    "quote": "Weight"
+   },
+   "price_usd": {
+    "v": 295,
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "at": "2026-08-31",
+    "list": true,
+    "quote": "$295"
+   },
+   "conflicts": [
+    {
+     "field": "capacity_l",
+     "values": [
+      {
+       "v": 49,
+       "unit": "L",
+       "src": "manufacturer specifications",
+       "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+       "at": "2026-08-31",
+       "quote": "Capacity"
+      },
+      {
+       "v": 47.9,
+       "unit": "L",
+       "src": "manufacturer product summary",
+       "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+       "at": "2026-08-31"
+      }
+     ],
+     "note": "Same page publishes two capacities. Neither selected as authoritative."
+    }
+   ],
+   "notes": "Original source units retained. Metric dimensions and weight derived with exact decimal factors, as authorized by the user; no rounding. Exterior includes handles and wheels. Capacity remains disputed (49 L versus 47.9 L); existing review capacity remains attributed to its review. No expansion amount or numeric SKU found. No distinct sale price shown; displayed and crossed-out prices are both $295. Smaller The Carry-On is a different product.",
+   "intake_status": "researched_with_exact_metric_conversions",
+   "external_cm": {
+    "v": [
+     57.658,
+     39.116,
+     24.384
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "cm",
+    "conversion": {
+     "from_field": "external_in",
+     "factor": "2.54",
+     "exact_values": [
+      "57.658",
+      "39.116",
+      "24.384"
+     ],
+     "rounded": false
+    },
+    "note": "Derived from manufacturer-published in using exact factor 2.54; not manufacturer-published metric figures. No rounding applied. Overall exterior includes handles and wheels; not measured by us."
+   },
+   "claimed_packing_cm": {
+    "v": [
+     53.086,
+     38.1,
+     20.066
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "cm",
+    "conversion": {
+     "from_field": "claimed_packing_in",
+     "factor": "2.54",
+     "exact_values": [
+      "53.086",
+      "38.10",
+      "20.066"
+     ],
+     "rounded": false
+    },
+    "note": "Derived from manufacturer-published in using exact factor 2.54; not manufacturer-published metric figures. No rounding applied."
+   },
+   "weight_kg": {
+    "v": 3.583379723,
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/bigger-carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "kg",
+    "conversion": {
+     "from_field": "weight_lb",
+     "factor": "0.45359237",
+     "exact_values": [
+      "3.583379723"
+     ],
+     "rounded": false
+    },
+    "note": "Derived from manufacturer-published lbs using exact factor 0.45359237; not manufacturer-published metric figures. No rounding applied."
+   }
   }
  ]
 }

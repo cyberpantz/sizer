@@ -33,11 +33,24 @@ describe('manufacturer data merged onto a review record', () => {
     for (const m of source) {
       const b = built.find((x) => x.slug === m.slug);
       assert.ok(b, `${m.slug} is in manufacturer-bags.json but not in data/bags`);
+      /* Deliberately NOT guarded on `m.external_cm` existing.
+       *
+       * This assertion was briefly weakened to `if (m.external_cm) {...}`,
+       * which made it pass in exactly the case it exists to catch: the Away
+       * intake arrived in inches as `external_in`, the build ignored the
+       * field, and a fully-researched bag landed with no dimensions at all
+       * and stayed invisible. A guard that skips the failing case is not a
+       * guard. The build converts imperial now, so this holds however the
+       * research arrived. */
       assert.equal(
         b.external_cm?.src,
         'manufacturer',
-        `${m.slug} was researched at the maker but the built record still uses ${b.external_cm?.src}`
+        `${m.slug} was researched at the maker but the built record has ${b.external_cm?.src ?? 'no dimensions'} — ` +
+          'if it came back in imperial, the build must convert it, not skip it'
       );
+      for (const field of ['external_in', 'claimed_packing_in', 'weight_lb', 'price_usd']) {
+        if (m[field]) assert.deepEqual(b[field], m[field], `${m.slug}: ${field} lost during merge`);
+      }
     }
   });
 
