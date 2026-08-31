@@ -46,7 +46,7 @@ const dims = (v) => (v === true ? 'Yes' : v === false ? 'No' : String(v));
         {makers.map((s) => (
           <article class="rounded-card border border-rule bg-surface p-4">
             <h3 class="font-semibold text-ink">
-              <a href={s.url} rel="nofollow noopener" class="text-blue">{s.publication}</a>
+              <a href={s.url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">{s.publication}</a>
             </h3>
             <p class="mt-1 text-[0.9375rem] text-ink-2">Publishes dimensions: {dims(s.publishes_dimensions)}</p>
             {s.beat && <p class="mt-1 text-[0.8125rem] text-muted">{s.beat}</p>}
@@ -76,7 +76,7 @@ const dims = (v) => (v === true ? 'Yes' : v === false ? 'No' : String(v));
             {publications.map((s) => (
               <tr class="border-b border-rule last:border-0">
                 <td class="p-3">
-                  <a href={s.url} rel="nofollow noopener" class="text-blue">{s.publication}</a>
+                  <a href={s.url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">{s.publication}</a>
                   <span class="block text-[0.8125rem] text-muted">{s.title}</span>
                 </td>
                 <td class="p-3 text-[0.8125rem]">{dims(s.publishes_dimensions)}</td>
@@ -113,7 +113,7 @@ const dims = (v) => (v === true ? 'Yes' : v === false ? 'No' : String(v));
               <tr class="border-b border-rule last:border-0">
                 <td class="p-3">{c.name}</td>
                 <td class="p-3 text-[0.8125rem]">
-                  <a href={c.url} rel="nofollow noopener" class="text-blue">baggage policy</a>
+                  <a href={c.url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">baggage policy</a>
                 </td>
                 <td class="p-3 font-mono text-[0.8125rem] text-muted">{c.verified_at ?? '—'}</td>
               </tr>

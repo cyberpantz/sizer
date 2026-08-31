@@ -13,6 +13,21 @@ const { title, description } = Astro.props;
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {/* Belt and braces behind rel="noreferrer" on every outbound link.
+
+      /check keeps the whole trip in the query string so a permalink works —
+      ?bags=…&legs=A3.economy,FR.basic&risk=… — and a Referer header hands that
+      entire string to whichever airline the reader clicks through to. They
+      would learn the reader's bag, their full itinerary, and which competitors
+      are on it. That is not ours to give away.
+
+      It also fixes a 403: Aegean's WAF rejects requests arriving with an
+      unfamiliar referrer, so our own source link was the one route to their
+      page that did not work.
+
+      strict-origin-when-cross-origin (the browser default) still sends the
+      origin. `same-origin` sends nothing at all off-site. */}
+  <meta name="referrer" content="same-origin" />
   <title>{title}</title>
   {description && <meta name="description" content={description} />}
   <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -558,7 +558,7 @@ const RISK = [
       const when = rec.verified_at
         ? ` · read ${new Date(rec.verified_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`
         : '';
-      return `<a href="${esc(rec.source_url)}" rel="nofollow noopener" target="_blank" class="text-blue">their baggage page ↗</a><span class="text-muted">${esc(when)}</span>`;
+      return `<a href="${esc(rec.source_url)}" rel="nofollow noopener noreferrer" target="_blank" class="text-blue">their baggage page ↗</a><span class="text-muted">${esc(when)}</span>`;
     }
     return `<span class="text-muted">no source recorded — this airline's page has not been read yet</span>`;
   }

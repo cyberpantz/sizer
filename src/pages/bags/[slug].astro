@@ -167,7 +167,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           </p>
           {ref && (
             <p class="mt-2 text-[0.9375rem]">
-              <a href={ref} rel="nofollow noopener" target="_blank" class="text-blue">
+              <a href={ref} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">
                 The page we read ↗
               </a>
               {at && <span class="text-muted"> · read {at}</span>}
@@ -242,7 +242,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                     {sourceOf.has(carrier.iata) ? (
                       <>
                         {' · '}
-                        <a href={sourceOf.get(carrier.iata).url} rel="nofollow noopener" target="_blank" class="text-blue">their page ↗</a>
+                        <a href={sourceOf.get(carrier.iata).url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">their page ↗</a>
                       </>
                     ) : (
                       <span> · no source recorded yet</span>
@@ -306,7 +306,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           <ul class="mt-2 space-y-3">
             {record.reviews.map((r) => (
               <li class="text-ink-2">
-                <a href={r.url} rel="nofollow noopener" target="_blank" class="font-semibold text-blue">{r.publication}</a>
+                <a href={r.url} rel="nofollow noopener noreferrer" target="_blank" class="font-semibold text-blue">{r.publication}</a>
                 {r.award && <span> — {r.award}</span>}
                 {r.caveat && <span class="block text-[0.9375rem] text-muted">“{r.caveat}”</span>}
               </li>
