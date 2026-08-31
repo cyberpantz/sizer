@@ -96,7 +96,97 @@ describe('wheels decide the rung', () => {
   });
 });
 
+describe('the ladder ranks sources, not field names', () => {
+  /* THE BUG FRANK FOUND BY READING A NUMBER ON THE PAGE.
+   *
+   * "22 of 61 bags carry the manufacturer's own overall dimensions" looked far
+   * too low against 54 researched records, and it was — but not because the
+   * count was miscomputed. 19 bags held a stale review measurement in
+   * `external_cm` and the maker's own figure in `claimed_cm`, because the
+   * intake correctly files an unlabelled figure as "claimed".
+   *
+   * toBag took `measured ?? external ?? claimed` and dimSourceOf tested
+   * `external_cm.src === 'review'` first. Both picked by WHICH FIELD held the
+   * number. So the site compared a review publication's measurement against
+   * airline limits, left the manufacturer's number unused one field away, and
+   * told the reader the bag rested on a review.
+   *
+   * docs/19 always said: measured > maker_overall > review > maker_unspecified
+   * > maker_packing. It just was not implemented. */
+  test('a maker figure in claimed_cm beats a review figure in external_cm', () => {
+    const r = rec({
+      external_cm: { v: [56, 40, 23], src: 'review' },
+      claimed_cm: dim([55, 39, 22], { includes_wheels: true }),
+    });
+    assert.equal(dimSourceOf(r), DIM_SOURCE.MAKER_OVERALL);
+    assert.deepEqual(
+      toBag(r).external_cm,
+      [55, 39, 22],
+      'the review number is still the one being compared against airline limits'
+    );
+  });
+
+  test('an UNLABELLED maker figure still loses to a review', () => {
+    /* The other half of the ladder, and it must not move: maker_unspecified
+       sits BELOW review, because an unlabelled figure is probably the packing
+       body and a publication at least measured the outside. */
+    const r = rec({
+      external_cm: { v: [56, 40, 23], src: 'review' },
+      claimed_cm: dim([55, 39, 22]),
+    });
+    assert.equal(dimSourceOf(r), DIM_SOURCE.REVIEW);
+    assert.deepEqual(toBag(r).external_cm, [56, 40, 23]);
+  });
+
+  test('our own measurement outranks everything', () => {
+    const r = rec({
+      measured_cm: dim([54, 38, 21]),
+      external_cm: dim([56, 40, 23], { includes_wheels: true }),
+    });
+    assert.equal(dimSourceOf(r), DIM_SOURCE.MEASURED);
+    assert.deepEqual(toBag(r).external_cm, [54, 38, 21]);
+  });
+
+  test('a packing figure is never chosen while anything else exists', () => {
+    const r = rec({
+      claimed_packing_cm: dim([50, 36, 19]),
+      claimed_cm: dim([55, 39, 22]),
+    });
+    assert.notEqual(dimSourceOf(r), DIM_SOURCE.MAKER_PACKING);
+    assert.deepEqual(toBag(r).external_cm, [55, 39, 22]);
+  });
+
+  test('provenance describes the figure actually used', () => {
+    /* It used to report `measured ?? external ?? claimed` independently of
+       which value won, so a bag could show the review's attribution beside the
+       manufacturer's number. */
+    const r = rec({
+      external_cm: { v: [56, 40, 23], src: 'review', ref: 'tl-carryon' },
+      claimed_cm: dim([55, 39, 22], { includes_wheels: true, ref: 'https://maker.test' }),
+    });
+    assert.equal(toBag(r).provenance.src, 'manufacturer');
+    assert.equal(toBag(r).provenance.ref, 'https://maker.test');
+  });
+});
+
 describe('the real catalogue', () => {
+  test('no bag ignores a better figure it already holds', async () => {
+    /* The whole-catalogue form of the bug. For every bag, the figure being
+       compared against airline limits must be the best-ranked one on the
+       record — never merely the first field that held a number. */
+    const { loadBags } = await import('../../lib/data.mjs');
+    const { rankedDimensions } = await import('../normalize.mjs');
+    const offenders = [];
+    for (const b of await loadBags()) {
+      const best = rankedDimensions(b.record)[0];
+      if (!best) continue;
+      const used = JSON.stringify(b.external_cm);
+      const want = JSON.stringify(best.field.v ?? best.field);
+      if (used !== want) offenders.push(`${b.slug}: uses ${used}, best is ${best.key} ${want}`);
+    }
+    assert.deepEqual(offenders, [], `a better figure was ignored:\n  ${offenders.join('\n  ')}`);
+  });
+
   test('every flagged record carries the manufacturer quote that justifies it', async () => {
     /* The flag is a claim about what a page says. If it cannot be walked back
        to the words on that page, it is our opinion wearing a boolean. */

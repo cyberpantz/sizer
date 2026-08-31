@@ -323,8 +323,12 @@ export function toBag(record) {
   const subject = record?.slug ?? '(unnamed bag)';
   if (!record) throw new EngineInputError('no bag record given', subject);
 
-  const external =
-    unwrap(record.measured_cm) ?? unwrap(record.external_cm) ?? unwrap(record.claimed_cm);
+  /* THE BEST FIGURE, not the first field that happens to hold one. Picking
+     `external_cm ?? claimed_cm` meant a review measurement outranked the
+     manufacturer's own number on 19 bags purely because of where the intake
+     filed it. */
+  const best = bestDimension(record);
+  const external = unwrap(best?.field);
   if (!external) {
     throw new EngineInputError(
       'no dimensions on this bag — check `sized` before evaluating it',
@@ -336,7 +340,7 @@ export function toBag(record) {
     brand: record.brand,
     model: record.model,
     external_cm: assertDims(external, subject),
-    provenance: provenanceOf(record.measured_cm ?? record.external_cm ?? record.claimed_cm),
+    provenance: provenanceOf(best.field),
     /* Which figure this is, and therefore what we may do with it. A first-class
        fact rather than a footnote — see DIM_SOURCE. */
     dim_source: dimSourceOf(record),
@@ -382,22 +386,74 @@ export function toBag(record) {
  *
  * `includes_wheels: false` is a statement, not a gap: a figure the maker says
  * EXCLUDES wheels is the packing body, whatever else the label calls it. */
-export function dimSourceOf(record) {
-  if (record?.dim_source) return record.dim_source;
-  if (unwrap(record?.measured_cm)) return DIM_SOURCE.MEASURED;
-  const ext = record?.external_cm;
-  if (ext?.src === 'review') return DIM_SOURCE.REVIEW;
+/* THE LADDER RANKS SOURCES. IT USED TO RANK FIELD NAMES.
+ *
+ * docs/19 sets the order: measured > maker_overall > review > maker_unspecified
+ * > maker_packing. The code did not implement it. `toBag` took
+ * `measured_cm ?? external_cm ?? claimed_cm` and `dimSourceOf` checked
+ * `external_cm.src === 'review'` before looking at anything else — both
+ * choosing by WHICH FIELD a number landed in rather than by where it came
+ * from.
+ *
+ * That inverted the entire premise of the project on 19 bags. Each had a stale
+ * review measurement in `external_cm` and the manufacturer's own figure in
+ * `claimed_cm`, because the intake correctly files an unlabelled figure as
+ * "claimed". The site then compared the REVIEW's number against airline
+ * limits, kept the maker's number unused, and told the reader the bag rested
+ * on a review publication — while the research sat one field away.
+ *
+ * Most of those 19 differ by under half a millimetre, because the publications
+ * were quoting the spec sheet rather than measuring. So little moved in the
+ * verdicts. What was wrong was the CLAIM: "22 of 61 carry the manufacturer's
+ * own dimensions" counted the field a number happened to land in.
+ *
+ * Now every figure on the record is ranked and the best one wins, which is
+ * what the ladder always said. */
+const RUNG_ORDER = [
+  DIM_SOURCE.MEASURED,
+  DIM_SOURCE.MAKER_OVERALL,
+  DIM_SOURCE.REVIEW,
+  DIM_SOURCE.MAKER_UNSPECIFIED,
+  DIM_SOURCE.MAKER_PACKING,
+  DIM_SOURCE.RESELLER,
+];
+const rankOf = (rung) => {
+  const i = RUNG_ORDER.indexOf(rung);
+  return i < 0 ? Number.POSITIVE_INFINITY : i;
+};
 
-  const field = unwrap(ext) ? ext : record?.claimed_cm;
-  if (!unwrap(field)) return null;
+/** What rung ONE figure sits on, given the record it belongs to. */
+function rungOfField(field, key, record) {
+  if (!field || !unwrap(field)) return null;
+  if (key === 'measured_cm') return DIM_SOURCE.MEASURED;
+  if (key === 'claimed_packing_cm') return DIM_SOURCE.MAKER_PACKING;
+  if (field.src === 'review') return DIM_SOURCE.REVIEW;
+  if (field.src === 'reseller') return DIM_SOURCE.RESELLER;
 
+  /* Manufacturer figure. Wheels decide — see the flag rules below. */
   if (field.includes_wheels === true) return DIM_SOURCE.MAKER_OVERALL;
   if (field.includes_wheels === false) return DIM_SOURCE.MAKER_PACKING;
-
-  /* No flag either way. Fall back to the old inference — a maker publishing a
-     separate packing figure alongside this one is distinguishing the two. */
-  if (unwrap(record?.claimed_packing_cm) && unwrap(ext)) return DIM_SOURCE.MAKER_OVERALL;
+  /* No flag. A maker publishing a separate packing figure alongside an
+     `external_*` one is distinguishing the two, which is the old inference and
+     still sound. Anything else is unlabelled. */
+  if (key === 'external_cm' && unwrap(record?.claimed_packing_cm)) return DIM_SOURCE.MAKER_OVERALL;
   return DIM_SOURCE.MAKER_UNSPECIFIED;
+}
+
+/** Every dimension on the record, best rung first. */
+export function rankedDimensions(record) {
+  return ['measured_cm', 'external_cm', 'claimed_cm', 'claimed_packing_cm']
+    .map((key) => ({ key, field: record?.[key], rung: rungOfField(record?.[key], key, record) }))
+    .filter((d) => d.rung)
+    .sort((a, b) => rankOf(a.rung) - rankOf(b.rung));
+}
+
+/** The figure the site should actually use, and what it is. */
+export const bestDimension = (record) => rankedDimensions(record)[0] ?? null;
+
+export function dimSourceOf(record) {
+  if (record?.dim_source) return record.dim_source;
+  return bestDimension(record)?.rung ?? null;
 }
 
 /** True when a record can be evaluated at all. Cheaper than try/catch in a loop. */
