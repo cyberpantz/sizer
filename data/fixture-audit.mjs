@@ -10,7 +10,7 @@
    — and they did: the audit reported 4 bags on the top shelf while the page
    showed 5. An audit measuring a different dataset than the product is worse
    than no audit, because it reads as coverage. */
-import { evaluate, coverage } from '../src/engine/fit.mjs';
+import { coverage, evaluate, isPromotable } from '../src/engine/fit.mjs';
 import { loadBags, loadCarriers } from '../src/lib/data.mjs';
 import { shelve } from '../src/lib/shelves.mjs';
 
@@ -95,12 +95,10 @@ need(
   8,
   'grows on its own as sources are added'
 );
-need(
-  'bags measured by us',
-  allBags.filter((b) => b.measured).length,
-  1,
-  'THE product claim — nothing may be promoted until this moves'
-);
+/* The release gate, post-plan-change: the manufacturer's own overall figure,
+   not our tape measure. Raised by reading product pages, not by buying bags. */
+need('bags promotable (maker overall)', allBags.filter(isPromotable).length, 15,
+  'raised one product page at a time; 9 of 40 today');
 
 /* 7 · carriers we cannot answer for, reported rather than hidden */
 const unknown = carriers.filter((c) => c.cabin_unknown).length;

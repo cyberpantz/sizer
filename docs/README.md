@@ -32,7 +32,7 @@ Strategy narrative lives in [`../cabin-index-spec.html`](../cabin-index-spec.htm
 
 ## The one-paragraph version
 
-Airlines measure the *external* size — wheels and handle included. That figure is reported inconsistently: some manufacturers publish both it and the packing size and explain the difference (Travelpro, Rick Steves); others publish one number; retail listings are worse again, and often disagree with each other about the same bag. Every tool in this category runs precise math on whichever number it happened to get. We measure bags ourselves, model the fare class the traveler actually booked, and answer in probability bands rather than a boolean — then recommend bags that clear the itinerary. Affiliate revenue, direct-to-consumer first.
+Airlines measure the *external* size — wheels and handle included. That figure is reported inconsistently: some manufacturers publish both it and the packing size and explain the difference (Travelpro, Rick Steves); others publish one number; retail listings are worse again, and often disagree with each other about the same bag. Every tool in this category runs precise math on whichever number it happened to get. We take the manufacturer's own **overall** dimensions — never a reseller listing — model the fare class and route the traveller actually booked, and answer in probability bands rather than a boolean — then recommend bags that clear the itinerary. Affiliate revenue, direct-to-consumer first.
 
 ## Canonical decisions
 
@@ -52,6 +52,7 @@ Airlines measure the *external* size — wheels and handle included. That figure
 | **Typeface** | Figtree + IBM Plex Mono. Barlow is gone. | [02](02-design-system.md#the-stack) |
 | **CSS** | Tailwind v4, palette declared in `@theme` in `src/styles/app.css`. The one hard rule — blue is the only interactive colour — is checked in `verify-build.mjs` against the built HTML. | [20](20-scaffold-plan.md) |
 | **Name** | *Sizer* is a working placeholder, not a decision | [09](09-naming.md) |
+| **Dimensions** | Manufacturer's own **overall** figure is the source of truth. Never resellers. We are not measuring bags ourselves. | [19](19-dataset-build.md) |
 | **Engine placement** | Build time for static pages, browser for the interactive query. Same pure module. | [17](17-tech-stack.md) |
 | **Components** | Repetition is the trigger — three uses. Header/nav/footer + interactive pieces with tests. Everything else a plain page. | [17](17-tech-stack.md) |
 | **First route** | Landing page | [17](17-tech-stack.md) |

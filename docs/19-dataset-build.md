@@ -18,7 +18,7 @@ and they did: the audit reported 4 bags on the top shelf while the page showed 5
 An audit measuring a different dataset than the product reads as coverage while
 providing none.
 
-**Current state: 14 of 14 launch paths exercised, 6 deferred.** 61 bags, 40 sized, **0 measured by us**. 58 carriers, 3 of which we cannot answer for.
+**Current state: 14 of 14 launch paths exercised, 6 deferred.** 61 bags, 40 sized, **9 promotable** on the manufacturer's own overall dimensions. 58 carriers, 3 of which we cannot answer for.
 
 Not every gap blocks. The audit splits **blocking** from **deferred** — a path is deferred when the product ships fine without it, or when it's waiting on data we haven't collected. Without that split everything looks equally urgent and nothing gets prioritised.
 
@@ -67,7 +67,7 @@ Everything else is deferred:
 | bag over a 7 kg cap empty | 0 | The "tight" advisory tier already renders; "over" is a rare edge |
 | cross-source conflicts | 2 | Grows on its own as sources are added |
 | bags cited by 2+ publications | 7 | Same |
-| **bags measured by us** | **0** | **THE product claim.** Nothing may be promoted until this moves — see the release gate below |
+| **bags promotable** | **9 of 40** | The release gate. Raised by sourcing the maker's own overall figure, not by measuring |
 
 **The top row, scoped honestly, is one bag.** The Patagonia Black Hole 40L duffel, at 24 of 24 — and it has no wheels.
 
@@ -83,12 +83,14 @@ That is the single most important gap in the project, and it is a *measurement* 
 
 ## Where the data comes from, in order of trust
 
-| Tier | Source | Provenance | Trust |
+| Rank | `dim_source` | What it is | May we recommend on it? |
 |---|---|---|---|
-| 1 | We measured it, with a photo | `measured` | The asset |
-| 2 | A publication measured it | `review` | Usable, must be re-measured |
-| 3 | Manufacturer spec sheet | `manufacturer` | **Varies.** Travelpro and Rick Steves publish packing *and* overall; others publish one figure, sometimes the packing one |
-| 4 | Retail or marketplace listing | `manufacturer` | Weakest. The same bag carries different dimensions across sellers, usually with no note of which figure it is |
+| 1 | `measured` | We put a tape on it | Yes — but nobody is planning to |
+| 2 | **`maker_overall`** | **The manufacturer states an overall / with-wheels figure explicitly** | **Yes. This is what we build on** |
+| 3 | `review` | A publication measured it | No. Displayable and attributed; their method is rarely stated |
+| 4 | `maker_unspecified` | Manufacturer gives one figure without saying which | No — it is probably the packing body, which runs small |
+| 5 | `maker_packing` | Explicitly the case/packing size | Never compared against an airline limit alone |
+| — | `reseller` | Marketplace or retail listing | **Never used as the operative dimension.** Recorded for conflict detection only |
 
 **Everything we hold today is tier 2, and all of it from one publication.** 29 sized bags: 11 from T+L's general guide, 18 from their international list. The Strategist and Pack Hacker publish no dimensions at all, so they contribute reviews and nothing else.
 
@@ -96,17 +98,29 @@ Half the catalogue rests on one outlet's tape measure. That is a single point of
 
 ### The rule that keeps this honest
 
-A tier-2 dimension may populate the catalogue and drive the mockups. It may **not** ship as a verdict without a re-measure. `validate.mjs` enforces the provenance half of this; the release gate enforces the rest:
+**Superseded gate:** *"no bag appears in a promoted recommendation with `measured_cm: null`."*
 
-> No bag appears in a promoted recommendation with `measured_cm: null`.
+That rested on measuring every bag ourselves, which is not happening — getting hold of 100 suitcases to put a tape on them was never a plan, and a gate nothing can pass blocks the product forever rather than protecting it.
 
-That's the line between "we read some reviews" and "we measured it ourselves," and it is the only thing we sell.
+The replacement is narrower and reachable:
+
+> A bag may be **promoted** — recommended, shelved, put in front of someone as an answer — only on `measured` or `maker_overall`. Everything else may be displayed, with its source named.
+
+`isPromotable()` in the engine enforces it; `promotable` comes back with every verdict; shelves sort promotable bags first, because the top card is read as the answer whatever the caption says.
+
+**The distinction was never who held the tape — it is which figure.** Overall, wheels and handle included, is what an airline checks. Travelpro publishes both and says which to use; Rick Steves publishes both. That is a better source than a stranger with a tape measure, and it is free.
+
+**What we will not do is take dimensions from a reseller.** Marketplace listings are the weakest source in this category — the same bag carries different dimensions across sellers, usually with no note of which figure is quoted — and they are also the easiest to scrape, which is why the competition uses them. Going to the manufacturer instead is the whole moat now.
+
+Current position: **9 of 40 sized bags are promotable.** The work is replacing `review` dimensions with the maker's own overall figure, one product page at a time.
 
 ---
 
 ## Build order
 
-**1 · Measure the 29 we can already size.** Cheapest first pass, because a disagreement with T+L is itself a finding — and if we agree with them consistently, tier 2 becomes a much more useful shortcut for everything after.
+**1 · Get the manufacturer's overall dimensions for the 31 bags currently on a review figure.** One product page each. Where the maker publishes both, record both — the gap between them is the thing this site explains, and it is the strongest illustration we have (the Rick Steves Spinner swings from 16 of 24 carriers to 6 between its packing and overall figures).
+
+Where a manufacturer publishes only one number, record it as `maker_unspecified` rather than assuming it is overall. That bag stays displayable and unpromotable until someone finds a better source.
 
 **2 · Fill the "goes anywhere" shelf with WHEELED overhead carry-ons.** Target: 15+ clearing 80%, most of them wheeled, because that's what people want and it's the thing we currently cannot answer. Sourced by *dimension*, not by award: the small European-sized hardsides — Monos Cabin, Travelpro Platinum Elite 20" International, Samsonite's international-sized lines, Antler, American Tourister's EU range, Cabin Zero. Most will never appear in a US best-of list. That is the point, and it's the moat.
 

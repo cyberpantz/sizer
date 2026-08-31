@@ -16,7 +16,7 @@
    and the dead drift-checker regex both survived. If the source is unreachable,
    THROW. */
 import { readFileSync, readdirSync } from 'node:fs';
-import { isSized, toBag, toCarrier } from '../engine/normalize.mjs';
+import { isPromotable, isSized, toBag, toCarrier } from '../engine/normalize.mjs';
 
 const root = new URL('../../data/', import.meta.url);
 
@@ -69,6 +69,9 @@ export async function coverageStats() {
     bags_total: bags.length,
     bags_sized: bags.filter(isSized).length,
     bags_measured: bags.filter((b) => b.measured_cm).length,
+    /* The number that matters for the release gate: dimensions we can put a
+       recommendation behind. */
+    bags_promotable: bags.filter((b) => isSized(b) && isPromotable(toBag(b))).length,
     carriers_total: carriers.length,
     carriers_researched: carriers.filter((c) => !c.placeholder).length,
     carriers_publishable: carriers.filter((c) => c.publication_ready).length,

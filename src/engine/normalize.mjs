@@ -84,6 +84,58 @@ export const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'f
    convenience; the other direction costs them a gate fee. */
 export const IN_TO_CM = 2.54;
 
+/* Where a dimension came from, ranked by how much it can be trusted.
+
+   The original plan was "we measure every bag ourselves". That is not
+   happening, and it was load-bearing — the release gate, the tier table and the
+   moat argument all rested on it.
+
+   The replacement is narrower and actually achievable: **go to the
+   manufacturer, never the reseller.** A marketplace listing is the weakest
+   source in this whole category — the same bag carries different dimensions
+   across sellers, usually with no note of which figure is being quoted — and it
+   is also the easiest one to scrape, which is why every competitor uses it.
+
+   The distinction that matters is not who measured, it is WHICH FIGURE:
+   the overall size, wheels and handle included, is the one an airline checks. */
+export const DIM_SOURCE = {
+  /* Manufacturer states an overall / with-wheels figure explicitly.
+     Travelpro: "the overall dimensions, which include wheels and carry handles".
+     This is what we build on. */
+  MAKER_OVERALL: 'maker_overall',
+  /* Manufacturer publishes one figure without saying which it is. Usable, and
+     flagged — it is probably the packing body, which runs small. */
+  MAKER_UNSPECIFIED: 'maker_unspecified',
+  /* Manufacturer's packing/case figure, explicitly labelled as such. Never
+     compared against an airline limit on its own. */
+  MAKER_PACKING: 'maker_packing',
+  /* A publication measured it. Attributed, and second to the maker's own
+     overall figure because their method is rarely stated. */
+  REVIEW: 'review',
+  /* Reseller or marketplace. NOT TRUSTED — recorded for conflict detection
+     only, never used as the operative dimension. */
+  RESELLER: 'reseller',
+  /* We put a tape on it. Still supported; nobody is planning to. */
+  MEASURED: 'measured',
+};
+
+/** Sources we will compute a published verdict from, best first. */
+export const TRUSTED_DIM_SOURCES = [
+  DIM_SOURCE.MEASURED,
+  DIM_SOURCE.MAKER_OVERALL,
+  DIM_SOURCE.REVIEW,
+  DIM_SOURCE.MAKER_UNSPECIFIED,
+];
+
+/** The release gate. A bag may only be PROMOTED — recommended, shelved, put in
+ *  front of someone as an answer — on a dimension we can stand behind.
+ *  Browsing and comparison are fine on weaker sources, as long as the page says
+ *  so; a recommendation is us putting our name to it. */
+export function isPromotable(bag) {
+  const src = bag?.dim_source;
+  return src === DIM_SOURCE.MEASURED || src === DIM_SOURCE.MAKER_OVERALL;
+}
+
 /* Route regions. An allowance can depend on where you are flying, not just what
    you bought: United Basic Economy includes no carry-on domestically and DOES
    include one transatlantic. Same fare, same passenger, opposite answers.
@@ -197,8 +249,9 @@ export function toBag(record) {
     model: record.model,
     external_cm: assertDims(external, subject),
     provenance: provenanceOf(record.measured_cm ?? record.external_cm ?? record.claimed_cm),
-    /* Whether the number is ours is a first-class fact, not a footnote: nothing
-       may ship as a promoted recommendation on someone else's tape measure. */
+    /* Which figure this is, and therefore what we may do with it. A first-class
+       fact rather than a footnote — see DIM_SOURCE. */
+    dim_source: dimSourceOf(record),
     measured: Boolean(unwrap(record.measured_cm)),
     weight_kg: unwrap(record.weight_kg) ?? null,
     soft: Boolean(record.soft),
@@ -206,6 +259,22 @@ export function toBag(record) {
     shell: shellOf(record),
     expands_cm: unwrap(record.expands_cm) ?? 0,
   };
+}
+
+/** Classify a bag record's operative dimension.
+ *
+ *  Explicit `dim_source` wins. Otherwise infer, conservatively: a record that
+ *  carries BOTH a packing figure and an external one is a manufacturer that
+ *  published both, which is the good case. A bare `claimed_cm` is unspecified —
+ *  assume the worse reading rather than the flattering one. */
+export function dimSourceOf(record) {
+  if (record?.dim_source) return record.dim_source;
+  if (unwrap(record?.measured_cm)) return DIM_SOURCE.MEASURED;
+  const ext = record?.external_cm;
+  if (ext?.src === 'review') return DIM_SOURCE.REVIEW;
+  if (unwrap(record?.claimed_packing_cm) && unwrap(ext)) return DIM_SOURCE.MAKER_OVERALL;
+  if (unwrap(ext) || unwrap(record?.claimed_cm)) return DIM_SOURCE.MAKER_UNSPECIFIED;
+  return null;
 }
 
 /** True when a record can be evaluated at all. Cheaper than try/catch in a loop. */

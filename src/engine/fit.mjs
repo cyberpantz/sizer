@@ -31,7 +31,7 @@ import {
   SQUISH_CM,
   WEIGHT_TIGHT_RATIO,
 } from './constants.mjs';
-import { EngineInputError, isSized, toBag, toCarrier } from './normalize.mjs';
+import { EngineInputError, isPromotable, isSized, toBag, toCarrier } from './normalize.mjs';
 
 /** Compared largest-to-smallest, never by axis name: a bag rotates, so
  *  length/width/depth are the manufacturer's convention rather than a physical
@@ -142,9 +142,10 @@ export function createEngine(overrides = {}) {
       delta_cm: d.cm,
       dimension: d.dimension,
       no_cabin_bag: false,
-      /* Surfaced so a caller can refuse to promote a bag we haven't measured.
-         The release gate depends on it. */
-      measured: bag.measured,
+      /* The release gate: may this bag be RECOMMENDED, not merely displayed?
+         See isPromotable — manufacturer's own overall figure, or ours. */
+      promotable: isPromotable(bag),
+      dim_source: bag.dim_source,
       advisories: runAdvisories({ bag, carrier, deltaCm: d.cm }),
     };
   }
@@ -231,4 +232,4 @@ export function createEngine(overrides = {}) {
 export const engine = createEngine();
 export const { delta, band, evaluate, envelope, bindingLeg, fitsPersonalItem, coverage } = engine;
 export * from './constants.mjs';
-export { EngineInputError, isSized, toBag, toCarrier };
+export { EngineInputError, isPromotable, isSized, toBag, toCarrier };

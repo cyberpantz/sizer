@@ -17,7 +17,7 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
 ---
 <Base
   title="Sizer — which carry-on actually fits your flight"
-  description={`Airlines measure the outside of your bag — wheels and handle included. Listings often don't say which figure they're quoting. We measure once and check against ${answerable} airlines.`}
+  description={`Airlines measure the outside of your bag — wheels and handle included. We use the manufacturer's own overall dimensions, never a reseller listing, and check them against ${answerable} airlines.`}
 >
   <div class="mx-auto max-w-page px-6">
 
@@ -33,9 +33,10 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
         <span class="text-muted">sets of dimensions.</span>
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-ink-2">
-        Airlines measure the outside — wheels and handle included. Listings
-        often don't say which figure they're quoting. We measure once, then
-        check it against {answerable} airlines.
+        Airlines measure the outside — wheels and handle included. Resellers
+        and marketplaces quote whichever figure they happened to get. We take
+        the manufacturer's own overall dimensions and check them against
+        {answerable} airlines, fare by fare.
       </p>
 
       <div class="mt-8 flex flex-wrap gap-3">
@@ -76,13 +77,15 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
         else's tape measure. Nothing is measured yet, so rather than quietly
         promote anyway, the page says so. This block disappears on its own as
         measurements land. */}
-    {stats.bags_measured < stats.bags_sized && (
+    {stats.bags_promotable < stats.bags_sized && (
       <section class="mb-16 rounded-card border border-amber/30 bg-amber-wash p-5">
-        <h2 class="font-semibold text-amber">What we haven't verified yet</h2>
+        <h2 class="font-semibold text-amber">Where these numbers come from</h2>
         <p class="mt-2 max-w-3xl text-[0.9375rem] text-ink-2">
-          We have measured <strong>{stats.bags_measured} of {stats.bags_sized}</strong> bags
-          ourselves. Every dimension above is a publisher's or a manufacturer's
-          figure, and those are the numbers this site exists to check.
+          <strong>{stats.bags_promotable} of {stats.bags_sized}</strong> bags here
+          carry the manufacturer's own overall dimensions — the figure that
+          includes wheels and handle. The rest use a review publication's
+          measurement, which we attribute and are still replacing at source.
+          We do not use reseller or marketplace listings for dimensions.
           {stats.carriers_researched < stats.carriers_total && (
             <> Of {stats.carriers_total} airlines, {stats.carriers_researched} have
             had their published allowances read from source.</>
