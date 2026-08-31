@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadSources, loadCarrierSources } from '../lib/sources.mjs';
+import { coverageStats } from '../lib/data.mjs';
+
+const sources = await loadSources();
+const carrierSources = await loadCarrierSources();
+const stats = await coverageStats();
+
+const makers = sources.filter((s) => s.kind === 'manufacturer');
+const publications = sources.filter((s) => s.kind !== 'manufacturer');
+
+/* `publishes.dimensions` is free text in the register because the real answers
+   are messy — "roundup no / REVIEW PAGES YES" is the truth about Pack Hacker.
+   Rendered as-is rather than flattened to a tick, because flattening it would
+   lose the finding. */
+const dims = (v) => (v === true ? 'Yes' : v === false ? 'No' : String(v));
+---
+<Base
+  title="Sources — Sizer"
+  description="Every source behind this site, and an honest record of whether we actually read it."
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <section class="pt-12 pb-8">
+      <h1 class="text-4xl font-bold tracking-tight">Sources</h1>
+      <p class="mt-3 max-w-3xl text-lg text-ink-2">
+        Everything behind the numbers on this site, with the part most sites
+        leave out: whether we actually opened it.
+      </p>
+      <p class="mt-3 max-w-3xl text-ink-2">
+        We got this wrong once. A figure about gate-agent commissions was
+        credited to a congressional report, marked verified, and quoted — all
+        from a search result summary, and the quote turned out not to be in the
+        document. The register exists so that is visible rather than repeatable.
+      </p>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">Manufacturers</h2>
+      <p class="mt-2 max-w-3xl text-ink-2">
+        Where a dimension can be recommended on, it comes from here — the
+        maker's own overall figure, wheels and handle included.
+      </p>
+      <div class="mt-6 space-y-4">
+        {makers.map((s) => (
+          <article class="rounded-card border border-rule bg-surface p-4">
+            <h3 class="font-semibold text-ink">
+              <a href={s.url} rel="nofollow noopener" class="text-blue">{s.publication}</a>
+            </h3>
+            <p class="mt-1 text-[0.9375rem] text-ink-2">Publishes dimensions: {dims(s.publishes_dimensions)}</p>
+            {s.beat && <p class="mt-1 text-[0.8125rem] text-muted">{s.beat}</p>}
+            {s.caution && <p class="mt-1 text-[0.8125rem] text-muted">{s.caution}</p>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">Review publications</h2>
+      <p class="mt-2 max-w-3xl text-ink-2">
+        We cite these for quality — durability, wheels, how a bag survives two
+        years. We don't assess any of that, and they test it properly. Where
+        they publish a dimension we use it only until we find the maker's own.
+      </p>
+      <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+        <table class="w-full text-left text-[0.9375rem]">
+          <thead class="border-b border-rule text-[0.8125rem] text-muted">
+            <tr>
+              <th class="p-3 font-medium">Publication</th>
+              <th class="p-3 font-medium">Publishes dimensions</th>
+              <th class="p-3 font-medium">Retrieved</th>
+            </tr>
+          </thead>
+          <tbody>
+            {publications.map((s) => (
+              <tr class="border-b border-rule last:border-0">
+                <td class="p-3">
+                  <a href={s.url} rel="nofollow noopener" class="text-blue">{s.publication}</a>
+                  <span class="block text-[0.8125rem] text-muted">{s.title}</span>
+                </td>
+                <td class="p-3 text-[0.8125rem]">{dims(s.publishes_dimensions)}</td>
+                <td class="p-3 font-mono text-[0.8125rem] text-muted">{s.retrieved ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 max-w-3xl text-[0.9375rem] text-muted">
+        Two of these publish no dimensions at all, in roundups titled for
+        international travel. That absence is why this site exists.
+      </p>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">Airlines</h2>
+      <p class="mt-2 max-w-3xl text-ink-2">
+        {carrierSources.length} of {stats.carriers_total} airlines have had
+        their published baggage page read at source and dated. The rest are
+        listed but excluded from every count until someone reads them.
+      </p>
+      <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+        <table class="w-full text-left text-[0.9375rem]">
+          <thead class="border-b border-rule text-[0.8125rem] text-muted">
+            <tr>
+              <th class="p-3 font-medium">Airline</th>
+              <th class="p-3 font-medium">Their page</th>
+              <th class="p-3 font-medium">Read on</th>
+            </tr>
+          </thead>
+          <tbody>
+            {carrierSources.map((c) => (
+              <tr class="border-b border-rule last:border-0">
+                <td class="p-3">{c.name}</td>
+                <td class="p-3 text-[0.8125rem]">
+                  <a href={c.url} rel="nofollow noopener" class="text-blue">baggage policy</a>
+                </td>
+                <td class="p-3 font-mono text-[0.8125rem] text-muted">{c.verified_at ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</Base>

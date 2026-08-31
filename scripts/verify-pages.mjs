@@ -9,7 +9,8 @@
      - `const ENGINE` declared by both the generated block and the adapter
    All five are the same failure mode: the module was fine, the page was broken.
    None would have been caught by `npm test`. */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
 
 const root = new URL('../', import.meta.url);
 const PAGES = [
@@ -19,6 +20,11 @@ const PAGES = [
   'mockup/bags.html',
   'mockup/guide.html',
 ];
+const walk = (d) =>
+  readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory() ? walk(join(d, e.name)) : [join(d, e.name)]
+  );
+
 const inlineScripts = (html) =>
   [...html.matchAll(/<script(?![^>]*src=)[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('\n');
 
@@ -64,6 +70,32 @@ for (const page of PAGES) {
   }
 
   console.log(`  ok    ${page}${decidesFit ? ' (engine inlined)' : ''}`);
+}
+
+/* Dead internal links.
+
+   A nav item pointing at a route that does not exist is a 404 the reader finds
+   before we do. A first pass at this only matched href="..." attributes and
+   missed /guide/, which lives in a nav ARRAY in Header.astro frontmatter —
+   which is exactly where a site's most-clicked links live. */
+const walkAll = (d) =>
+  readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory() ? walkAll(join(d, e.name)) : [join(d, e.name)]
+  );
+
+const routes = new Set(
+  walkAll('src/pages').map((f) =>
+    `/${f.replace(/^src\/pages\/?/, '').replace(/index\.astro$/, '').replace(/\.astro$/, '/')}`.replace(/\/+/g, '/')
+  )
+);
+
+for (const f of walkAll('src')) {
+  if (!f.endsWith('.astro')) continue;
+  const src = readFileSync(f, 'utf8');
+  for (const m of src.matchAll(/href[=:]\s*['"](\/[^'"#?]*)['"]/g)) {
+    const href = m[1];
+    if (!routes.has(href) && !routes.has(`${href}/`)) fail(f, `links to ${href}, which is not a route`);
+  }
 }
 
 console.log(failed ? `\n${failed} page(s) broken` : '\nall pages parse and run one shared engine');

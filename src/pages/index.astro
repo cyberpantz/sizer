@@ -73,10 +73,10 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
       </section>
     ))}
 
-    {/* The release gate from docs/19 says no bag may be PROMOTED on someone
-        else's tape measure. Nothing is measured yet, so rather than quietly
-        promote anyway, the page says so. This block disappears on its own as
-        measurements land. */}
+    {/* The release gate (docs/19): a bag may only be RECOMMENDED on the
+        manufacturer's own overall figure. Most of the catalogue is still on a
+        review publication's measurement, so rather than quietly promote anyway,
+        the page names the split. It disappears on its own as sources improve. */}
     {stats.bags_promotable < stats.bags_sized && (
       <section class="mb-16 rounded-card border border-amber/30 bg-amber-wash p-5">
         <h2 class="font-semibold text-amber">Where these numbers come from</h2>

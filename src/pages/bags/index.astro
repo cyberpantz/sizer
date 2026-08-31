@@ -1,0 +1,94 @@
+---
+import Base from '../../layouts/Base.astro';
+import BagCard from '../../components/BagCard.astro';
+import { loadBags, loadCarriers } from '../../lib/data.mjs';
+import { shelve } from '../../lib/shelves.mjs';
+
+const bags = await loadBags();
+const carriers = await loadCarriers();
+const shelves = shelve(bags, carriers);
+const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+
+/* Filters are derived from what is actually in the catalogue, never hard-coded.
+   A filter with nothing behind it is a dead end the reader has to discover by
+   clicking it. */
+const types = [...new Set(bags.map((b) => b.record.type).filter(Boolean))]
+  .map((type) => ({ type, count: bags.filter((b) => b.record.type === type).length }))
+  .filter((t) => t.count > 0)
+  .sort((a, b) => b.count - a.count);
+
+/* Each note explains what the form factor actually costs you. The roller line
+   is Pack Hacker's tested finding, attributed — they rolled every bag over
+   cobblestones and grass and found the second pair of wheels stops helping the
+   moment the surface does. */
+const NOTE = {
+  'hardside spinner':
+    'What most people picture. Glides on smooth floors; the wheels stick out, so the shell is smaller than the bag.',
+  'softside spinner': 'Gives a little under a sizer, and the outer pockets are usable in a queue.',
+  '2-wheel roller':
+    'You drag these rather than push them — more work across a terminal, better on anything rougher than a polished floor. Pack Hacker rolled every bag over cobblestones and grass and found the second pair of wheels stops helping the moment the surface does.',
+  backpack: 'No wheels to count against the limit, and stairs and cobbles stop mattering.',
+  duffel: 'The most forgiving shape under a sizer, and the least convenient to move any distance.',
+  underseat: 'Sized for the space under the seat, not the overhead bin. A different question.',
+};
+---
+<Base
+  title="Carry-on bags that fit — Sizer"
+  description={`Every bag we track, grouped by how many of ${answerable} airlines it actually clears.`}
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <section class="pt-12 pb-8">
+      <h1 class="text-4xl font-bold tracking-tight">Bags</h1>
+      <p class="mt-3 max-w-2xl text-lg text-ink-2">
+        {bags.length} carry-ons, grouped by how many of {answerable} airlines
+        each one actually clears. Sorted so the bags we can stand behind come
+        first.
+      </p>
+    </section>
+
+    <nav class="flex flex-wrap gap-2 border-y border-rule py-4" aria-label="Filter by type">
+      <a
+        href="#all"
+        class="rounded-chip border border-rule-strong px-3 py-1.5 text-sm no-underline text-ink hover:border-blue hover:text-blue"
+      >Everything <span class="text-muted">{bags.length}</span></a>
+      {types.map((t) => (
+        <a
+          href={`#${t.type.replace(/\s+/g, '-')}`}
+          class="rounded-chip border border-rule-strong px-3 py-1.5 text-sm no-underline text-ink hover:border-blue hover:text-blue"
+        >{t.type} <span class="text-muted">{t.count}</span></a>
+      ))}
+    </nav>
+
+    <div id="all"></div>
+
+    {shelves.map((shelf) => shelf.bags.length > 0 && (
+      <section class="border-b border-rule py-10">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 class="text-2xl font-semibold tracking-tight">{shelf.title}</h2>
+          <span class="font-mono text-[0.8125rem] text-muted">{shelf.bags.length} bags</span>
+        </div>
+        <p class="mt-1 max-w-2xl text-ink-2">{shelf.blurb}</p>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {shelf.bags.map(({ bag, coverage }) => (
+            <BagCard bag={bag} coverage={coverage} />
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">What the shape costs you</h2>
+      <dl class="mt-6 grid gap-5 sm:grid-cols-2">
+        {types.map((t) => NOTE[t.type] && (
+          <div>
+            <dt class="font-semibold text-ink">{t.type} <span class="font-normal text-muted">· {t.count}</span></dt>
+            <dd class="mt-1 text-[0.9375rem] text-ink-2">{NOTE[t.type]}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+  </div>
+</Base>

@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadBags, loadCarriers, coverageStats } from '../lib/data.mjs';
+import { EPS_CM, gambleCeiling } from '../engine/constants.mjs';
+import { DIM_SOURCE } from '../engine/normalize.mjs';
+
+const bags = await loadBags();
+const carriers = await loadCarriers();
+const stats = await coverageStats();
+const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+
+/* Every number on this page is computed, not typed. A methodology page with
+   hand-written figures goes stale the first time the data changes, and a stale
+   transparency page is worse than none. */
+const bySource = Object.fromEntries(
+  Object.values(DIM_SOURCE).map((src) => [src, bags.filter((b) => b.dim_source === src).length])
+);
+
+const SOURCE_ROWS = [
+  [DIM_SOURCE.MEASURED, 'We measured it ourselves', 'Yes'],
+  [DIM_SOURCE.MAKER_OVERALL, "The manufacturer's own overall figure — wheels and handle included", 'Yes'],
+  [DIM_SOURCE.REVIEW, 'A review publication measured it', 'No — shown and attributed'],
+  [DIM_SOURCE.MAKER_UNSPECIFIED, "One figure, without saying which", 'No'],
+  [DIM_SOURCE.MAKER_PACKING, 'Explicitly the packing size', 'No'],
+  [DIM_SOURCE.RESELLER, 'A marketplace or retail listing', 'Never'],
+];
+
+const BANDS = [
+  ['It fits', 'Inside the limit with room to spare.'],
+  ['Just fits', 'Legal, but with no margin — and the airline measures.'],
+  ['Risky', "Over the limit, at an airline that often doesn't check."],
+  ["It won't fit", 'Over the limit at an airline that does check.'],
+];
+
+const CEILINGS = [
+  [1, 3, 'Effectively never measured'],
+  [4, 5, 'Occasional, usually when the bins are filling'],
+  [6, 7, 'Frames at the gate; staff use judgement'],
+  [8, 10, 'Measured as routine — over is over'],
+];
+---
+<Base
+  title="How we work it out — Sizer"
+  description="Where our dimensions come from, what we will and won't recommend on, and what we don't know."
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <section class="pt-12 pb-8">
+      <h1 class="text-4xl font-bold tracking-tight">How we work it out</h1>
+      <p class="mt-3 max-w-2xl text-lg text-ink-2">
+        Every figure on this page is computed from the data behind the site. If
+        the data changes, this page changes with it.
+      </p>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">Which number we use</h2>
+      <p class="mt-3 max-w-3xl text-ink-2">
+        An airline measures the outside of your bag — wheels and handle
+        included. That is the only figure that matters at a gate, and it is not
+        always the one you find online. Some manufacturers publish both and say
+        which is which; Travelpro states outright that you should compare the
+        overall number against your airline's limit. Others publish one figure
+        without saying. Marketplace listings are worst: the same bag carries
+        different dimensions across sellers.
+      </p>
+      <p class="mt-3 max-w-3xl text-ink-2">
+        So we rank sources, and we only <strong>recommend</strong> a bag on one
+        we can stand behind.
+      </p>
+
+      <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+        <table class="w-full text-left text-[0.9375rem]">
+          <thead class="border-b border-rule text-[0.8125rem] text-muted">
+            <tr>
+              <th class="p-3 font-medium">Source</th>
+              <th class="p-3 font-medium">Recommend on it?</th>
+              <th class="p-3 font-medium">Bags</th>
+            </tr>
+          </thead>
+          <tbody>
+            {SOURCE_ROWS.map(([src, label, may]) => (
+              <tr class="border-b border-rule last:border-0">
+                <td class="p-3">{label}</td>
+                <td class="p-3 text-muted">{may}</td>
+                <td class="p-3 font-mono text-[0.8125rem]">{bySource[src] ?? 0}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-4 max-w-3xl text-[0.9375rem] text-ink-2">
+        <strong>{stats.bags_promotable} of {stats.bags_sized}</strong> bags
+        currently meet that bar. The rest are shown with their source named
+        while we replace them at the manufacturer.
+      </p>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">Four answers, not two</h2>
+      <p class="mt-3 max-w-3xl text-ink-2">
+        "Fits" and "doesn't fit" is the wrong shape for this question, because
+        airlines differ in how hard they check. A bag a centimetre over is a
+        non-event at one airline and a fee at another.
+      </p>
+      <dl class="mt-6 grid gap-4 sm:grid-cols-2">
+        {BANDS.map(([label, meaning]) => (
+          <div class="rounded-card border border-rule p-4">
+            <dt class="font-semibold text-ink">{label}</dt>
+            <dd class="mt-1 text-[0.9375rem] text-ink-2">{meaning}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">How strictly an airline checks</h2>
+      <p class="mt-3 max-w-3xl text-ink-2">
+        A score from 1 to 10, and it means one thing only: <em>how likely the
+        published limit is to be enforced</em>. It is not how restrictive the
+        rules are — the rules are already the box we compare against, and
+        counting them twice would make a small allowance look worse than it is.
+      </p>
+      <p class="mt-3 max-w-3xl text-ink-2">
+        The score decides how far over the limit is still worth showing you as a
+        risk rather than a refusal:
+      </p>
+      <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+        <table class="w-full text-left text-[0.9375rem]">
+          <thead class="border-b border-rule text-[0.8125rem] text-muted">
+            <tr>
+              <th class="p-3 font-medium">Score</th>
+              <th class="p-3 font-medium">What it means</th>
+              <th class="p-3 font-medium">Overage still shown as a risk</th>
+            </tr>
+          </thead>
+          <tbody>
+            {CEILINGS.map(([lo, hi, meaning]) => (
+              <tr class="border-b border-rule last:border-0">
+                <td class="p-3 font-mono text-[0.8125rem]">{lo}–{hi}</td>
+                <td class="p-3">{meaning}</td>
+                <td class="p-3 font-mono text-[0.8125rem]">
+                  {gambleCeiling(hi) === 0 ? 'none' : `up to ${gambleCeiling(hi)} cm`}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 max-w-3xl text-[0.9375rem] text-muted">
+        Where we have not researched an airline's enforcement, we assume it is
+        strict. Being over-cautious costs you some convenience; the other
+        direction costs you a gate fee.
+      </p>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">What we don't know</h2>
+      <ul class="mt-4 max-w-3xl space-y-3 text-ink-2">
+        <li>
+          <strong class="text-ink">Nothing is measured by us.</strong> We rely on
+          the manufacturer's published overall figure. If they are wrong, so are
+          we — which is why we say where every number came from.
+        </li>
+        <li>
+          <strong class="text-ink">
+            {carriers.length - answerable} of {carriers.length} airlines we list
+            cannot be answered for yet.
+          </strong>{' '}
+          They are excluded from every count on this site rather than guessed
+          at. "Fits 40 of {answerable}" never quietly includes airlines we
+          haven't read.
+        </li>
+        <li>
+          <strong class="text-ink">Some airlines contradict themselves.</strong>{' '}
+          United publishes a carry-on limit in both inches and centimetres, and
+          the two disagree — a 35.5 cm bag passes one and fails the other. Where
+          that happens we use the stricter figure on each dimension.
+        </li>
+        <li>
+          <strong class="text-ink">Nothing resolves below {EPS_CM} cm.</strong>{' '}
+          Not a tape measure, not a soft-sided bag, not a gate sizer. A
+          difference smaller than that is reported as "at the line", not as a
+          pass or a failure.
+        </li>
+      </ul>
+      <p class="mt-6">
+        <a href="/sources/" class="text-blue">Every source we used, and whether we actually read it →</a>
+      </p>
+    </section>
+
+  </div>
+</Base>

@@ -69,15 +69,9 @@ Everything else is deferred:
 | bags cited by 2+ publications | 7 | Same |
 | **bags promotable** | **9 of 40** | The release gate. Raised by sourcing the maker's own overall figure, not by measuring |
 
-**The top row, scoped honestly, is one bag.** The Patagonia Black Hole 40L duffel, at 24 of 24 — and it has no wheels.
+**Resolved.** The top shelf held one wheelless duffel when the carrier set was 24 placeholders. Against 55 answerable carriers it holds five, and wheeled bags are on it.
 
-Which means the sharper version of the problem:
-
-> **We currently hold zero wheeled carry-ons that clear 80% of carriers.** The best is the Calpak Luka at 19/24 — 79%, one carrier short of the shelf.
-
-Most people who arrive at this site want a wheeled bag. Right now we cannot name one that goes everywhere. Not because none exists — because the US review circuit optimises for a 22 × 14 × 9 domestic bin and doesn't test the small European-sized hardsides that would clear.
-
-That is the single most important gap in the project, and it is a *measurement* problem, not a research problem. No further review-reading fixes it.
+What replaced it as the binding constraint is **provenance, not coverage**: 31 of 40 sized bags are on a review dimension and therefore cannot be recommended, only displayed.
 
 ---
 
@@ -92,9 +86,9 @@ That is the single most important gap in the project, and it is a *measurement* 
 | 5 | `maker_packing` | Explicitly the case/packing size | Never compared against an airline limit alone |
 | — | `reseller` | Marketplace or retail listing | **Never used as the operative dimension.** Recorded for conflict detection only |
 
-**Everything we hold today is tier 2, and all of it from one publication.** 29 sized bags: 11 from T+L's general guide, 18 from their international list. The Strategist and Pack Hacker publish no dimensions at all, so they contribute reviews and nothing else.
+**9 of 40 sized bags carry the maker's own overall figure. The other 31 rest on a review publication's measurement**, mostly Travel + Leisure's — the Strategist and Pack Hacker publish no dimensions at all.
 
-Half the catalogue rests on one outlet's tape measure. That is a single point of failure under the whole product, and no amount of additional review-reading fixes it — the other outlets don't publish the number. **Only measuring does.**
+That concentration is the weakness: most of the catalogue depends on one outlet's tape measure and a method they don't publish. The fix is not more review-reading, and it is no longer measuring either. **It is going to the manufacturer's product page**, which is free, repeatable, and where Travelpro and Rick Steves already publish exactly the figure we need.
 
 ### The rule that keeps this honest
 

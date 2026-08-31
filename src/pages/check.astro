@@ -1,0 +1,242 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadCarriers } from '../lib/data.mjs';
+
+const carriers = await loadCarriers();
+const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+---
+<Base
+  title="Check a bag — Sizer"
+  description="Pick the bag you own and the flights you're taking. We check every leg, and tell you which one decides the trip."
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <section class="pt-12 pb-6">
+      <h1 class="text-4xl font-bold tracking-tight">Check a bag</h1>
+      <p class="mt-3 max-w-2xl text-lg text-ink-2">
+        Pick a bag and add your flights. We check every leg against the fare you
+        booked and tell you which one decides the trip.
+      </p>
+      {/* The cold-start fix from docs/01: don't ask for dimensions. Almost
+          nobody knows their bag's external size, and asking for it is why the
+          competition's tools go unused. Ask which bag they own — we already
+          have the number. */}
+      <p class="mt-2 max-w-2xl text-[0.9375rem] text-muted">
+        You don't need to measure anything. If your bag isn't listed, you can
+        enter its size instead.
+      </p>
+    </section>
+
+    <div id="check" data-check class="pb-20">
+      {/* Server-rendered fallback. The tool needs JavaScript, so say what it
+          does rather than showing an empty box. */}
+      <noscript>
+        <p class="rounded-card border border-rule bg-surface p-5 text-ink-2">
+          This tool runs in your browser and needs JavaScript. You can still{' '}
+          <a href="/bags/" class="text-blue">browse bags by how widely they fit</a>.
+        </p>
+      </noscript>
+
+      <div data-loading class="rounded-card border border-rule bg-surface p-5 text-muted">
+        Loading {answerable} airlines…
+      </div>
+
+      <div data-ui hidden>
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,22rem)_1fr]">
+
+          <div class="space-y-5">
+            <div>
+              <label for="bag" class="block text-sm font-semibold text-ink">Your bag</label>
+              <select
+                id="bag"
+                data-bag
+                class="mt-1.5 w-full rounded-chip border border-rule-strong bg-surface px-3 py-2.5 text-ink"
+              ></select>
+              <p data-bagdims class="mt-1.5 font-mono text-[0.8125rem] text-muted"></p>
+            </div>
+
+            <fieldset>
+              <legend class="text-sm font-semibold text-ink">Your flights</legend>
+              <div data-legs class="mt-1.5 space-y-2"></div>
+              <button
+                type="button"
+                data-add
+                class="mt-2 rounded-chip border border-rule-strong px-3 py-2 text-sm font-semibold text-ink hover:border-blue hover:text-blue"
+              >Add a flight</button>
+            </fieldset>
+          </div>
+
+          <div data-result aria-live="polite" class="space-y-4"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</Base>
+
+<script>
+  /* The engine runs here unchanged — same module the build uses.
+     That is the whole payoff of keeping it pure: no DOM, no I/O, no units, so
+     a verdict computed in this browser is byte-identical to one computed at
+     build time. */
+  import { createEngine } from '../engine/fit.mjs';
+  import { toBag, toCarrier } from '../engine/normalize.mjs';
+  import { createUnits } from '../ui/units.mjs';
+  import { BAND_COPY, bandLabel, verdictLine, advisoryLine } from '../ui/verdict.mjs';
+
+  const root = document.querySelector('[data-check]');
+  const U = createUnits();
+  const ENGINE = createEngine();
+
+  const el = (sel) => root.querySelector(sel);
+  const state = { bag: null, legs: [] };
+  let DATA = null;
+
+  const TONE = {
+    good: 'border-green/20 bg-green-wash text-green',
+    caution: 'border-amber/20 bg-amber-wash text-amber',
+    warn: 'border-orange/20 bg-orange-wash text-orange',
+    bad: 'border-red/20 bg-red-wash text-red',
+  };
+  const UNKNOWN = 'border-rule bg-surface-2 text-muted';
+
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+  async function boot() {
+    const res = await fetch('/catalogue.json');
+    if (!res.ok) throw new Error(`catalogue unavailable (${res.status})`);
+    DATA = await res.json();
+
+    const bagSel = el('[data-bag]');
+    bagSel.innerHTML = DATA.bags
+      .map((b) => `<option value="${esc(b.slug)}">${esc(b.brand)} ${esc(b.model)}</option>`)
+      .join('');
+    state.bag = DATA.bags[0];
+    addLeg();
+
+    el('[data-loading]').hidden = true;
+    el('[data-ui]').hidden = false;
+
+    bagSel.addEventListener('change', (e) => {
+      state.bag = DATA.bags.find((b) => b.slug === e.target.value);
+      render();
+    });
+    el('[data-add]').addEventListener('click', () => { addLeg(); render(); });
+    U.onChange(render);
+    render();
+  }
+
+  function addLeg() {
+    state.legs.push({ iata: DATA.carriers[0].iata, fare: DATA.carriers[0].fares[0] });
+  }
+
+  function legRow(leg, i) {
+    const carrier = DATA.carriers.find((c) => c.iata === leg.iata) ?? DATA.carriers[0];
+    return `
+      <div class="flex gap-2" data-leg="${i}">
+        <select data-leg-carrier="${i}" class="min-w-0 flex-1 rounded-chip border border-rule-strong bg-surface px-3 py-2 text-ink">
+          ${DATA.carriers.map((c) => `<option value="${esc(c.iata)}"${c.iata === leg.iata ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}
+        </select>
+        <select data-leg-fare="${i}" class="w-32 rounded-chip border border-rule-strong bg-surface px-3 py-2 text-ink">
+          ${carrier.fares.map((f) => `<option value="${esc(f)}"${f === leg.fare ? ' selected' : ''}>${esc(f)}</option>`).join('')}
+        </select>
+        ${state.legs.length > 1 ? `<button type="button" data-remove="${i}" aria-label="Remove flight" class="rounded-chip border border-rule-strong px-3 text-muted hover:border-blue hover:text-blue">×</button>` : ''}
+      </div>`;
+  }
+
+  function render() {
+    if (!state.bag) return;
+
+    el('[data-bagdims]').textContent = `${U.dims(state.bag.external_cm)}${
+      state.bag.weight_kg ? ` · ${U.mass(state.bag.weight_kg)} ${U.massLabel()} empty` : ''
+    }`;
+
+    el('[data-legs]').innerHTML = state.legs.map(legRow).join('');
+    for (const s of el('[data-legs]').querySelectorAll('[data-leg-carrier]')) {
+      s.addEventListener('change', (e) => {
+        const i = +e.target.dataset.legCarrier;
+        const c = DATA.carriers.find((x) => x.iata === e.target.value);
+        state.legs[i] = { iata: c.iata, fare: c.fares[0] };
+        render();
+      });
+    }
+    for (const s of el('[data-legs]').querySelectorAll('[data-leg-fare]')) {
+      s.addEventListener('change', (e) => {
+        state.legs[+e.target.dataset.legFare].fare = e.target.value;
+        render();
+      });
+    }
+    for (const b of el('[data-legs]').querySelectorAll('[data-remove]')) {
+      b.addEventListener('click', (e) => {
+        state.legs.splice(+e.currentTarget.dataset.remove, 1);
+        render();
+      });
+    }
+
+    const bag = toBag({ ...state.bag, external_cm: { v: state.bag.external_cm } });
+    const rows = state.legs.map((leg) => {
+      const rec = DATA.carriers.find((c) => c.iata === leg.iata).record;
+      const carrier = toCarrier(rec, leg.fare);
+      return { carrier, result: ENGINE.evaluate(bag, carrier), fare: leg.fare };
+    });
+
+    /* The binding leg is the answer. A trip is only as good as its worst
+       flight, and naming that flight is the thing a list of rows doesn't do. */
+    const worst = rows.reduce((a, b) => {
+      const rank = (r) => (r.result.band === null ? 2 : ['clears', 'line', 'gamble', 'wont'].indexOf(r.result.band));
+      return rank(b) > rank(a) ? b : a;
+    }, rows[0]);
+
+    const copy = worst.result.band ? BAND_COPY[worst.result.band] : null;
+
+    el('[data-result]').innerHTML = `
+      <div class="rounded-card border p-5 ${copy ? TONE[copy.tone] : UNKNOWN}">
+        <p class="text-2xl font-bold">${esc(bandLabel(worst.result.band))}</p>
+        <p class="mt-1 text-ink-2">
+          ${rows.length > 1 ? `${esc(worst.carrier.name)} decides this trip. ` : ''}${esc(verdictLine(worst.result, U))}
+        </p>
+      </div>
+
+      ${rows.length > 1 ? `
+        <div class="overflow-x-auto rounded-card border border-rule">
+          <table class="w-full text-left text-[0.9375rem]">
+            <thead class="border-b border-rule text-[0.8125rem] text-muted">
+              <tr><th class="p-3 font-medium">Flight</th><th class="p-3 font-medium">Fare</th><th class="p-3 font-medium">Allowance</th><th class="p-3 font-medium">Verdict</th></tr>
+            </thead>
+            <tbody>
+              ${rows.map((r) => `
+                <tr class="border-b border-rule last:border-0${r === worst ? ' bg-surface-2' : ''}">
+                  <td class="p-3">${esc(r.carrier.name)}</td>
+                  <td class="p-3 text-muted">${esc(r.fare)}</td>
+                  <td class="p-3 font-mono text-[0.8125rem]">${r.carrier.allowance ? esc(U.dims(r.carrier.allowance.max_cm)) : '—'}</td>
+                  <td class="p-3 font-semibold">${esc(bandLabel(r.result.band))}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>` : ''}
+
+      ${worst.result.advisories.length ? `
+        <ul class="space-y-2">
+          ${worst.result.advisories.map((a) => {
+            const line = advisoryLine(a, U);
+            return line ? `<li class="rounded-card border border-rule bg-surface p-4 text-[0.9375rem] text-ink-2">${esc(line)}</li>` : '';
+          }).join('')}
+        </ul>` : ''}
+
+      ${!state.bag.measured && state.bag.dim_source !== 'maker_overall' ? `
+        <p class="text-[0.8125rem] text-muted">
+          This bag's dimensions come from a review publication, not the
+          manufacturer's own overall figure. We attribute it and are replacing
+          it at source.
+        </p>` : ''}
+    `;
+  }
+
+  boot().catch((err) => {
+    /* Never leave a spinner running. A tool that silently fails to load reads
+       as a broken site; say what happened and offer the static route. */
+    el('[data-loading]').innerHTML =
+      `Could not load the catalogue (${esc(err.message)}). ` +
+      `<a href="/bags/" class="text-blue">Browse bags instead</a>.`;
+  });
+</script>

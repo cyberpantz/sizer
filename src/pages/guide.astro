@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadCarriers } from '../lib/data.mjs';
+
+const carriers = await loadCarriers();
+const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+
+/* Three sizes of bag, drawn to scale against each other. The numbers are the
+   common floors rather than any one airline's — a guide, not a verdict.
+   docs/13 has the full outline; this covers the part people arrive confused
+   about, which is the difference between the three. */
+const CATEGORIES = [
+  {
+    name: 'Personal item',
+    cm: [40, 30, 20],
+    where: 'Under the seat in front of you',
+    note: 'On a budget-airline basic fare this is often the ONLY bag you get. Not a small carry-on — a different allowance with its own limit.',
+  },
+  {
+    name: 'Carry-on',
+    cm: [55, 40, 23],
+    where: 'In the overhead bin',
+    note: 'The one people mean by "carry-on". Measured with wheels and handle, which is where most of the trouble starts.',
+  },
+  {
+    name: 'Checked',
+    cm: [90, 75, 43],
+    where: 'In the hold',
+    note: 'Usually a linear limit — length plus width plus height, commonly 158 cm — rather than three separate maximums.',
+  },
+];
+const widest = Math.max(...CATEGORIES.map((c) => c.cm[0]));
+---
+<Base
+  title="Carry-on, personal item, checked — Sizer"
+  description="What the three baggage categories actually mean, and why the same bag gets different answers on different airlines."
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <section class="pt-12 pb-8">
+      <h1 class="text-4xl font-bold tracking-tight">The three sizes</h1>
+      <p class="mt-3 max-w-2xl text-lg text-ink-2">
+        Most confusion at a gate comes from these being treated as one idea.
+        They are three separate allowances, and a fare can include one, two or
+        none of them.
+      </p>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <div class="space-y-8">
+        {CATEGORIES.map((c) => (
+          <article>
+            <div class="flex flex-wrap items-baseline gap-x-3">
+              <h2 class="text-xl font-semibold tracking-tight">{c.name}</h2>
+              <span class="font-mono text-[0.8125rem] text-muted" data-dims={JSON.stringify(c.cm)}>
+                {c.cm.join(' × ')} cm
+              </span>
+              <span class="text-[0.8125rem] text-muted">· {c.where}</span>
+            </div>
+            {/* To scale against each other, so the difference is visible rather
+                than asserted. */}
+            <div
+              class="mt-3 rounded-chip border border-rule-strong bg-surface-2"
+              style={`width:${(c.cm[0] / widest) * 100}%;height:${Math.max(28, c.cm[1] / 2)}px`}
+              aria-hidden="true"
+            ></div>
+            <p class="mt-3 max-w-2xl text-ink-2">{c.note}</p>
+          </article>
+        ))}
+      </div>
+      <p class="mt-8 max-w-2xl text-[0.8125rem] text-muted">
+        These are common floors, not any single airline's rule. Limits vary, and
+        that variation is the whole problem — we check{' '}
+        {answerable} airlines individually.
+      </p>
+    </section>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">Why the same bag gets different answers</h2>
+      <dl class="mt-6 grid gap-5 sm:grid-cols-2">
+        <div>
+          <dt class="font-semibold text-ink">Wheels and handle count</dt>
+          <dd class="mt-1 text-[0.9375rem] text-ink-2">
+            Airlines measure the outside. A bag advertised at its packing size
+            can be several centimetres larger in the frame at the gate.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-semibold text-ink">The fare changes the answer</dt>
+          <dd class="mt-1 text-[0.9375rem] text-ink-2">
+            On some airlines a basic fare includes no cabin bag at all, whatever
+            its size — and the same ticket plus a small add-on includes one.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-semibold text-ink">So does the route</dt>
+          <dd class="mt-1 text-[0.9375rem] text-ink-2">
+            United's Basic Economy includes no carry-on domestically, and does
+            include one across the Atlantic. Same fare, same passenger.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-semibold text-ink">Enforcement varies more than the rules</dt>
+          <dd class="mt-1 text-[0.9375rem] text-ink-2">
+            Some airlines gauge every bag; others have removed their sizers.
+            Being a centimetre over is a non-event at one and a fee at another.
+          </dd>
+        </div>
+      </dl>
+      <p class="mt-8">
+        <a href="/check/" class="text-blue">Check a bag against your actual flights →</a>
+      </p>
+    </section>
+
+  </div>
+</Base>

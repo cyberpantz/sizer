@@ -23,13 +23,14 @@
     "validate:carriers": "node data/validate-carriers.mjs",
     "publish:check": "node data/validate-carriers.mjs --publish",
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/build-client-data.mjs && astro build",
     "preview": "astro preview",
     "verify:build": "node scripts/verify-build.mjs",
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "format": "biome format --write",
-    "verify:spacing": "node scripts/verify-spacing.mjs"
+    "verify:spacing": "node scripts/verify-spacing.mjs",
+    "build:client-data": "node scripts/build-client-data.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.5",
