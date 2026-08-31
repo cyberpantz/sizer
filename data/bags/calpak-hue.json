@@ -41,6 +41,7 @@
   "at": "2026-08-31",
   "quote": "Exterior (Including wheel)",
   "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
   "conversion": {
    "from_field": "claimed_in",
    "factor": "2.54",
@@ -113,7 +114,8 @@
   "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
   "at": "2026-08-31",
   "quote": "Exterior (Including wheel)",
-  "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion."
+  "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion.",
+  "includes_wheels": true
  },
  "claimed_packing_in": {
   "v": [

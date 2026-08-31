@@ -200,6 +200,44 @@ researched bag landed with a price and no dimensions and stayed invisible.
 **If a page prints both units, record both**; the printed metric figure wins
 over any conversion.
 
+### Wheels and handles: set the flag, don't argue it in a note
+
+**On every exterior dimension, record `includes_wheels` and
+`includes_handles` as `true` / `false`, or leave them out entirely.**
+
+```json
+"external_in": {
+  "v": [22.7, 15.4, 9.6],
+  "quote": "External dimensions including wheels",
+  "includes_wheels": true
+}
+```
+
+Set a flag ONLY from the manufacturer's own words, and put those words in
+`quote`. If the page says "External dimensions including wheels", that is
+`includes_wheels: true` and the quote proves it. If the page just says
+"Dimensions", **leave both flags out** — silence is not a `false`.
+
+**Wheels are what matter. Handles are not a reason to hold back.** The first
+intake filed a dozen records as `claimed_*` with notes like *"exterior
+explicitly includes wheel; handles not explicitly confirmed"* — correctly
+following the old brief, and it cost us the ability to recommend July, Quince,
+Bellroy, Calpak and Solgaard. A telescoping handle is retracted when a bag is
+measured or dropped in a sizer, and the packing-to-overall gap is driven
+overwhelmingly by the wheels. So:
+
+| The page says | Flag | What it becomes |
+|---|---|---|
+| "External dimensions including wheels" | `includes_wheels: true` | the overall figure — recommendable |
+| "Exterior dimensions" and nothing about wheels | omit both | shown, not recommended |
+| "Interior" / "packing" dimensions | `includes_wheels: false` | packing body, never compared to a limit |
+| just "Dimensions" | omit both | shown, not recommended |
+
+The build reads the flag and decides the rung — see `dimSourceOf` in
+`engine/normalize.mjs`. **Do not decide it yourself by choosing a field name.**
+That judgement used to live in 54 separate prose notes and could not be
+re-audited without re-reading all of them.
+
 ### The fields that are easy to get wrong
 
 **The `note` on the exterior field must say what the figure includes.** This is

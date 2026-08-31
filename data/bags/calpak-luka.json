@@ -51,6 +51,7 @@
   "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
   "at": "2026-08-31",
   "note": "Exterior includes wheel; handles not explicitly included, so claimed only. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
   "conversion": {
    "from_field": "claimed_in",
    "factor": "2.54",
@@ -123,7 +124,8 @@
   "src": "manufacturer",
   "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
   "at": "2026-08-31",
-  "note": "Exterior includes wheel; handles not explicitly included, so claimed only."
+  "note": "Exterior includes wheel; handles not explicitly included, so claimed only.",
+  "includes_wheels": true
  },
  "claimed_packing_in": {
   "v": [

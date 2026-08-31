@@ -41,6 +41,7 @@
   "at": "2026-08-31",
   "quote": "Exterior (Including wheel)",
   "note": "Exterior explicitly includes wheels but does not explicitly include handles; retained as claimed per brief. Interior is separately labelled. Printed inches only; no manual conversion. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
   "conversion": {
    "from_field": "claimed_in",
    "factor": "2.54",
@@ -117,7 +118,8 @@
   "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
   "at": "2026-08-31",
   "quote": "Exterior (Including wheel)",
-  "note": "Exterior explicitly includes wheels but does not explicitly include handles; retained as claimed per brief. Interior is separately labelled. Printed inches only; no manual conversion."
+  "note": "Exterior explicitly includes wheels but does not explicitly include handles; retained as claimed per brief. Interior is separately labelled. Printed inches only; no manual conversion.",
+  "includes_wheels": true
  },
  "claimed_packing_in": {
   "v": [

@@ -21,6 +21,8 @@
   "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
   "at": "2026-08-31",
   "note": "Manufacturer explicitly includes wheels and handles. Official 21-inch product is labelled Carry-On Plus; these are its complete exterior measurements. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
+  "includes_handles": true,
   "conversion": {
    "from_field": "external_in",
    "factor": "2.54",
@@ -127,7 +129,9 @@
   "src": "manufacturer",
   "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
   "at": "2026-08-31",
-  "note": "Manufacturer explicitly includes wheels and handles. Official 21-inch product is labelled Carry-On Plus; these are its complete exterior measurements."
+  "note": "Manufacturer explicitly includes wheels and handles. Official 21-inch product is labelled Carry-On Plus; these are its complete exterior measurements.",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "claimed_packing_in": {
   "v": [

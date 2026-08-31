@@ -51,6 +51,7 @@
   "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
   "at": "2026-08-31",
   "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
   "conversion": {
    "from_field": "claimed_in",
    "factor": "2.54",
@@ -116,7 +117,8 @@
   "src": "manufacturer",
   "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
   "at": "2026-08-31",
-  "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred."
+  "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred.",
+  "includes_wheels": true
  },
  "claimed_packing_in": {
   "v": [

@@ -98,13 +98,13 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Transcribed from user-supplied screenshot of the manufacturer page received 2026-08-31, archived at resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Product-family URL supplied for reference; screenshot does not display its exact URL or SKU. Direct browser access previously encountered human verification. No live-page verification claimed. Price, capacity, metric specifications and explicit empty-weight wording are not shown.",
  "manufacturer_source": {
   "url": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
   "retrieved": "2026-08-31",
   "title": "Samsonite Freeform Carry-On Spinner — user-supplied manufacturer-page screenshot",
   "local": "resources/bags/2026-08-31-samsonite-freeform.md"
  },
- "notes": "Transcribed from user-supplied screenshot of the manufacturer page received 2026-08-31, archived at resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Product-family URL supplied for reference; screenshot does not display its exact URL or SKU. Direct browser access previously encountered human verification. No live-page verification claimed. Price, capacity, metric specifications and explicit empty-weight wording are not shown.",
  "claimed_in": {
   "v": [
    23,

@@ -23,6 +23,7 @@
   "at": "2026-08-31",
   "quote": "External dimensions including wheels",
   "note": "Page labels these external including wheels, but does not explicitly confirm handles are counted. Conservatively stored as claimed per intake brief. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
   "conversion": {
    "from_field": "claimed_in",
    "factor": "2.54",
@@ -95,7 +96,8 @@
   "ref": "https://www.quince.com/unisex/small-carry-on-hard-shell-suitcase",
   "at": "2026-08-31",
   "quote": "External dimensions including wheels",
-  "note": "Page labels these external including wheels, but does not explicitly confirm handles are counted. Conservatively stored as claimed per intake brief."
+  "note": "Page labels these external including wheels, but does not explicitly confirm handles are counted. Conservatively stored as claimed per intake brief.",
+  "includes_wheels": true
  },
  "weight_lb": {
   "v": 6.2,

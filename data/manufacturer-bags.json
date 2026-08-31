@@ -306,7 +306,7 @@
     "unit": "cm"
    },
    "conflicts": [],
-   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 37\u201349 L. Global name does not overcome the 38.1 cm width or 22.9 cm depth; exceeds 35 cm width and 20 cm depth envelopes."
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 37–49 L. Global name does not overcome the 38.1 cm width or 22.9 cm depth; exceeds 35 cm width and 20 cm depth envelopes."
   },
   {
    "slug": "briggs-riley-baseline-global-2-wheel",
@@ -377,7 +377,7 @@
     "unit": "cm"
    },
    "conflicts": [],
-   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 39\u201352 L. Different wheel configuration and packing space from the spinner. Exceeds 35 cm width and 20 cm depth envelopes."
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 39–52 L. Different wheel configuration and packing space from the spinner. Exceeds 35 cm width and 20 cm depth envelopes."
   },
   {
    "slug": "briggs-riley-zdx-global-spinner",
@@ -448,7 +448,7 @@
     "unit": "cm"
    },
    "conflicts": [],
-   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 27.9 cm; capacity 37.9\u201347.3 L. Exceeds 35 cm width and 20 cm depth envelopes; do not infer universal compliance from Global."
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 27.9 cm; capacity 37.9–47.3 L. Exceeds 35 cm width and 20 cm depth envelopes; do not infer universal compliance from Global."
   },
   {
    "slug": "samsonite-uplift",
@@ -463,7 +463,7 @@
    "manufacturer_source": {
     "url": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
     "retrieved": "2026-08-31",
-    "title": "UpLIFT Hardside Carry-On Spinner \u2014 Samsonite US",
+    "title": "UpLIFT Hardside Carry-On Spinner — Samsonite US",
     "sku": "1520295963"
    },
    "external_cm": {
@@ -522,7 +522,7 @@
    "brand": "Away",
    "model": "The Bigger Carry-On",
    "line": "away-carryon",
-   "variant": "Bigger Carry-On \u2014 Jet Black (Classic polycarbonate)",
+   "variant": "Bigger Carry-On — Jet Black (Classic polycarbonate)",
    "type": "hardside spinner",
    "soft": 0,
    "wheels": 4,
@@ -604,7 +604,7 @@
    "brand": "Away",
    "model": "The Carry-On",
    "line": "away-carryon",
-   "variant": "Carry-On \u2014 Jet Black (Classic polycarbonate)",
+   "variant": "Carry-On — Jet Black (Classic polycarbonate)",
    "type": "hardside spinner",
    "soft": 0,
    "wheels": 4,
@@ -696,18 +696,18 @@
   },
   {
    "slug": "beis-carryon-roller",
-   "brand": "B\u00e9is",
+   "brand": "Béis",
    "model": "The Carry-On Roller",
    "line": "beis-roller",
    "type": "hardside spinner",
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Carry-On Roller \u2014 matte Black",
+   "variant": "Carry-On Roller — matte Black",
    "manufacturer_source": {
     "url": "https://beistravel.com/products/the-carry-on-roller-in-black",
     "retrieved": "2026-08-31",
-    "title": "B\u00c9IS The Carry-On Roller in Black",
+    "title": "BÉIS The Carry-On Roller in Black",
     "local": "resources/bags/2026-08-31-beis-carryon-roller.md"
    },
    "claimed_in": {
@@ -721,7 +721,7 @@
     "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
     "at": "2026-08-31",
     "quote": "Dimensions",
-    "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L \u00d7 H \u00d7 D; stored H \u00d7 L \u00d7 D. Not verified overall dimensions."
+    "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L × H × D; stored H × L × D. Not verified overall dimensions."
    },
    "claimed_cm": {
     "v": [
@@ -734,7 +734,7 @@
     "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
     "at": "2026-08-31",
     "quote": "Dimensions",
-    "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L \u00d7 H \u00d7 D; stored H \u00d7 L \u00d7 D. Not verified overall dimensions."
+    "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L × H × D; stored H × L × D. Not verified overall dimensions."
    },
    "weight_lb": {
     "v": 7.81,
@@ -776,7 +776,7 @@
     "list": true,
     "quote": "$268"
    },
-   "notes": "FAQ calls dimensions exterior, but the reviewed text does not explicitly confirm inclusion of wheels and handles. Kept as claimed dimensions, not promoted as verified overall. Source order L \u00d7 H \u00d7 D is reordered to H \u00d7 L \u00d7 D without changing values. Capacity expands to 61 L. Both published units retained; dimensions and weight equivalents differ slightly, without reconciliation. No interior dimensions or numeric SKU found; no sale shown. Small Carry-On, Medium Check-In and Large Check-In are other size selections.",
+   "notes": "FAQ calls dimensions exterior, but the reviewed text does not explicitly confirm inclusion of wheels and handles. Kept as claimed dimensions, not promoted as verified overall. Source order L × H × D is reordered to H × L × D without changing values. Capacity expands to 61 L. Both published units retained; dimensions and weight equivalents differ slightly, without reconciliation. No interior dimensions or numeric SKU found; no sale shown. Small Carry-On, Medium Check-In and Large Check-In are other size selections.",
    "conflicts": [
     {
      "field": "claimed_cm",
@@ -829,11 +829,11 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Carry On \u2014 Moss, ejectable-battery version; no CaseSafe add-on",
+   "variant": "Carry On — Moss, ejectable-battery version; no CaseSafe add-on",
    "manufacturer_source": {
     "url": "https://july.com/us/luggage/carry-on/",
     "retrieved": "2026-08-31",
-    "title": "July Carry On \u2014 Moss",
+    "title": "July Carry On — Moss",
     "local": "resources/bags/2026-08-31-july-carryon.md"
    },
    "claimed_in": {
@@ -847,7 +847,8 @@
     "ref": "https://july.com/us/luggage/carry-on/",
     "at": "2026-08-31",
     "quote": "External dimensions including wheels:",
-    "note": "Product-page external dimensions explicitly include wheels; handles not explicit. Comparison page publishes another triple. Pending clarification, not verified overall."
+    "note": "Product-page external dimensions explicitly include wheels; handles not explicit. Comparison page publishes another triple. Pending clarification, not verified overall.",
+    "includes_wheels": true
    },
    "claimed_packing_in": {
     "v": [
@@ -938,7 +939,7 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Carry-On \u2014 Desert Taupe",
+   "variant": "Carry-On — Desert Taupe",
    "manufacturer_source": {
     "url": "https://monos.com/products/carry-on",
     "retrieved": "2026-08-31",
@@ -1024,7 +1025,7 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Roller Pro Carry-On \u2014 Black, bag only",
+   "variant": "Roller Pro Carry-On — Black, bag only",
    "manufacturer_source": {
     "url": "https://www.peakdesign.com/products/roller-pro",
     "retrieved": "2026-08-31",
@@ -1174,11 +1175,11 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Essential Cabin \u2014 matte black, SKU 83253631",
+   "variant": "Essential Cabin — matte black, SKU 83253631",
    "manufacturer_source": {
     "url": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
     "retrieved": "2026-08-31",
-    "title": "RIMOWA Essential Cabin \u2014 matte black",
+    "title": "RIMOWA Essential Cabin — matte black",
     "local": "resources/bags/2026-08-31-rimowa-cabin.md"
    },
    "external_cm": {
@@ -1308,7 +1309,7 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Carry-On Max \u2014 Black",
+   "variant": "Carry-On Max — Black",
    "manufacturer_source": {
     "url": "https://aersf.com/products/carry-on-max",
     "retrieved": "2026-08-31",
@@ -1402,7 +1403,7 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Carry-On \u2014 Black",
+   "variant": "Carry-On — Black",
    "manufacturer_source": {
     "url": "https://aersf.com/products/carry-on",
     "retrieved": "2026-08-31",
@@ -1496,7 +1497,7 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Hue Front Pocket Carry-On \u2014 Glazed Dark Cherry, 20-inch size label",
+   "variant": "Hue Front Pocket Carry-On — Glazed Dark Cherry, 20-inch size label",
    "manufacturer_source": {
     "url": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
     "retrieved": "2026-08-31",
@@ -1515,7 +1516,8 @@
     "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
     "at": "2026-08-31",
     "quote": "Exterior (Including wheel)",
-    "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion."
+    "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion.",
+    "includes_wheels": true
    },
    "claimed_packing_in": {
     "v": [
@@ -1566,7 +1568,7 @@
    "soft": 0,
    "wheels": 4,
    "role": "overhead",
-   "variant": "Hybrid Carry-on X \u2014 Grey / Cognac",
+   "variant": "Hybrid Carry-on X — Grey / Cognac",
    "manufacturer_source": {
     "url": "https://www.carlfriedrik.com/products/the-carry-on-x",
     "retrieved": "2026-08-31",
@@ -1669,7 +1671,7 @@
    "soft": 1,
    "wheels": 0,
    "role": "overhead",
-   "variant": "Allpa 35L Travel Pack \u2014 Cotopaxi Black, recycled-fabric version",
+   "variant": "Allpa 35L Travel Pack — Cotopaxi Black, recycled-fabric version",
    "manufacturer_source": {
     "url": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
     "retrieved": "2026-08-31",
@@ -1764,7 +1766,7 @@
    "soft": 1,
    "wheels": 2,
    "role": "overhead",
-   "variant": "21.5-inch / 32L Carry-On \u2014 Black, current recycled-fabric model",
+   "variant": "21.5-inch / 32L Carry-On — Black, current recycled-fabric model",
    "manufacturer_source": {
     "url": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
     "retrieved": "2026-08-31",
@@ -1985,7 +1987,7 @@
     "title": "Osprey Transporter Wheeled Carry-On 38",
     "local": "resources/bags/2026-08-31-osprey-transporter-wheeled-38.md"
    },
-   "notes": "Current NanoTough version, O/S 38L specification table. Volume also printed 2319 IN\u00b3. USD page displays As low as Current Price $300.00 but color/size selectors unresolved/out of stock: regular variant price unverified and omitted. Missing interior dimensions, expansion amount, SKU, explicit empty-weight qualifier. Requested color Pine Leaf Green cannot be confirmed by rendered selector.",
+   "notes": "Current NanoTough version, O/S 38L specification table. Volume also printed 2319 IN³. USD page displays As low as Current Price $300.00 but color/size selectors unresolved/out of stock: regular variant price unverified and omitted. Missing interior dimensions, expansion amount, SKU, explicit empty-weight qualifier. Requested color Pine Leaf Green cannot be confirmed by rendered selector.",
    "claimed_in": {
     "v": [
      21.7,
@@ -2107,7 +2109,8 @@
     "ref": "https://www.quince.com/unisex/small-carry-on-hard-shell-suitcase",
     "at": "2026-08-31",
     "quote": "External dimensions including wheels",
-    "note": "Page labels these external including wheels, but does not explicitly confirm handles are counted. Conservatively stored as claimed per intake brief."
+    "note": "Page labels these external including wheels, but does not explicitly confirm handles are counted. Conservatively stored as claimed per intake brief.",
+    "includes_wheels": true
    },
    "weight_lb": {
     "v": 6.2,
@@ -2317,7 +2320,7 @@
      "note": "Displayed and embedded capacity ranges disagree. No active capacity selected."
     }
    ],
-   "notes": "Black SKU SU321CXSPW-4. Expanded exterior: 21 \u00d7 15 \u00d7 11.25 in / 53.3 \u00d7 38.1 \u00d7 28.6 cm. Capacity label prints 41\u201352 L (2531\u20133164 cu in); embedded product text instead prints 41.3\u201350.5 L. Capacity withheld pending clarification. Page claims up to 25% more space. Regular USD price, no sale shown; personalization excluded. No separately labelled usable interior triple or explicit empty-weight qualifier found."
+   "notes": "Black SKU SU321CXSPW-4. Expanded exterior: 21 × 15 × 11.25 in / 53.3 × 38.1 × 28.6 cm. Capacity label prints 41–52 L (2531–3164 cu in); embedded product text instead prints 41.3–50.5 L. Capacity withheld pending clarification. Page claims up to 25% more space. Regular USD price, no sale shown; personalization excluded. No separately labelled usable interior triple or explicit empty-weight qualifier found."
   },
   {
    "slug": "briggs-riley-baseline-essential-spinner",
@@ -2500,7 +2503,7 @@
      "note": "Displayed and embedded capacity ranges disagree. No active capacity selected."
     }
    ],
-   "notes": "Black SKU BLU122CXSP-4. Expanded exterior: 22 \u00d7 14 \u00d7 11.5 in / 55.9 \u00d7 35.6 \u00d7 29.2 cm. Capacity label prints 37\u201348 L (2240\u20132940 cu in); embedded product text instead prints 35.4\u201346.4 L. Capacity withheld pending clarification. CX compression-expansion; no subtraction used to invent an expansion increment. Regular USD price, no sale shown; personalization excluded. No separately labelled usable interior triple or explicit empty-weight qualifier found."
+   "notes": "Black SKU BLU122CXSP-4. Expanded exterior: 22 × 14 × 11.5 in / 55.9 × 35.6 × 29.2 cm. Capacity label prints 37–48 L (2240–2940 cu in); embedded product text instead prints 35.4–46.4 L. Capacity withheld pending clarification. CX compression-expansion; no subtraction used to invent an expansion increment. Regular USD price, no sale shown; personalization excluded. No separately labelled usable interior triple or explicit empty-weight qualifier found."
   },
   {
    "slug": "solgaard-closet-med",
@@ -2683,7 +2686,8 @@
     "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
     "at": "2026-08-31",
     "quote": "Exterior (Including wheel)",
-    "note": "Exterior explicitly includes wheels but does not explicitly include handles; retained as claimed per brief. Interior is separately labelled. Printed inches only; no manual conversion."
+    "note": "Exterior explicitly includes wheels but does not explicitly include handles; retained as claimed per brief. Interior is separately labelled. Printed inches only; no manual conversion.",
+    "includes_wheels": true
    },
    "claimed_packing_in": {
     "v": [
@@ -2967,7 +2971,7 @@
   },
   {
    "slug": "beis-hybrid-roller",
-   "brand": "B\u00e9is",
+   "brand": "Béis",
    "model": "The Hybrid Carry-On Roller",
    "line": "beis-roller",
    "type": "hardside spinner",
@@ -2978,7 +2982,7 @@
    "manufacturer_source": {
     "url": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
     "retrieved": "2026-08-31",
-    "title": "B\u00e9is The Hybrid Carry-On Roller",
+    "title": "Béis The Hybrid Carry-On Roller",
     "local": "resources/bags/2026-08-31-beis-hybrid-roller.md"
    },
    "notes": "Current coupling-system Hybrid Carry-On, distinct from Small and standard Carry-On. Expanded volume 41L. No interior triple, separate SKU or explicit empty-weight qualifier found. USD298 regular, no sale shown.",
@@ -3094,7 +3098,7 @@
   },
   {
    "slug": "beis-small-carryon-roller",
-   "brand": "B\u00e9is",
+   "brand": "Béis",
    "model": "The Small Carry-On Roller",
    "line": "beis-roller",
    "type": "hardside spinner",
@@ -3105,7 +3109,7 @@
    "manufacturer_source": {
     "url": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
     "retrieved": "2026-08-31",
-    "title": "B\u00e9is The Small Carry-On Roller",
+    "title": "Béis The Small Carry-On Roller",
     "local": "resources/bags/2026-08-31-beis-small-carryon-roller.md"
    },
    "notes": "Source order: 13.50 L x 21.50 H x 8.07 D inches; 34.3 x 54.6 x 20.5 cm. Current redesigned Small model may differ from earlier reviewed generation. Missing interior triple, quantified expansion, explicit empty-weight qualifier and confirmed SKU. Embedded USD248 not used as separately verified list price.",
@@ -3412,7 +3416,8 @@
     "src": "manufacturer",
     "ref": "https://july.com/us/luggage/carry-on-max/",
     "at": "2026-08-31",
-    "note": "Unexpanded. Label explicitly includes wheels but does not explicitly include handles; saved as claimed. Interior label says excluding wheels, which may mean body rather than usable packing space."
+    "note": "Unexpanded. Label explicitly includes wheels but does not explicitly include handles; saved as claimed. Interior label says excluding wheels, which may mean body rather than usable packing space.",
+    "includes_wheels": true
    },
    "claimed_packing_in": {
     "v": [
@@ -3482,7 +3487,8 @@
     "src": "manufacturer",
     "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
     "at": "2026-08-31",
-    "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred."
+    "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred.",
+    "includes_wheels": true
    },
    "claimed_packing_in": {
     "v": [
@@ -3601,7 +3607,8 @@
     "src": "manufacturer",
     "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
     "at": "2026-08-31",
-    "note": "Exterior includes wheel; handles not explicitly included, so claimed only."
+    "note": "Exterior includes wheel; handles not explicitly included, so claimed only.",
+    "includes_wheels": true
    },
    "claimed_packing_in": {
     "v": [
@@ -3671,7 +3678,9 @@
     "src": "manufacturer",
     "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
     "at": "2026-08-31",
-    "note": "Manufacturer explicitly includes wheels and handles. Official 21-inch product is labelled Carry-On Plus; these are its complete exterior measurements."
+    "note": "Manufacturer explicitly includes wheels and handles. Official 21-inch product is labelled Carry-On Plus; these are its complete exterior measurements.",
+    "includes_wheels": true,
+    "includes_handles": true
    },
    "claimed_packing_in": {
     "v": [
@@ -3741,7 +3750,8 @@
     "src": "manufacturer",
     "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
     "at": "2026-08-31",
-    "note": "Maximum external dimensions including wheels; handles not explicitly included, so claimed only."
+    "note": "Maximum external dimensions including wheels; handles not explicitly included, so claimed only.",
+    "includes_wheels": true
    },
    "claimed_packing_in": {
     "v": [
@@ -4400,7 +4410,9 @@
     "src": "manufacturer",
     "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
     "at": "2026-08-31",
-    "note": "Unexpanded overall dimensions explicitly include wheels and carry handles. Case dimensions separate; not a measured usable interior. Size-comparison panel disagrees on depth."
+    "note": "Unexpanded overall dimensions explicitly include wheels and carry handles. Case dimensions separate; not a measured usable interior. Size-comparison panel disagrees on depth.",
+    "includes_wheels": true,
+    "includes_handles": true
    },
    "claimed_packing_in": {
     "v": [
@@ -4434,7 +4446,7 @@
    "expands_in": {
     "v": 2,
     "unit": "in",
-    "quote": "Tapered expansion option adds up to 2\u201d more packing capacity",
+    "quote": "Tapered expansion option adds up to 2” more packing capacity",
     "src": "manufacturer",
     "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
     "at": "2026-08-31"
@@ -4829,7 +4841,7 @@
    "manufacturer_source": {
     "url": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
     "retrieved": "2026-08-31",
-    "title": "Samsonite Freeform Carry-On Spinner \u2014 user-supplied manufacturer-page screenshot",
+    "title": "Samsonite Freeform Carry-On Spinner — user-supplied manufacturer-page screenshot",
     "local": "resources/bags/2026-08-31-samsonite-freeform.md"
    },
    "notes": "Transcribed from user-supplied screenshot of the manufacturer page received 2026-08-31, archived at resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Product-family URL supplied for reference; screenshot does not display its exact URL or SKU. Direct browser access previously encountered human verification. No live-page verification claimed. Price, capacity, metric specifications and explicit empty-weight wording are not shown.",
@@ -4841,7 +4853,7 @@
      10
     ],
     "unit": "in",
-    "quote": "Exterior Dimensions: 23\u201dH x 15\u201dL x 10\u201dW",
+    "quote": "Exterior Dimensions: 23”H x 15”L x 10”W",
     "src": "manufacturer",
     "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
     "at": "2026-08-31",
@@ -4854,7 +4866,7 @@
      10
     ],
     "unit": "in",
-    "quote": "Interior Dimensions: 20.5\u201dH x 14.5\u201dL x 10\u201dW",
+    "quote": "Interior Dimensions: 20.5”H x 14.5”L x 10”W",
     "src": "manufacturer",
     "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
     "at": "2026-08-31",

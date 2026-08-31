@@ -21,6 +21,8 @@
   "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
   "at": "2026-08-31",
   "note": "Unexpanded overall dimensions explicitly include wheels and carry handles. Case dimensions separate; not a measured usable interior. Size-comparison panel disagrees on depth. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
+  "includes_handles": true,
   "conversion": {
    "from_field": "external_in",
    "factor": "2.54",
@@ -168,7 +170,9 @@
   "src": "manufacturer",
   "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
   "at": "2026-08-31",
-  "note": "Unexpanded overall dimensions explicitly include wheels and carry handles. Case dimensions separate; not a measured usable interior. Size-comparison panel disagrees on depth."
+  "note": "Unexpanded overall dimensions explicitly include wheels and carry handles. Case dimensions separate; not a measured usable interior. Size-comparison panel disagrees on depth.",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "claimed_packing_in": {
   "v": [

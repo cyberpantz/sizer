@@ -51,6 +51,7 @@
   "ref": "https://july.com/us/luggage/carry-on-max/",
   "at": "2026-08-31",
   "note": "Unexpanded. Label explicitly includes wheels but does not explicitly include handles; saved as claimed. Interior label says excluding wheels, which may mean body rather than usable packing space. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
   "conversion": {
    "from_field": "claimed_in",
    "factor": "2.54",
@@ -123,7 +124,8 @@
   "src": "manufacturer",
   "ref": "https://july.com/us/luggage/carry-on-max/",
   "at": "2026-08-31",
-  "note": "Unexpanded. Label explicitly includes wheels but does not explicitly include handles; saved as claimed. Interior label says excluding wheels, which may mean body rather than usable packing space."
+  "note": "Unexpanded. Label explicitly includes wheels but does not explicitly include handles; saved as claimed. Interior label says excluding wheels, which may mean body rather than usable packing space.",
+  "includes_wheels": true
  },
  "claimed_packing_in": {
   "v": [

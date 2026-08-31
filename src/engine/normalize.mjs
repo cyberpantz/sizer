@@ -355,14 +355,49 @@ export function toBag(record) {
  *  carries BOTH a packing figure and an external one is a manufacturer that
  *  published both, which is the good case. A bare `claimed_cm` is unspecified —
  *  assume the worse reading rather than the flattering one. */
+/* WHEELS DECIDE THE RUNG. HANDLES DO NOT.
+ *
+ * The rung used to be inferred: a record was MAKER_OVERALL only if it also
+ * carried a separate packing figure, on the theory that a maker publishing
+ * both must mean the other one is the outside. That is a proxy, and it left 20
+ * well-researched bags — July, Quince, Bellroy, Calpak, Solgaard, Away Flex —
+ * at MAKER_UNSPECIFIED and therefore unrecommendable, even where the page said
+ * in plain words "External dimensions including wheels".
+ *
+ * Every one of those intake notes said the same thing: wheels explicitly
+ * included, HANDLES not explicitly confirmed. That is not a real doubt about
+ * which figure it is:
+ *
+ *   - A telescoping handle is retracted when a bag is measured or dropped in a
+ *     sizer, so it is not part of the envelope that gets checked.
+ *   - The packing-to-overall gap is driven overwhelmingly by WHEELS. Our own
+ *     copy says "wheels, handle and feet" and the wheels are the big term.
+ *   - A page stating "external dimensions" that excluded a permanent part of
+ *     the bag would be misstating them.
+ *
+ * So the standard is: the maker says wheels are in, and it is the overall
+ * figure. Recorded as a flag on the dimension by whoever reads the page, and
+ * applied HERE — one rule in one tested place, rather than 54 judgement calls
+ * made in prose notes and impossible to re-audit.
+ *
+ * `includes_wheels: false` is a statement, not a gap: a figure the maker says
+ * EXCLUDES wheels is the packing body, whatever else the label calls it. */
 export function dimSourceOf(record) {
   if (record?.dim_source) return record.dim_source;
   if (unwrap(record?.measured_cm)) return DIM_SOURCE.MEASURED;
   const ext = record?.external_cm;
   if (ext?.src === 'review') return DIM_SOURCE.REVIEW;
+
+  const field = unwrap(ext) ? ext : record?.claimed_cm;
+  if (!unwrap(field)) return null;
+
+  if (field.includes_wheels === true) return DIM_SOURCE.MAKER_OVERALL;
+  if (field.includes_wheels === false) return DIM_SOURCE.MAKER_PACKING;
+
+  /* No flag either way. Fall back to the old inference — a maker publishing a
+     separate packing figure alongside this one is distinguishing the two. */
   if (unwrap(record?.claimed_packing_cm) && unwrap(ext)) return DIM_SOURCE.MAKER_OVERALL;
-  if (unwrap(ext) || unwrap(record?.claimed_cm)) return DIM_SOURCE.MAKER_UNSPECIFIED;
-  return null;
+  return DIM_SOURCE.MAKER_UNSPECIFIED;
 }
 
 /** True when a record can be evaluated at all. Cheaper than try/catch in a loop. */
