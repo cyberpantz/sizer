@@ -138,7 +138,10 @@ export default function Picker({
         {...getMenuProps()}
         class={
           isOpen
-            ? 'absolute z-20 mt-1 max-h-72 w-full overflow-y-auto rounded-card border border-rule-strong bg-surface py-1 shadow-panel'
+            /* max-h caps the drop so it cannot run off the viewport on a
+               short screen; the panel around it no longer clips it. z-30 puts
+               it above the panel below, which paints after this one. */
+            ? 'absolute z-30 mt-1 max-h-80 w-full overflow-y-auto rounded-card border border-rule-strong bg-surface py-1 shadow-panel'
             : 'hidden'
         }
       >

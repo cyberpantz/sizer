@@ -78,23 +78,23 @@ const RISK = [
       <div data-ui hidden class="grid items-start gap-7 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
 
         <div>
-          <section class="overflow-hidden rounded-card border border-rule bg-surface shadow-panel">
+          <section class="rounded-card border border-rule bg-surface shadow-panel">
             <div class="border-b border-rule px-5 py-4">
               <h2 class="text-lg font-semibold">Your bags</h2>
               <p class="mt-0.5 text-[0.9375rem] text-muted">Add the ones you're choosing between.</p>
             </div>
-            <div class="px-5 pt-4 pb-[1.125rem]" data-bagbox></div>
+            <div class="relative z-20 px-5 pt-4 pb-[1.125rem]" data-bagbox></div>
           </section>
 
-          <section class="mt-4 overflow-hidden rounded-card border border-rule bg-surface shadow-panel">
+          <section class="mt-4 rounded-card border border-rule bg-surface shadow-panel">
             <div class="border-b border-rule px-5 py-4">
               <h2 class="text-lg font-semibold">Your flights</h2>
               <p class="mt-0.5 text-[0.9375rem] text-muted">Every leg, in order. The strictest one wins.</p>
             </div>
-            <div class="px-5 pt-4 pb-[1.125rem]" data-legbox></div>
+            <div class="relative z-10 px-5 pt-4 pb-[1.125rem]" data-legbox></div>
           </section>
 
-          <section class="mt-4 overflow-hidden rounded-card border border-rule bg-surface shadow-panel">
+          <section class="mt-4 rounded-card border border-rule bg-surface shadow-panel">
             <div class="border-b border-rule px-5 py-4">
               <h2 class="text-lg font-semibold">How much risk will you take?</h2>
             </div>
@@ -142,6 +142,7 @@ const RISK = [
   import { createEngine, desc, engine as DEFAULT } from '../engine/fit.mjs';
   import { toBag, toCarrier } from '../engine/normalize.mjs';
   import { fareLabel } from '../ui/fare.mjs';
+  import { enforcementLabel, enforcementNote, isResearched } from '../ui/strictness.mjs';
   import { createUnits } from '../ui/units.mjs';
   import { advisoryLine, bandLabel, resultLabel } from '../ui/verdict.mjs';
 
@@ -377,6 +378,7 @@ const RISK = [
                   )
                   .join('')}
               </select>
+              ${strictnessLine(c.record?.strictness)}
               ${
                 regional
                   ? `<span class="mt-1.5 block text-[0.90625rem] leading-snug text-amber">⚠ Often a regional jet. The overhead bins are smaller than the airline's own limit, so a full-size bag is frequently taken at the door.</span>`
@@ -528,7 +530,7 @@ const RISK = [
       bind ? ' bg-red-wash' : ''
     }">
       <span class="grid h-6 w-6 place-items-center rounded-full bg-surface-2 font-mono text-[0.8125rem] text-muted">${x.i + 1}</span>
-      <span class="font-semibold">${esc(x.carrier.name)}<span class="block text-[0.875rem] font-normal text-muted">${esc(fareLabel(x.leg.fare, carrierOf(x.leg.iata)?.fare_names?.[x.leg.fare]))} · ${source(x.leg.iata)}</span></span>
+      <span class="font-semibold">${esc(x.carrier.name)}<span class="block text-[0.875rem] font-normal text-muted">${esc(fareLabel(x.leg.fare, carrierOf(x.leg.iata)?.fare_names?.[x.leg.fare]))} · ${esc(enforcementLabel(carrierOf(x.leg.iata)?.record?.strictness?.score).toLowerCase())} · ${source(x.leg.iata)}</span></span>
       <span class="text-[0.9375rem] text-ink-2">${detail}${
         weight ? ` · ${weight.level === 'over' ? 'over on weight' : 'tight on weight'}` : ''
       }</span>
@@ -536,6 +538,29 @@ const RISK = [
         band ? TAG[band] : UNKNOWN_TAG
       }">${esc(resultLabel(x.result))}</span>
     </div>`;
+  }
+
+  /* ---------- how hard this airline checks ---------- */
+
+  /* Strictness decides every verdict on this page and the reader could not see
+     it. It is the whole difference between "Risky" and "Over": same bag, same
+     centimetres over, different answer because of a number we never showed.
+
+     Shown as a tier, never as "7/10" — that would imply a precision we do not
+     have. And it says which kind of claim it is, because EVERY score in the
+     dataset today is a type/region prior rather than researched enforcement.
+     23 carriers do carry a researched claim about how they behave, and where
+     one exists it is quoted instead of our adjective. */
+  function strictnessLine(strictness) {
+    if (!strictness) return '';
+    const label = enforcementLabel(strictness.score);
+    const researched = isResearched(strictness);
+    const hasClaim = (strictness.evidence ?? []).some((e) => e.claim);
+    return `<span class="mt-1.5 block text-[0.84375rem] leading-snug text-muted">
+      <b class="font-semibold text-ink-2">${esc(label)}</b>${
+        hasClaim || researched ? '' : ' <span title="A starting assumption for this type of airline and region, not researched enforcement.">(assumed)</span>'
+      }
+    </span>`;
   }
 
   /* ---------- provenance ---------- */
@@ -833,6 +858,15 @@ const RISK = [
           Answered on <b class="font-semibold text-ink">${esc(RISK_LABEL[state.risk])}</b>.
           ${riskEffect(bagOfEngine, worst.carrier, band)}
         </p>
+
+        ${
+          worst.carrier?.allowance
+            ? `<p class="mt-4 rounded-chip bg-surface-2 px-4 py-3 text-[0.9375rem] text-ink-2">
+                 <b class="font-semibold text-ink">${esc(worst.carrier.name)}: ${esc(enforcementLabel(carrierOf(worst.leg.iata)?.record?.strictness?.score).toLowerCase())}.</b>
+                 ${esc(enforcementNote(carrierOf(worst.leg.iata)?.record?.strictness))}
+               </p>`
+            : ''
+        }
 
         ${comparator(b, bagOfEngine, worst.carrier, band)}
 

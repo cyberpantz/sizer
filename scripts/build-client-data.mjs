@@ -55,7 +55,19 @@ for (const c of carrierRecords) {
       region: c.record.region,
       type: c.record.type,
       status: c.record.status,
-      strictness: { score: c.record.strictness?.score },
+      /* Score, basis AND the researched claim.
+         The bare score was all that shipped, so the browser could not tell a
+         prior from a finding — and every score today IS a prior. Shipping the
+         basis is what lets the page say so. The evidence claim is trimmed to
+         the first, which is all the UI shows. */
+      strictness: {
+        score: c.record.strictness?.score,
+        score_basis: c.record.strictness?.score_basis ?? null,
+        evidence: (c.record.strictness?.evidence ?? [])
+          .filter((e) => e.claim)
+          .slice(0, 1)
+          .map((e) => ({ claim: e.claim, url: e.url ?? null, unverified: e.unverified !== false })),
+      },
       operates_regional_jets: c.record.operates_regional_jets,
       agent_commission: c.record.agent_commission
         ? {
