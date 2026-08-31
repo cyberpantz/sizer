@@ -596,50 +596,72 @@ const RISK = [
     /* Front elevation uses the two largest axes; the third gets its own bar,
        because a flat drawing that pretends to show depth is a lie with a
        vanishing point. */
-    /* Axes, not a floating pair of rectangles.
+    /* Two elevations, on shared axes — the drawing convention for a box.
 
-       Both boxes are anchored to a common origin and measured along a labelled
-       x and y axis, so the drawing reads as a measurement rather than a
-       picture. Without them the two rectangles are just shapes and the reader
-       has to infer that they share a corner — which is the only reason the
-       comparison means anything. */
-    const W = 330;
+       Both rectangles are anchored to a common origin and measured along
+       labelled axes, so the drawing reads as a measurement rather than a
+       picture. Without axes the shapes are just shapes and the reader has to
+       infer that they share a corner, which is the only reason the comparison
+       means anything.
+
+       FRONT elevation (left): longest side up, second side across.
+       SIDE  elevation (right): the same longest side, depth across.
+
+       The third axis used to appear only in the bars underneath, which meant
+       the picture showed two thirds of the problem. A bag is stopped on
+       whichever axis is worst, and depth is very often the one — an expander,
+       a bulging front pocket, a hard shell that will not squeeze. The two
+       panels share a baseline and a vertical scale, so the depth panel is a
+       true side view rather than a second unrelated chart. */
     const H = 250;
     const OX = 52; // origin x — room for the y-axis tick labels
     const OY = H - 48; // origin y — room for the x-axis labels
     const TOP = 26; // headroom for the y arrowhead
-    const RIGHT = W - 30; // headroom for the x arrowhead
+    const PANEL_GAP = 34; // between the two elevations
+    const ARROW = 22; // headroom past each x arrowhead
 
-    /* Scaled to the LARGER of bag and limit on each axis, so an oversize bag
-       overflows the dashed box visibly instead of being clipped out of the
-       frame — the overflow IS the finding. */
+    /* Scaled to the LARGER of bag and limit on every axis, so an oversize bag
+       overflows the dashed box visibly instead of being clipped out of frame —
+       the overflow IS the finding. */
     const spanY = Math.max(bag[0], box[0]);
     const spanX = Math.max(bag[1], box[1]);
-    const k = Math.min((OY - TOP) / spanY, (RIGHT - OX) / spanX);
+    const spanZ = Math.max(bag[2], box[2]);
 
-    const rect = (long, wide, attrs) =>
-      `<rect x="${OX}" y="${OY - long * k}" width="${wide * k}" height="${long * k}" rx="3" ${attrs}/>`;
+    /* One scale for everything. Two panels at different scales would be a
+       chart that looks like a drawing, which is worse than either. */
+    const MAX_W = 460;
+    const k = Math.min(
+      (OY - TOP) / spanY,
+      (MAX_W - OX - PANEL_GAP - ARROW * 2) / (spanX + spanZ)
+    );
+
+    /* Where the side elevation starts. */
+    const DX = OX + spanX * k + ARROW + PANEL_GAP;
+    const W = DX + spanZ * k + ARROW + 8;
+    const RIGHT = OX + spanX * k + ARROW;
+    const D_RIGHT = DX + spanZ * k + ARROW;
+
+    const rect = (originX, long, across, attrs) =>
+      `<rect x="${originX}" y="${OY - long * k}" width="${across * k}" height="${long * k}" rx="3" ${attrs}/>`;
 
     const stroke = band ? INK[band] : 'var(--color-muted)';
 
-    /* A tick and its value on one axis.
+    /* A tick and its value on one axis. `originX` lets the same helper serve
+       both elevations.
 
        `shift` moves the label clear when the two ticks nearly coincide. That is
        not an edge case: a bag 0.1 cm off the limit is the most interesting
        result this page produces, and it is exactly when the two numbers land on
        top of each other and become unreadable. */
-    const tick = (axis, cm, colour, shift = 0) => {
+    const tick = (axis, cm, colour, shift = 0, originX = OX) => {
       const at = cm * k;
       return axis === 'y'
         ? `<line x1="${OX - 4}" y1="${OY - at}" x2="${OX}" y2="${OY - at}" stroke="${colour}" stroke-width="1.5"/>
            <text x="${OX - 7}" y="${OY - at + 3.5 + shift}" text-anchor="end" font-size="10.5" font-family="IBM Plex Mono" fill="${colour}">${esc(U.len(cm))}</text>`
-        : `<line x1="${OX + at}" y1="${OY}" x2="${OX + at}" y2="${OY + 4}" stroke="${colour}" stroke-width="1.5"/>
-           <text x="${OX + at + shift}" y="${OY + 15}" text-anchor="middle" font-size="10.5" font-family="IBM Plex Mono" fill="${colour}">${esc(U.len(cm))}</text>`;
+        : `<line x1="${originX + at}" y1="${OY}" x2="${originX + at}" y2="${OY + 4}" stroke="${colour}" stroke-width="1.5"/>
+           <text x="${originX + at + shift}" y="${OY + 15}" text-anchor="middle" font-size="10.5" font-family="IBM Plex Mono" fill="${colour}">${esc(U.len(cm))}</text>`;
     };
 
-    /* How far apart the two labels are on screen, and how much to nudge the
-       bag's label if they would overlap. 13px is roughly one line of the tick
-       type; below that they touch. */
     const nudge = (a, b, away) => (Math.abs(a - b) * k < 13 ? away : 0);
 
     const bar = (i) => {
@@ -663,28 +685,38 @@ const RISK = [
       <p class="text-[0.875rem] font-semibold text-ink">Your bag against ${esc(carrier.name)}'s limit</p>
       <p class="mt-0.5 text-[0.8125rem]">${source(carrier.iata)}</p>
       <div class="mt-3 flex flex-wrap items-center gap-6">
-        <svg viewBox="0 0 ${W} ${H}" class="h-[250px] w-[330px] shrink-0" role="img"
-          aria-label="The bag drawn to scale against the airline's published allowance on labelled axes: longest side up the y axis, second-longest along the x axis, both measured from a shared origin.">
+        <svg viewBox="0 0 ${W} ${H}" class="h-[250px] w-full max-w-[460px] shrink-0" role="img"
+          aria-label="Two elevations of the bag drawn to scale against the airline's allowance. Left: longest side against second-longest. Right: the same longest side against the depth. Both measured from a shared baseline.">
           <defs>
             <marker id="sizer-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
               <path d="M0 0 L8 4 L0 8 z" fill="var(--color-ink-2)"/>
             </marker>
           </defs>
 
-          ${rect(box[0], box[1], 'fill="var(--color-surface)" stroke="var(--color-rule-strong)" stroke-width="2" stroke-dasharray="6 4"')}
-          ${rect(bag[0], bag[1], `fill="${stroke}" fill-opacity=".14" stroke="${stroke}" stroke-width="2.5"`)}
+          ${rect(OX, box[0], box[1], 'fill="var(--color-surface)" stroke="var(--color-rule-strong)" stroke-width="2" stroke-dasharray="6 4"')}
+          ${rect(OX, bag[0], bag[1], `fill="${stroke}" fill-opacity=".14" stroke="${stroke}" stroke-width="2.5"`)}
+
+          ${rect(DX, box[0], box[2], 'fill="var(--color-surface)" stroke="var(--color-rule-strong)" stroke-width="2" stroke-dasharray="6 4"')}
+          ${rect(DX, bag[0], bag[2], `fill="${stroke}" fill-opacity=".14" stroke="${stroke}" stroke-width="2.5"`)}
 
           <line x1="${OX}" y1="${OY}" x2="${OX}" y2="${TOP}" stroke="var(--color-ink-2)" stroke-width="1.5" marker-end="url(#sizer-arrow)"/>
           <line x1="${OX}" y1="${OY}" x2="${RIGHT}" y2="${OY}" stroke="var(--color-ink-2)" stroke-width="1.5" marker-end="url(#sizer-arrow)"/>
+          <line x1="${DX}" y1="${OY}" x2="${DX}" y2="${TOP}" stroke="var(--color-ink-2)" stroke-width="1.5" stroke-opacity=".45"/>
+          <line x1="${DX}" y1="${OY}" x2="${D_RIGHT}" y2="${OY}" stroke="var(--color-ink-2)" stroke-width="1.5" marker-end="url(#sizer-arrow)"/>
 
           ${tick('y', box[0], 'var(--color-rule-strong)')}
           ${tick('y', bag[0], stroke, nudge(bag[0], box[0], bag[0] > box[0] ? -11 : 11))}
           ${tick('x', box[1], 'var(--color-rule-strong)')}
           ${tick('x', bag[1], stroke, nudge(bag[1], box[1], bag[1] > box[1] ? 15 : -15))}
+          ${tick('x', box[2], 'var(--color-rule-strong)', 0, DX)}
+          ${tick('x', bag[2], stroke, nudge(bag[2], box[2], bag[2] > box[2] ? 15 : -15), DX)}
 
           <text x="14" y="${(OY + TOP) / 2}" font-size="11" font-family="Figtree" fill="var(--color-muted)"
             text-anchor="middle" transform="rotate(-90 14 ${(OY + TOP) / 2})">longest side (${esc(U.lenLabel())})</text>
-          <text x="${(OX + RIGHT) / 2}" y="${H - 8}" text-anchor="middle" font-size="11" font-family="Figtree" fill="var(--color-muted)">second side (${esc(U.lenLabel())})</text>
+          <text x="${(OX + RIGHT) / 2}" y="${H - 8}" text-anchor="middle" font-size="11" font-family="Figtree" fill="var(--color-muted)">second side</text>
+          <text x="${(DX + D_RIGHT) / 2}" y="${H - 8}" text-anchor="middle" font-size="11" font-family="Figtree" fill="var(--color-muted)">depth</text>
+          <text x="${OX}" y="${TOP - 8}" font-size="10.5" font-family="Figtree" fill="var(--color-rule-strong)">front</text>
+          <text x="${DX}" y="${TOP - 8}" font-size="10.5" font-family="Figtree" fill="var(--color-rule-strong)">side</text>
         </svg>
         <div class="min-w-[19rem] flex-1">
           ${[0, 1, 2].map(bar).join('')}
