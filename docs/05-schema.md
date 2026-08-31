@@ -63,6 +63,32 @@ One row per **fare class × bag type**. Denormalized on purpose — allowances a
 }
 ```
 
+### Fares are three axes, not one string
+
+Across the researched set, `fare_class` held all of:
+
+| Value | What it actually is |
+|---|---|
+| `economy`, `business` | **cabin class** — what you fly |
+| `basic`, `flex`, `max`, `plus`, `comfort_flex`, `family` | **fare brand** — which ticket |
+| `priority` | **a paid add-on** — €6 on top of a fare |
+
+One string cannot represent that, and *"economy"* alone cannot tell a Ryanair Basic from a Ryanair Basic **+ Priority** — which is the difference between no cabin bag at any size and 55 × 40 × 20. It is the highest-value distinction in the product.
+
+```jsonc
+{ "type": "cabin", "cabin_class": "economy", "fare_class": "basic", "max_cm": … }
+{ "type": "cabin", "cabin_class": "economy", "addon": "priority", "max_cm": … }
+```
+
+A booking is `{ class, fare, addons[] }`. `resolveFare()` matches **add-on → fare → class**, most specific first, and reports which axis matched so a page can distinguish *"we answered for your fare"* from *"we fell back to your cabin class"*. A bare string still resolves, so existing callers keep working.
+
+**An add-on row is opt-in only.** Two bugs surfaced writing this, both in the expensive direction:
+
+- `a.cabin_class === b.class` was `undefined === undefined` and matched the first row in the file. **Third time today** that shape has bitten, after `gambleCeiling(null)` and the missing cabin row.
+- A Ryanair **Basic** booking then matched the **Priority** row through `cabin_class: economy` — telling a passenger with no cabin allowance that their bag was fine. A row carrying `addon` is now unreachable unless that add-on is in the booking.
+
+`validate-carriers.mjs` rejects an unknown `cabin_class` and an add-on row with no fare or class, which would be an allowance no booking can ever reach.
+
 ### Absence must say why — unknown is not banned
 
 **Superseded rule:** *"a fare with no cabin row means no cabin bag at any size."* That was safe while every record was placeholder. It stopped being safe the moment a real audit began, because a **half-researched carrier also has no cabin row** — and telling a traveller their bag is banned when nobody has looked is a worse error than any dimension we could get wrong. To the reader the two are indistinguishable.

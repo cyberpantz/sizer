@@ -61,6 +61,20 @@ for (const { file, rec } of records) {
   /* Every fare row that grants no cabin bag must state which of the four it is.
      "not_permitted" is a finding and shows as a refusal; the others are gaps
      and show as unanswerable. Conflating them is the bug this replaced. */
+  /* Fares carry three axes now. A row may state cabin_class, fare_class/
+     fare_brand and addon; the last gates the row behind a purchase. */
+  const CLASSES = ['economy', 'premium_economy', 'business', 'first'];
+  for (const a of rec.allowances ?? []) {
+    if (a.cabin_class && !CLASSES.includes(a.cabin_class)) {
+      bad(`${id}/${a.fare_class ?? a.addon}: unknown cabin_class "${a.cabin_class}"`);
+    }
+    /* An add-on row that nobody can reach is a silent hole: the allowance exists
+       in the file and no booking will ever match it. */
+    if (a.addon && !a.fare_class && !a.cabin_class) {
+      bad(`${id}: add-on row "${a.addon}" has no fare_class or cabin_class — unreachable`);
+    }
+  }
+
   const ABSENCE = ['not_permitted', 'not_researched', 'not_published', 'out_of_scope'];
   for (const a of rec.allowances ?? []) {
     if (a.cabin_absence && !ABSENCE.includes(a.cabin_absence)) {
