@@ -1,11 +1,11 @@
 /* Runs the real catalogue against the carrier set. Directional only — every
    dimension is a publication's, none is ours, and the carriers are placeholders. */
 import { readFileSync, readdirSync } from "node:fs";
+import { readMockup } from "../scripts/read-mockup.mjs";
+const { AIR } = readMockup();
 const dir = new URL("bags/", import.meta.url);
 const bags = readdirSync(dir).filter(f => f.endsWith(".json") && f !== "_index.json")
   .map(f => JSON.parse(readFileSync(new URL(f, dir)))).filter(b => b.external_cm);
-const html = readFileSync(new URL("../mockup/index.html", import.meta.url), "utf8");
-const AIR = eval(html.match(/const AIR=\[[\s\S]*?\n\];/)[0].replace(/^const AIR=/, ""));
 const std = a => a.f.economy ? "economy" : (a.f.priority ? "priority" : (a.f.plus ? "plus" : Object.keys(a.f)[0]));
 const desc = a => [...a].sort((x, y) => y - x);
 
@@ -52,11 +52,11 @@ const rows = bags.map(b => {
   return { b, ok, tight, pass: ok + tight };
 }).sort((x, y) => y.pass - x.pass || y.ok - x.ok);
 
-console.log("bag".padEnd(34) + "type".padEnd(18) + "clears  line   ok/24  reviews");
+console.log("bag".padEnd(34) + "type".padEnd(18) + "clears  line   ok/N   reviews");
 for (const r of rows) {
   const awards = r.b.reviews.filter(v => v.award).length;
   console.log(`${(r.b.brand + " " + r.b.model).slice(0,33).padEnd(34)}${r.b.type.padEnd(18)}${String(r.ok).padStart(4)}${String(r.tight).padStart(6)}${String(r.pass).padStart(8)}/24${String(awards).padStart(6)}`);
 }
-const good = rows.filter(r => r.pass >= 18).length;
-console.log(`\n${good} of ${rows.length} sized bags clear or scrape 18+ of 24 carriers.`);
-console.log(`${rows.filter(r=>r.pass<=9).length} clear 9 or fewer — most of them award winners.`);
+const good = rows.filter(r => r.pass / AIR.length >= 0.8).length;
+console.log(`\n${good} of ${rows.length} sized bags clear or scrape 80%+ of carriers.`);
+console.log(`${rows.filter(r=>r.pass/AIR.length<=0.2).length} clear under a fifth — most of them award winners.`);
