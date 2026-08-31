@@ -114,6 +114,19 @@ export function createEngine(overrides = {}) {
         ],
       };
     }
+    /* We do not know the allowance. Refusing to answer is the only honest
+       option — a guess here is indistinguishable to the reader from a finding. */
+    if (carrier.cabin_unknown) {
+      return {
+        band: null,
+        delta_cm: null,
+        dimension: null,
+        no_cabin_bag: false,
+        unknown: true,
+        reason: carrier.cabin_absence,
+        advisories: [{ id: 'allowance_unknown', level: carrier.cabin_absence }],
+      };
+    }
     if (carrier.no_cabin_bag) {
       return {
         band: 'wont',
@@ -157,6 +170,7 @@ export function createEngine(overrides = {}) {
     for (const carrier of carriers) {
       const result = evaluate(bag, carrier);
       if (result.no_cabin_bag) return { carrier, result };
+      if (result.unknown) return { carrier, result }; // an unanswerable leg decides the trip
       if (!worst || result.delta_cm > worst.result.delta_cm) worst = { carrier, result };
     }
     return worst;
@@ -175,8 +189,11 @@ export function createEngine(overrides = {}) {
    *  excluded from the denominator, not counted as failures — "clears 19 of 24"
    *  must not quietly become "19 of 25" because a defunct airline is still in
    *  the file. */
+  /** Carriers we cannot score leave the denominator, exactly like ones that no
+   *  longer fly. "Clears 41 of 58" must not silently become "41 of 58" when six
+   *  of those 58 were never researched. */
   function coverage(bag, carriers) {
-    const live = carriers.filter((c) => c.flying !== false);
+    const live = carriers.filter((c) => c.flying !== false && !c.cabin_unknown);
     let clears = 0,
       line = 0;
     for (const c of live) {
@@ -190,6 +207,10 @@ export function createEngine(overrides = {}) {
       pass: clears + line,
       of: live.length,
       excluded: carriers.length - live.length,
+      /* Split out, because "we could not answer for 6 of these" is a different
+         statement to "6 of these no longer fly" and the page should say which. */
+      unknown: carriers.filter((c) => c.cabin_unknown).length,
+      not_flying: carriers.filter((c) => c.flying === false).length,
       ratio: live.length ? (clears + line) / live.length : 0,
     };
   }

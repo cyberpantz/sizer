@@ -50,6 +50,29 @@ function assertDims(v, subject) {
    flagged it in October, five months after the last Spirit flight. */
 export const CARRIER_STATUS = new Set(['operating', 'ceased', 'merged', 'suspended']);
 
+/* Why a fare has no cabin row. Three different facts that looked identical.
+
+   The original rule was "absence is the signal": no cabin row meant no cabin bag
+   at any size, which is the loudest thing this product says. That was safe while
+   every record was placeholder. It stopped being safe the moment a real audit
+   began, because a half-researched carrier also has no cabin row — and telling
+   someone their bag is banned when nobody has looked yet is a worse error than
+   any dimension we could get wrong.
+
+   Same shape as gambleCeiling(null): an absent value silently produced a
+   confident answer. */
+export const CABIN_ABSENCE = {
+  /* The carrier publishes a fare that permits no cabin bag at any size.
+     Ryanair Basic, Wizz Basic. A finding, and the strongest one we make. */
+  NOT_PERMITTED: 'not_permitted',
+  /* Nobody has read this fare yet. We do not know. */
+  NOT_RESEARCHED: 'not_researched',
+  /* The carrier does not publish it, and we could not establish it. */
+  NOT_PUBLISHED: 'not_published',
+  /* Deliberately outside scope — a cargo or charter fare we do not model. */
+  OUT_OF_SCOPE: 'out_of_scope',
+};
+
 const SHELLS = new Set(['aluminium', 'hardside', 'softside', 'backpack', 'duffel']);
 
 /** Infer construction when the record doesn't state it. The regex on model name
@@ -104,6 +127,15 @@ export function toCarrier(record, fareClass) {
 
   const rows = record.allowances ?? [];
   const cabin = rows.find((a) => a.type === 'cabin' && a.fare_class === fareClass);
+
+  /* Absence must say WHY. An explicit row of `{type:'cabin', permitted:false}`
+     is a finding; a fare row that exists with no cabin entry is unresearched
+     unless it says otherwise. Falling back to NOT_RESEARCHED is deliberate: the
+     conservative reading of silence is "we do not know", never "banned". */
+  const fareRow = rows.find((a) => a.fare_class === fareClass);
+  const absence = cabin
+    ? null
+    : (fareRow?.cabin_absence ?? record.cabin_absence ?? CABIN_ABSENCE.NOT_RESEARCHED);
   const strictness = unwrap(record.strictness?.score ?? record.strictness);
   if (typeof strictness !== 'number' || strictness < 1 || strictness > 10) {
     throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
@@ -113,12 +145,15 @@ export function toCarrier(record, fareClass) {
     name: record.name,
     fare_class: fareClass,
     strictness,
-    /* Absence is the signal. A fare with no cabin row means no cabin bag at any
-       size — never a zero-size row, which a naive comparison would let pass. */
+    /* Never a zero-size row — a naive comparison would let one pass. */
     allowance: cabin
       ? { max_cm: assertDims(cabin.max_cm, subject), max_kg: cabin.max_kg ?? null }
       : null,
-    no_cabin_bag: !cabin,
+    /* Only an EXPLICIT finding means "no cabin bag". Everything else is unknown:
+       silence from a half-researched carrier must never read as a ban. */
+    no_cabin_bag: absence === CABIN_ABSENCE.NOT_PERMITTED,
+    cabin_unknown: absence != null && absence !== CABIN_ABSENCE.NOT_PERMITTED,
+    cabin_absence: absence,
     regional_jets: Boolean(record.operates_regional_jets),
     /* Documented per-catch commission, if any. Carried on the carrier because
        it is a fact about the airline, not about the bag. */

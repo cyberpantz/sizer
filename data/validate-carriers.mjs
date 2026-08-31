@@ -48,7 +48,28 @@ for (const { file, rec } of records) {
   }
 
   const cabin = (rec.allowances ?? []).filter((a) => a.type === 'cabin');
-  if (!cabin.length) bad(`${id}: no cabin allowance rows at all`);
+  /* A carrier with no cabin rows is not necessarily wrong — it may be
+     mid-research. But it must SAY so, because the engine's reading of silence
+     changed: absence is now "unknown", and an unknown carrier is excluded from
+     every result rather than reported as banning cabin bags. */
+  if (!cabin.length && !rec.cabin_absence) {
+    bad(
+      `${id}: no cabin rows and no cabin_absence — say whether that is not_permitted, not_researched, not_published or out_of_scope`
+    );
+  }
+
+  /* Every fare row that grants no cabin bag must state which of the four it is.
+     "not_permitted" is a finding and shows as a refusal; the others are gaps
+     and show as unanswerable. Conflating them is the bug this replaced. */
+  const ABSENCE = ['not_permitted', 'not_researched', 'not_published', 'out_of_scope'];
+  for (const a of rec.allowances ?? []) {
+    if (a.cabin_absence && !ABSENCE.includes(a.cabin_absence)) {
+      bad(`${id}/${a.fare_class}: unknown cabin_absence "${a.cabin_absence}"`);
+    }
+  }
+  if (rec.cabin_absence && !ABSENCE.includes(rec.cabin_absence)) {
+    bad(`${id}: unknown cabin_absence "${rec.cabin_absence}"`);
+  }
   for (const a of cabin) {
     if (!Array.isArray(a.max_cm) || a.max_cm.length !== 3)
       bad(`${id}/${a.fare_class}: max_cm must be 3 numbers`);
@@ -120,6 +141,17 @@ for (const { file, rec } of records) {
   }
 }
 
+/* How many fares we genuinely cannot answer. Worth printing every run: it is
+   the honest denominator behind every coverage figure on the site. */
+let unanswerable = 0,
+  banned = 0;
+for (const { rec } of records) {
+  for (const a of rec.allowances ?? []) {
+    if (a.cabin_absence === 'not_permitted') banned++;
+    else if (a.cabin_absence) unanswerable++;
+  }
+}
+
 const placeholders = records.filter(({ rec }) => rec.placeholder).length;
 const researched = records.filter(
   ({ rec }) => rec.research_status === 'official_allowances_researched'
@@ -128,6 +160,11 @@ const pendingReview = records.filter(({ rec }) => rec.publication_ready === fals
 console.log(
   `${records.length} carriers · ${researched} researched · ${placeholders} placeholder · ${pendingReview} pending publication review · target 50`
 );
+if (banned || unanswerable) {
+  console.log(
+    `  fares with no cabin bag: ${banned} not permitted (a finding) · ${unanswerable} unanswerable (a gap)`
+  );
+}
 
 if (fail) {
   console.log(`\n${fail} problem(s)`);

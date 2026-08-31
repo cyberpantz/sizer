@@ -63,7 +63,34 @@ One row per **fare class × bag type**. Denormalized on purpose — allowances a
 }
 ```
 
-**A fare class with no cabin allowance has no `cabin` row.** Absence is the signal — that's what drives the Door A warning. Never encode it as a zero-size row; a zero would silently pass a naive comparison.
+### Absence must say why — unknown is not banned
+
+**Superseded rule:** *"a fare with no cabin row means no cabin bag at any size."* That was safe while every record was placeholder. It stopped being safe the moment a real audit began, because a **half-researched carrier also has no cabin row** — and telling a traveller their bag is banned when nobody has looked is a worse error than any dimension we could get wrong. To the reader the two are indistinguishable.
+
+Same shape as `gambleCeiling(null)` returning the most permissive ceiling: an absent value silently produced a confident answer.
+
+```jsonc
+"cabin_absence": "not_permitted"   // a FINDING — no cabin bag at any size
+                 "not_researched"  // nobody has read this fare yet
+                 "not_published"   // the carrier doesn't say, and we couldn't establish it
+                 "out_of_scope"    // a fare we deliberately don't model
+```
+
+Only `not_permitted` produces a refusal. The other three produce **no verdict at all** — `band: null`, with the reason carried so the page can say which kind of gap it is. Silence with no `cabin_absence` defaults to `not_researched`, because the conservative reading of silence is "we do not know".
+
+Engine consequences, all tested in `absence.test.mjs`:
+
+- An unknown fare returns `band: null`, never `wont`.
+- Unknown carriers **leave the coverage denominator**. "Clears 41 of 58" must not include six nobody researched. `coverage()` reports `unknown` and `not_flying` separately, because *"we could not answer"* and *"this airline is gone"* are different statements.
+- An unknown leg **does not shrink a multi-leg envelope**, but it **does decide the itinerary** — a trip is only as answerable as its least-known leg.
+
+`validate-carriers.mjs` requires a carrier with no cabin rows to state a `cabin_absence`, and prints the split every run:
+
+```
+fares with no cabin bag: N not permitted (a finding) · M unanswerable (a gap)
+```
+
+Still never a zero-size row — a zero would silently pass a naive comparison.
 
 ### Checked rows
 

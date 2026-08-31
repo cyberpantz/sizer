@@ -123,9 +123,14 @@ describe('carriers', () => {
     assert.equal(c.no_cabin_bag, false);
   });
 
-  test('a missing cabin row means no cabin bag — never a zero-size allowance', () => {
+  /* Superseded. A missing cabin row used to mean "no cabin bag at any size";
+     it now means UNKNOWN unless the record says not_permitted. See
+     absence.test.mjs — telling a traveller their bag is banned because nobody
+     researched the fare is the worse error. */
+  test('a missing cabin row is unknown, not a ban, and never a zero-size allowance', () => {
     const c = toCarrier(CARRIER, 'basic');
-    assert.equal(c.no_cabin_bag, true);
+    assert.equal(c.no_cabin_bag, false);
+    assert.equal(c.cabin_unknown, true);
     assert.equal(c.allowance, null, 'a zero-size row would silently pass a naive comparison');
   });
 
