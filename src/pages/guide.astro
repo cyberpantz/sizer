@@ -1,116 +1,507 @@
 ---
 import Base from '../layouts/Base.astro';
-import { loadCarriers } from '../lib/data.mjs';
+import { guideFacts } from '../lib/guide-facts.mjs';
 
-const carriers = await loadCarriers();
-const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+/* The guide, rebuilt to the approved mockup: contents rail, standfirst, pull
+   quotes, a to-scale figure, numbered steps, callouts, a closing CTA.
 
-/* Three sizes of bag, drawn to scale against each other. The numbers are the
-   common floors rather than any one airline's — a guide, not a verdict.
-   docs/13 has the full outline; this covers the part people arrive confused
-   about, which is the difference between the three. */
-const CATEGORIES = [
-  {
-    name: 'Personal item',
-    cm: [40, 30, 20],
-    where: 'Under the seat in front of you',
-    note: 'On a budget-airline basic fare this is often the ONLY bag you get. Not a small carry-on — a different allowance with its own limit.',
-  },
-  {
-    name: 'Carry-on',
-    cm: [55, 40, 23],
-    where: 'In the overhead bin',
-    note: 'The one people mean by "carry-on". Measured with wheels and handle, which is where most of the trouble starts.',
-  },
-  {
-    name: 'Checked',
-    cm: [90, 75, 43],
-    where: 'In the hold',
-    note: 'Usually a linear limit — length plus width plus height, commonly 158 cm — rather than three separate maximums.',
-  },
+   What changed from the mockup is the CONTENT, not the shape:
+
+   - Section 3 was "How to measure yours — this is exactly the method we use on
+     every bag we publish". We do not measure bags. It is now written for the
+     reader measuring their own, which is a real and useful thing, and it says
+     plainly where our numbers come from instead.
+   - The mockup's Consumer Reports figures and its Ryanair / American
+     enforcement claims are not in resources/SOURCES.md — nobody opened those.
+     Replaced with the one tier-1 enforcement source we did read in full, and
+     with findings computed from our own dataset.
+   - Every number below comes from guideFacts(). None is typed. */
+const f = await guideFacts();
+
+const readThrough = f.verifiedThrough
+  ? new Date(f.verifiedThrough).toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
+  : null;
+
+const SECTIONS = [
+  ['gap', 'The label is not the number at the gate'],
+  ['three', 'Three bags, three places'],
+  ['measure', 'How to check your own bag'],
+  ['enforce', 'Who actually checks'],
+  ['fare', 'The ticket trap'],
+  ['systems', 'Weight against pieces'],
+  ['over', "If you're already over"],
 ];
-const widest = Math.max(...CATEGORIES.map((c) => c.cm[0]));
+
+const STEPS = [
+  [
+    'Empty it and stand it upright',
+    'On a hard floor, against a wall. A packed bag bulges, and the bulge is what gets caught.',
+  ],
+  [
+    'Push the handle all the way down',
+    'An extended handle is not how it is measured. Leaving it up will frighten you for no reason.',
+  ],
+  [
+    'Measure the widest point on each side',
+    'Not the flat face. Wheels, feet, handle housing, and any pocket that sits proud when the bag is full.',
+  ],
+  [
+    'Write it down to the nearest half centimetre, rounding up',
+    'Rounding down is how you talk yourself into a fee.',
+  ],
+  [
+    'Compare it against the airline, not the label',
+    'And against the airline you are actually flying, on the fare you actually bought.',
+  ],
+];
+
+const FIXES = [
+  [
+    'Slightly over, and the airline rarely checks',
+    'Pack it thin, leave the outer pockets flat, and do not use the expansion zip.',
+  ],
+  [
+    'Slightly over, and the airline does check',
+    'Buy the hold bag online before you travel. At the airport it is typically two to three times the price.',
+  ],
+  [
+    'Only the cabin size is the problem',
+    'Price the next fare up. It sometimes costs less than the hold bag it saves you.',
+  ],
+  [
+    'A soft-sided bag',
+    'It compresses. A soft bag will often go into a frame that a hard shell of the same size will not.',
+  ],
+  [
+    'A regional-jet leg',
+    'Nothing to do. The bag is taken at the aircraft door and handed back at the door, free.',
+  ],
+];
+
+const dims = (cm) => cm.join(' × ');
+
+/* The three categories, drawn to scale against each other rather than asserted
+   in prose — the confusion underneath most bad outcomes is spatial, which is
+   why prose keeps failing at it (docs/13).
+
+   Geometry is computed here, not in the template: an expression complex enough
+   to need a reduce() belongs in frontmatter where it can be read. */
+const CATEGORIES = [
+  { name: 'Personal item', cm: [40, 30, 20], caption: 'under the seat', color: 'green' },
+  { name: 'Cabin bag', cm: [55, 40, 23], caption: 'overhead bin', color: 'amber' },
+  { name: 'Checked bag', cm: [90, 75, 43], caption: 'the hold', color: 'blue' },
+];
+const SCALE = 150 / Math.max(...CATEGORIES.map((c) => c.cm[0]));
+const GAP = 40;
+const BASE = 210;
+let cursor = 20;
+const FIGURE = CATEGORIES.map((c) => {
+  const w = c.cm[0] * SCALE;
+  const h = c.cm[1] * SCALE;
+  const x = cursor;
+  cursor += w + GAP;
+  return { ...c, x, y: BASE - h, w, h, mid: x + w / 2 };
+});
+const FIGURE_W = cursor;
 ---
 <Base
-  title="Carry-on, personal item, checked — Sizer"
-  description="What the three baggage categories actually mean, and why the same bag gets different answers on different airlines."
+  title="Why bags get stopped at the gate — Sizer"
+  description={`What actually goes wrong at a boarding gate, and what to do about each one. Every figure computed from ${f.answerable} airlines we can answer for.`}
 >
   <div class="mx-auto max-w-page px-6">
+    <div class="grid items-start gap-12 pt-10 lg:grid-cols-[13rem_minmax(0,1fr)]">
 
-    <section class="pt-12 pb-8">
-      <h1 class="text-4xl font-bold tracking-tight">The three sizes</h1>
-      <p class="mt-3 max-w-2xl text-lg text-ink-2">
-        Most confusion at a gate comes from these being treated as one idea.
-        They are three separate allowances, and a fare can include one, two or
-        none of them.
-      </p>
-    </section>
+      {/* Contents rail. Sticky on wide screens, a plain list on narrow ones —
+          a long article without one is a wall, and this page is meant to be
+          returned to and linked into by section. */}
+      <aside class="lg:sticky lg:top-6">
+        <p class="text-[0.8125rem] font-semibold text-muted">On this page</p>
+        <nav class="mt-2 flex flex-col">
+          {SECTIONS.map(([id, label], i) => (
+            <a
+              href={`#${id}`}
+              class="py-1.5 text-[0.9375rem] leading-snug text-ink-2 no-underline hover:text-blue"
+            >
+              <span class="font-mono text-[0.8125rem] text-muted">{i + 1}.</span>{' '}
+              {label}
+            </a>
+          ))}
+        </nav>
+      </aside>
 
-    <section class="border-t border-rule py-10">
-      <div class="space-y-8">
-        {CATEGORIES.map((c) => (
-          <article>
-            <div class="flex flex-wrap items-baseline gap-x-3">
-              <h2 class="text-xl font-semibold tracking-tight">{c.name}</h2>
-              <span class="font-mono text-[0.8125rem] text-muted" data-dims={JSON.stringify(c.cm)}>
-                {c.cm.join(' × ')} cm
-              </span>
-              <span class="text-[0.8125rem] text-muted">· {c.where}</span>
-            </div>
-            {/* To scale against each other, so the difference is visible rather
-                than asserted. */}
-            <div
-              class="mt-3 rounded-chip border border-rule-strong bg-surface-2"
-              style={`width:${(c.cm[0] / widest) * 100}%;height:${Math.max(28, c.cm[1] / 2)}px`}
-              aria-hidden="true"
-            ></div>
-            <p class="mt-3 max-w-2xl text-ink-2">{c.note}</p>
-          </article>
-        ))}
-      </div>
-      <p class="mt-8 max-w-2xl text-[0.8125rem] text-muted">
-        These are common floors, not any single airline's rule. Limits vary, and
-        that variation is the whole problem — we check{' '}
-        {answerable} airlines individually.
-      </p>
-    </section>
+      <article class="max-w-[68ch] pb-4">
 
-    <section class="border-t border-rule py-10">
-      <h2 class="text-2xl font-semibold tracking-tight">Why the same bag gets different answers</h2>
-      <dl class="mt-6 grid gap-5 sm:grid-cols-2">
-        <div>
-          <dt class="font-semibold text-ink">Wheels and handle count</dt>
-          <dd class="mt-1 text-[0.9375rem] text-ink-2">
-            Airlines measure the outside. A bag advertised at its packing size
-            can be several centimetres larger in the frame at the gate.
-          </dd>
-        </div>
-        <div>
-          <dt class="font-semibold text-ink">The fare changes the answer</dt>
-          <dd class="mt-1 text-[0.9375rem] text-ink-2">
-            On some airlines a basic fare includes no cabin bag at all, whatever
-            its size — and the same ticket plus a small add-on includes one.
-          </dd>
-        </div>
-        <div>
-          <dt class="font-semibold text-ink">So does the route</dt>
-          <dd class="mt-1 text-[0.9375rem] text-ink-2">
-            United's Basic Economy includes no carry-on domestically, and does
-            include one across the Atlantic. Same fare, same passenger.
-          </dd>
-        </div>
-        <div>
-          <dt class="font-semibold text-ink">Enforcement varies more than the rules</dt>
-          <dd class="mt-1 text-[0.9375rem] text-ink-2">
-            Some airlines gauge every bag; others have removed their sizers.
-            Being a centimetre over is a non-event at one and a fee at another.
-          </dd>
-        </div>
-      </dl>
-      <p class="mt-8">
-        <a href="/check/" class="text-blue">Check a bag against your actual flights →</a>
-      </p>
-    </section>
+        <h1 class="text-balance text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">
+          Why bags get stopped at the gate
+        </h1>
+        <p class="mt-4 text-xl text-ink-2">
+          Almost none of it is because people failed to read the rules. Here is
+          what actually goes wrong, and what to do about each one.
+        </p>
+        <p class="mt-4 font-mono text-[0.875rem] text-muted">
+          Every figure below is computed from {f.carriers} airlines and{' '}
+          {f.bags} bags{readThrough && ` · sources read through ${readThrough}`}
+        </p>
 
+        {/* 1 */}
+        <h2 id="gap" class="mt-14 scroll-mt-6 text-3xl font-bold tracking-tight">
+          <span class="text-muted">1.</span> The label is not the number at the gate
+        </h2>
+        <p class="mt-3 text-lg text-ink-2">
+          This is the most common reason a compliant-looking bag gets turned
+          away, and most guides never mention it.
+        </p>
+        <p class="mt-4 text-ink-2">
+          A suitcase has two honest sizes. There is the space you pack into, and
+          there is the outside of the object — wheels, feet, handle housing and
+          all. Both are real measurements of the same bag, and they can differ
+          by several centimetres. An airline only ever uses the second one.
+        </p>
+        <p class="mt-4 text-ink-2">
+          The better makers publish both and say which is which. Travelpro
+          states outright that the overall figure is the one to compare against
+          an airline's limit; Rick Steves lists packing and with-wheels
+          dimensions side by side. The number degrades as it travels: by the
+          time the same bag reaches a marketplace listing, it often carries a
+          different set of dimensions from every seller, with no indication of
+          which measurement anyone took.
+        </p>
+
+        <div class="mt-6 rounded-card border border-rule border-l-4 border-l-blue bg-surface p-5 text-lg text-ink-2">
+          <strong class="font-semibold text-ink">
+            The gap is not a constant, which is why you cannot correct for it.
+          </strong>{' '}
+          One bag runs over on width, another on height. Add a centimetre to
+          every number on the label and you will still be caught — just on a
+          different side.
+        </div>
+
+        <p class="mt-6 text-ink-2">
+          Even the airlines are not immune. United publishes its carry-on limit
+          in inches and in centimetres on the same page, and the two figures
+          disagree: a bag can pass one and fail the other. Where that happens we
+          take the stricter number on each side.
+        </p>
+        <p class="mt-4 text-[0.9375rem] text-muted">
+          We take dimensions from the manufacturer's own overall figure, never a
+          reseller listing, and we name the source on every bag.{' '}
+          <a href="/methodology/" class="text-blue">How we work it out →</a>
+        </p>
+
+        {/* 2 */}
+        <h2 id="three" class="mt-14 scroll-mt-6 text-3xl font-bold tracking-tight">
+          <span class="text-muted">2.</span> Three bags, three places
+        </h2>
+        <p class="mt-3 text-lg text-ink-2">
+          Most bad outcomes start with treating "carry-on" as one category. It
+          is three, and the difference is about where the bag physically goes.
+        </p>
+
+        <figure class="mt-6 rounded-card border border-rule bg-surface p-6">
+          <svg viewBox={`0 0 ${FIGURE_W} 245`} role="img" class="block h-auto w-full"
+            aria-label="The three baggage categories drawn to relative scale: a personal item under the seat, a cabin bag in the overhead bin, and a checked bag in the hold">
+            {FIGURE.map((c) => (
+              <g>
+                <rect
+                  x={c.x} y={c.y} width={c.w} height={c.h} rx="5"
+                  fill={`var(--color-${c.color}-wash)`}
+                  stroke={`var(--color-${c.color})`}
+                  stroke-width="2.5"
+                />
+                <text x={c.mid} y={c.y - 10} text-anchor="middle" font-size="13"
+                  font-family="Figtree" fill="var(--color-muted)">{c.caption}</text>
+                <text x={c.mid} y={c.y + c.h / 2 + 4} text-anchor="middle" font-size="12.5"
+                  font-family="IBM Plex Mono" fill={`var(--color-${c.color})`}>{c.cm.join('×')}</text>
+                <text x={c.mid} y="232" text-anchor="middle" font-size="14" font-weight="600"
+                  font-family="Figtree" fill="var(--color-ink)">{c.name}</text>
+              </g>
+            ))}
+          </svg>
+          <figcaption class="mt-4 text-[0.9375rem] text-muted">
+            Drawn to scale against each other. These are common envelopes, not
+            any one airline's rule — we hold {f.envelopes.distinct} distinct
+            cabin envelopes across {f.carriers} airlines, from{' '}
+            <span class="font-mono">{dims(f.envelopes.smallest.cm)}</span> at{' '}
+            {f.envelopes.smallest.name} to{' '}
+            <span class="font-mono">{dims(f.envelopes.largest.cm)}</span> at{' '}
+            {f.envelopes.largest.name}.
+          </figcaption>
+        </figure>
+
+        <p class="mt-6 text-ink-2">
+          A personal item is much smaller than people picture, and on the
+          cheapest ticket from some airlines it is all you get — not a smaller
+          suitcase, no suitcase. That catches more people than any size limit
+          does, and it is section 5.
+        </p>
+
+        {/* 3 */}
+        <h2 id="measure" class="mt-14 scroll-mt-6 text-3xl font-bold tracking-tight">
+          <span class="text-muted">3.</span> How to check your own bag
+        </h2>
+        <p class="mt-3 text-lg text-ink-2">
+          Two minutes and a tape measure. Worth doing once for a bag you will
+          fly with for years.
+        </p>
+
+        <ol class="mt-6 space-y-4">
+          {STEPS.map(([title, detail], i) => (
+            <li class="flex gap-4">
+              <span
+                class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-blue text-[0.875rem] font-semibold text-on-blue"
+                aria-hidden="true"
+              >{i + 1}</span>
+              <div>
+                <strong class="font-semibold text-ink">{title}</strong>
+                <p class="mt-0.5 text-ink-2">{detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div class="mt-6 rounded-chip bg-green-wash p-4 text-[0.9375rem] text-green">
+          <strong class="font-bold">If your bag matches its label, that is worth knowing.</strong>{' '}
+          Plenty do. It means whoever measured it measured the way an airline
+          does, and it is a reasonable thing to look for next time you buy.
+        </div>
+
+        <p class="mt-6 text-[0.9375rem] text-muted">
+          We do not do this ourselves — we are not a testing lab and we have not
+          had {f.bags} suitcases through the door. Our figures come from each
+          manufacturer's own published overall dimensions, and every bag on this
+          site names where its number came from.
+        </p>
+
+        {/* 4 */}
+        <h2 id="enforce" class="mt-14 scroll-mt-6 text-3xl font-bold tracking-tight">
+          <span class="text-muted">4.</span> Who actually checks
+        </h2>
+        <p class="mt-3 text-lg text-ink-2">
+          Knowing a limit is not the same as knowing whether anyone enforces it.
+          A bag a centimetre over is a non-event at one airline and a fee at
+          another.
+        </p>
+
+        <p class="mt-4 text-ink-2">
+          At the strict end, catching bags has been paid work. A US Senate
+          subcommittee found that two ultra-low-cost carriers paid{' '}
+          <strong class="text-ink">$26 million</strong> to gate agents and other
+          personnel across 2022 and 2023 for catching passengers with bags that
+          allegedly broke the policy, with staff able to earn as much as{' '}
+          <strong class="text-ink">$10 for each bag</strong> a passenger was
+          forced to check at the gate.
+        </p>
+        <p class="mt-2 text-[0.9375rem] text-muted">
+          Senate Permanent Subcommittee on Investigations, press release,
+          26 November 2024 —{' '}
+          <a
+            href="https://www.blumenthal.senate.gov/newsroom/press/release/senate-permanent-subcommittee-on-investigations-releases-majority-staff-report-slamming-sky-high-airline-junk-fees"
+            rel="nofollow noopener"
+            class="text-blue"
+          >read in full</a>. The $26 million is a joint figure and belongs to
+          neither carrier alone.
+        </p>
+
+        <p class="mt-6 text-ink-2">
+          So we score every airline on how likely its published limit is to be
+          enforced — not on how tight the limit is, which is already the box we
+          compare against. Where nobody has researched an airline yet, it starts
+          strict, because being over-cautious costs you convenience and the
+          other direction costs you a fee.
+        </p>
+
+        <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+          <table class="w-full text-left text-[0.9375rem]">
+            <thead class="border-b border-rule bg-surface-2 text-[0.8125rem] text-muted">
+              <tr>
+                <th class="p-3 font-medium">Score</th>
+                <th class="p-3 font-medium">What it means</th>
+                <th class="p-3 font-medium">Airlines</th>
+              </tr>
+            </thead>
+            <tbody>
+              {f.strictness.map((t) => (
+                <tr class="border-b border-rule last:border-0">
+                  <td class="p-3 font-mono text-[0.8125rem]">{t.lo}–{t.hi}</td>
+                  <td class="p-3">{t.label}</td>
+                  <td class="p-3 font-mono text-[0.8125rem]">{t.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="mt-3 text-[0.9375rem] text-muted">
+          Most of these are still the starting prior for the airline's business
+          model and region rather than researched enforcement. That is stated on
+          each airline rather than smoothed over.
+        </p>
+
+        <p class="mt-6 text-ink-2">
+          There is a third case worth knowing: <strong class="text-ink">regional jets</strong>.
+          On a CRJ-200 or an ERJ-145 the overhead bins are smaller than the
+          airline's own published limit, so a completely legal bag can still be
+          taken at the aircraft door. It is handed back at the door on arrival
+          and it costs nothing — but if you were relying on having it with you,
+          plan differently.
+        </p>
+
+        {/* 5 */}
+        <h2 id="fare" class="mt-14 scroll-mt-6 text-3xl font-bold tracking-tight">
+          <span class="text-muted">5.</span> The ticket trap
+        </h2>
+        <p class="mt-3 text-lg text-ink-2">
+          The same bag, the same airline, the same aircraft — and a different
+          answer, because of which fare you bought.
+        </p>
+
+        <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+          <table class="w-full text-left text-[0.9375rem]">
+            <thead class="border-b border-rule bg-surface-2 text-[0.8125rem] text-muted">
+              <tr>
+                <th class="p-3 font-medium">Airline</th>
+                <th class="p-3 font-medium">Cheapest fare</th>
+                <th class="p-3 font-medium">Standard economy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {f.fareGaps.map((g) => (
+                <tr class="border-b border-rule last:border-0">
+                  <td class="p-3">{g.name}</td>
+                  <td class="p-3 font-mono text-[0.8125rem]">{dims(g.basic)}</td>
+                  <td class="p-3 font-mono text-[0.8125rem]">{dims(g.economy)}</td>
+                </tr>
+              ))}
+              {f.noCabinFares.map((n) => (
+                <tr class="border-b border-rule last:border-0">
+                  <td class="p-3">{n.name}</td>
+                  <td class="p-3 text-ink-2">No cabin bag at all</td>
+                  <td class="p-3 font-mono text-[0.8125rem]">—</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-6 rounded-chip bg-amber-wash p-4 text-[0.9375rem] text-amber">
+          <strong class="font-bold">Look at the depth on that Lufthansa row.</strong>{' '}
+          The cheapest fare allows 15 cm. Standard economy allows 23. Almost no
+          wheeled suitcase is 15 cm deep, so that fare does not give you a
+          smaller suitcase — it gives you no suitcase. Nobody could reasonably
+          be expected to know this from the fare name, which is why we ask which
+          ticket you bought instead of assuming.
+        </div>
+
+        <p class="mt-6 text-[0.9375rem] text-muted">
+          Only differences we have read from the airline's own page appear here.
+          A fare with no cabin row in our data is a page nobody has read yet,
+          not a fare that forbids a bag, and we will not print one as the other.
+        </p>
+
+        {/* 6 */}
+        <h2 id="systems" class="mt-14 scroll-mt-6 text-3xl font-bold tracking-tight">
+          <span class="text-muted">6.</span> Weight against pieces
+        </h2>
+        <p class="mt-3 text-lg text-ink-2">
+          Two different systems for checked bags, and mixing them up on a
+          connecting trip is expensive.
+        </p>
+
+        <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+          <table class="w-full text-left text-[0.9375rem]">
+            <thead class="border-b border-rule bg-surface-2 text-[0.8125rem] text-muted">
+              <tr>
+                <th class="p-3 font-medium">System</th>
+                <th class="p-3 font-medium">How it works</th>
+                <th class="p-3 font-medium">Airlines here</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-rule">
+                <td class="p-3 font-semibold">Piece</td>
+                <td class="p-3">A set number of bags, each with its own weight limit</td>
+                <td class="p-3 font-mono text-[0.8125rem]">{f.systems.piece}</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold">Weight</td>
+                <td class="p-3">A total allowance you split across as many bags as you like</td>
+                <td class="p-3 font-mono text-[0.8125rem]">{f.systems.weight}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="mt-6 text-ink-2">
+          <strong class="text-ink">The trap is the connection.</strong> Put both
+          systems on one trip and the rules change between legs. The strictest
+          one is what you have to pack for.
+        </p>
+
+        <p class="mt-4 text-ink-2">
+          Weight catches people out in the cabin too. Cabin weight caps in our
+          data run from{' '}
+          <strong class="text-ink">{f.weight.lowestCap.kg} kg</strong> at{' '}
+          {f.weight.lowestCap.carriers.join(', ')} upwards, and{' '}
+          {f.weight.strictCapCarriers} airlines cap a cabin bag at{' '}
+          {f.weight.cap} kg or less. That matters more than it sounds:{' '}
+          <strong class="text-ink">
+            {f.weight.overHalf} of the {f.weight.weighed} bags we hold a weight
+            for use more than half of a {f.weight.cap} kg allowance while
+            completely empty
+          </strong>. The heaviest is {f.weight.heaviest.kg} kg before you put a
+          single thing in it.
+        </p>
+
+        {/* 7 */}
+        <h2 id="over" class="mt-14 scroll-mt-6 text-3xl font-bold tracking-tight">
+          <span class="text-muted">7.</span> If you're already over
+        </h2>
+        <p class="mt-3 text-lg text-ink-2">
+          Usually fixable, and rarely by buying anything.
+        </p>
+
+        <div class="mt-6 overflow-x-auto rounded-card border border-rule">
+          <table class="w-full text-left text-[0.9375rem]">
+            <thead class="border-b border-rule bg-surface-2 text-[0.8125rem] text-muted">
+              <tr>
+                <th class="p-3 font-medium">Situation</th>
+                <th class="p-3 font-medium">What to do</th>
+              </tr>
+            </thead>
+            <tbody>
+              {FIXES.map(([when, what]) => (
+                <tr class="border-b border-rule last:border-0">
+                  <td class="p-3 align-top">{when}</td>
+                  <td class="p-3 text-ink-2">{what}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-6 rounded-chip bg-amber-wash p-4 text-[0.9375rem] text-amber">
+          <strong class="font-bold">One booking, or several?</strong>{' '}
+          On a single ticket a checked bag goes to your final destination — you
+          cannot check it for one leg and carry it on the next. Booked
+          separately, you can.
+        </div>
+
+        <div class="mt-12 flex flex-wrap items-center justify-between gap-5 rounded-card bg-blue-wash p-6">
+          <p class="max-w-[46ch] text-lg text-ink-2">
+            <strong class="font-semibold text-ink">Want the answer for your actual trip?</strong>{' '}
+            Add your flights and the bag you own, and we will tell you which leg
+            decides it.
+          </p>
+          <a
+            href="/check/"
+            class="rounded-chip bg-blue px-5 py-3 font-semibold text-on-blue no-underline hover:bg-blue-hover"
+          >Check my trip →</a>
+        </div>
+
+      </article>
+    </div>
   </div>
 </Base>

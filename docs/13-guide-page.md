@@ -28,19 +28,27 @@ Facts are free to use — a size limit is a fact and nobody owns it ([04-data-so
 
 ### 1. The hook — the thing nobody else leads with
 
-Open on the gap, with the numbers:
-
-> Your suitcase is probably bigger than the label says.
->
-> Consumer Reports measured a Briggs & Riley sold as 22 × 14 × 9 in at **22.5 × 14.5 × 9.25** — over the limit at American, Delta and United. An Eagle Creek Tarmac 22, also sold as 22 × 14 × 9, measured **22.25 × 15 × 8.5**: over on width, under on depth.
->
-> Manufacturers usually measure the packing space. A Samsonite spokesperson has confirmed the company does not measure handles or wheels. **Airlines measure everything that sticks out.**
+Open on the gap: a suitcase has two honest sizes, the space you pack into and the outside of the object, and an airline only ever uses the second.
 
 Then the point that makes it actionable — and that no competitor states:
 
 > The gap isn't consistent, so you can't correct for it. One bag runs over on width, another on height. Add a centimetre to every number and you'll still be caught, just on a different side.
 
-**This is the most valuable paragraph on the site.** It's the argument for measurement, and it's ours.
+**This is the most valuable paragraph on the site.**
+
+⚠️ **What is NOT in the shipped page, and why.** An earlier draft of this section
+opened on Consumer Reports' measurements of a Briggs & Riley and an Eagle Creek
+Tarmac 22. Those figures appear nowhere in `resources/SOURCES.md`: nobody opened
+the original. They are probably accurate, and citing them on our most quotable
+page would repeat the Frontier failure exactly — a number credited to a document
+we never read. Same for the mockup's Ryanair spotting bonus and American pulling
+its gate sizers.
+
+The shipped hook therefore rests on sources we did open — Travelpro publishing
+both figures and saying which to use, Rick Steves publishing both, United's own
+page contradicting itself between inches and centimetres — plus findings computed
+from our own dataset. It is a better page for it: the argument is now
+demonstrated by our data rather than borrowed from someone else's.
 
 ### 2. The three categories — as a diagram, not prose
 
@@ -54,11 +62,11 @@ A single scale diagram: seat, the space under it, the overhead bin, the hold. Ea
 | Cabin bag | Overhead bin | 55 × 40 × 23 cm |
 | Checked | Hold | ≤ 158 cm linear |
 
-### 3. How to measure your own bag
+### 3. How to check your own bag
 
-Our published method, in the guide rather than buried in `/methodology`: empty, upright, handle retracted, widest point on each axis, wheels and feet and pockets included, to 0.5 cm.
+**Rewritten.** This section used to describe "our published method" and promise a photograph of our tape against a bag. We do not measure bags — see [19-dataset-build.md](19-dataset-build.md). A guide that argues for measurement while having none is exactly what a reader notices.
 
-**Include the photograph of the tape against the bag.** One image carries the entire argument.
+It is now written for the reader measuring the bag they already own, which is a genuinely useful two-minute job: empty, upright, handle retracted, widest point on each axis, wheels and feet and pockets included, to 0.5 cm, rounding up. The section then says plainly that our own figures come from the manufacturer's published overall dimensions, and that every bag names its source.
 
 ### 4. Where enforcement actually differs — cited
 
@@ -108,4 +116,8 @@ Plain, specific, unhurried. Never breathless, never listicle. The competitor's g
 
 ## Sequencing
 
-Write it **after** the first 20 bags are measured. The hook depends on our own measurements, not borrowed ones, and the recommendations section needs real data. A guide published before we've measured anything is a guide that argues for measurement while having none — which readers notice.
+**Superseded.** The old rule was "write it after the first 20 bags are measured," on the assumption the hook needed our own measurements. Nobody is measuring bags, so that gate could never open.
+
+The replacement: the guide ships when every claim on it is either **computed from the dataset** or **backed by a source someone opened**. That bar is met now. `src/lib/guide-facts.mjs` derives every figure — envelope range, fare gaps, strictness distribution, weight caps, empty-bag weights — and `src/lib/__tests__/guide-facts.test.mjs` holds the rules that keep it honest, chief among them: **a fare with no cabin row is a page nobody read, never a fare that forbids a bag.**
+
+Section 8, the recommendations layer, still waits on provenance: it needs bags that pass `isPromotable()`, and 9 of 40 do.
