@@ -1,0 +1,38 @@
+---
+import VerdictBadge from './VerdictBadge.astro';
+
+const { bag, result, coverage } = Astro.props;
+
+/* Dimensions are rendered in cm and carry data-dims so the units toggle can
+   re-render them client-side without re-parsing text a reader may be looking
+   at. See UnitToggle. */
+const dims = JSON.stringify(bag.external_cm);
+---
+<article class="rounded-card border border-rule bg-surface p-5">
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <h3 class="font-semibold text-ink">{bag.brand} {bag.model}</h3>
+      <p class="mt-1 font-mono text-[0.8125rem] text-muted" data-dims={dims}>
+        {bag.external_cm.join(' × ')} cm
+      </p>
+    </div>
+    {result && <VerdictBadge result={result} />}
+  </div>
+
+  {coverage && (
+    <p class="mt-3 text-[0.8125rem] text-ink-2">
+      Fits <strong class="font-semibold text-ink">{coverage.pass} of {coverage.of}</strong> airlines
+      {coverage.unknown > 0 && (
+        <span class="text-muted"> · {coverage.unknown} we can't answer for yet</span>
+      )}
+    </p>
+  )}
+
+  {/* The claim the whole product rests on. Until someone puts a tape on this
+      bag, say so — every figure here is someone else's. */}
+  {!bag.measured && (
+    <p class="mt-3 border-t border-rule pt-3 text-[0.75rem] text-muted">
+      Not yet measured by us — dimensions are the publisher's.
+    </p>
+  )}
+</article>

@@ -1,0 +1,35 @@
+---
+/* A verdict. The most important thing on the site, so it is the component with
+   the strictest rules:
+
+   1. It renders what the engine returned and never computes anything.
+   2. A null band is NOT a failure — it means unanswerable, and says why.
+   3. Status colours here are exactly that: status. Never interactive.
+      (verify-build.mjs fails the build if a status colour lands on a control.)
+*/
+import { BAND_COPY, bandLabel } from '../ui/verdict.mjs';
+
+const { result } = Astro.props;
+const band = result?.band ?? null;
+const copy = band ? BAND_COPY[band] : null;
+
+const TONE = {
+  good:    'bg-green-wash text-green border-green/20',
+  caution: 'bg-amber-wash text-amber border-amber/20',
+  warn:    'bg-orange-wash text-orange border-orange/20',
+  bad:     'bg-red-wash text-red border-red/20',
+};
+/* Unanswerable is deliberately grey, not amber. A reader must be able to tell
+   "we don't know" from "risky" at a glance — they are different facts and the
+   whole provenance discipline is wasted if the UI blurs them. */
+const unknown = 'bg-surface-2 text-muted border-rule';
+---
+<span
+  class:list={[
+    'inline-flex items-center gap-2 rounded-chip border px-3 py-1.5 text-sm font-semibold',
+    copy ? TONE[copy.tone] : unknown,
+  ]}
+  data-band={band ?? 'unknown'}
+>
+  {bandLabel(band)}
+</span>

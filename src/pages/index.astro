@@ -1,9 +1,92 @@
 ---
 import Base from '../layouts/Base.astro';
+import BagCard from '../components/BagCard.astro';
+import { loadBags, loadCarriers, coverageStats } from '../lib/data.mjs';
+import { shelve } from '../lib/shelves.mjs';
+
+/* Everything here runs at build time. The engine is pure, so the same functions
+   run in the browser for the interactive check — see docs/17-tech-stack.md. */
+const bags = loadBags();
+const carriers = loadCarriers();
+const shelves = shelve(bags, carriers);
+const stats = coverageStats();
+
+/* The number we can honestly stand behind: carriers the engine can actually
+   answer for, not the number of files in data/carriers/. */
+const answerable = carriers.filter((c) => !c.cabin_unknown).length;
 ---
-<Base title="Sizer" description="Which carry-on actually fits your flight.">
+<Base
+  title="Sizer — which carry-on actually fits your flight"
+  description={`Measured carry-on dimensions checked against ${answerable} airlines. Airlines measure the outside of your bag, wheels and handle included. Manufacturers publish the inside.`}
+>
   <div class="mx-auto max-w-page px-6">
-    <h1 class="text-4xl font-bold tracking-tight mt-12 mb-2">Scaffold up.</h1>
-    <p class="text-muted">Engine, data and components wired. Landing page is step 3.</p>
+
+    <section class="pt-16 pb-12">
+      <h1 class="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+        Airlines measure the outside of your bag.
+        <span class="text-muted">Manufacturers publish the inside.</span>
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-ink-2">
+        That gap is why a bag sold as a carry-on gets stopped at the gate. We
+        check external dimensions — wheels and handle included — against
+        {answerable} airlines.
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/check/"
+          class="rounded-chip bg-blue px-5 py-3 font-semibold text-on-blue no-underline hover:bg-blue-hover"
+        >Check a bag you own</a>
+        <a
+          href="/bags/"
+          class="rounded-chip border border-rule-strong px-5 py-3 font-semibold text-ink no-underline hover:border-blue hover:text-blue"
+        >Browse bags that fit</a>
+      </div>
+    </section>
+
+    {shelves.map((shelf) => shelf.bags.length > 0 && (
+      <section class="border-t border-rule py-10">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 class="text-2xl font-semibold tracking-tight">{shelf.title}</h2>
+          <span class="font-mono text-[0.8125rem] text-muted">{shelf.bags.length} bags</span>
+        </div>
+        <p class="mt-1 max-w-2xl text-ink-2">{shelf.blurb}</p>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {shelf.bags.slice(0, 6).map(({ bag, coverage }) => (
+            <BagCard bag={bag} coverage={coverage} />
+          ))}
+        </div>
+
+        {shelf.bags.length > 6 && (
+          <p class="mt-4">
+            <a href="/bags/" class="text-blue">See all {shelf.bags.length} →</a>
+          </p>
+        )}
+      </section>
+    ))}
+
+    {/* The release gate from docs/19 says no bag may be PROMOTED on someone
+        else's tape measure. Nothing is measured yet, so rather than quietly
+        promote anyway, the page says so. This block disappears on its own as
+        measurements land. */}
+    {stats.bags_measured < stats.bags_sized && (
+      <section class="mb-16 rounded-card border border-amber/30 bg-amber-wash p-5">
+        <h2 class="font-semibold text-amber">What we haven't verified yet</h2>
+        <p class="mt-2 max-w-3xl text-[0.9375rem] text-ink-2">
+          We have measured <strong>{stats.bags_measured} of {stats.bags_sized}</strong> bags
+          ourselves. Every dimension above is a publisher's or a manufacturer's
+          figure, and those are the numbers this site exists to check.
+          {stats.carriers_researched < stats.carriers_total && (
+            <> Of {stats.carriers_total} airlines, {stats.carriers_researched} have
+            had their published allowances read from source.</>
+          )}
+        </p>
+        <p class="mt-2 text-[0.9375rem]">
+          <a href="/methodology/" class="text-blue">How we measure, and what that claim is worth →</a>
+        </p>
+      </section>
+    )}
+
   </div>
 </Base>
