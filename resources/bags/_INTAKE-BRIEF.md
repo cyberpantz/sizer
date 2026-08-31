@@ -202,11 +202,16 @@ over any conversion.
 
 ### The fields that are easy to get wrong
 
-**`external_cm.note` must say what the figure includes.** This is the field
-that makes the number auditable a year from now. If the page did not say
-whether wheels are included, the note must say *that* — and the record should
-use `claimed_cm` rather than `external_cm`, because an unlabelled figure is
-probably the packing body and must not be promoted.
+**The `note` on the exterior field must say what the figure includes.** This is
+what makes the number auditable a year from now. If the page did not say
+whether wheels and handles are counted, the note must say *that* — and the
+figure belongs under `claimed_*` rather than `external_*`, because an
+unlabelled dimension is probably the packing body and must never be promoted.
+
+Whichever unit the page prints: `claimed_in` / `external_in` for an imperial
+source, `claimed_cm` / `external_cm` for a metric one. The distinction being
+drawn is *labelled exterior* versus *unlabelled*, and it applies identically in
+both units.
 
 **`price_usd.list` distinguishes list price from sale price.** Set `true` for
 the regular price, `false` for a sale price. We band bags as Budget / Midrange
