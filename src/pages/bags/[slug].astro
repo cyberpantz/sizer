@@ -6,6 +6,12 @@ import { DIM_SOURCE, isPromotable, toCarrier } from '../../engine/normalize.mjs'
 import { loadBags, loadCarriers } from '../../lib/data.mjs';
 import { loadCarrierSources } from '../../lib/sources.mjs';
 import { fareLabel } from '../../ui/fare.mjs';
+import {
+  SCALE_MAX,
+  enforcementLabel,
+  enforcementScore,
+  isResearched,
+} from '../../ui/strictness.mjs';
 import { resultLabel } from '../../ui/verdict.mjs';
 
 /* The bag page, from mockup/bag.html.
@@ -275,12 +281,23 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
         <div class="mt-7">
           <h3 class="text-lg font-semibold">{group.label}</h3>
           <div class="mt-2 overflow-hidden rounded-card border border-rule">
-            {group.rows.map(({ carrier, result }) => (
+            {group.rows.map(({ carrier, record: cRecord, result }) => (
               <div class="grid grid-cols-[minmax(0,1fr)_9rem_8.5rem] items-center gap-3 border-b border-rule px-4 py-3 text-[0.9375rem] last:border-b-0">
                 <span>
                   <span class="font-semibold">{carrier.name}</span>
                   <span class="block text-[0.8125rem] text-muted">
                     {fareLabel(carrier.fare_class)}
+                    {enforcementScore(cRecord.strictness?.score) !== null && (
+                      <>
+                        {' · '}
+                        <span class="font-mono">{enforcementScore(cRecord.strictness?.score)}/{SCALE_MAX}</span>
+                        {' '}
+                        {enforcementLabel(cRecord.strictness?.score).toLowerCase()}
+                        {!isResearched(cRecord.strictness) &&
+                          !(cRecord.strictness?.evidence ?? []).some((e) => e.claim) &&
+                          ' (assumed)'}
+                      </>
+                    )}
                     {sourceOf.has(carrier.iata) ? (
                       <>
                         {' · '}

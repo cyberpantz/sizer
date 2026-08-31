@@ -7,7 +7,16 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { describe, test } from 'node:test';
 import { gambleCeiling } from '../../engine/constants.mjs';
-import { enforcementLabel, enforcementNote, isResearched, TIERS, tierFor } from '../strictness.mjs';
+import {
+  enforcementLabel,
+  enforcementNote,
+  enforcementScore,
+  enforcementSteps,
+  isResearched,
+  SCALE_MAX,
+  TIERS,
+  tierFor,
+} from '../strictness.mjs';
 
 describe('enforcement indicator', () => {
   test('the tiers are the engine’s tiers', () => {
@@ -26,11 +35,23 @@ describe('enforcement indicator', () => {
     }
   });
 
-  test('a score is never shown as a bare number', () => {
-    /* "7/10" implies a precision we do not have. These are ordinal tiers. */
+  test('a score is always paired with its tier word', () => {
+    /* The score is shown now — I had hidden it behind the tier, and that was
+       my judgement rather than a project rule. What matters is that "9" never
+       appears alone: the tier word is what stops a reader treating a prior as
+       a measurement, and the pairing is the whole reason showing the number is
+       safe. */
     for (let score = 1; score <= 10; score++) {
-      assert.doesNotMatch(enforcementLabel(score), /\d/, `score ${score} leaked a number`);
+      assert.equal(enforcementScore(score), score);
+      assert.ok(enforcementLabel(score), `score ${score} has no tier word to travel with`);
     }
+  });
+
+  test('the meter never overflows its scale', () => {
+    assert.equal(enforcementSteps(0), 0);
+    assert.equal(enforcementSteps(9), 9);
+    assert.equal(enforcementSteps(99), SCALE_MAX);
+    assert.equal(enforcementSteps(null), 0);
   });
 
   test('an unscored carrier is not described as lenient', () => {

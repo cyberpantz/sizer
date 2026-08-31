@@ -5,12 +5,19 @@
    number of centimetres over, and the answer changes because of a number the
    reader never sees. Showing it is overdue.
 
-   THREE RULES, and the first two are what make this honest rather than
-   decorative:
+   THREE RULES:
 
-   1. NEVER SHOW THE BARE NUMBER. "7/10" implies a precision we do not have.
-      These are ordinal tiers, and the tiers are the same ones gambleCeiling()
-      uses — so what the reader sees and what the engine does cannot drift.
+   1. THE SCORE IS SHOWN, NEVER ON ITS OWN. I first hid the number behind a
+      tier word, on the grounds that "7/10" implies a precision we do not have.
+      Frank overruled that and he is right: a number is legible, comparable
+      across airlines, and it is OUR score — the thing a competitor publishes
+      and we were hiding. The precision worry is real but it is answered by
+      showing the basis beside it, not by withholding it.
+
+      So a score always travels with its tier word and, where it is a prior,
+      with a marker saying so. The tiers remain gambleCeiling()'s own
+      boundaries, so what the reader sees and what the engine does cannot
+      drift.
 
    2. SAY WHEN IT IS A GUESS. Every carrier in the dataset today scores on a
       type/region prior, not on researched enforcement: 35 are
@@ -41,6 +48,20 @@ export function tierFor(score) {
 }
 
 export const enforcementLabel = (score) => tierFor(score)?.label ?? 'Enforcement unknown';
+
+/** The score itself, out of 10, or null when nobody has scored it.
+ *  Callers must render it with enforcementLabel() and, for a prior, the
+ *  "(assumed)" marker — the guard in the tests enforces that pairing. */
+export const enforcementScore = (score) =>
+  typeof score === 'number' && Number.isFinite(score) ? Math.round(score) : null;
+
+export const SCALE_MAX = 10;
+
+/** Filled steps out of SCALE_MAX, for a small meter. */
+export const enforcementSteps = (score) => {
+  const n = enforcementScore(score);
+  return n === null ? 0 : Math.max(0, Math.min(SCALE_MAX, n));
+};
 
 /** Is this score researched, or a starting assumption? */
 export const isResearched = (strictness) =>
