@@ -390,6 +390,7 @@ const RISK = [
         draw();
       });
     }
+
     for (const s of root.querySelectorAll('[data-leg-fare]')) {
       s.addEventListener('change', (e) => {
         state.legs[+e.target.dataset.legFare].fare = e.target.value;

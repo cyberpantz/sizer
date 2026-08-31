@@ -12,36 +12,23 @@ plausible-looking invention fails on the way in rather than on the site.
 
 ---
 
-## The 22
+## Which airlines, in what order
 
-These produce verdicts on the live site today from records nobody has read.
-Roughly worst-first — a ULCC's limit is smaller, enforced harder, and wrong more
-expensively than a full-service carrier's.
+**The first 22 are done** — all 58 records now cite a source and a date.
 
-| | IATA | Airline | Why it matters |
-|---|---|---|---|
-| 1 | `FR` | Ryanair | ULCC. Basic fare is under-seat only; the single most consequential record here |
-| 2 | `W6` | Wizz Air | ULCC, same shape |
-| 3 | `U2` | easyJet | LCC, and the large-bag add-on changes the answer |
-| 4 | `F9` | Frontier | ULCC. Also the gate-agent commission carrier |
-| 5 | `VY` | Vueling | LCC |
-| 6 | `TR` | Scoot | LCC, 7 kg cabin cap territory |
-| 7 | `LH` | Lufthansa | Basic fare permits no wheeled cabin bag from May 2026 — verify, don't assume |
-| 8 | `WN` | Southwest | Hybrid, unusual policy |
-| 9 | `AA` | American | Basic Economy DOES include a carry-on — the opposite of United |
-| 10 | `DL` | Delta | Same |
-| 11 | `BA` | British Airways | Generous, and the hand-baggage-only fare is its own case |
-| 12 | `AF` | Air France | |
-| 13 | `KL` | KLM | |
-| 14 | `IB` | Iberia | |
-| 15 | `B6` | JetBlue | Blue Basic historically excluded the carry-on — check whether it still does |
-| 16 | `EK` | Emirates | |
-| 17 | `QR` | Qatar | |
-| 18 | `TK` | Turkish | |
-| 19 | `SQ` | Singapore | 7 kg cabin cap |
-| 20 | `CX` | Cathay Pacific | 7 kg cabin cap |
-| 21 | `NH` | ANA | |
-| 22 | `JL` | Japan Airlines | |
+The next batch and its reasoning live in [docs/22-launch-coverage.md](../../docs/22-launch-coverage.md).
+Short version, highest value first:
+
+| Tier | Airlines | Why |
+|---|---|---|
+| 1 | `TG` `FD` `AK` `GA` `JT` `QG` | Thailand and Indonesia are at **zero** coverage and both are named launch markets |
+| 2 | `AS` `G4` `AC` `SY` `WS` | North America is the home market and the thinnest region |
+| 3 | `MM` `GK` `9C` `VJ` `5J` `7C` `6E` `MH` `SL` `DD` `HU` | Asian LCCs — where the 5–7 kg cabin weight caps live |
+| 4 | `N0` `OG` `EY` | Transatlantic LCCs and the Gulf hub we lack |
+
+⚠️ `HA` Hawaiian is **not** on the list: Alaska and Hawaiian moved to one
+passenger service system in April 2026 and flights carry `AS` codes. Confirm
+against Alaska's own site before recording it either way.
 
 ---
 
@@ -178,6 +165,6 @@ not that one number slipped.
 ## What this does not cover
 
 `strictness` stays a type/region prior until someone researches enforcement, and
-`publication_ready` stays `false` until that review happens. Filling these 22 in
+`publication_ready` stays `false` until that review happens. Filling these in
 makes the allowances real and the citations clickable; it does not make the
 enforcement scores researched. Those are separate claims and the site says so.
