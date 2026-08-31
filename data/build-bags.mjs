@@ -360,6 +360,59 @@ for (const b of bags) {
   b.fits_personal_item = e.every((v, i) => v <= p[i]);
 }
 
+/* BRAND-LEVEL DIMENSION POLICY.
+ *
+ * Travelpro's FAQ answers "do the listed dimensions include wheels and
+ * handles?" for the whole brand: they publish both numbers and the overall one
+ * includes wheels and carry handles. That settles every Travelpro bag at once,
+ * and re-deriving it per product page is how one answer becomes forty
+ * judgement calls.
+ *
+ * THE SAFETY RULE, which is Frank's caveat and is the whole reason this is not
+ * a blanket flag: a brand policy says what the OVERALL figure includes. It says
+ * nothing about whether WE captured the overall figure or the case figure. So
+ * the policy is applied only where the stored figure is confirmably the
+ * overall one — it is materially larger than the same record's own packing
+ * figure. A record holding a single number with no sibling could be either,
+ * and stays unflagged.
+ *
+ * Two Travelpro bags fail that test today (maxlite5-21, maxlite5-compact) and
+ * are deliberately left alone. Applying the policy to them would be assuming
+ * the answer to the exact question the caveat asks. */
+const unwrapV = (f) => (f && typeof f === 'object' && 'v' in f ? f.v : null);
+const policyPath = new URL('brand-dimension-policy.json', here);
+const BRAND_POLICY = existsSync(policyPath) ? JSON.parse(readFileSync(policyPath)).brands : {};
+const POLICY_FIELDS = ['external_cm', 'external_in', 'claimed_cm', 'claimed_in'];
+
+function applyBrandPolicy(record) {
+  const policy = BRAND_POLICY[record.brand];
+  if (!policy?.overall_includes_wheels) return record;
+
+  const packing = unwrapV(record.claimed_packing_cm) ?? unwrapV(record.claimed_packing_in);
+  if (!packing) return record; // cannot tell which figure we hold
+
+  for (const key of POLICY_FIELDS) {
+    const f = record[key];
+    if (!f?.v || 'includes_wheels' in f) continue;
+    /* Compare like with like: an inch field against an inch packing figure. */
+    const sameUnit = key.endsWith('_in') ? unwrapV(record.claimed_packing_in) : packing;
+    if (!sameUnit) continue;
+    const biggest = Math.max(...f.v.map((v, i) => v - (sameUnit[i] ?? 0)));
+    if (biggest < (key.endsWith('_in') ? 0.4 : 1)) continue; // same body — proves nothing
+
+    f.includes_wheels = true;
+    if (policy.overall_includes_handles) f.includes_handles = true;
+    f.note = [
+      f.note,
+      `${record.brand} states brand-wide: "${policy.quote}" (${policy.source}). Confirmed as the overall figure here because it exceeds this record's own packing figure.`,
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+  return record;
+}
+for (const b of bags) applyBrandPolicy(b);
+
 /* THE EXCLUSION REGISTER IS ENFORCED, NOT DECORATIVE.
  *
  * Two bags were removed because neither can ever be sourced: Amazon Basics is

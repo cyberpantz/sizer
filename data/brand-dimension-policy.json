@@ -1,0 +1,16 @@
+{
+ "note": "How a MANUFACTURER says it publishes dimensions, stated once for the whole brand rather than re-argued per bag. A brand that answers 'do the listed dimensions include wheels and handles?' in its FAQ has settled the question for every product it sells, and re-deriving that from each product page is how one answer turns into forty judgement calls. Applied by data/build-bags.mjs, and ONLY to a figure we can confirm is the overall one — see the safety rule there.",
+ "brands": {
+  "Travelpro": {
+   "overall_includes_wheels": true,
+   "overall_includes_handles": true,
+   "publishes_both": true,
+   "quote": "We publish both numbers. The case dimensions (the packing body only) are 19 x 15 x 7.75 in. The overall dimensions, which include wheels and carry handles, are 21.75 x 15.75 x 7.75 in. When airlines publish size limits they mean the overall size, so compare the overall number to your airline's limit.",
+   "source": "Travelpro FAQ, 'Do the listed dimensions include wheels and handles?'",
+   "url": null,
+   "url_status": "PENDING — text supplied by Frank on 2026-08-31; the FAQ page URL still needs recording so a reader can check it, per the rule that every claim is answerable to 'where did you get that?'",
+   "at": "2026-08-31",
+   "corroboration": "The FAQ's own figures convert to 55.2 x 40 x 19.7 cm overall and 48.3 x 38.1 x 19.7 cm case, which match travelpro-maxlite5-international's stored pair exactly. So the policy is not only stated, it is verified against a record we already held."
+  }
+ }
+}

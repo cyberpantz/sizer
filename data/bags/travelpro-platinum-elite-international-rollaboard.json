@@ -21,7 +21,10 @@
   ],
   "src": "manufacturer",
   "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
-  "at": "2026-08-30"
+  "at": "2026-08-30",
+  "includes_wheels": true,
+  "includes_handles": true,
+  "note": "Travelpro states brand-wide: \"We publish both numbers. The case dimensions (the packing body only) are 19 x 15 x 7.75 in. The overall dimensions, which include wheels and carry handles, are 21.75 x 15.75 x 7.75 in. When airlines publish size limits they mean the overall size, so compare the overall number to your airline's limit.\" (Travelpro FAQ, 'Do the listed dimensions include wheels and handles?'). Confirmed as the overall figure here because it exceeds this record's own packing figure."
  },
  "measured_cm": null,
  "measured_at": null,
@@ -50,7 +53,9 @@
   "src": "manufacturer",
   "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
   "at": "2026-08-30",
-  "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+  "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us. Travelpro states brand-wide: \"We publish both numbers. The case dimensions (the packing body only) are 19 x 15 x 7.75 in. The overall dimensions, which include wheels and carry handles, are 21.75 x 15.75 x 7.75 in. When airlines publish size limits they mean the overall size, so compare the overall number to your airline's limit.\" (Travelpro FAQ, 'Do the listed dimensions include wheels and handles?'). Confirmed as the overall figure here because it exceeds this record's own packing figure.",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "weight_kg": {
   "v": 3.35,
