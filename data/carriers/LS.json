@@ -1,0 +1,121 @@
+{
+  "iata": "LS",
+  "name": "Jet2.com",
+  "region": "EU",
+  "type": "lcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Existing engine prior only; no researched enforcement score is asserted."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Flight-only",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Flight-only; adult allowance.",
+      "source_url": "https://www.jet2.com/en/baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Flight-only",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Flight-only; adult allowance.",
+      "source_url": "https://www.jet2.com/en/baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Flight-only",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 22,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Paid hold baggage: up to three 22 kg pieces. No included checked bag in the flight-only fare; package holidays may differ. Numerical dimensions not verified.",
+      "source_url": "https://www.jet2.com/en/baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Flight-only",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Flight-only; adult allowance.",
+      "source_url": "https://www.jet2.com/en/baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Flight-only",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Flight-only; adult allowance.",
+      "source_url": "https://www.jet2.com/en/baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Flight-only",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 22,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Paid hold baggage: up to three 22 kg pieces. No included checked bag in the flight-only fare; package holidays may differ. Numerical dimensions not verified.",
+      "source_url": "https://www.jet2.com/en/baggage",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.jet2.com/en/baggage",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_dossier": "resources/carriers/LS-jet2-com.md",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "audit_note": "Baggage allowance rows were researched from official airline pages; these are not mockup placeholders. Research covers the sourced, dated rows only. Enforcement scores remain model priors, and unresolved policy conflicts, unknown limits and unmodeled exceptions are documented in the research dossier. Publication review remains pending."
+}

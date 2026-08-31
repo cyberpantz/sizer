@@ -18,6 +18,8 @@ data/
 
 ## Carrier
 
+Research status and publication readiness are separate. `placeholder: true` identifies unresearched/mockup data. Official-source allowance research uses `placeholder: false` and `research_status: "official_allowances_researched"`; dated source URLs identify the specific rows checked. `publication_ready: false` independently blocks publication while the issues in `audit_note` and the research dossier remain unresolved. A researched allowance does not imply that enforcement scores, all fares, or every exception have been verified.
+
 ```jsonc
 {
   "iata": "FR",

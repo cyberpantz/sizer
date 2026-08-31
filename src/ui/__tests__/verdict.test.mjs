@@ -1,10 +1,10 @@
 /* Verdict copy. One source, because three copies had already disagreed. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { BAND_COPY, BANNED, bandLabel, verdictLine, advisoryLine } from '../verdict.mjs';
-import { createUnits, CM } from '../units.mjs';
+import { describe, test } from 'node:test';
 import { BANDS } from '../../engine/constants.mjs';
+import { CM, createUnits } from '../units.mjs';
+import { advisoryLine, BAND_COPY, BANNED, bandLabel, verdictLine } from '../verdict.mjs';
 
 const U = createUnits({ storage: { getItem: () => CM, setItem() {} } });
 
@@ -73,8 +73,10 @@ describe('advisory copy', () => {
   test('the commission line states the fee and nothing about intent', () => {
     const s = advisoryLine({ id: 'agent_commission', amount_usd: 10 }, U);
     assert.match(s, /\$10/);
-    assert.ok(!/unfair|abuse|dishonest|trick/i.test(s),
-      'the figure is ours to report; characterisation belongs to the cited source');
+    assert.ok(
+      !/unfair|abuse|dishonest|trick/i.test(s),
+      'the figure is ours to report; characterisation belongs to the cited source'
+    );
   });
 
   test('an unknown advisory renders empty rather than breaking the page', () => {

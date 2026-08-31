@@ -11,7 +11,7 @@
 
    Astro will import the module properly and this script retires. Until then
    the marker block is GENERATED: never hand-edit between the markers. */
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
 const MODULES = ['constants.mjs', 'advisories.mjs', 'fit.mjs', 'normalize.mjs'];
@@ -44,7 +44,9 @@ function inlineEngine() {
     }
     const aliased = src.match(/^import\s*\{[^}]*\bas\b[^}]*\}/m);
     if (aliased) {
-      throw new Error(`${m}: aliased imports cannot be inlined (${aliased[0].replace(/\s+/g, ' ')}) — the alias does not exist once modules share one scope`);
+      throw new Error(
+        `${m}: aliased imports cannot be inlined (${aliased[0].replace(/\s+/g, ' ')}) — the alias does not exist once modules share one scope`
+      );
     }
     src = src
       .replace(/^import\s*\{[\s\S]*?\}\s*from\s+'[^']+';\s*$/gm, '')
@@ -78,14 +80,20 @@ function inlineCarriers() {
       for (const a of c.allowances.filter((x) => x.type === 'cabin')) {
         const chk = c.allowances.find((x) => x.type === 'checked' && x.fare_class === a.fare_class);
         fares[a.fare_class] = {
-          d: a.max_cm, kg: a.max_kg,
+          d: a.max_cm,
+          kg: a.max_kg,
           ovh: a.max_cm[0] >= 45 ? 1 : 0,
           chk: chk?.free_pieces ?? 0,
           note: a.note ?? '',
         };
       }
-      return { c: c.iata, n: c.name, st: c.strictness.score,
-               e: c.strictness.evidence?.[0]?.claim ?? '', f: fares };
+      return {
+        c: c.iata,
+        n: c.name,
+        st: c.strictness.score,
+        e: c.strictness.evidence?.[0]?.claim ?? '',
+        f: fares,
+      };
     });
   return `${DSTART}\nconst AIR = ${JSON.stringify(rows, null, 1)};\n${DEND}`;
 }
@@ -101,7 +109,9 @@ function inlineBags() {
     .filter((b) => b.external_cm && b.role === 'overhead')
     .sort((a, b) => a.slug.localeCompare(b.slug))
     .map((b) => ({
-      s: b.slug, b: b.brand, m: b.model,
+      s: b.slug,
+      b: b.brand,
+      m: b.model,
       /* Manufacturer packing figure where we have it, else the external one —
          the pages show "claimed vs actual" and need something in both slots. */
       c: b.claimed_packing_cm?.v ?? b.external_cm.v,
@@ -123,7 +133,8 @@ function inlineCarriersKeyed() {
     const fares = {};
     for (const a of c.allowances.filter((x) => x.type === 'cabin')) {
       fares[a.fare_class] = {
-        d: a.max_cm, kg: a.max_kg,
+        d: a.max_cm,
+        kg: a.max_kg,
         /* ⚠️ Gate and hold prices are NOT in the schema yet. The page used to
            carry hand-written strings like "$40 online". They are also what
            `fee_asymmetry` needs for strictness, so the 50-carrier audit should
@@ -131,8 +142,13 @@ function inlineCarriersKeyed() {
         hold: null,
       };
     }
-    out[c.iata] = { n: c.name, st: c.strictness.score,
-                    regional: c.operates_regional_jets ? 1 : 0, gate: null, f: fares };
+    out[c.iata] = {
+      n: c.name,
+      st: c.strictness.score,
+      regional: c.operates_regional_jets ? 1 : 0,
+      gate: null,
+      f: fares,
+    };
   }
   return `${KSTART}\nconst AIR = ${JSON.stringify(out, null, 1)};\n${KEND}`;
 }
@@ -142,27 +158,43 @@ const carriers = inlineCarriers();
 const carriersKeyed = inlineCarriersKeyed();
 const bags = inlineBags();
 const check = process.argv.includes('--check');
-let drifted = 0, written = 0;
+let drifted = 0,
+  written = 0;
 
 for (const page of PAGES) {
   const url = new URL(page, root);
   const html = readFileSync(url, 'utf8');
-  let out = html, changed = false, stale = [];
-  for (const [name, a, b, want] of [['engine', START, END, block],
-                                    ['carriers', DSTART, DEND, carriers],
-                                    ['bags', BSTART, BEND, bags],
-                                    ['carriers', KSTART, KEND, carriersKeyed]]) {
-    const s = out.indexOf(a), e = out.indexOf(b);
-    if (s === -1 || e === -1) continue;                 // page doesn't use this block
-    if (out.slice(s, e + b.length) === want) continue;  // already current
+  let out = html,
+    changed = false,
+    stale = [];
+  for (const [name, a, b, want] of [
+    ['engine', START, END, block],
+    ['carriers', DSTART, DEND, carriers],
+    ['bags', BSTART, BEND, bags],
+    ['carriers', KSTART, KEND, carriersKeyed],
+  ]) {
+    const s = out.indexOf(a),
+      e = out.indexOf(b);
+    if (s === -1 || e === -1) continue; // page doesn't use this block
+    if (out.slice(s, e + b.length) === want) continue; // already current
     stale.push(name);
     out = out.slice(0, s) + want + out.slice(e + b.length);
     changed = true;
   }
   const has = [START, DSTART, BSTART, KSTART].filter((m) => out.indexOf(m) !== -1).length;
-  if (!has) { console.log(`  SKIP  ${page} — no generated blocks`); continue; }
-  if (!changed) { console.log(`  ok    ${page}`); continue; }
-  if (check) { console.log(`  DRIFT ${page} — ${stale.join(' and ')} out of date`); drifted++; continue; }
+  if (!has) {
+    console.log(`  SKIP  ${page} — no generated blocks`);
+    continue;
+  }
+  if (!changed) {
+    console.log(`  ok    ${page}`);
+    continue;
+  }
+  if (check) {
+    console.log(`  DRIFT ${page} — ${stale.join(' and ')} out of date`);
+    drifted++;
+    continue;
+  }
   writeFileSync(url, out);
   console.log(`  built ${page} (${stale.join(', ')})`);
   written++;

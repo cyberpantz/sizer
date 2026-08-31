@@ -14,27 +14,31 @@
    by checking which colour utilities appear on interactive elements — see
    docs/02-design-system.md. */
 @theme {
-  --color-paper:     #FBF9F6;
-  --color-surface:   #FFFFFF;
-  --color-surface-2: #F5F2ED;
-  --color-rule:      #E7E2DA;
-  --color-rule-strong:#C8C1B5;
+  --color-paper: #fbf9f6;
+  --color-surface: #ffffff;
+  --color-surface-2: #f5f2ed;
+  --color-rule: #e7e2da;
+  --color-rule-strong: #c8c1b5;
 
-  --color-ink:   #1C1A17;
-  --color-ink-2: #4C4741;
-  --color-muted: #736C63;
+  --color-ink: #1c1a17;
+  --color-ink-2: #4c4741;
+  --color-muted: #736c63;
 
   /* Interactive. The only family permitted on a control. */
-  --color-blue:       #1D4E89;
-  --color-blue-hover: #163D6C;
-  --color-blue-wash:  #EDF2F8;
-  --color-on-blue:    #FFFFFF;
+  --color-blue: #1d4e89;
+  --color-blue-hover: #163d6c;
+  --color-blue-wash: #edf2f8;
+  --color-on-blue: #ffffff;
 
   /* Status. Never interactive. */
-  --color-green:  #14713D;  --color-green-wash:  #E9F3EC;
-  --color-amber:  #8A5D00;  --color-amber-wash:  #FBF3E2;
-  --color-orange: #B4530F;  --color-orange-wash: #FBEEE4;
-  --color-red:    #B3261E;  --color-red-wash:    #FAECEA;
+  --color-green: #14713d;
+  --color-green-wash: #e9f3ec;
+  --color-amber: #8a5d00;
+  --color-amber-wash: #fbf3e2;
+  --color-orange: #b4530f;
+  --color-orange-wash: #fbeee4;
+  --color-red: #b3261e;
+  --color-red-wash: #faecea;
 
   --font-sans: Figtree, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -47,5 +51,7 @@
 }
 
 @layer base {
-  body { @apply bg-paper text-ink font-sans antialiased; }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
 }

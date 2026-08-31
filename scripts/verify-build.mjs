@@ -3,16 +3,21 @@
    The engine tests cover logic; verify-pages covers the mockups. This covers
    the shipped HTML, where a different class of bug lives: a default that only
    holds in a browser, a colour that bypassed the tokens, a missing disclosure. */
-import { readFileSync, existsSync } from 'node:fs';
-import { globSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
 const dir = new URL('dist/client/', root);
 let fail = 0;
-const bad = (m) => { console.log(`  FAIL  ${m}`); fail++; };
+const bad = (m) => {
+  console.log(`  FAIL  ${m}`);
+  fail++;
+};
 
 const index = new URL('index.html', dir);
-if (!existsSync(index)) { console.log('  no build — run: npx astro build'); process.exit(1); }
+if (!existsSync(index)) {
+  console.log('  no build — run: npx astro build');
+  process.exit(1);
+}
 const html = readFileSync(index, 'utf8');
 
 /* Styles may be inlined OR emitted as a linked stylesheet — Astro inlines small
@@ -21,7 +26,7 @@ const html = readFileSync(index, 'utf8');
 const linked = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)]
   .map((m) => m[1])
   .filter((h) => h.startsWith('/'))
-  .map((h) => new URL('.' + h, dir))
+  .map((h) => new URL(`.${h}`, dir))
   .filter((u) => existsSync(u))
   .map((u) => readFileSync(u, 'utf8'));
 const styles = [
@@ -72,15 +77,22 @@ for (const tag of html.match(INTERACTIVE) ?? []) {
   }
 }
 if (offenders.length) {
-  bad(`status colour on an interactive element — blue is the only interactive colour:\n         ${offenders.join('\n         ')}`);
+  bad(
+    `status colour on an interactive element — blue is the only interactive colour:\n         ${offenders.join('\n         ')}`
+  );
 }
 
 /* Tailwind theme tokens must actually be in the output; if @theme silently
    failed we would ship a page with no palette at all. */
-if (!/--color-blue:/.test(styles)) bad('theme tokens missing from the build — @theme did not compile');
+if (!/--color-blue:/.test(styles))
+  bad('theme tokens missing from the build — @theme did not compile');
 
 /* 4. A page with no title is a page nobody finds. */
 if (!/<title>[^<]+<\/title>/.test(html)) bad('no <title>');
 
-console.log(fail ? `\n${fail} problem(s) in the built output` : 'built output: metric default, disclosure present, tokens intact');
+console.log(
+  fail
+    ? `\n${fail} problem(s) in the built output`
+    : 'built output: metric default, disclosure present, tokens intact'
+);
 process.exit(fail ? 1 : 0);

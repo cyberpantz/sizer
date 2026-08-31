@@ -1,0 +1,211 @@
+{
+  "iata": "A3",
+  "name": "Aegean Airlines",
+  "region": "EU",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Light",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1,
+      "allowance_group": "light_cabin_choice",
+      "group_max_count": 1,
+      "note": "Light, adult Airbus-operated flight. Turboprop allowance is smaller: 55 × 40 × 23 cm. Choose this cabin bag OR one personal item, never both.",
+      "additional_source_urls": [
+        "https://en.aegeanair.com/en/travel-information/travelling-with-olympic-air/baggage/hand-luggage-and-essentials/?app_version=1&origin=app&sc_site=olympicair"
+      ]
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Light",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "allowance_group": "light_cabin_choice",
+      "group_max_count": 1,
+      "note": "Light: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Alternative to the cabin bag, not additional."
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Light",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Light: 0 included checked bag(s). 23 kg is the standard bag allowance before overweight fees; absolute acceptance ceiling 32 kg. Adult base fare, no status benefits; special route rules require ticket confirmation."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Flex",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Flex, adult Airbus-operated flight. Turboprop allowance is smaller: 55 × 40 × 23 cm. One cabin bag plus one personal item.",
+      "additional_source_urls": [
+        "https://en.aegeanair.com/en/travel-information/travelling-with-olympic-air/baggage/hand-luggage-and-essentials/?app_version=1&origin=app&sc_site=olympicair"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Flex",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Flex: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Flex",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Flex: 0 included checked bag(s). 23 kg is the standard bag allowance before overweight fees; absolute acceptance ceiling 32 kg. Adult base fare, no status benefits; special route rules require ticket confirmation."
+    },
+    {
+      "fare_class": "comfort_flex",
+      "fare_name": "ComfortFlex",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "ComfortFlex, adult Airbus-operated flight. Turboprop allowance is smaller: 55 × 40 × 23 cm. One cabin bag plus one personal item.",
+      "additional_source_urls": [
+        "https://en.aegeanair.com/en/travel-information/travelling-with-olympic-air/baggage/hand-luggage-and-essentials/?app_version=1&origin=app&sc_site=olympicair"
+      ]
+    },
+    {
+      "fare_class": "comfort_flex",
+      "fare_name": "ComfortFlex",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "ComfortFlex: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag."
+    },
+    {
+      "fare_class": "comfort_flex",
+      "fare_name": "ComfortFlex",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "ComfortFlex: 1 included checked bag(s). 23 kg is the standard bag allowance before overweight fees; absolute acceptance ceiling 32 kg. Adult base fare, no status benefits; special route rules require ticket confirmation."
+    },
+    {
+      "fare_class": "family",
+      "fare_name": "Family",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Family, adult Airbus-operated flight. Turboprop allowance is smaller: 55 × 40 × 23 cm. One cabin bag plus one personal item.",
+      "additional_source_urls": [
+        "https://en.aegeanair.com/en/travel-information/travelling-with-olympic-air/baggage/hand-luggage-and-essentials/?app_version=1&origin=app&sc_site=olympicair"
+      ]
+    },
+    {
+      "fare_class": "family",
+      "fare_name": "Family",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Family: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag."
+    },
+    {
+      "fare_class": "family",
+      "fare_name": "Family",
+      "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+      "verified_at": "2026-08-30",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Family: 0 included checked bag(s). 23 kg is the standard bag allowance before overweight fees; absolute acceptance ceiling 32 kg. Adult base fare, no status benefits; special route rules require ticket confirmation."
+    }
+  ],
+  "source_url": "https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "audit_note": "Official economy fare allowances researched, not placeholder data. Record models adult Airbus-operated flights. Light cabin/personal rows are mutually exclusive, expressed by allowance_group and group_max_count; the current engine does not enforce that relationship or select aircraft-specific limits. Turboprop, business, status benefits and special route rules are not fully modeled. Enforcement and physical sizers remain unverified.",
+  "research_dossier": "resources/carriers/A3-aegean-airlines.md"
+}

@@ -3,22 +3,23 @@
    Two jobs. The dull one is shape: every record must survive toCarrier() so a
    malformed allowance fails here rather than at a gate.
 
-   The important one is the PUBLICATION GATE. Every record currently carries
-   `placeholder: true` because the values came out of a mockup, and every number
-   quoted in the docs is derived from them. The single worst outcome for this
-   project is publishing a confident verdict computed from data nobody verified —
-   that is precisely the failure we criticise the category for. So: placeholders
-   are allowed to exist, and are not allowed to ship. */
-import { readFileSync, readdirSync } from 'node:fs';
-import { toCarrier, EngineInputError } from '../src/engine/normalize.mjs';
-import { resolve, MIN_CONFIDENCE } from '../src/engine/strictness.mjs';
+   The PUBLICATION GATE distinguishes mockup placeholders from researched
+   allowances. A researched record is not a placeholder, but may still carry
+   publication_ready: false while enforcement or policy conflicts need review.
+   Neither category may ship until its outstanding review is complete. */
+import { readdirSync, readFileSync } from 'node:fs';
+import { EngineInputError, toCarrier } from '../src/engine/normalize.mjs';
+import { resolve } from '../src/engine/strictness.mjs';
 
 const dir = new URL('carriers/', import.meta.url);
 const files = readdirSync(dir).filter((f) => f.endsWith('.json') && f !== '_index.json');
 const PUBLISHING = process.argv.includes('--publish');
 
 let fail = 0;
-const bad = (s) => { console.log(`  FAIL  ${s}`); fail++; };
+const bad = (s) => {
+  console.log(`  FAIL  ${s}`);
+  fail++;
+};
 
 const records = files.map((f) => ({ file: f, rec: JSON.parse(readFileSync(new URL(f, dir))) }));
 
@@ -26,10 +27,12 @@ for (const { file, rec } of records) {
   const id = rec.iata ?? file;
 
   if (!rec.iata || !rec.name) bad(`${file}: missing iata or name`);
-  if (rec.iata && file !== `${rec.iata}.json`) bad(`${file}: filename does not match iata ${rec.iata}`);
+  if (rec.iata && file !== `${rec.iata}.json`)
+    bad(`${file}: filename does not match iata ${rec.iata}`);
 
   const score = rec.strictness?.score;
-  if (typeof score !== 'number' || score < 1 || score > 10) bad(`${id}: strictness must be 1-10, got ${score}`);
+  if (typeof score !== 'number' || score < 1 || score > 10)
+    bad(`${id}: strictness must be 1-10, got ${score}`);
 
   /* Lifecycle. A ceased carrier is allowed in the dataset — the history is worth
      keeping and someone will still search for it — but it must say when, and why
@@ -47,8 +50,10 @@ for (const { file, rec } of records) {
   const cabin = (rec.allowances ?? []).filter((a) => a.type === 'cabin');
   if (!cabin.length) bad(`${id}: no cabin allowance rows at all`);
   for (const a of cabin) {
-    if (!Array.isArray(a.max_cm) || a.max_cm.length !== 3) bad(`${id}/${a.fare_class}: max_cm must be 3 numbers`);
-    else if (a.max_cm.some((n) => !Number.isFinite(n) || n <= 0)) bad(`${id}/${a.fare_class}: implausible max_cm`);
+    if (!Array.isArray(a.max_cm) || a.max_cm.length !== 3)
+      bad(`${id}/${a.fare_class}: max_cm must be 3 numbers`);
+    else if (a.max_cm.some((n) => !Number.isFinite(n) || n <= 0))
+      bad(`${id}/${a.fare_class}: implausible max_cm`);
     /* A zero-size row would silently pass a naive comparison. Absence is the
        signal for "no cabin bag", never a row of zeroes. */
     if (Array.isArray(a.max_cm) && a.max_cm.every((n) => n === 0)) {
@@ -58,8 +63,9 @@ for (const { file, rec } of records) {
 
   /* Every fare must normalize, since that is what the engine actually calls. */
   for (const a of cabin) {
-    try { toCarrier(rec, a.fare_class); }
-    catch (e) {
+    try {
+      toCarrier(rec, a.fare_class);
+    } catch (e) {
       if (e instanceof EngineInputError) bad(`${id}/${a.fare_class}: ${e.message}`);
       else throw e;
     }
@@ -69,8 +75,12 @@ for (const { file, rec } of records) {
      same burden as any other claim in this repo: a reason, a name, a date. */
   const o = rec.strictness?.override;
   if (o?.score != null) {
-    if (typeof o.score !== 'number' || o.score < 1 || o.score > 10) bad(`${id}: override score must be 1-10`);
-    if (!o.reason) bad(`${id}: strictness override with no reason — an unexplained number is what this replaces`);
+    if (typeof o.score !== 'number' || o.score < 1 || o.score > 10)
+      bad(`${id}: override score must be 1-10`);
+    if (!o.reason)
+      bad(
+        `${id}: strictness override with no reason — an unexplained number is what this replaces`
+      );
     if (!o.by) bad(`${id}: strictness override with no author`);
     if (!o.at) bad(`${id}: strictness override with no date — nobody can tell if it still holds`);
     const st = resolve(rec.strictness).override?.status;
@@ -103,16 +113,28 @@ for (const { file, rec } of records) {
 
   if (PUBLISHING) {
     if (rec.placeholder) bad(`${id}: placeholder data cannot be published`);
+    if (rec.publication_ready === false)
+      bad(`${id}: researched allowances; publication review pending`);
     if (!rec.source_url) bad(`${id}: no source_url — nobody read the carrier's page`);
     if (!rec.verified_at) bad(`${id}: never verified`);
   }
 }
 
 const placeholders = records.filter(({ rec }) => rec.placeholder).length;
-const verified = records.length - placeholders;
-console.log(`${records.length} carriers · ${verified} verified · ${placeholders} placeholder · target 50`);
+const researched = records.filter(
+  ({ rec }) => rec.research_status === 'official_allowances_researched'
+).length;
+const pendingReview = records.filter(({ rec }) => rec.publication_ready === false).length;
+console.log(
+  `${records.length} carriers · ${researched} researched · ${placeholders} placeholder · ${pendingReview} pending publication review · target 50`
+);
 
-if (fail) { console.log(`\n${fail} problem(s)`); process.exit(1); }
-console.log(PUBLISHING
-  ? '\ncarrier data is fit to publish'
-  : '\nshape is valid. Run with --publish to check it is fit to ship (it is not, yet).');
+if (fail) {
+  console.log(`\n${fail} problem(s)`);
+  process.exit(1);
+}
+console.log(
+  PUBLISHING
+    ? '\ncarrier data is fit to publish'
+    : '\nshape is valid. Run with --publish to check it is fit to ship (it is not, yet).'
+);

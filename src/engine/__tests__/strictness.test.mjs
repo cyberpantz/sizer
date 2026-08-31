@@ -4,12 +4,22 @@
    someone to a gate with a bag that will not fit. The tests that matter are the
    ones about NOT KNOWING — an unresearched carrier must never read as a lax one. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { scoreFrom, resolve, COMPONENTS, MAX_RAW, REPORT_FLOOR, MIN_CONFIDENCE,
-         TYPE_PRIOR, priorFor, NO_PRIOR } from '../strictness.mjs';
+import { describe, test } from 'node:test';
+import {
+  COMPONENTS,
+  MAX_RAW,
+  MIN_CONFIDENCE,
+  NO_PRIOR,
+  priorFor,
+  REPORT_FLOOR,
+  resolve,
+  scoreFrom,
+  TYPE_PRIOR,
+} from '../strictness.mjs';
 
-const yes = { v: true }, no = { v: false };
+const yes = { v: true },
+  no = { v: false };
 const all = (v) => Object.fromEntries(Object.keys(COMPONENTS).map((k) => [k, { v }]));
 
 describe('derived from components', () => {
@@ -18,8 +28,11 @@ describe('derived from components', () => {
   });
 
   test('none present scores at the bottom, whatever the prior said', () => {
-    assert.equal(scoreFrom(all(false), null, 'ulcc').score, 1,
-      'full evidence must be able to overturn the business-model prior entirely');
+    assert.equal(
+      scoreFrom(all(false), null, 'ulcc').score,
+      1,
+      'full evidence must be able to overturn the business-model prior entirely'
+    );
   });
 
   test('is monotonic — adding an enforcement behaviour never lowers the score', () => {
@@ -28,12 +41,20 @@ describe('derived from components', () => {
     for (let i = 0; i <= keys.length; i++) {
       const c = Object.fromEntries(keys.map((k, j) => [k, { v: j < i }]));
       const s = scoreFrom(c).score;
-      if (s != null) { assert.ok(s >= prev, `score fell from ${prev} to ${s}`); prev = s; }
+      if (s != null) {
+        assert.ok(s >= prev, `score fell from ${prev} to ${s}`);
+        prev = s;
+      }
     }
   });
 
   test('the same facts always give the same score', () => {
-    const c = { published_gauging: yes, staff_incentive: no, weighs_at_checkin: yes, fee_asymmetry: yes };
+    const c = {
+      published_gauging: yes,
+      staff_incentive: no,
+      weighs_at_checkin: yes,
+      fee_asymmetry: yes,
+    };
     assert.equal(scoreFrom(c).score, scoreFrom(c).score);
   });
 });
@@ -67,10 +88,20 @@ describe('not knowing is not the same as lax', () => {
   });
 
   test('unknown components are not counted as absent', () => {
-    const partial = scoreFrom({ published_gauging: yes, staff_incentive: yes }, null, 'full_service');
-    const explicit = scoreFrom({ published_gauging: yes, staff_incentive: yes, weighs_at_checkin: no, fee_asymmetry: no }, null, 'full_service');
-    assert.ok(partial.score > explicit.score,
-      'scoring unknowns as "no" would understate every half-researched carrier');
+    const partial = scoreFrom(
+      { published_gauging: yes, staff_incentive: yes },
+      null,
+      'full_service'
+    );
+    const explicit = scoreFrom(
+      { published_gauging: yes, staff_incentive: yes, weighs_at_checkin: no, fee_asymmetry: no },
+      null,
+      'full_service'
+    );
+    assert.ok(
+      partial.score > explicit.score,
+      'scoring unknowns as "no" would understate every half-researched carrier'
+    );
   });
 });
 
@@ -104,7 +135,10 @@ describe('observed outcomes', () => {
 
 describe('overrides', () => {
   test('a human can pin a score, and it is labelled', () => {
-    const r = resolve({ components: all(false), override: { score: 9, reason: 'policy changed mid-audit' } });
+    const r = resolve({
+      components: all(false),
+      override: { score: 9, reason: 'policy changed mid-audit' },
+    });
     assert.equal(r.score, 9);
     assert.equal(r.source, 'override');
     assert.equal(r.override.reason, 'policy changed mid-audit');
@@ -113,7 +147,11 @@ describe('overrides', () => {
   test('a legacy hand-assigned score still works but is flagged', () => {
     const r = resolve({ score: 7 });
     assert.equal(r.score, 7);
-    assert.equal(r.source, 'legacy_manual', 'so it shows up in an audit rather than passing for derived');
+    assert.equal(
+      r.source,
+      'legacy_manual',
+      'so it shows up in an audit rather than passing for derived'
+    );
   });
 
   test('components beat a stale hand-assigned number', () => {
@@ -125,55 +163,91 @@ describe('overrides', () => {
 
 describe('weights', () => {
   test('the two tier-1, self-published signals carry the most weight', () => {
-    const w = Object.entries(COMPONENTS).map(([k, c]) => [k, c.weight]).sort((a, b) => b[1] - a[1]);
-    assert.deepEqual(w.slice(0, 2).map((x) => x[0]).sort(), ['fee_asymmetry', 'published_gauging'],
-      'the heaviest components must be the ones we can actually source');
+    const w = Object.entries(COMPONENTS)
+      .map(([k, c]) => [k, c.weight])
+      .sort((a, b) => b[1] - a[1]);
+    assert.deepEqual(
+      w
+        .slice(0, 2)
+        .map((x) => x[0])
+        .sort(),
+      ['fee_asymmetry', 'published_gauging'],
+      'the heaviest components must be the ones we can actually source'
+    );
   });
 
   test('every component states where its answer comes from', () => {
     for (const [k, c] of Object.entries(COMPONENTS)) {
-      assert.ok(c.source, `${k} has no source — an unsourceable component is a guess with a schema`);
+      assert.ok(
+        c.source,
+        `${k} has no source — an unsourceable component is a guess with a schema`
+      );
       assert.ok(c.asks, `${k} does not say what question it answers`);
     }
   });
 
   test('MAX_RAW tracks the table rather than being hard-coded', () => {
-    assert.equal(MAX_RAW, Object.values(COMPONENTS).reduce((n, c) => n + c.weight, 0));
+    assert.equal(
+      MAX_RAW,
+      Object.values(COMPONENTS).reduce((n, c) => n + c.weight, 0)
+    );
   });
 });
 
 describe('admin override — the operator must be able to act on reports', () => {
-  const comps = { published_gauging: yes, staff_incentive: no, weighs_at_checkin: no, fee_asymmetry: yes };
+  const comps = {
+    published_gauging: yes,
+    staff_incentive: no,
+    weighs_at_checkin: no,
+    fee_asymmetry: yes,
+  };
 
   test('an admin can pin a score for one carrier', () => {
-    const r = resolve({ components: comps, override: { score: 5, reason: 'sizers removed', by: 'frank', at: '2026-08-30' } });
+    const r = resolve({
+      components: comps,
+      override: { score: 5, reason: 'sizers removed', by: 'frank', at: '2026-08-30' },
+    });
     assert.equal(r.score, 5);
     assert.equal(r.source, 'override');
   });
 
   test('the derived score survives, so the disagreement is visible', () => {
-    const r = resolve({ components: comps, override: { score: 9, reason: 'x', by: 'frank', at: '2026-08-30' } });
+    const r = resolve({
+      components: comps,
+      override: { score: 9, reason: 'x', by: 'frank', at: '2026-08-30' },
+    });
     const expected = scoreFrom(comps).score;
     assert.equal(r.derived_score, expected);
-    assert.equal(r.disagrees_by, 9 - expected, 'seeing HOW MUCH a human overrode the model is the point');
+    assert.equal(
+      r.disagrees_by,
+      9 - expected,
+      'seeing HOW MUCH a human overrode the model is the point'
+    );
   });
 
   test('it carries who and when', () => {
-    const r = resolve({ components: comps, override: { score: 5, reason: 'x', by: 'frank', at: '2026-08-30' } });
+    const r = resolve({
+      components: comps,
+      override: { score: 5, reason: 'x', by: 'frank', at: '2026-08-30' },
+    });
     assert.equal(r.override.by, 'frank');
     assert.equal(r.override.at, '2026-08-30');
   });
 
   test('an override goes stale and says so', () => {
-    const r = resolve({ components: comps, override: { score: 5, reason: 'x', by: 'f', at: '2024-01-01' } },
-                      new Date('2026-08-30'));
+    const r = resolve(
+      { components: comps, override: { score: 5, reason: 'x', by: 'f', at: '2024-01-01' } },
+      new Date('2026-08-30')
+    );
     assert.equal(r.override.status.stale, true);
     assert.ok(r.override.status.days > 180);
   });
 
   test('a fresh override is current', () => {
-    const r = resolve({ components: comps, override: { score: 5, reason: 'x', by: 'f', at: '2026-08-01' } },
-                      new Date('2026-08-30'));
+    const r = resolve(
+      { components: comps, override: { score: 5, reason: 'x', by: 'f', at: '2026-08-01' } },
+      new Date('2026-08-30')
+    );
     assert.equal(r.override.status.stale, false);
   });
 
@@ -184,16 +258,20 @@ describe('admin override — the operator must be able to act on reports', () =>
   });
 
   test('a per-carrier review window can be shortened', () => {
-    const r = resolve({ components: comps, override: { score: 5, reason: 'x', at: '2026-06-01', review_days: 30 } },
-                      new Date('2026-08-30'));
+    const r = resolve(
+      { components: comps, override: { score: 5, reason: 'x', at: '2026-06-01', review_days: 30 } },
+      new Date('2026-08-30')
+    );
     assert.equal(r.override.status.stale, true, 'a volatile carrier can demand a tighter window');
   });
 });
 
 describe('the business-model prior', () => {
   test('a ULCC starts stricter than a legacy carrier', () => {
-    assert.ok(TYPE_PRIOR.ulcc.score > TYPE_PRIOR.full_service.score,
-      'ancillary fees ARE the ULCC revenue model — enforcement is structural');
+    assert.ok(
+      TYPE_PRIOR.ulcc.score > TYPE_PRIOR.full_service.score,
+      'ancillary fees ARE the ULCC revenue model — enforcement is structural'
+    );
   });
 
   test('every prior explains itself', () => {
@@ -212,14 +290,19 @@ describe('the business-model prior', () => {
     const none = scoreFrom({}, null, 'ulcc').score;
     const half = scoreFrom({ published_gauging: no, fee_asymmetry: no }, null, 'ulcc').score;
     const full = scoreFrom(all(false), null, 'ulcc').score;
-    assert.ok(none > half && half > full,
-      'a ULCC that demonstrably does not enforce must be able to score low');
+    assert.ok(
+      none > half && half > full,
+      'a ULCC that demonstrably does not enforce must be able to score low'
+    );
   });
 
   test('a prior alone is always provisional', () => {
     for (const t of Object.keys(TYPE_PRIOR)) {
-      assert.equal(scoreFrom({}, null, t).provisional, true,
-        'the published content still has to be read for every carrier');
+      assert.equal(
+        scoreFrom({}, null, t).provisional,
+        true,
+        'the published content still has to be read for every carrier'
+      );
     }
   });
 });
@@ -236,8 +319,11 @@ describe('the region shift', () => {
   });
 
   test('a ULCC does not get stricter for being European — it is already at the ceiling', () => {
-    assert.equal(priorFor('ulcc', 'EU').score, priorFor('ulcc', 'NA').score,
-      'the shift describes legacy carriers moving toward ULCC practice, not the region itself');
+    assert.equal(
+      priorFor('ulcc', 'EU').score,
+      priorFor('ulcc', 'NA').score,
+      'the shift describes legacy carriers moving toward ULCC practice, not the region itself'
+    );
   });
 
   test('an unknown region leaves the prior alone', () => {

@@ -5,10 +5,10 @@
    is one edit and cannot disagree with itself. */
 
 export const BAND_COPY = {
-  clears: { label: 'It fits',      tone: 'good',    token: 'var(--green)' },
-  line:   { label: 'Just fits',    tone: 'caution', token: 'var(--amber)' },
-  gamble: { label: 'Risky',        tone: 'warn',    token: 'var(--orange)' },
-  wont:   { label: "It won't fit", tone: 'bad',     token: 'var(--red)' },
+  clears: { label: 'It fits', tone: 'good', token: 'var(--green)' },
+  line: { label: 'Just fits', tone: 'caution', token: 'var(--amber)' },
+  gamble: { label: 'Risky', tone: 'warn', token: 'var(--orange)' },
+  wont: { label: "It won't fit", tone: 'bad', token: 'var(--red)' },
 };
 
 /* Editorial policy 16: we report measurements, not accusations. "Turned away",

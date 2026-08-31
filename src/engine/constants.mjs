@@ -24,10 +24,10 @@ export function gambleCeiling(strictness) {
      some convenience, an over-confident one costs them a gate fee and their
      bag. When we do not know, say the strict thing. */
   if (typeof strictness !== 'number' || !Number.isFinite(strictness)) return 0;
-  if (strictness <= 3) return 5.0;  // effectively never measured
-  if (strictness <= 5) return 3.0;  // occasional, usually only when bins are full
-  if (strictness <= 7) return 1.5;  // frames at the gate, staff use judgement
-  return 0;                         // measured as routine — over is over
+  if (strictness <= 3) return 5.0; // effectively never measured
+  if (strictness <= 5) return 3.0; // occasional, usually only when bins are full
+  if (strictness <= 7) return 1.5; // frames at the gate, staff use judgement
+  return 0; // measured as routine — over is over
 }
 
 /** What an unresearched carrier scores. Used when a record has no strictness
@@ -40,7 +40,7 @@ export const UNKNOWN_STRICTNESS = 8;
  *  folding it in moved one bag nine carriers, silently, which is wiggle room
  *  replacing a published limit. It raises an advisory instead. */
 export const SQUISH_CM = {
-  aluminium: 0,    // dents, doesn't compress
+  aluminium: 0, // dents, doesn't compress
   hardside: 0.3,
   softside: 1.5,
   backpack: 2.5,

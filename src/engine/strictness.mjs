@@ -42,12 +42,18 @@
    exists so that an unresearched carrier has a DEFENSIBLE score rather than a
    null or a fail-safe guess, not so we can skip the reading. */
 export const TYPE_PRIOR = {
-  ulcc:         { score: 9, why: 'Ancillary fees are the revenue model; enforcement is structural.' },
-  lcc:          { score: 7, why: 'Fee-dependent, though less absolutely than a ULCC.' },
-  hybrid:       { score: 6, why: 'Bundles vary; enforcement varies with the fare sold.' },
-  full_service: { score: 5, why: 'Fare covers the seat; gate staff are measured on on-time departure.' },
-  regional:     { score: 6, why: 'Bins are physically small, so bags are stopped for space rather than policy.' },
-  charter:      { score: 7, why: 'Thin margins, high load factors.' },
+  ulcc: { score: 9, why: 'Ancillary fees are the revenue model; enforcement is structural.' },
+  lcc: { score: 7, why: 'Fee-dependent, though less absolutely than a ULCC.' },
+  hybrid: { score: 6, why: 'Bundles vary; enforcement varies with the fare sold.' },
+  full_service: {
+    score: 5,
+    why: 'Fare covers the seat; gate staff are measured on on-time departure.',
+  },
+  regional: {
+    score: 6,
+    why: 'Bins are physically small, so bags are stopped for space rather than policy.',
+  },
+  charter: { score: 7, why: 'Thin margins, high load factors.' },
 };
 
 /* Region shifts the prior, because carrier TYPE alone did not explain the data.
@@ -62,9 +68,9 @@ export const TYPE_PRIOR = {
    obvious mechanism: European carriers compete directly with Ryanair and Wizz
    and have adopted their gate practices, and Gulf carriers weigh as standard. */
 export const REGION_SHIFT = {
-  EU: +2,   // gate sizers are routine; direct competition with ULCCs
-  ME: +2,   // cabin bags weighed as standard
-  AS: +1,   // weighing common, size enforcement variable
+  EU: +2, // gate sizers are routine; direct competition with ULCCs
+  ME: +2, // cabin bags weighed as standard
+  AS: +1, // weighing common, size enforcement variable
   /* NA is the baseline, and the reason needs stating carefully: it is US
      LEGACY carriers that are relaxing — American removed its gate sizers in
      Oct 2025 — not the US as a region. US ULCCs run the most aggressively
@@ -78,7 +84,10 @@ export const REGION_SHIFT = {
 /** With no type and no evidence, assume strict. The asymmetry from
  *  constants.mjs applies: an over-cautious verdict costs convenience, an
  *  over-confident one costs a gate fee and the bag. */
-export const NO_PRIOR = { score: 8, why: 'Carrier type unknown — assume enforcement until shown otherwise.' };
+export const NO_PRIOR = {
+  score: 8,
+  why: 'Carrier type unknown — assume enforcement until shown otherwise.',
+};
 
 export function priorFor(type, region = null) {
   const base = TYPE_PRIOR[type] ?? NO_PRIOR;
@@ -125,7 +134,7 @@ export const COMPONENTS = {
     weight: 3,
     asks: 'Is the gate price for a carry-on several times the online price?',
     source: 'carrier fee table — tier 1',
-    threshold: 3,   // gate >= 3x online counts as true
+    threshold: 3, // gate >= 3x online counts as true
   },
 
   /* Documented pay-per-catch schemes. Rare, real, and decisive where it exists. */
@@ -152,7 +161,7 @@ export const MAX_RAW = Object.values(COMPONENTS).reduce((n, c) => n + c.weight, 
  *  rather than asserted. Weighted by sample size so three angry reports cannot
  *  move a score, and deliberately capable of OVERRIDING the asserted components
  *  once the sample is real: what actually happens beats what we think happens. */
-export const REPORT_FLOOR = 25;   // below this, reports inform but do not decide
+export const REPORT_FLOOR = 25; // below this, reports inform but do not decide
 
 /** Below this share of components researched, we do not publish a score at all.
  *  One known component out of four produced a confident-looking 10 in testing —
@@ -164,11 +173,15 @@ export const MIN_CONFIDENCE = 0.5;
 export function scoreFrom(components = {}, reports = null, type = null, region = null) {
   const prior = priorFor(type, region);
 
-  let raw = 0, known = 0;
+  let raw = 0,
+    known = 0;
   const missing = [];
   for (const [key, spec] of Object.entries(COMPONENTS)) {
     const c = components[key];
-    if (c == null || c.v == null) { missing.push(key); continue; }
+    if (c == null || c.v == null) {
+      missing.push(key);
+      continue;
+    }
     known += spec.weight;
     if (c.v === true) raw += spec.weight;
   }
@@ -201,7 +214,9 @@ export function scoreFrom(components = {}, reports = null, type = null, region =
     prior: prior.score,
     prior_why: prior.why,
     asserted: asserted == null ? null : Math.round(asserted),
-    raw, known, of: MAX_RAW,
+    raw,
+    known,
+    of: MAX_RAW,
     confidence: +confidence.toFixed(2),
     missing,
     source,

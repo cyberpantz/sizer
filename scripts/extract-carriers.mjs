@@ -12,15 +12,44 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
 const html = readFileSync(new URL('mockup/index.html', root), 'utf8');
+// biome-ignore lint/security/noGlobalEval: one-off migration reading our own generated literal out of a mockup we wrote
 const AIR = eval(html.match(/const AIR ?= ?\[[\s\S]*?\n\];/)[0].replace(/^const AIR=/, ''));
 
 const REGION = {
-  FR: 'EU', W6: 'EU', U2: 'EU', AF: 'EU', KL: 'EU', LH: 'EU', BA: 'EU', IB: 'EU', VY: 'EU',
-  AA: 'NA', UA: 'NA', DL: 'NA', WN: 'NA', B6: 'NA', NK: 'NA', F9: 'NA',
-  SQ: 'AS', CX: 'AS', JL: 'AS', NH: 'AS', TK: 'AS', TR: 'AS', EK: 'ME', QR: 'ME',
+  FR: 'EU',
+  W6: 'EU',
+  U2: 'EU',
+  AF: 'EU',
+  KL: 'EU',
+  LH: 'EU',
+  BA: 'EU',
+  IB: 'EU',
+  VY: 'EU',
+  AA: 'NA',
+  UA: 'NA',
+  DL: 'NA',
+  WN: 'NA',
+  B6: 'NA',
+  NK: 'NA',
+  F9: 'NA',
+  SQ: 'AS',
+  CX: 'AS',
+  JL: 'AS',
+  NH: 'AS',
+  TK: 'AS',
+  TR: 'AS',
+  EK: 'ME',
+  QR: 'ME',
 };
 const TYPE = {
-  FR: 'ulcc', W6: 'ulcc', U2: 'lcc', VY: 'lcc', NK: 'ulcc', F9: 'ulcc', TR: 'lcc', WN: 'lcc',
+  FR: 'ulcc',
+  W6: 'ulcc',
+  U2: 'lcc',
+  VY: 'lcc',
+  NK: 'ulcc',
+  F9: 'ulcc',
+  TR: 'lcc',
+  WN: 'lcc',
 };
 /* Mainline brands whose regional subsidiaries publish the mainline limits but
    fly aircraft whose bins won't take a 22-inch roller. Drives the advisory. */
@@ -45,10 +74,15 @@ for (const a of AIR) {
     });
     if (f.chk) {
       allowances.push({
-        fare_class: fare, type: 'checked',
-        linear_max_cm: null, max_kg: null, free_pieces: f.chk,
-        system: 'piece', weight_total_kg: null,
-        source_url: '', verified_at: null,
+        fare_class: fare,
+        type: 'checked',
+        linear_max_cm: null,
+        max_kg: null,
+        free_pieces: f.chk,
+        system: 'piece',
+        weight_total_kg: null,
+        source_url: '',
+        verified_at: null,
       });
     }
   }
@@ -76,18 +110,26 @@ for (const a of AIR) {
     /* The flag that keeps this out of production. validate-carriers.mjs fails
        any build that tries to publish one. */
     placeholder: true,
-    placeholder_note: 'Lifted from mockup/index.html. Not verified against the carrier. Do not publish.',
+    placeholder_note:
+      'Lifted from mockup/index.html. Not verified against the carrier. Do not publish.',
   };
   writeFileSync(new URL(`data/carriers/${a.c}.json`, root), JSON.stringify(record, null, 1));
   written++;
 }
 
-writeFileSync(new URL('data/carriers/_index.json', root), JSON.stringify({
-  generated: new Date().toISOString().slice(0, 10),
-  count: written,
-  target: 50,
-  verified: 0,
-  note: 'Every record is placeholder: true until someone reads the carrier page and fills source_url + verified_at.',
-  carriers: AIR.map((a) => a.c).sort(),
-}, null, 1));
+writeFileSync(
+  new URL('data/carriers/_index.json', root),
+  JSON.stringify(
+    {
+      generated: new Date().toISOString().slice(0, 10),
+      count: written,
+      target: 50,
+      verified: 0,
+      note: 'Every record is placeholder: true until someone reads the carrier page and fills source_url + verified_at.',
+      carriers: AIR.map((a) => a.c).sort(),
+    },
+    null,
+    1
+  )
+);
 console.log(`${written} carrier records written, all flagged placeholder`);

@@ -2,9 +2,9 @@
    three times before settling and the cost of getting them wrong is losing
    either the US or the non-US audience entirely. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { createUnits, localeDefault, CM, IN } from '../units.mjs';
+import { describe, test } from 'node:test';
+import { CM, createUnits, IN, localeDefault } from '../units.mjs';
 
 const fakeStore = (init = {}) => {
   const m = new Map(Object.entries(init));
@@ -31,7 +31,14 @@ describe('opening default', () => {
     assert.equal(localeDefault(undefined), CM);
     assert.equal(localeDefault(null), CM);
     assert.equal(localeDefault({}), CM);
-    assert.equal(localeDefault({ get language() { throw new Error('x'); } }), CM);
+    assert.equal(
+      localeDefault({
+        get language() {
+          throw new Error('x');
+        },
+      }),
+      CM
+    );
   });
 
   /* Node 22 ships a built-in navigator reporting en-US. Without this guard every
@@ -68,10 +75,17 @@ describe('an explicit choice wins and persists', () => {
   });
 
   test('storage that throws does not break the page', () => {
-    const hostile = { getItem() { throw new Error('blocked'); }, setItem() { throw new Error('blocked'); } };
+    const hostile = {
+      getItem() {
+        throw new Error('blocked');
+      },
+      setItem() {
+        throw new Error('blocked');
+      },
+    };
     const U = createUnits({ storage: hostile, navigator: nav('de-DE') });
     assert.equal(U.unit, CM);
-    U.set(IN);                       // must not throw
+    U.set(IN); // must not throw
     assert.equal(U.unit, IN, 'the choice applies for the session even if it cannot persist');
   });
 
@@ -85,7 +99,8 @@ describe('an explicit choice wins and persists', () => {
 
 describe('conversion', () => {
   const metric = () => createUnits({ storage: fakeStore({ units: CM }), navigator: nav('en-US') });
-  const imperial = () => createUnits({ storage: fakeStore({ units: IN }), navigator: nav('de-DE') });
+  const imperial = () =>
+    createUnits({ storage: fakeStore({ units: IN }), navigator: nav('de-DE') });
 
   test('cm passes through untouched in metric', () => {
     assert.equal(metric().len(55.9), 55.9);
@@ -106,7 +121,7 @@ describe('conversion', () => {
     assert.equal(metric().dims([55, 40, 20]), '55 × 40 × 20 cm');
   });
 
-  test('dual display leads with the reader\'s own unit', () => {
+  test("dual display leads with the reader's own unit", () => {
     assert.match(metric().dimsBoth([55, 40, 20]), /^55 × 40 × 20 cm · /);
     assert.match(imperial().dimsBoth([55, 40, 20]), /^21\.7 × 15\.7 × 7\.9 in · /);
   });
@@ -116,7 +131,9 @@ describe('the toggle', () => {
   test('flips and notifies', () => {
     const U = createUnits({ storage: fakeStore(), navigator: nav('en-US') });
     let seen = null;
-    U.onChange((u) => { seen = u; });
+    U.onChange((u) => {
+      seen = u;
+    });
     U.toggle();
     assert.equal(U.unit, CM);
     assert.equal(seen, CM, 'every rendered figure on the page depends on this firing');
@@ -126,7 +143,9 @@ describe('the toggle', () => {
     const U = createUnits({ storage: fakeStore() });
     let n = 0;
     const off = U.onChange(() => n++);
-    U.toggle(); off(); U.toggle();
+    U.toggle();
+    off();
+    U.toggle();
     assert.equal(n, 1);
   });
 });

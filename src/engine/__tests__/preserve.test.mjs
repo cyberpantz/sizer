@@ -5,12 +5,12 @@
    the repo that is genuinely ours. This test exists because the failure would be
    silent: a rebuild that wipes the asset looks exactly like a rebuild that works. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, mkdtempSync, cpSync, rmSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { describe, test } from 'node:test';
 
 const root = new URL('../../../', import.meta.url).pathname;
 
@@ -45,7 +45,9 @@ describe('rebuilding the catalogue', () => {
       assert.equal(after.measured_by, 'frank');
       assert.equal(after.measurement_photo, '/img/measure/monos-carryon.jpg');
       assert.equal(after.needs_measurement, false, 'a measured bag must leave the queue');
-    } finally { teardown(); }
+    } finally {
+      teardown();
+    }
   });
 
   test('still refreshes derived fields around the preserved ones', () => {
@@ -54,7 +56,7 @@ describe('rebuilding the catalogue', () => {
       const file = join(d, 'data/bags/monos-carryon.json');
       const rec = JSON.parse(readFileSync(file));
       rec.measured_cm = { v: [1, 1, 1], src: 'measured', at: '2026-09-02' };
-      rec.brand = 'WRONG';                 // derived — must be regenerated
+      rec.brand = 'WRONG'; // derived — must be regenerated
       writeFileSync(file, JSON.stringify(rec, null, 1));
 
       rebuildIn(d);
@@ -62,16 +64,23 @@ describe('rebuilding the catalogue', () => {
       const after = JSON.parse(readFileSync(file));
       assert.equal(after.brand, 'Monos', 'derived fields must still rebuild');
       assert.deepEqual(after.measured_cm.v, [1, 1, 1], 'preserved fields must survive');
-    } finally { teardown(); }
+    } finally {
+      teardown();
+    }
   });
 
   test('refuses to rebuild over a record it cannot parse', () => {
     const d = setup();
     try {
       writeFileSync(join(d, 'data/bags/monos-carryon.json'), '{ not json');
-      assert.throws(() => rebuildIn(d), /unreadable|Fix or move it/,
-        'a corrupt record may hold a measurement — never clobber it on a guess');
-    } finally { teardown(); }
+      assert.throws(
+        () => rebuildIn(d),
+        /unreadable|Fix or move it/,
+        'a corrupt record may hold a measurement — never clobber it on a guess'
+      );
+    } finally {
+      teardown();
+    }
   });
 
   test('a bag with no measurement stays queued', () => {
@@ -81,6 +90,8 @@ describe('rebuilding the catalogue', () => {
       const after = JSON.parse(readFileSync(join(d, 'data/bags/monos-carryon.json')));
       assert.equal(after.measured_cm, null);
       assert.equal(after.needs_measurement, true);
-    } finally { teardown(); }
+    } finally {
+      teardown();
+    }
   });
 });

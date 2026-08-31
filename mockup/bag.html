@@ -592,6 +592,36 @@ const AIR = [
   }
  },
  {
+  "c": "DY",
+  "n": "Norwegian",
+  "st": 9,
+  "e": "",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item."
+   },
+   "flex": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 15,
+    "ovh": 1,
+    "chk": 2,
+    "note": "Cabin bag and personal item share 15 kg; not a separate allowance per item."
+   }
+  }
+ },
+ {
   "c": "EI",
   "n": "Aer Lingus",
   "st": 7,
@@ -637,6 +667,36 @@ const AIR = [
     "ovh": 1,
     "chk": 1,
     "note": "7 kg in the cabin. A hard-shell suitcase uses half of that empty."
+   }
+  }
+ },
+ {
+  "c": "EW",
+  "n": "Eurowings",
+  "st": 9,
+  "e": "",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "ovh": 1,
+    "chk": 1,
+    "note": "SMART; adult allowance."
+   },
+   "business": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "ovh": 1,
+    "chk": 2,
+    "note": "BIZclass; adult allowance."
    }
   }
  },
@@ -727,6 +787,36 @@ const AIR = [
     "ovh": 1,
     "chk": 0,
     "note": "Adds one overhead bag on top of the under-seat item."
+   }
+  }
+ },
+ {
+  "c": "HV",
+  "n": "Transavia",
+  "st": 9,
+  "e": "",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item."
+   },
+   "max": {
+    "d": [
+     55,
+     40,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item."
    }
   }
  },
@@ -916,6 +1006,36 @@ const AIR = [
   }
  },
  {
+  "c": "LS",
+  "n": "Jet2.com",
+  "st": 9,
+  "e": "",
+  "f": {
+   "basic": {
+    "d": [
+     56,
+     45,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Flight-only; adult allowance."
+   },
+   "economy": {
+    "d": [
+     56,
+     45,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Flight-only; adult allowance."
+   }
+  }
+ },
+ {
   "c": "LX",
   "n": "SWISS",
   "st": 7,
@@ -1018,6 +1138,25 @@ const AIR = [
     "ovh": 1,
     "chk": 2,
     "note": "Economy. General baggage page supplies per-axis dimensions; current carry-on page states 115 cm total. Personal-item dimensions verified separately."
+   }
+  }
+ },
+ {
+  "c": "PC",
+  "n": "Pegasus Airlines",
+  "st": 9,
+  "e": "",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "ovh": 1,
+    "chk": 1,
+    "note": "Saver; adult allowance."
    }
   }
  },
@@ -1283,6 +1422,25 @@ const AIR = [
   }
  },
  {
+  "c": "V7",
+  "n": "Volotea",
+  "st": 9,
+  "e": "",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     25
+    ],
+    "kg": 10,
+    "ovh": 1,
+    "chk": 0,
+    "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item."
+   }
+  }
+ },
+ {
   "c": "VN",
   "n": "Vietnam Airlines",
   "st": 6,
@@ -1411,6 +1569,25 @@ const AIR = [
   }
  },
  {
+  "c": "XQ",
+  "n": "SunExpress",
+  "st": 9,
+  "e": "",
+  "f": {
+   "economy": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "ovh": 1,
+    "chk": 0,
+    "note": "International SunValue. No separate personal-item entitlement verified; do not infer one from the SunLight allowance."
+   }
+  }
+ },
+ {
   "c": "ZG",
   "n": "ZIPAIR",
   "st": 8,
@@ -1460,10 +1637,10 @@ function gambleCeiling(strictness) {
      some convenience, an over-confident one costs them a gate fee and their
      bag. When we do not know, say the strict thing. */
   if (typeof strictness !== 'number' || !Number.isFinite(strictness)) return 0;
-  if (strictness <= 3) return 5.0;  // effectively never measured
-  if (strictness <= 5) return 3.0;  // occasional, usually only when bins are full
-  if (strictness <= 7) return 1.5;  // frames at the gate, staff use judgement
-  return 0;                         // measured as routine — over is over
+  if (strictness <= 3) return 5.0; // effectively never measured
+  if (strictness <= 5) return 3.0; // occasional, usually only when bins are full
+  if (strictness <= 7) return 1.5; // frames at the gate, staff use judgement
+  return 0; // measured as routine — over is over
 }
 
 /** What an unresearched carrier scores. Used when a record has no strictness
@@ -1476,7 +1653,7 @@ const UNKNOWN_STRICTNESS = 8;
  *  folding it in moved one bag nine carriers, silently, which is wiggle room
  *  replacing a published limit. It raises an advisory instead. */
 const SQUISH_CM = {
-  aluminium: 0,    // dents, doesn't compress
+  aluminium: 0, // dents, doesn't compress
   hardside: 0.3,
   softside: 1.5,
   backpack: 2.5,
@@ -1522,7 +1699,13 @@ function squish({ bag, deltaCm, config }) {
   if (deltaCm <= 0) return null;
   const give = config.SQUISH_CM[bag.shell] ?? 0;
   if (give >= 1 && deltaCm <= give) {
-    return { id: 'squish', level: 'may_squeeze', over_cm: deltaCm, give_cm: give, shell: bag.shell };
+    return {
+      id: 'squish',
+      level: 'may_squeeze',
+      over_cm: deltaCm,
+      give_cm: give,
+      shell: bag.shell,
+    };
   }
   /* Rigid and over. "It'll probably squeeze in" is sound for a duffel and
      completely wrong for a polycarbonate shell, which either goes in or doesn't.
@@ -1534,13 +1717,20 @@ function squish({ bag, deltaCm, config }) {
 }
 
 function weight({ bag, carrier, config }) {
-  const cap = carrier.allowance?.max_kg, kg = bag.weight_kg;
+  const cap = carrier.allowance?.max_kg,
+    kg = bag.weight_kg;
   if (!cap || !kg) return null;
   const left = +(cap - kg).toFixed(2);
   if (left <= 0) return { id: 'weight', level: 'over', bag_kg: kg, cap_kg: cap, left_kg: left };
   if (kg / cap >= config.WEIGHT_TIGHT_RATIO) {
-    return { id: 'weight', level: 'tight', bag_kg: kg, cap_kg: cap,
-             left_kg: left, share: +(kg / cap).toFixed(2) };
+    return {
+      id: 'weight',
+      level: 'tight',
+      bag_kg: kg,
+      cap_kg: cap,
+      left_kg: left,
+      share: +(kg / cap).toFixed(2),
+    };
   }
   return null;
 }
@@ -1552,8 +1742,12 @@ function expansion({ bag, deltaCm }) {
   if (!bag.expands_cm) return null;
   const expanded = +(deltaCm + bag.expands_cm).toFixed(2);
   if (deltaCm <= 0 && expanded > 0) {
-    return { id: 'expansion', level: 'compliant_until_expanded',
-             expands_cm: bag.expands_cm, over_when_expanded_cm: expanded };
+    return {
+      id: 'expansion',
+      level: 'compliant_until_expanded',
+      expands_cm: bag.expands_cm,
+      over_when_expanded_cm: expanded,
+    };
   }
   return null;
 }
@@ -1603,7 +1797,14 @@ function noCabinBag({ carrier }) {
 }
 
 /** Order is render order: most consequential first. */
-const DEFAULT_ADVISORIES = [noCabinBag, agentCommission, regionalJet, squish, weight, expansion];
+const DEFAULT_ADVISORIES = [
+  noCabinBag,
+  agentCommission,
+  regionalJet,
+  squish,
+  weight,
+  expansion,
+];
 
 // ---- src/engine/fit.mjs ----
 /* The fit engine.
@@ -1625,12 +1826,12 @@ const DEFAULT_ADVISORIES = [noCabinBag, agentCommission, regionalJet, squish, we
      3. a flat 3 cm ceiling that ignored strictness entirely
    All three are tests now. Add a case when a fourth turns up. */
 
+
 /* Plain named imports, no aliases and no namespace import. The mockup inliner
    flattens these modules into a single scope, where `defaults.EPS_CM` and
    `EPS_CM as DEFAULT_EPS_CM` both evaporate. scripts/build-mockups.mjs rejects
    either form rather than emitting a page that throws in a browser — both were
    caught that way, which is the entire reason that check exists. */
-
 
 
 /** Compared largest-to-smallest, never by axis name: a bag rotates, so
@@ -1642,8 +1843,12 @@ const DIM_LABEL = ['long', 'wide', 'deep'];
 
 function createEngine(overrides = {}) {
   const config = {
-    EPS_CM, gambleCeiling, SQUISH_CM,
-    SOFT_COMPRESS_CM, WEIGHT_TIGHT_RATIO, PERSONAL_ITEM_CM,
+    EPS_CM,
+    gambleCeiling,
+    SQUISH_CM,
+    SOFT_COMPRESS_CM,
+    WEIGHT_TIGHT_RATIO,
+    PERSONAL_ITEM_CM,
     advisories: DEFAULT_ADVISORIES,
     ...overrides,
   };
@@ -1659,11 +1864,16 @@ function createEngine(overrides = {}) {
   /** Overage on the worst dimension. Negative means room to spare. Reports the
    *  binding dimension, because that is the fact the traveller can act on. */
   function delta(bag, allowanceCm) {
-    const e = effective(bag), m = desc(allowanceCm);
-    let worst = -Infinity, idx = 0;
+    const e = effective(bag),
+      m = desc(allowanceCm);
+    let worst = -Infinity,
+      idx = 0;
     for (let i = 0; i < 3; i++) {
       const d = e[i] - m[i];
-      if (d > worst) { worst = d; idx = i; }
+      if (d > worst) {
+        worst = d;
+        idx = i;
+      }
     }
     return { cm: +worst.toFixed(2), dimension: DIM_LABEL[idx], index: idx };
   }
@@ -1674,8 +1884,8 @@ function createEngine(overrides = {}) {
     const ceiling = config.gambleCeiling(strictness);
     if (deltaCm > ceiling && deltaCm > config.EPS_CM) return 'wont';
     if (deltaCm > config.EPS_CM) return 'gamble';
-    if (deltaCm > 0) return 'line';                      // over, but inside our own error
-    if (deltaCm > -2 && strictness >= 6) return 'line';  // legal, no margin, they measure
+    if (deltaCm > 0) return 'line'; // over, but inside our own error
+    if (deltaCm > -2 && strictness >= 6) return 'line'; // legal, no margin, they measure
     return 'clears';
   }
 
@@ -1687,16 +1897,30 @@ function createEngine(overrides = {}) {
        a defunct airline's published limits are trivia. */
     if (carrier.flying === false) {
       return {
-        band: null, delta_cm: null, dimension: null, no_cabin_bag: false,
-        not_flying: true, status: carrier.status, ceased_at: carrier.ceased_at,
+        band: null,
+        delta_cm: null,
+        dimension: null,
+        no_cabin_bag: false,
+        not_flying: true,
+        status: carrier.status,
+        ceased_at: carrier.ceased_at,
         successor: carrier.successor ?? null,
-        advisories: [{ id: 'not_flying', level: carrier.status,
-                       ceased_at: carrier.ceased_at, successor: carrier.successor ?? null }],
+        advisories: [
+          {
+            id: 'not_flying',
+            level: carrier.status,
+            ceased_at: carrier.ceased_at,
+            successor: carrier.successor ?? null,
+          },
+        ],
       };
     }
     if (carrier.no_cabin_bag) {
       return {
-        band: 'wont', delta_cm: null, dimension: null, no_cabin_bag: true,
+        band: 'wont',
+        delta_cm: null,
+        dimension: null,
+        no_cabin_bag: true,
         advisories: runAdvisories({ bag, carrier, deltaCm: null }),
       };
     }
@@ -1720,7 +1944,8 @@ function createEngine(overrides = {}) {
   /** Strictest common box across an itinerary: the biggest bag surviving every
    *  leg. Minimum per SORTED dimension, so it is rotation-independent. */
   function envelope(carriers) {
-    const boxes = carriers.filter((c) => c.allowance && c.flying !== false)
+    const boxes = carriers
+      .filter((c) => c.allowance && c.flying !== false)
       .map((c) => desc(c.allowance.max_cm));
     if (!boxes.length) return null;
     return [0, 1, 2].map((i) => Math.min(...boxes.map((b) => b[i])));
@@ -1741,7 +1966,8 @@ function createEngine(overrides = {}) {
   /** Does an overhead carry-on also fit a personal-item envelope? Shown on a bag
    *  page; never a reason to move it out of the carry-on shelf. */
   function fitsPersonalItem(bag) {
-    const e = desc(bag.external_cm), p = desc(config.PERSONAL_ITEM_CM);
+    const e = desc(bag.external_cm),
+      p = desc(config.PERSONAL_ITEM_CM);
     return e.every((v, i) => v <= p[i]);
   }
 
@@ -1752,18 +1978,34 @@ function createEngine(overrides = {}) {
    *  the file. */
   function coverage(bag, carriers) {
     const live = carriers.filter((c) => c.flying !== false);
-    let clears = 0, line = 0;
+    let clears = 0,
+      line = 0;
     for (const c of live) {
       const b = evaluate(bag, c).band;
-      if (b === 'clears') clears++; else if (b === 'line') line++;
+      if (b === 'clears') clears++;
+      else if (b === 'line') line++;
     }
-    return { clears, line, pass: clears + line, of: live.length,
-             excluded: carriers.length - live.length,
-             ratio: live.length ? (clears + line) / live.length : 0 };
+    return {
+      clears,
+      line,
+      pass: clears + line,
+      of: live.length,
+      excluded: carriers.length - live.length,
+      ratio: live.length ? (clears + line) / live.length : 0,
+    };
   }
 
-  return { config, effective, delta, band, evaluate, envelope,
-           bindingLeg, fitsPersonalItem, coverage };
+  return {
+    config,
+    effective,
+    delta,
+    band,
+    evaluate,
+    envelope,
+    bindingLeg,
+    fitsPersonalItem,
+    coverage,
+  };
 }
 
 const engine = createEngine();
@@ -1781,16 +2023,21 @@ const engine = createEngine();
    fail loudly here, not silently produce a verdict someone acts on. */
 
 class EngineInputError extends Error {
-  constructor(msg, subject) { super(msg); this.name = 'EngineInputError'; this.subject = subject; }
+  constructor(msg, subject) {
+    super(msg);
+    this.name = 'EngineInputError';
+    this.subject = subject;
+  }
 }
 
 /** Accepts a bare value or a {v,...} provenance object. */
-const unwrap = (f) => (f && typeof f === 'object' && !Array.isArray(f) && 'v' in f) ? f.v : f;
+const unwrap = (f) =>
+  f && typeof f === 'object' && !Array.isArray(f) && 'v' in f ? f.v : f;
 
 /** Provenance travels alongside the value, never inside it. The UI must be able
  *  to render a manufacturer claim differently from something we measured. */
 const provenanceOf = (f) =>
-  (f && typeof f === 'object' && !Array.isArray(f) && 'src' in f)
+  f && typeof f === 'object' && !Array.isArray(f) && 'src' in f
     ? { src: f.src, at: f.at ?? null, ref: f.ref ?? null }
     : { src: 'unknown', at: null, ref: null };
 
@@ -1834,13 +2081,18 @@ function toBag(record) {
   const subject = record?.slug ?? '(unnamed bag)';
   if (!record) throw new EngineInputError('no bag record given', subject);
 
-  const external = unwrap(record.measured_cm) ?? unwrap(record.external_cm) ?? unwrap(record.claimed_cm);
+  const external =
+    unwrap(record.measured_cm) ?? unwrap(record.external_cm) ?? unwrap(record.claimed_cm);
   if (!external) {
     throw new EngineInputError(
-      'no dimensions on this bag — check `sized` before evaluating it', subject);
+      'no dimensions on this bag — check `sized` before evaluating it',
+      subject
+    );
   }
   return {
-    slug: record.slug, brand: record.brand, model: record.model,
+    slug: record.slug,
+    brand: record.brand,
+    model: record.model,
     external_cm: assertDims(external, subject),
     provenance: provenanceOf(record.measured_cm ?? record.external_cm ?? record.claimed_cm),
     /* Whether the number is ours is a first-class fact, not a footnote: nothing
@@ -1870,10 +2122,15 @@ function toCarrier(record, fareClass) {
     throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
   }
   return {
-    iata: record.iata, name: record.name, fare_class: fareClass, strictness,
+    iata: record.iata,
+    name: record.name,
+    fare_class: fareClass,
+    strictness,
     /* Absence is the signal. A fare with no cabin row means no cabin bag at any
        size — never a zero-size row, which a naive comparison would let pass. */
-    allowance: cabin ? { max_cm: assertDims(cabin.max_cm, subject), max_kg: cabin.max_kg ?? null } : null,
+    allowance: cabin
+      ? { max_cm: assertDims(cabin.max_cm, subject), max_kg: cabin.max_kg ?? null }
+      : null,
     no_cabin_bag: !cabin,
     regional_jets: Boolean(record.operates_regional_jets),
     /* Documented per-catch commission, if any. Carried on the carrier because

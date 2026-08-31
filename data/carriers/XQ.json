@@ -1,0 +1,89 @@
+{
+  "iata": "XQ",
+  "name": "SunExpress",
+  "region": "ME",
+  "type": "lcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Existing engine prior only; no researched enforcement score is asserted."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "SunLight",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 4,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "SunLight; adult allowance.",
+      "source_url": "https://www.sunexpress.com/en-gb/information/luggage-info/hand-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "SunValue",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "International SunValue. No separate personal-item entitlement verified; do not infer one from the SunLight allowance.",
+      "source_url": "https://www.sunexpress.com/en-gb/information/luggage-info/hand-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "SunLight",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 32,
+      "free_pieces": 0,
+      "system": "weight",
+      "weight_total_kg": 0,
+      "note": "International SunLight: 0 kg total included, maximum 32 kg per piece and 158 cm linear. Domestic and other international fares differ.",
+      "source_url": "https://www.sunexpress.com/en-gb/information/luggage-info/checked-baggage/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "SunValue",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 20,
+      "note": "International SunValue: 20 kg total included, maximum 32 kg per piece and 158 cm linear. Domestic and other international fares differ.",
+      "source_url": "https://www.sunexpress.com/en-gb/information/luggage-info/checked-baggage/",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.sunexpress.com/en-gb/information/luggage-info/hand-baggage",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_dossier": "resources/carriers/XQ-sunexpress.md",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "audit_note": "Baggage allowance rows were researched from official airline pages; these are not mockup placeholders. Research covers the sourced, dated rows only. Enforcement scores remain model priors, and unresolved policy conflicts, unknown limits and unmodeled exceptions are documented in the research dossier. Publication review remains pending."
+}

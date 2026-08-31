@@ -12,13 +12,21 @@
 import { readFileSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
-const PAGES = ['mockup/index.html', 'mockup/check.html', 'mockup/bag.html',
-               'mockup/bags.html', 'mockup/guide.html'];
+const PAGES = [
+  'mockup/index.html',
+  'mockup/check.html',
+  'mockup/bag.html',
+  'mockup/bags.html',
+  'mockup/guide.html',
+];
 const inlineScripts = (html) =>
   [...html.matchAll(/<script(?![^>]*src=)[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]).join('\n');
 
 let failed = 0;
-const fail = (page, msg) => { console.log(`  FAIL  ${page} — ${msg}`); failed++; };
+const fail = (page, msg) => {
+  console.log(`  FAIL  ${page} — ${msg}`);
+  failed++;
+};
 
 for (const page of PAGES) {
   const html = readFileSync(new URL(page, root), 'utf8');
@@ -27,19 +35,32 @@ for (const page of PAGES) {
   /* 1. Does it parse at all? A duplicate declaration throws before the page
         renders a single pixel, and a mockup opened from disk shows a blank
         screen with the reason only in the console. */
-  try { new Function(src); } catch (e) { fail(page, e.message); continue; }
+  try {
+    new Function(src);
+  } catch (e) {
+    fail(page, e.message);
+    continue;
+  }
 
   /* 2. Exactly one engine. Two would mean the port left a copy behind. */
   const engines = (src.match(/^function gambleCeiling/gm) ?? []).length;
-  if (engines > 1) { fail(page, `${engines} copies of gambleCeiling — a pasted engine survived`); continue; }
+  if (engines > 1) {
+    fail(page, `${engines} copies of gambleCeiling — a pasted engine survived`);
+    continue;
+  }
 
   /* 3. If the page decides fit, it must do so through the shared engine. */
   const decidesFit = /function fit\s*\(/.test(src);
   if (decidesFit && !src.includes('ENGINE:START')) {
-    fail(page, 'has a fit() but no inlined engine — it is running its own ladder'); continue;
+    fail(page, 'has a fit() but no inlined engine — it is running its own ladder');
+    continue;
   }
-  if (decidesFit && /band\s*=\s*["']wont["']/.test(src.replace(/\/\* ENGINE:START[\s\S]*?\/\* ENGINE:END \*\//, ''))) {
-    fail(page, 'assigns a band outside the engine block — the ladder has been reimplemented'); continue;
+  if (
+    decidesFit &&
+    /band\s*=\s*["']wont["']/.test(src.replace(/\/\* ENGINE:START[\s\S]*?\/\* ENGINE:END \*\//, ''))
+  ) {
+    fail(page, 'assigns a band outside the engine block — the ladder has been reimplemented');
+    continue;
   }
 
   console.log(`  ok    ${page}${decidesFit ? ' (engine inlined)' : ''}`);

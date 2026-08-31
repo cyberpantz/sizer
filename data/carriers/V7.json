@@ -1,0 +1,115 @@
+{
+  "iata": "V7",
+  "name": "Volotea",
+  "region": "EU",
+  "type": "lcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Existing engine prior only; no researched enforcement score is asserted."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Standard",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Standard; adult allowance.",
+      "source_url": "https://www.volotea.com/en/baggage/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Standard",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 25,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "No included checked bag in this modeled fare/add-on. Paid options 10/20/25 kg; up to five pieces and 50 kg total. Overweight charged up to 32 kg per piece. Numerical size unverified.",
+      "source_url": "https://www.volotea.com/en/baggage/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Standard + Priority Boarding",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item.",
+      "source_url": "https://www.volotea.com/en/baggage/",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Standard + Priority Boarding",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item.",
+      "source_url": "https://www.volotea.com/en/baggage/",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Standard + Priority Boarding",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 25,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "No included checked bag in this modeled fare/add-on. Paid options 10/20/25 kg; up to five pieces and 50 kg total. Overweight charged up to 32 kg per piece. Numerical size unverified.",
+      "source_url": "https://www.volotea.com/en/baggage/",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.volotea.com/en/baggage/",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_dossier": "resources/carriers/V7-volotea.md",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "audit_note": "Baggage allowance rows were researched from official airline pages; these are not mockup placeholders. Research covers the sourced, dated rows only. Enforcement scores remain model priors, and unresolved policy conflicts, unknown limits and unmodeled exceptions are documented in the research dossier. Publication review remains pending."
+}

@@ -19,18 +19,24 @@
     "audit": "node data/fixture-audit.mjs",
     "verdicts": "node data/verdicts.mjs",
     "drift": "node docs/check-drift.mjs",
-    "check": "npm run test && npm run verify:inlined && npm run verify:pages && npm run verify:engine && npm run build:bags && npm run validate && npm run validate:carriers && npm run drift && npm run build && npm run verify:build",
+    "check": "npm run lint && npm run test && npm run verify:inlined && npm run verify:pages && npm run verify:engine && npm run build:bags && npm run validate && npm run validate:carriers && npm run drift && npm run build && npm run verify:build",
     "validate:carriers": "node data/validate-carriers.mjs",
     "publish:check": "node data/validate-carriers.mjs --publish",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "verify:build": "node scripts/verify-build.mjs"
+    "verify:build": "node scripts/verify-build.mjs",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "format": "biome format --write"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.5",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.9",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.11"
   }
 }

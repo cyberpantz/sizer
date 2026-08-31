@@ -26,6 +26,6 @@ No archived snapshot was created. Browser-rendered tables were used where the te
 
 ## Enforcement and gaps
 
-Strictness 6 is the existing engine's type/region prior (full_service, AS), not a researched enforcement rating. Published gauging, fee asymmetry, staff incentives and actual weighing remain unscored; no traveller-report sample collected. Physical sizer dimensions and regional-aircraft operation are unknown. Carrier remains a publication-blocking placeholder.
+Strictness 6 is the existing engine's type/region prior (full_service, AS), not a researched enforcement rating. Published gauging, fee asymmetry, staff incentives and actual weighing remain unscored; no traveller-report sample collected. Physical sizer dimensions and regional-aircraft operation are unknown. Allowances are researched; publication review remains pending separately (publication_ready: false).
 
 Only the listed adult allowances are modeled. Fare labels map to the specific fare names stated above, not every ticket sold under that cabin. Partner-operated flights, status benefits, infants, special baggage, route exceptions and paid upgrades require ticket-specific confirmation. Unknown wheel/handle treatment remains null; use external product dimensions conservatively.

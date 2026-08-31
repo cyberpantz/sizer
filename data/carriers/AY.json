@@ -137,7 +137,9 @@
   "source_url": "https://www.finnair.com/us-en/baggage-on-finnair-flights/carry-on-baggage",
   "verified_at": "2026-08-30",
   "verified_by": "codex",
-  "placeholder": true,
-  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
-  "research_dossier": "resources/carriers/AY-finnair.md"
+  "placeholder": false,
+  "research_dossier": "resources/carriers/AY-finnair.md",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "audit_note": "Baggage allowance rows were researched from official airline pages; these are not mockup placeholders. Research covers the sourced, dated rows only. Enforcement scores remain model priors, and unresolved policy conflicts, unknown limits and unmodeled exceptions are documented in the research dossier. Publication review remains pending."
 }

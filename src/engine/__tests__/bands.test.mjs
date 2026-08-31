@@ -6,9 +6,9 @@
      - PROPERTIES, which hold for every input. Those catch the next bug, and
        every bug so far has come from a case nobody thought to write down. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { createEngine, band, BANDS, EPS_CM, gambleCeiling } from '../fit.mjs';
+import { describe, test } from 'node:test';
+import { BANDS, band, createEngine, EPS_CM, gambleCeiling } from '../fit.mjs';
 
 describe('band ladder', () => {
   test('is exhaustive — no delta falls through at any strictness', () => {
@@ -21,12 +21,15 @@ describe('band ladder', () => {
   });
 
   test('is monotonic — a stricter carrier is never more permissive', () => {
-    const rank = (b) => BANDS.indexOf(b);   // clears < line < gamble < wont
+    const rank = (b) => BANDS.indexOf(b); // clears < line < gamble < wont
     for (let d = -5; d <= 8; d += 0.1) {
       let prev = -1;
       for (let st = 1; st <= 10; st++) {
         const r = rank(band(+d.toFixed(2), st));
-        assert.ok(r >= prev, `delta ${d.toFixed(1)}: st ${st} is more permissive than st ${st - 1}`);
+        assert.ok(
+          r >= prev,
+          `delta ${d.toFixed(1)}: st ${st} is more permissive than st ${st - 1}`
+        );
         prev = r;
       }
     }
@@ -69,7 +72,10 @@ describe('regressions — each of these shipped once', () => {
   test('bug 2: a rounding artefact is never a failure', () => {
     for (let st = 1; st <= 10; st++) {
       assert.ok(['line', 'clears'].includes(band(0.01, st)), `st ${st} failed a bag by 0.01cm`);
-      assert.ok(['line', 'clears'].includes(band(EPS_CM, st)), `st ${st} failed a bag at exactly EPS`);
+      assert.ok(
+        ['line', 'clears'].includes(band(EPS_CM, st)),
+        `st ${st} failed a bag at exactly EPS`
+      );
     }
   });
 

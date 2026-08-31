@@ -8,6 +8,7 @@ const root = new URL('../', import.meta.url);
 function literal(html, name) {
   const m = html.match(new RegExp(`const ${name}\\s*=\\s*(\\[[\\s\\S]*?\\n\\s*\\];)`));
   if (!m) throw new Error(`no ${name} literal found in the page`);
+  // biome-ignore lint/security/noGlobalEval: the mockups embed generated JS literals in HTML; parsing them back out is the whole job of this file, and the input is our own build output
   return eval(m[1]);
 }
 

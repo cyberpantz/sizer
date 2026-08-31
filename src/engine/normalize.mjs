@@ -10,16 +10,21 @@
    fail loudly here, not silently produce a verdict someone acts on. */
 
 export class EngineInputError extends Error {
-  constructor(msg, subject) { super(msg); this.name = 'EngineInputError'; this.subject = subject; }
+  constructor(msg, subject) {
+    super(msg);
+    this.name = 'EngineInputError';
+    this.subject = subject;
+  }
 }
 
 /** Accepts a bare value or a {v,...} provenance object. */
-export const unwrap = (f) => (f && typeof f === 'object' && !Array.isArray(f) && 'v' in f) ? f.v : f;
+export const unwrap = (f) =>
+  f && typeof f === 'object' && !Array.isArray(f) && 'v' in f ? f.v : f;
 
 /** Provenance travels alongside the value, never inside it. The UI must be able
  *  to render a manufacturer claim differently from something we measured. */
 export const provenanceOf = (f) =>
-  (f && typeof f === 'object' && !Array.isArray(f) && 'src' in f)
+  f && typeof f === 'object' && !Array.isArray(f) && 'src' in f
     ? { src: f.src, at: f.at ?? null, ref: f.ref ?? null }
     : { src: 'unknown', at: null, ref: null };
 
@@ -63,13 +68,18 @@ export function toBag(record) {
   const subject = record?.slug ?? '(unnamed bag)';
   if (!record) throw new EngineInputError('no bag record given', subject);
 
-  const external = unwrap(record.measured_cm) ?? unwrap(record.external_cm) ?? unwrap(record.claimed_cm);
+  const external =
+    unwrap(record.measured_cm) ?? unwrap(record.external_cm) ?? unwrap(record.claimed_cm);
   if (!external) {
     throw new EngineInputError(
-      'no dimensions on this bag — check `sized` before evaluating it', subject);
+      'no dimensions on this bag — check `sized` before evaluating it',
+      subject
+    );
   }
   return {
-    slug: record.slug, brand: record.brand, model: record.model,
+    slug: record.slug,
+    brand: record.brand,
+    model: record.model,
     external_cm: assertDims(external, subject),
     provenance: provenanceOf(record.measured_cm ?? record.external_cm ?? record.claimed_cm),
     /* Whether the number is ours is a first-class fact, not a footnote: nothing
@@ -99,10 +109,15 @@ export function toCarrier(record, fareClass) {
     throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
   }
   return {
-    iata: record.iata, name: record.name, fare_class: fareClass, strictness,
+    iata: record.iata,
+    name: record.name,
+    fare_class: fareClass,
+    strictness,
     /* Absence is the signal. A fare with no cabin row means no cabin bag at any
        size — never a zero-size row, which a naive comparison would let pass. */
-    allowance: cabin ? { max_cm: assertDims(cabin.max_cm, subject), max_kg: cabin.max_kg ?? null } : null,
+    allowance: cabin
+      ? { max_cm: assertDims(cabin.max_cm, subject), max_kg: cabin.max_kg ?? null }
+      : null,
     no_cabin_bag: !cabin,
     regional_jets: Boolean(record.operates_regional_jets),
     /* Documented per-catch commission, if any. Carried on the carrier because

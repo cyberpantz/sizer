@@ -1,0 +1,150 @@
+{
+  "iata": "EW",
+  "name": "Eurowings",
+  "region": "EU",
+  "type": "lcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Existing engine prior only; no researched enforcement score is asserted."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "BASIC",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        25
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "BASIC; adult allowance.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/hand-baggage-policy.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "BASIC",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "BASIC. Numerical checked-bag dimensions not verified; null is not unlimited.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/checked-baggage.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "SMART",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        25
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "SMART; adult allowance.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/hand-baggage-policy.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "SMART",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "SMART; adult allowance.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/hand-baggage-policy.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "SMART",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "SMART. Numerical checked-bag dimensions not verified; null is not unlimited.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/checked-baggage.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "business",
+      "fare_name": "BIZclass",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        25
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "BIZclass; adult allowance.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/hand-baggage-policy.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "business",
+      "fare_name": "BIZclass",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 2,
+      "note": "BIZclass; adult allowance.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/hand-baggage-policy.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "business",
+      "fare_name": "BIZclass",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 32,
+      "free_pieces": 2,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "BIZclass. Numerical checked-bag dimensions not verified; null is not unlimited.",
+      "source_url": "https://www.eurowings.com/en/information/baggage/checked-baggage.html",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.eurowings.com/en/information/baggage/hand-baggage-policy.html",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_dossier": "resources/carriers/EW-eurowings.md",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "audit_note": "Baggage allowance rows were researched from official airline pages; these are not mockup placeholders. Research covers the sourced, dated rows only. Enforcement scores remain model priors, and unresolved policy conflicts, unknown limits and unmodeled exceptions are documented in the research dossier. Publication review remains pending."
+}

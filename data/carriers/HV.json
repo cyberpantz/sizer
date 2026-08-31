@@ -1,0 +1,211 @@
+{
+  "iata": "HV",
+  "name": "Transavia",
+  "region": "EU",
+  "type": "lcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Existing engine prior only; no researched enforcement score is asserted."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Basic; adult allowance.",
+      "source_url": "https://www.transavia.com/help/en-eu/baggage/cabin-baggage/how-much-to-bring",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "checked",
+      "linear_max_cm": 165,
+      "max_kg": 32,
+      "free_pieces": 0,
+      "system": "weight",
+      "weight_total_kg": 0,
+      "note": "Basic: 0 kg included total; maximum 32 kg per piece. Dedicated checked-rules page states 165 cm linear including wheels/handles; cabin FAQ conflicts with 70 × 60 × 30 cm. Review before publishing.",
+      "source_url": "https://www.transavia.com/help/en-uk/baggage/checked-baggage/checked-baggage-rules",
+      "verified_at": "2026-08-30",
+      "additional_source_urls": [
+        "https://www.transavia.com/help/en-nl/search-and-book/basic-smart-plus-max-fare/basic-fare"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Smart",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item.",
+      "source_url": "https://www.transavia.com/help/en-eu/baggage/cabin-baggage/how-much-to-bring",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Smart",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item.",
+      "source_url": "https://www.transavia.com/help/en-eu/baggage/cabin-baggage/how-much-to-bring",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Smart",
+      "type": "checked",
+      "linear_max_cm": 165,
+      "max_kg": 32,
+      "free_pieces": 0,
+      "system": "weight",
+      "weight_total_kg": 0,
+      "note": "Smart: 0 kg included total; maximum 32 kg per piece. Dedicated checked-rules page states 165 cm linear including wheels/handles; cabin FAQ conflicts with 70 × 60 × 30 cm. Review before publishing.",
+      "source_url": "https://www.transavia.com/help/en-uk/baggage/checked-baggage/checked-baggage-rules",
+      "verified_at": "2026-08-30",
+      "additional_source_urls": [
+        "https://www.transavia.com/help/en-nl/search-and-book/basic-smart-plus-max-fare/what-do-i-get-with-the-smart-fare"
+      ]
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "Plus",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Plus; adult allowance.",
+      "source_url": "https://www.transavia.com/help/en-eu/baggage/cabin-baggage/how-much-to-bring",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "Plus",
+      "type": "checked",
+      "linear_max_cm": 165,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 20,
+      "note": "Plus: 20 kg included total; maximum 32 kg per piece. Dedicated checked-rules page states 165 cm linear including wheels/handles; cabin FAQ conflicts with 70 × 60 × 30 cm. Review before publishing.",
+      "source_url": "https://www.transavia.com/help/en-uk/baggage/checked-baggage/checked-baggage-rules",
+      "verified_at": "2026-08-30",
+      "additional_source_urls": [
+        "https://www.transavia.com/help/en-nl/search-and-book/basic-smart-plus-max-fare/plus-fare"
+      ]
+    },
+    {
+      "fare_class": "max",
+      "fare_name": "Max",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item.",
+      "source_url": "https://www.transavia.com/help/en-eu/baggage/cabin-baggage/how-much-to-bring",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "max",
+      "fare_name": "Max",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Cabin bag and personal item share 10 kg; not a separate allowance per item.",
+      "source_url": "https://www.transavia.com/help/en-eu/baggage/cabin-baggage/how-much-to-bring",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "max",
+      "fare_name": "Max",
+      "type": "checked",
+      "linear_max_cm": 165,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 30,
+      "note": "Max: 30 kg included total; maximum 32 kg per piece. Dedicated checked-rules page states 165 cm linear including wheels/handles; cabin FAQ conflicts with 70 × 60 × 30 cm. Review before publishing.",
+      "source_url": "https://www.transavia.com/help/en-uk/baggage/checked-baggage/checked-baggage-rules",
+      "verified_at": "2026-08-30",
+      "additional_source_urls": [
+        "https://www.transavia.com/help/en-nl/search-and-book/basic-smart-plus-max-fare/max-fare"
+      ]
+    }
+  ],
+  "source_url": "https://www.transavia.com/help/en-eu/baggage/cabin-baggage/how-much-to-bring",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_dossier": "resources/carriers/HV-transavia.md",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "audit_note": "Baggage allowance rows were researched from official airline pages; these are not mockup placeholders. Research covers the sourced, dated rows only. Enforcement scores remain model priors, and unresolved policy conflicts, unknown limits and unmodeled exceptions are documented in the research dossier. Publication review remains pending."
+}

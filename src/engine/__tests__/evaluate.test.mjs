@@ -1,9 +1,9 @@
 /* End-to-end: real bags, real carriers, whole-verdict behaviour. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { evaluate, coverage, envelope, bindingLeg, delta, fitsPersonalItem } from '../fit.mjs';
-import { BAGS, CARRIERS, ALL_CARRIERS, bag, carrier } from '../__fixtures__/catalogue.mjs';
+import { describe, test } from 'node:test';
+import { ALL_CARRIERS, BAGS, bag, CARRIERS, carrier } from '../__fixtures__/catalogue.mjs';
+import { bindingLeg, coverage, delta, envelope, evaluate, fitsPersonalItem } from '../fit.mjs';
 
 const adv = (r, id) => r.advisories.find((a) => a.id === id);
 
@@ -35,7 +35,10 @@ describe('bands over real bags', () => {
 
   test('a bag on the US standard is not an international bag', () => {
     const cov = coverage(BAGS.uplift, ALL_CARRIERS);
-    assert.ok(cov.ratio < 0.6, `US-standard bag scored ${cov.pass}/${cov.of} — too good to be true`);
+    assert.ok(
+      cov.ratio < 0.6,
+      `US-standard bag scored ${cov.pass}/${cov.of} — too good to be true`
+    );
   });
 });
 
@@ -141,8 +144,10 @@ describe('personal item', () => {
 });
 
 describe('per-catch commission — the case the bands cannot represent', () => {
-  const commissioned = { ...carrier('Frontier', 9, [61, 46, 25]),
-    agent_commission: { amount_usd: 10, where: 'gate' } };
+  const commissioned = {
+    ...carrier('Frontier', 9, [61, 46, 25]),
+    agent_commission: { amount_usd: 10, where: 'gate' },
+  };
   const plain = carrier('Delta', 5, [56, 35, 23]);
   const small = bag('small', [45, 33, 20], { weight_kg: 2.5 });
 
@@ -171,8 +176,10 @@ describe('per-catch commission — the case the bands cannot represent', () => {
     assert.equal(a.level, 'incentivised_enforcement');
     for (const v of Object.values(a)) {
       if (typeof v === 'string') {
-        assert.ok(!/unfair|scam|abuse|cheat|dishonest/i.test(v),
-          'the engine returns figures; characterisation is the source\'s, quoted in copy');
+        assert.ok(
+          !/unfair|scam|abuse|cheat|dishonest/i.test(v),
+          "the engine returns figures; characterisation is the source's, quoted in copy"
+        );
       }
     }
   });
@@ -183,8 +190,12 @@ describe('carriers that no longer fly', () => {
      policy as current. Over a 5-7 year horizon this is routine, not exceptional,
      and it is a step change rather than staleness — a 180-day freshness warning
      would have flagged it five months after the last flight. */
-  const dead = { ...carrier('Spirit', 9, [46, 36, 20]), flying: false,
-                 status: 'ceased', ceased_at: '2026-05-02' };
+  const dead = {
+    ...carrier('Spirit', 9, [46, 36, 20]),
+    flying: false,
+    status: 'ceased',
+    ceased_at: '2026-05-02',
+  };
   const live = CARRIERS.delta;
   const small = bag('small', [40, 30, 18]);
 
@@ -201,8 +212,11 @@ describe('carriers that no longer fly', () => {
   });
 
   test('a bag that would have fitted still gets no verdict', () => {
-    assert.equal(evaluate(small, dead).band, null,
-      'a defunct airline\'s published limits are trivia, not an answer');
+    assert.equal(
+      evaluate(small, dead).band,
+      null,
+      "a defunct airline's published limits are trivia, not an answer"
+    );
   });
 
   test('they leave the coverage denominator rather than counting as failures', () => {
@@ -215,12 +229,18 @@ describe('carriers that no longer fly', () => {
 
   test('they do not shrink a multi-leg envelope', () => {
     const tight = { ...carrier('Tiny', 9, [40, 30, 15]), flying: false };
-    assert.deepEqual(envelope([live, tight]), envelope([live]),
-      'a dead carrier must not constrain a living itinerary');
+    assert.deepEqual(
+      envelope([live, tight]),
+      envelope([live]),
+      'a dead carrier must not constrain a living itinerary'
+    );
   });
 
   test('a carrier with no status set is assumed to be flying', () => {
-    assert.notEqual(evaluate(small, live).band, null,
-      'absence of a status means nobody thought about it, not that the airline failed');
+    assert.notEqual(
+      evaluate(small, live).band,
+      null,
+      'absence of a status means nobody thought about it, not that the airline failed'
+    );
   });
 });

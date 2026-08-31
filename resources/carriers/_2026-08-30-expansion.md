@@ -8,7 +8,7 @@ Asian additions: Air India (AI), EVA Air (BR), Air China (CA), China Airlines (C
 
 Each new record contains sourced economy cabin/personal allowance research, dated 2026-08-30, and a linked reading dossier. 18 additions also have checked-baggage rows; remaining checked allowances are explicitly unresearched. Selected basic/light fare differences are recorded. This is not an exhaustive fare, route, aircraft or interline policy database.
 
-All new carriers remain publication-blocking placeholders because full enforcement and exception audits are incomplete. Strictness scores are existing engine priors, not measurements. Unknown physical sizers, fleet details and personal-item sizes were not invented. The original 23 placeholders were not re-audited.
+The 27 additions are researched records, not placeholders. Publication readiness is tracked separately because full enforcement and exception audits are incomplete. Strictness scores are existing engine priors, not measurements. Unknown physical sizers, fleet details and personal-item sizes were not invented. The original 23 placeholders were not re-audited.
 
 Combined cabin/personal weight metadata and notes must be honored before presenting a complete packing verdict; the current engine does not evaluate combined weights. Finnair checked baggage uses per-axis limits, with no fabricated linear maximum. Condor has conflicting official cabin dimensions: its dated baggage page supplies the May 2026 values, while the English fare overview retains older values. The conflict is recorded for review.
 

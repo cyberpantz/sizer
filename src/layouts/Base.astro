@@ -1,8 +1,11 @@
 ---
-import '../styles/app.css';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/app.css';
 
+/* Biome's .astro support is experimental and does not see template usage, so
+   frontmatter props read as unused. Handled by an override in biome.json rather
+   than by turning the rule off everywhere — it is a good rule in .mjs. */
 const { title, description } = Astro.props;
 ---
 <!doctype html>

@@ -22,7 +22,13 @@ export function squish({ bag, deltaCm, config }) {
   if (deltaCm <= 0) return null;
   const give = config.SQUISH_CM[bag.shell] ?? 0;
   if (give >= 1 && deltaCm <= give) {
-    return { id: 'squish', level: 'may_squeeze', over_cm: deltaCm, give_cm: give, shell: bag.shell };
+    return {
+      id: 'squish',
+      level: 'may_squeeze',
+      over_cm: deltaCm,
+      give_cm: give,
+      shell: bag.shell,
+    };
   }
   /* Rigid and over. "It'll probably squeeze in" is sound for a duffel and
      completely wrong for a polycarbonate shell, which either goes in or doesn't.
@@ -34,13 +40,20 @@ export function squish({ bag, deltaCm, config }) {
 }
 
 export function weight({ bag, carrier, config }) {
-  const cap = carrier.allowance?.max_kg, kg = bag.weight_kg;
+  const cap = carrier.allowance?.max_kg,
+    kg = bag.weight_kg;
   if (!cap || !kg) return null;
   const left = +(cap - kg).toFixed(2);
   if (left <= 0) return { id: 'weight', level: 'over', bag_kg: kg, cap_kg: cap, left_kg: left };
   if (kg / cap >= config.WEIGHT_TIGHT_RATIO) {
-    return { id: 'weight', level: 'tight', bag_kg: kg, cap_kg: cap,
-             left_kg: left, share: +(kg / cap).toFixed(2) };
+    return {
+      id: 'weight',
+      level: 'tight',
+      bag_kg: kg,
+      cap_kg: cap,
+      left_kg: left,
+      share: +(kg / cap).toFixed(2),
+    };
   }
   return null;
 }
@@ -52,8 +65,12 @@ export function expansion({ bag, deltaCm }) {
   if (!bag.expands_cm) return null;
   const expanded = +(deltaCm + bag.expands_cm).toFixed(2);
   if (deltaCm <= 0 && expanded > 0) {
-    return { id: 'expansion', level: 'compliant_until_expanded',
-             expands_cm: bag.expands_cm, over_when_expanded_cm: expanded };
+    return {
+      id: 'expansion',
+      level: 'compliant_until_expanded',
+      expands_cm: bag.expands_cm,
+      over_when_expanded_cm: expanded,
+    };
   }
   return null;
 }
@@ -103,4 +120,11 @@ export function noCabinBag({ carrier }) {
 }
 
 /** Order is render order: most consequential first. */
-export const DEFAULT_ADVISORIES = [noCabinBag, agentCommission, regionalJet, squish, weight, expansion];
+export const DEFAULT_ADVISORIES = [
+  noCabinBag,
+  agentCommission,
+  regionalJet,
+  squish,
+  weight,
+  expansion,
+];
