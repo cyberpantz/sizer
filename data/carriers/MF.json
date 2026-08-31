@@ -1,0 +1,58 @@
+{
+  "iata": "MF",
+  "name": "XiamenAir",
+  "region": "AS",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.xiamenair.com/en-ca/article-detail?articleLink=%2Fcms-i18n-ow%2Fcms-en-ca%2Fchannels%2F11753.json",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "cabin",
+      "source_url": "https://www.xiamenair.com/en-ca/article-detail?articleLink=%2Fcms-i18n-ow%2Fcms-en-ca%2Fchannels%2F11753.json",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": null,
+      "linear_max_cm": 115,
+      "max_kg": 5,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "The official table publishes only a 115 cm total-dimensions limit, not a rectangular box."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "personal",
+      "source_url": "https://www.xiamenair.com/en-ca/article-detail?articleLink=%2Fcms-i18n-ow%2Fcms-en-ca%2Fchannels%2F11753.json",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "absence": "not_published",
+      "note": "The reviewed page says unchecked baggage must fit under the seat or in the enclosed cabin compartment but publishes no separate personal-item dimensions."
+    }
+  ],
+  "audit_note": "Official baggage instructions researched. XiamenAir publishes a linear-only cabin limit; checked allowances vary by route and were not modeled in this pass.",
+  "research_dossier": "resources/carriers/MF-xiamenair.md"
+}

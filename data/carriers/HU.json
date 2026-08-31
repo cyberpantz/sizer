@@ -1,0 +1,85 @@
+{
+  "iata": "HU",
+  "name": "Hainan Airlines",
+  "region": "AS",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.hnair.com/lvxingxinxi/xlxx/stxl/",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy — domestic China",
+      "type": "cabin",
+      "source_url": "https://www.hnair.com/lvxingxinxi/xlxx/stxl/",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_in": [
+        22,
+        16,
+        8
+      ],
+      "max_kg": 7,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Domestic Hainan-operated flight. International/regional flights use a 115 cm linear limit and 10 kg instead."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy — domestic China",
+      "type": "personal",
+      "source_url": "https://www.hnair.com/lvxingxinxi/cxzb/ysztj/2017gnysztj/202601/t20260125_82769.html",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        30,
+        30,
+        20
+      ],
+      "max_in": [
+        12,
+        12,
+        8
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Reference dimensions for small loose personal items consolidated to fit under the seat."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy — domestic China",
+      "type": "checked",
+      "source_url": "https://www.hnair.com/lvxingxinxi/cxzb/ysztj/2017gnysztj/202601/t20260125_82769.html",
+      "verified_at": "2026-08-31",
+      "max_kg": 20,
+      "free_pieces": 1,
+      "system": "weight",
+      "note": "General domestic economy allowance; discounted products may differ."
+    }
+  ],
+  "audit_note": "Official current hand-baggage and domestic conditions pages researched. The JSON models domestic economy as a documented scope; international cabin and checked rules differ by route and remain in this dossier gap.",
+  "research_dossier": "resources/carriers/HU-hainan-airlines.md"
+}

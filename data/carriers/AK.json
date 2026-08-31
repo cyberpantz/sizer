@@ -1,0 +1,82 @@
+{
+  "iata": "AK",
+  "name": "AirAsia Malaysia",
+  "region": "AS",
+  "type": "ulcc",
+  "status": "operating",
+  "source_url": "https://support.airasia.com/s/article/What-are-the-rules-for-cabin-baggage-on-board?language=in",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Low Fare",
+      "type": "cabin",
+      "source_url": "https://support.airasia.com/s/article/What-are-the-rules-for-cabin-baggage-on-board?language=in",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "allowance_group": "low_fare_cabin_total",
+      "group_max_kg": 7
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Low Fare",
+      "type": "personal",
+      "source_url": "https://support.airasia.com/s/article/What-are-the-rules-for-cabin-baggage-on-board?language=in",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        40,
+        30,
+        10
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "allowance_group": "low_fare_cabin_total",
+      "group_max_kg": 7
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Low Fare",
+      "type": "checked",
+      "source_url": "https://support.airasia.com/s/article/What-I-need-to-know-about-checked-baggage",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        119,
+        81,
+        119
+      ],
+      "max_kg": 32,
+      "free_pieces": 0,
+      "system": "weight",
+      "note": "No complimentary checked baggage on the base fare. Purchased weight tiers vary by route; no individual piece may exceed 32 kg."
+    }
+  ],
+  "audit_note": "Official AirAsia cabin and checked-baggage help pages researched for carrier code AK. The group ranking was resolved to AirAsia Malaysia rather than creating a non-operating holding-company record.",
+  "research_dossier": "resources/carriers/AK-airasia-malaysia.md"
+}

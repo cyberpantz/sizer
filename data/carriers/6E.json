@@ -1,0 +1,78 @@
+{
+  "iata": "6E",
+  "name": "IndiGo",
+  "region": "AS",
+  "type": "lcc",
+  "status": "operating",
+  "source_url": "https://aem-beta-skyplus-prod-canary.goindigo.in/travel-information/en/baggage-allowance.html",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "cabin",
+      "source_url": "https://aem-beta-skyplus-prod-canary.goindigo.in/travel-information/en/baggage-allowance.html",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        55,
+        35,
+        25
+      ],
+      "linear_max_cm": 115,
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "personal",
+      "source_url": "https://aem-beta-skyplus-prod-canary.goindigo.in/travel-information/en/baggage-allowance.html",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "max_kg": 3,
+      "includes_wheels": null,
+      "count": 1,
+      "absence": "not_published",
+      "note": "One additional personal article, such as a purse or small laptop bag, up to 3 kg; no dimensions are published on the reviewed page."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy — domestic India",
+      "type": "checked",
+      "source_url": "https://aem-beta-skyplus-prod-canary.goindigo.in/travel-information/en/baggage-allowance.html",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 158,
+      "max_kg": 15,
+      "free_pieces": 1,
+      "system": "weight",
+      "applies_to": {
+        "regions": [
+          "domestic"
+        ]
+      },
+      "note": "Domestic allowance. International allowances vary by destination and are not generalized here."
+    }
+  ],
+  "audit_note": "Official baggage table researched. Cabin allowance is consistent on IndiGo-operated services; checked baggage is route-specific, so only the domestic India rule is modeled.",
+  "research_dossier": "resources/carriers/6E-indigo.md"
+}

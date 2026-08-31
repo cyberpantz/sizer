@@ -1,13 +1,16 @@
 # Airline IATA code lookup
 
-The 68 carriers currently in `data/carriers`, sorted by IATA code. Some abbreviated dataset names are expanded for clarity.
+The 75 carriers currently in `data/carriers`, sorted by IATA code. Some abbreviated dataset names are expanded for clarity.
 
 | IATA code | Common airline name |
 | --- | --- |
+| 5J | Cebu Pacific |
+| 6E | IndiGo |
 | A3 | Aegean Airlines |
 | AA | American Airlines |
 | AF | Air France |
 | AI | Air India |
+| AK | AirAsia Malaysia |
 | AY | Finnair |
 | AZ | ITA Airways |
 | B6 | JetBlue |
@@ -28,6 +31,7 @@ The 68 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | FI | Icelandair |
 | FR | Ryanair |
 | GQ | SKY express |
+| HU | Hainan Airlines |
 | HV | Transavia |
 | HY | Uzbekistan Airways |
 | IB | Iberia |
@@ -42,6 +46,7 @@ The 68 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | LO | LOT Polish Airlines |
 | LS | Jet2.com |
 | LX | SWISS |
+| MF | XiamenAir |
 | MU | China Eastern Airlines |
 | N4 | Nordwind Airlines |
 | NH | ANA (All Nippon Airways) |
@@ -55,6 +60,7 @@ The 68 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | SK | SAS (Scandinavian Airlines) |
 | SN | Brussels Airlines |
 | SQ | Singapore Airlines |
+| SV | Saudia |
 | TK | Turkish Airlines |
 | TP | TAP Air Portugal |
 | TR | Scoot |
@@ -64,6 +70,7 @@ The 68 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | UT | UTair |
 | UX | Air Europa |
 | V7 | Volotea |
+| VJ | VietJet Air |
 | VN | Vietnam Airlines |
 | VS | Virgin Atlantic |
 | VY | Vueling |

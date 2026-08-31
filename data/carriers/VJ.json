@@ -1,0 +1,83 @@
+{
+  "iata": "VJ",
+  "name": "VietJet Air",
+  "region": "AS",
+  "type": "ulcc",
+  "status": "operating",
+  "source_url": "https://www.vietjetair.com/en/pages/baggage-service-1608369253127",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Eco",
+      "type": "cabin",
+      "source_url": "https://www.vietjetair.com/en/pages/baggage-service-1608369253127",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "allowance_group": "eco_cabin_total",
+      "group_max_kg": 7
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Eco",
+      "type": "personal",
+      "source_url": "https://www.vietjetair.com/en/pages/baggage-service-1608369253127",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        30,
+        20,
+        10
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "allowance_group": "eco_cabin_total",
+      "group_max_kg": 7,
+      "note": "Conservative handbag/general-small-item box. The airline separately permits a laptop bag up to 40 × 30 × 10 cm or garment bag up to 114 × 60 × 11 cm."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Eco",
+      "type": "checked",
+      "source_url": "https://www.vietjetair.com/en/pages/baggage-service-1608369253127",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        119,
+        119,
+        81
+      ],
+      "max_kg": 32,
+      "free_pieces": 0,
+      "system": "weight",
+      "note": "Eco does not include checked baggage; 32 kg and 119 × 119 × 81 cm are the standard maximums for a purchased checked piece."
+    }
+  ],
+  "audit_note": "Official baggage service and fare FAQ researched. The smallest published personal-item category is used conservatively; alternative item categories remain in the note.",
+  "research_dossier": "resources/carriers/VJ-vietjet-air.md"
+}

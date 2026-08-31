@@ -1,234 +1,394 @@
-# The 3D size visualiser
+# 3D luggage size visualizer
 
-**Where it lives:** the bag detail page, `/bags/[slug]`, directly under the
-dimension block.
+**Status:** implementation specification
 
-**What it is:** a rotatable, measured volume — the bag drawn at true proportion
-with its three axes labelled, and the wheel-and-handle gap shown as a shell
-around the packing body.
+**Route:** `/bags/[slug]`
 
----
+**Placement:** in the product header, replacing the large static silhouette in
+the right column on desktop and appearing between the title and dimensions on
+mobile.
 
-## What it is FOR, which decides everything else
+The visualizer is a measuring instrument with the finish of a product viewer.
+It shows the bag at its real proportions, makes height, width, and depth
+unambiguous, and explains which exterior parts count toward an airline limit.
+It should invite interaction without turning the page into a luggage ad.
 
-The comparator on `/check` already answers *"does it fit?"*. This must not be a
-second, prettier version of that, or it is decoration — and this site has
-already thrown away one control for restating something the page said
-elsewhere (`docs/24`, the coverage facet).
+## Outcome
 
-Three questions it answers that nothing on the site currently does:
+The initial view is a stable three-quarter view on a warm off-white stage.
+Three visible rules identify:
 
-1. **Which dimension is which.** A reader looking at `55.9 × 35.6 × 22.9` does
-   not know which number is the height. Nobody does. Airlines print their
-   limits in a different order again. A labelled solid removes the ambiguity in
-   one glance, and that ambiguity is the single commonest way a person
-   mis-checks their own bag.
+- **Height:** floor to the highest fixed point, including wheels and fixed handles
+- **Width:** the widest left-to-right exterior point
+- **Depth:** front to back at the deepest point
 
-2. **Where the wheels and handle live.** This is the site's central argument —
-   the packing body is not what an airline measures — and today it is a
-   sentence: *"Wheels, handle and feet add 4.4 cm over the packing figure."* As
-   a **nested shell**, it stops being a claim and becomes a shape. 29 of 57
-   bags carry both figures, so the data exists.
+Values use the site's active unit. Users can drag to rotate, use arrow keys, or
+choose Front, Side, and Top views. Measurements remain legible while the bag
+moves. Construction changes the rendering: polycarbonate reads as a matte molded
+shell, aluminum has a restrained metallic response, and backpacks and duffels
+read as woven fabric.
 
-3. **What 40 cm of depth actually looks like.** Numbers do not convey volume.
-   A solid at true proportion does.
+When overall and packing dimensions both exist, a **Packing space** control
+reveals the smaller internal volume inside the exterior shell. Wheels, handles,
+feet, and the body remain visible as the difference. This explains why a bag
+marketed as 20 inches can measure 22 inches at an airline sizer.
 
-If a build of this does not make (2) obvious, it has missed the point and
-should not ship.
+The visualizer does not decide whether a bag fits. The existing fit engine
+remains authoritative. A later airline-cage mode may visualize an engine result,
+but must never calculate its own verdict.
 
----
+## Page composition
 
-## The build decision: CSS 3D, not Three.js
+Replace the current 18 rem coverage card with a 25–29 rem visualizer card. Keep
+the coverage summary and trip CTA directly beneath the stage in the same card.
 
-**Recommendation: CSS 3D transforms. No 3D library.**
-
-The subject is a rectangular prism. That is six `<div>`s and a
-`transform: rotateX() rotateY()`. Three.js would render the same six faces for
-roughly 150 kB gzipped on a page that currently ships almost nothing.
-
-The argument is not only bundle size:
-
-| | CSS 3D | Three.js |
-|---|---|---|
-| Bundle | 0 kB | ~150 kB gzip |
-| Dimension labels | **real DOM text** | canvas glyphs |
-| Units toggle | works via existing `data-cm` hooks | needs re-render plumbing |
-| Screen reader | reads the labels | opaque canvas |
-| Text selection / zoom | native | none |
-| No WebGL / old device | works | needs a fallback |
-| Lighting, reflections, soft shadows | approximate | real |
-
-The label point is decisive. Every figure on this site carries a `data-cm`
-hook so the Metric/Imperial toggle can rewrite it in place
-(`src/components/UnitToggle.astro`). In CSS 3D the measurement labels are DOM
-elements and that works for free. In a canvas they are pixels, and the toggle
-silently stops reaching them — which is precisely the class of bug that had
-weight stuck in kilograms for the whole of today.
-
-**Reach for Three.js only if** we later want true soft shadows, a genuine
-material response, or non-box geometry (a duffel's slump, a backpack's taper).
-We have 1 duffel and 2 backpacks out of 57. Not yet.
-
----
-
-## Visual language
-
-**It should read as a drawing, not a photograph.** `docs/23` already ruled out
-product photography on the grounds that a glossy render is the manufacturer's
-framing, and this site's whole argument is that the manufacturer's presentation
-is not what the airline measures. A photoreal polycarbonate shell would import
-exactly that framing back in.
-
-The reference is an **architect's model or an exploded technical drawing**:
-matte, warm, honest about being a diagram.
-
-```
-Overall shell   var(--color-surface-2) at ~18% opacity, edges var(--color-rule-strong)
-Packing body    solid var(--color-surface), edges var(--color-rule)
-Face shading    top 100% · front 94% · side 88% brightness — a fixed key light
-                from upper-left. No specular, no gradient ramps.
-Contact shadow  a single soft ellipse, var(--color-ink) at 8%, blurred
-Axis labels     font-mono, text-[0.8125rem], text-muted, on the rules
-Axis rules      1px var(--color-rule-strong), with the same arrow caps the
-                /check comparator already uses — the two drawings must look
-                like they come from the same hand
+```text
+┌──────────────────────────────────┬─────────────────────────────┐
+│ Bag type                         │       3D BAG MODEL          │
+│ Brand + model                    │        ↗ width              │
+│                                  │ height │     depth ↘        │
+│ Outside dimensions              │        ▼                    │
+│ Packing dimensions              │ [Front] [Side] [Top] [Reset]│
+│ Empty weight                     ├─────────────────────────────┤
+│ Provenance                       │ Clears 46/75 · Check trip → │
+└──────────────────────────────────┴─────────────────────────────┘
 ```
 
-**Colour discipline holds.** Blue is the only interactive colour
-(`docs/02`), so the drag handle and any control are blue and **the geometry
-never is**. If the bag is shown against an airline limit, the limit's cage may
-carry the verdict's status colour — that is status, which is permitted, and it
-is the same green/lime/amber/orange/red ladder as the badge.
+Desktop uses a sticky visualizer only within the header; it stops before the
+airline table. Mobile order is name, visualizer, dimension table, provenance,
+then coverage and CTA.
 
-**Type detail, cheaply.** The existing `BagSilhouette` already maps type →
-shape. Reuse it: four small wheel pucks on a spinner, two on a roller, none on
-a backpack or duffel. Rounded corner radius from `soft` — a hard shell is
-crisp, a softside gets a wider radius. This costs almost nothing and stops all
-57 bags looking like the same grey box.
+- Desktop stage: aspect ratio `4 / 5`, height 28–34 rem
+- Tablet: aspect ratio `4 / 3`, height 24–28 rem
+- Mobile: aspect ratio `1 / 1`, minimum height 20 rem
+- Reserve the stage size before hydration so layout shift is zero
 
----
+Use the existing card vocabulary: `bg-surface`, `border-rule`, `rounded-card`,
+and `shadow-panel`. The stage must not become a black product-viewer island.
+
+## Visual direction
+
+The scene should resemble a carefully lit physical scale model photographed in
+the same room as the rest of the site.
+
+- Background: `--color-surface-2`, no visible horizon
+- Ground: transparent except for a soft contact shadow
+- Lighting: large upper-left key, weak front-right fill, very subtle rim
+- Ambient occlusion: restrained around wheels, handles, seams, and ground contact
+- Camera: orthographic; perspective must not distort measured proportions
+- Default view: yaw `-28°`, pitch `14°`, bag upright
+
+Do not use an HDR showroom, glossy floor, dramatic spotlight, depth-of-field,
+lens flare, particles, or reflections of an imaginary room.
+
+### Palette and materials
+
+The model stays neutral because blue means interaction and the verdict palette
+means status elsewhere on the site.
+
+| Element | Treatment |
+| --- | --- |
+| Hard shell | warm graphite/stone, medium roughness, broad highlights |
+| Soft luggage | warm charcoal woven surface, high roughness |
+| Aluminum | desaturated silver, restrained metalness, never mirror-like |
+| Wheels and handle | dark graphite |
+| Seams and ribs | one value darker than the body, no black outlines |
+| Measurement rules | `--color-ink-2` at 70% |
+| Labels | surface chip, ink text, mono value |
+| Interactive state | `--color-blue` |
+| Packing body | blue at 8–12% opacity with blue wire edges |
+
+Use six controlled procedural presets:
+
+| Preset | Geometry cues | Render cues |
+| --- | --- | --- |
+| `hard_shell` | rounded body, shallow ribs, zipper seam | roughness .58, metalness 0 |
+| `aluminum` | crisp corners, grooves, corner guards | roughness .42, metalness .72 |
+| `soft_side` | softer corners, front panel, piping | roughness .9, subtle weave |
+| `backpack` | tapered top, soft front, suggested rear straps | roughness .94 |
+| `duffel` | rounded barrel, top handles, soft base | roughness .94 |
+| `underseat` | compact body, short handle, recorded wheels | follows hard/soft record |
+
+Release one uses procedural geometry and tiny generated normal maps. It does not
+need one GLB asset per SKU. This keeps every model data-driven and avoids an
+inconsistent 60-model production queue. Product-specific models are deferred
+until they can be produced consistently.
+
+## Geometry and measurement truth
+
+The canonical scene coordinates are `Y = height`, `X = width`, and `Z = depth`.
+Bag records use upright `[height, width, depth]`. The adapter must name axes;
+raw indexes must not spread through renderer code.
+
+```ts
+type BagDimensions = {
+  heightCm: number;
+  widthCm: number;
+  depthCm: number;
+};
+```
+
+Build every model inside the exact exterior bounding box. Decorative geometry
+may sit inside it but never extend beyond it. Wheels and fixed handles therefore
+cannot make the rendered object larger than the dimensions it claims to show.
+
+The visualizer consumes the same normalized `bag.external_cm` selected by
+`rankedDimensions()` and used by the fit engine. It must never choose a raw
+dimension field by name.
+
+Data confidence affects measurement rules, not the apparent physical size:
+
+- maker overall or our measurement: solid rules
+- review measurement: dashed extension rules
+- maker unspecified: dashed rules plus existing “shown, not recommended” copy
+- packing-only or reseller dimensions: no interactive visualizer
+
+`wheels` controls visible wheel count. A telescoping handle is always retracted.
+If packing dimensions and `wheel_handle_delta_cm` exist, use the recorded
+axis-by-axis gap. Never divide a total gap evenly among axes. Center the packing
+body in width and depth and rest it above the wheels. An illustrative 80/20 split
+may place the height gap below/above the body, but must never be described as a
+measured wheel-versus-handle split.
+
+When only `expands_cm` exists, show an amber “Expander: +N” badge by the depth
+rule. Do not render an expanded volume without a sourced three-axis
+`expanded_external_cm`.
+
+## Measurement overlay
+
+Render lines and labels as HTML/SVG over the WebGL canvas, never as canvas text.
+This keeps text crisp, accessible, and compatible with the unit toggle.
+
+Each axis has two extension lines, a dimension line with inward arrowheads, and
+a chip with the axis name and value. Use IBM Plex Mono for values and small
+uppercase Figtree for axis names. Labels may move to avoid collisions. Fade an
+occluded rule to 35% rather than drawing through the model like an X-ray.
+
+The server emits metric values using existing `data-cm`/`data-dims` hooks. The
+unit controller changes labels without rebuilding the scene. Geometry keeps its
+source precision; only visible values use the shared formatter.
 
 ## Interaction
 
-- **Drag to rotate.** Pointer events, so mouse/touch/pen are one code path.
-  Constrain to yaw −45°…+45° and pitch −20°…+30°. A box that can spin to a
-  useless angle is a toy; a box that stays legible is an instrument.
-- **Inertia, lightly damped.** Enough to feel physical, settling in well under
-  a second. No spin-forever.
-- **Idle hint.** A slow 6° yaw drift on first view only, so a reader learns it
-  is draggable without a tooltip. Stops permanently on first interaction.
-- **Keyboard.** Arrow keys rotate in 15° steps; the container is `tabindex=0`
-  with a visible focus ring. This is not optional — a drag-only control is
-  unusable for a chunk of readers.
-- **Reset.** Double-click, or a small blue text button, returns to the default
-  three-quarter view.
-- **`prefers-reduced-motion`.** No idle drift, no inertia, instant snapping
-  between angles. The control still works.
+### Pointer and touch
 
-**One deliberate omission: no zoom.** Scale is the whole point. Letting someone
-pinch a 55 cm bag to fill the screen destroys the only thing the drawing is
-for. Zoom would be actively harmful here.
+- Horizontal drag: yaw `-70°…70°`
+- Vertical drag: pitch `-18°…28°`
+- Gentle inertia that settles within 650 ms
+- No roll, pan, zoom, or endless spin
+- Vertical touch movement under 12 px remains page scroll; capture only after
+  horizontal intent is clear
+- Use pointer capture once rotation begins
+- Run one subtle 5° invitation turn after intersection; once only, stopped by
+  interaction, and disabled by reduced-motion
 
----
+An orthographic fit-to-stage camera preserves the visual meaning of scale. Zoom
+would make the bag appear larger without changing its measurements and is not
+useful here.
 
-## The packing-gap shell
+### Controls and keyboard
 
-The feature that justifies the whole thing.
+Four text buttons sit below the stage: **Front**, **Side**, **Top**, and
+**Reset**. Selected state uses blue wash rather than a solid blue fill. Dragging
+away from a preset clears its selected state.
 
-When `claimed_packing_cm` exists (29 of 57 bags), render **two nested
-volumes**: the packing body solid, the overall dimensions as a translucent
-shell around it. A small caption names the difference in the reader's units,
-using the same `data-cm` hook everything else uses:
+The focusable stage announces: “Interactive 3D size model. Use arrow keys to
+rotate. Press 1 for front, 2 for side, 3 for top, and 0 to reset.”
 
-> The shell is the **4.4 cm** the wheels and handle add. That is the number an
-> airline measures against.
+- Left/right: yaw 10°
+- Up/down: pitch 10°
+- `1`, `2`, `3`, `0`: presets
+- Home: reset
+- Standard blue focus ring around the stage, never the canvas
 
-For the other 28 bags, render the single volume and say so plainly — the same
-rule as everywhere else on this site: *absence is stated, never disguised.*
+### Packing-space reveal
 
----
+When packing dimensions exist, show a segmented control: **Outside size** and
+**Packing space**. Outside is default. Packing mode crossfades the exterior to
+16% opacity and reveals the inner body without moving parts.
 
-## Accessibility
+Caption:
 
-A 3D control is opaque to assistive technology unless it is built not to be.
+> The translucent shell includes the wheels, fixed handles and body around the
+> packing space. Airlines measure the outside shell.
 
-- The measurements **must** exist as real text in the DOM regardless of the
-  drawing — they are the content, the geometry is an illustration of it.
-- `role="img"` on the scene with an `aria-label` giving the three dimensions
-  and, where known, the packing gap.
-- The rotation control is separately focusable and labelled
-  (*"Rotate the bag. Arrow keys to turn."*).
-- Never the sole carrier of any fact. If the visualiser fails to initialise,
-  the page must lose nothing but the picture — the existing `BagSilhouette` is
-  the static fallback.
+Without packing dimensions, omit the control and state that separate packing
+dimensions are not published. Never fabricate an inner volume.
 
----
+## Rendering architecture
 
-## Performance
+Use **Three.js directly** in one lazy client component. The earlier CSS-3D
+proposal cannot deliver curved forms, material response, wheel geometry,
+ambient occlusion, or reliable lighting. Do not add React Three Fiber; Astro and
+Preact do not need a second abstraction for this procedural scene.
 
-- **Detail page only.** Never on a card, never 57 instances.
-- **Lazy.** Initialise on `IntersectionObserver`, not on load.
-- The static silhouette renders server-side and is replaced on hydrate, so
-  there is no layout shift and no empty box before JavaScript.
-- Target: no dependency, under ~4 kB of component JS.
+```text
+src/components/bag-visualizer/
+  BagVisualizer.astro       server shell, fallback, DOM labels, accessible copy
+  BagVisualizer.client.ts   renderer lifecycle and input
+  createBagGeometry.ts      procedural geometry inside normalized bounds
+  createMaterials.ts        restrained material presets
+  projectMeasurements.ts    3D bounds to SVG/DOM label coordinates
+  visualProfile.ts          record to render-only profile
+```
 
----
+```ts
+type BagVisualizerProps = {
+  slug: string;
+  name: string;
+  dimensions: BagDimensions;
+  packingDimensions?: BagDimensions;
+  dimensionSource: string;
+  type: 'hardside spinner' | 'softside spinner' | '2-wheel roller' |
+        'underseat' | 'backpack' | 'duffel';
+  wheels: 0 | 2 | 4;
+  soft: boolean;
+  expandsCm?: number;
+  visualProfile?: BagVisualProfile;
+};
 
-## Data it needs
+type BagVisualProfile = {
+  material: 'hard_shell' | 'aluminum' | 'soft_side' | 'backpack' | 'duffel';
+  cornerRadius?: 'small' | 'medium' | 'large';
+  ribbing?: 'none' | 'horizontal' | 'vertical';
+  frontPocket?: boolean;
+  wheelStyle?: 'single' | 'double';
+};
+```
 
-Everything is already in the record:
+`visualProfile.ts` derives a safe preset from existing `type`, `soft`, and
+`wheels`. Add optional record overrides only when classification is visibly
+wrong. These fields contain no measurements and cannot affect fit results.
 
-| Need | Field | Coverage |
-|---|---|---|
-| Overall dimensions | `external_cm` / `claimed_cm` via `rankedDimensions()` | 57 of 57 |
-| Packing body | `claimed_packing_cm` | 29 |
-| Precomputed gap | `wheel_handle_delta_cm` | 25 |
-| Wheel count | `wheels` | all |
-| Shell softness | `soft` | all |
-| Type → silhouette | `type` | all |
+### Loading and performance
 
-**It must use `rankedDimensions()`**, not `external_cm` directly. That was
-today's bug: picking a field by name rather than by source rank meant 19 bags
-were drawn from a review measurement while the manufacturer's own figure sat
-unused one field away.
+- Server-render the card, values, controls, and `BagSilhouette` fallback
+- Hydrate within 300 px of the viewport
+- Dynamically import Three.js with the client
+- Crossfade fallback only after the first complete frame
+- Pause outside the viewport and while `document.hidden`
+- Render on demand after motion settles; no permanent 60 fps loop
+- Cap device pixel ratio at 1.75
+- Dispose renderer, geometry, materials, and textures on Astro navigation
 
----
+| Budget | Target |
+| --- | --- |
+| Initial page JavaScript | no increase; visualizer is lazy |
+| Lazy chunk | ≤ 180 kB gzip including Three.js |
+| Generated textures | ≤ 20 kB |
+| First frame after intersection | ≤ 500 ms on mid-range mobile |
+| Interaction | median ≥ 45 fps; no long task over 100 ms |
+| Layout shift | 0 |
 
-## Failure modes to design against
+If Three.js misses the bundle budget, import only used modules or evaluate a
+smaller renderer. Do not sacrifice the DOM overlay or accessibility to save
+weight.
 
-1. **Becoming a product viewer.** If it drifts toward "look at this nice
-   suitcase", it has become the manufacturer's marketing and lost its reason to
-   exist. It is a measuring instrument.
-2. **Labels that stop converting.** The moment a measurement is painted into a
-   canvas or baked into a string, the units toggle cannot reach it. Guarded by
-   the existing `unit-toggle.test.mjs` rules: no unit inside a string, every
-   figure carries a hook.
-3. **Implying precision we do not have.** A crisp solid says "this is exact".
-   For a bag on an unlabelled maker figure, or a review measurement, the
-   provenance line below must stay visible and honest. Consider a subtly
-   softer edge treatment for non-`maker_overall` figures — the drawing should
-   not look more certain than the number behind it.
-4. **Mobile drag stealing page scroll.** Constrain to horizontal drag on touch,
-   or require a deliberate press-and-hold. A reader who cannot scroll past the
-   widget will leave.
+## Progressive enhancement and accessibility
 
----
+- Static `BagSilhouette` and all dimensions exist in initial HTML
+- WebGL failure silently leaves the useful fallback
+- Canvas is `aria-hidden="true"`; it carries no unique information
+- Text description names shape, dimensions, wheel count, and packing gap
+- Labels are real DOM text; controls are native 44 px buttons
+- Presets and packing mode use `aria-pressed`
+- Rotation is not announced continuously; presets update one polite status line
+- High-contrast mode uses solid system-color rules
+- Reduced-motion removes invitation motion, inertia, and crossfades
+- Save-Data, no WebGL, or context failure keeps the SVG fallback
 
-## Phasing
+The fallback is a supported mode, not an apology.
 
-**Phase 1 — the instrument.** Single volume, three labelled axes, drag +
-keyboard rotate, static fallback, full a11y. This is the whole value of point
-(1) above and ships in a day.
+## Analytics
 
-**Phase 2 — the shell.** The nested packing body and the gap caption. This is
-the part that makes the site's argument physical, and it is the reason to build
-any of it.
+Emit each at most once per page view:
 
-**Phase 3 — the airline cage.** An optional wireframe box at a chosen airline's
-limit, tinted with the verdict colour, so the reader sees exactly which face is
-over. This is where it stops being an illustration and becomes an answer —
-but it needs an airline picker on the bag page, which does not exist yet.
+- `bag_visualizer_loaded`
+- `bag_visualizer_rotated`
+- `bag_visualizer_view_selected` with `front | side | top | reset`
+- `bag_visualizer_packing_revealed`
+- `bag_visualizer_fallback` with `reduced_data | no_webgl | context_error`
 
-Phase 3 is the one that would genuinely differentiate. Worth noting the
-competitor's Bag Finder shows a single unlabelled dimension string and no
-drawing at all.
+Rotation time is not a success metric. Useful downstream signals are trip-check
+starts and product clicks after interaction.
+
+## Failure states
+
+| Condition | Behavior |
+| --- | --- |
+| No eligible exterior dimensions | Do not render the card |
+| No packing dimensions | Exterior only with explicit absence copy |
+| No material metadata | Derive neutral preset from type and softness |
+| Unknown wheels | Use neutral feet; make no wheel-count claim |
+| WebGL unavailable/lost | Keep or reinstate SVG fallback |
+| Labels overlap | Snap labels to reserved card edges |
+| Narrow mobile | Default front view; place depth rule below model |
+| Reduced motion | Direct manipulation without inertia or idle motion |
+
+## Delivery
+
+### Phase 1 — measured model
+
+- Astro shell and static fallback
+- Orthographic procedural models for all six bag types
+- Hard-shell and fabric materials
+- Pointer, touch, keyboard, and preset views
+- Three projected measurement axes
+- Unit-toggle integration
+- Performance instrumentation and WebGL fallback
+
+### Phase 2 — construction polish
+
+- Aluminum material
+- Wheels, handles, seams, ribs, and front-pocket details
+- Contact shadow and restrained ambient occlusion
+- Packing-space reveal from real `claimed_packing_cm`
+- Expansion badge
+
+### Phase 3 — airline cage
+
+- Entry from the trip checker or a saved itinerary
+- Wireframe airline envelope around the bag
+- Binding face in the engine verdict color
+- Engine-provided overage labels
+- No duplicate fare, route, or fit calculation in rendering code
+
+## Acceptance criteria
+
+1. Every eligible model has the exact proportions of normalized exterior
+   dimensions used by the fit engine.
+2. Height, width, and depth remain correct in every preset view and switch units
+   through the global toggle.
+3. Mouse, touch, pen, and keyboard work; mobile scrolling remains reliable.
+4. Hard side, soft side, backpack, and duffel look distinct without inventing
+   SKU-specific facts.
+5. Packing mode appears only with sourced packing dimensions, and expansion is
+   never inferred from a single increment.
+6. Initial HTML contains dimensions and a useful fallback.
+7. Reduced-motion, high-contrast, Save-Data, no-WebGL, and context-loss paths work.
+8. Lazy chunk, first-frame, and frame-time budgets are measured repeatably.
+9. No visualizer calculation can alter a verdict, source rank, or coverage count.
+10. It passes axe, keyboard-only, iOS Safari, Android Chrome, and desktop
+    Safari/Chrome/Firefox review.
+
+### Visual review
+
+- Warm paper, white cards, restrained shadows, Figtree and IBM Plex Mono
+- Blue only for interaction; verdict colors only for a future airline cage
+- Model reads as luggage without a logo
+- Materials do not look wet, toy-like, or game-like
+- Axis labels remain clearer than decorative details
+- Packing shell explains the wheel-and-handle gap within three seconds
+- Nothing auto-rotates after the first user interaction
+
+## Non-goals
+
+- Exact product replicas, logos, or inferred product colors
+- Opening lids, zippers, or compartments
+- Packing simulations or user-uploaded scans
+- AR room placement
+- Free zoom, pan, or endless spin
+- A second fit engine
+- Photoreal marketing renders
+
+Those add spectacle without improving understanding of the measured exterior.

@@ -1,0 +1,162 @@
+{
+  "iata": "5J",
+  "name": "Cebu Pacific",
+  "region": "AS",
+  "type": "ulcc",
+  "status": "operating",
+  "source_url": "https://help.cebupacificair.com/article/ceb-baggage-guidelines-and-upgrade-options-118500",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "GO Basic",
+      "type": "cabin",
+      "source_url": "https://help.cebupacificair.com/article/ceb-baggage-guidelines-and-upgrade-options-118500",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_in": [
+        22,
+        14,
+        9
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "allowance_group": "go_basic_cabin_total",
+      "group_max_kg": 7
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "GO Basic",
+      "type": "personal",
+      "source_url": "https://help.cebupacificair.com/article/ceb-baggage-guidelines-and-upgrade-options-118500",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        36,
+        20,
+        20
+      ],
+      "max_in": [
+        14,
+        8,
+        8
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "allowance_group": "go_basic_cabin_total",
+      "group_max_kg": 7
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "GO Basic",
+      "type": "checked",
+      "source_url": "https://help.cebupacificair.com/article/ceb-baggage-guidelines-and-upgrade-options-118500",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        99,
+        99,
+        99
+      ],
+      "max_in": [
+        39,
+        39,
+        39
+      ],
+      "max_kg": 20,
+      "free_pieces": 0,
+      "system": "piece",
+      "note": "No checked bag included; a 20 kg piece is available as an add-on."
+    },
+    {
+      "fare_class": "standard",
+      "fare_name": "GO Easy",
+      "type": "cabin",
+      "source_url": "https://help.cebupacificair.com/article/ceb-baggage-guidelines-and-upgrade-options-118500",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_in": [
+        22,
+        14,
+        9
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "allowance_group": "go_easy_cabin_total",
+      "group_max_kg": 7
+    },
+    {
+      "fare_class": "standard",
+      "fare_name": "GO Easy",
+      "type": "personal",
+      "source_url": "https://help.cebupacificair.com/article/ceb-baggage-guidelines-and-upgrade-options-118500",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        36,
+        20,
+        20
+      ],
+      "max_in": [
+        14,
+        8,
+        8
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "allowance_group": "go_easy_cabin_total",
+      "group_max_kg": 7
+    },
+    {
+      "fare_class": "standard",
+      "fare_name": "GO Easy",
+      "type": "checked",
+      "source_url": "https://help.cebupacificair.com/article/ceb-baggage-guidelines-and-upgrade-options-118500",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        99,
+        99,
+        99
+      ],
+      "max_in": [
+        39,
+        39,
+        39
+      ],
+      "max_kg": 20,
+      "free_pieces": 1,
+      "system": "piece"
+    }
+  ],
+  "audit_note": "Official current baggage guidelines researched. Wheels and handles are explicitly included in hand-carry measurements; the two cabin pieces share a 7 kg cap.",
+  "research_dossier": "resources/carriers/5J-cebu-pacific.md"
+}
