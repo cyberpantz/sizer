@@ -11,6 +11,7 @@ import {
   enforcementLabel,
   enforcementScore,
   isResearched,
+  strictnessIcon,
 } from '../../ui/strictness.mjs';
 import { resultLabel } from '../../ui/verdict.mjs';
 
@@ -285,11 +286,13 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
               <div class="grid grid-cols-[minmax(0,1fr)_9rem_8.5rem] items-center gap-3 border-b border-rule px-4 py-3 text-[0.9375rem] last:border-b-0">
                 <span>
                   <span class="font-semibold">{carrier.name}</span>
-                  <span class="block text-[0.8125rem] text-muted">
+                  <span class="flex flex-wrap items-center gap-x-1 text-[0.8125rem] text-muted">
                     {fareLabel(carrier.fare_class)}
                     {enforcementScore(cRecord.strictness?.score) !== null && (
                       <>
                         {' · '}
+                        <Fragment set:html={strictnessIcon(cRecord.strictness?.score, { size: 13 })} />
+                        {' '}
                         <span class="font-mono">{enforcementScore(cRecord.strictness?.score)}/{SCALE_MAX}</span>
                         {' '}
                         {enforcementLabel(cRecord.strictness?.score).toLowerCase()}

@@ -147,8 +147,9 @@ const RISK = [
     enforcementLabel,
     enforcementNote,
     enforcementScore,
-    enforcementSteps,
     isResearched,
+    strictnessIcon,
+    tierIndex,
   } from '../ui/strictness.mjs';
   import { createUnits } from '../ui/units.mjs';
   import { advisoryLine, bandLabel, resultLabel } from '../ui/verdict.mjs';
@@ -558,13 +559,9 @@ const RISK = [
      dataset today is a type/region prior rather than researched enforcement.
      23 carriers do carry a researched claim about how they behave, and where
      one exists it is quoted instead of our adjective. */
-  /* Tone follows the tier, so the meter reads at a glance: green rarely
-     checks, red measures everything. Status colour on a non-interactive
-     element, which docs/02 allows. */
-  const STRICT_BAR = ['bg-green', 'bg-amber', 'bg-orange', 'bg-red'];
+  /* Tone follows the tier so the number reads at a glance. Status colour on
+     non-interactive text, which docs/02 allows. */
   const STRICT_INK = ['text-green', 'text-amber', 'text-orange', 'text-red'];
-  const tierIndex = (score) =>
-    score == null ? -1 : score <= 3 ? 0 : score <= 5 ? 1 : score <= 7 ? 2 : 3;
 
   /* "9/10, measures every bag" — the number and the word, never one alone. */
   const strictScore = (iata) => {
@@ -578,19 +575,15 @@ const RISK = [
   function strictnessLine(strictness) {
     if (!strictness) return '';
     const n = enforcementScore(strictness.score);
-    const i = tierIndex(n);
+    const i = tierIndex(strictness.score);
     const assumed = !isResearched(strictness) && !(strictness.evidence ?? []).some((e) => e.claim);
 
-    /* A ten-step meter, so the number has something to mean. The score is
-       never alone: it travels with the tier word and, when it rests on a
-       prior, with the marker that says so. */
-    const meter = Array.from({ length: SCALE_MAX }, (_, k) => {
-      const on = k < enforcementSteps(strictness.score);
-      return `<span class="h-1.5 w-1 rounded-[1px] ${on ? (STRICT_BAR[i] ?? 'bg-muted') : 'bg-rule'}"></span>`;
-    }).join('');
-
-    return `<span class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.84375rem] leading-snug text-muted">
-      <span class="flex items-center gap-[2px]" aria-hidden="true">${meter}</span>
+    /* Icon, number, word. The icon carries the level by bar height, so it
+       still reads in greyscale; the number differentiates within a tier —
+       easyJet at 8 and Ryanair at 9 both "measure every bag" and are not the
+       same airline to fly. */
+    return `<span class="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-[0.84375rem] leading-snug text-muted">
+      ${strictnessIcon(strictness.score, { size: 15 })}
       <span class="font-mono ${i >= 0 ? (STRICT_INK[i] ?? 'text-muted') : 'text-muted'}">${n === null ? '—' : `${n}/${SCALE_MAX}`}</span>
       <span>${esc(enforcementLabel(strictness.score).toLowerCase())}</span>
       ${assumed ? '<span class="text-muted">· assumed</span>' : ''}

@@ -84,3 +84,52 @@ export function enforcementNote(strictness) {
   if (!tier) return 'Nobody has looked at how strictly this airline checks.';
   return `${tier.detail} This is our starting assumption for an airline of this type and region, not researched enforcement.`;
 }
+
+/* ---------- the icon ---------- */
+
+/* Four ascending bars, filled to the tier — the signal-strength idiom.
+
+   The first version was a ten-step meter, which at 4px per step was visual
+   noise rather than an icon. Four bars read instantly at 16px and match the
+   four tiers exactly, so the picture and the words cannot disagree.
+
+   Deliberately THREE redundant channels: height, fill, and colour. Colour
+   alone would fail for a colour-blind reader and in print; the ascending
+   height carries the same information on its own, which is why the idiom
+   works on every phone in the world.
+
+   Returned as a string so the .astro pages and the client script — which
+   builds its markup in template literals — can share one implementation.
+   Two drawings of the same thing would drift. */
+const ICON_TONE = [
+  'var(--color-green)',
+  'var(--color-amber)',
+  'var(--color-orange)',
+  'var(--color-red)',
+];
+
+/** Which of the four tiers a score sits in. -1 when unscored. */
+export function tierIndex(score) {
+  const tier = tierFor(score);
+  return tier ? TIERS.indexOf(tier) : -1;
+}
+
+export function strictnessIcon(score, { size = 16 } = {}) {
+  const i = tierIndex(score);
+  const label =
+    i < 0
+      ? 'Enforcement not scored'
+      : `Strictness ${enforcementScore(score)} of ${SCALE_MAX}: ${enforcementLabel(score).toLowerCase()}`;
+
+  const bars = [0, 1, 2, 3]
+    .map((k) => {
+      const h = 4 + k * 3.2; // 4, 7.2, 10.4, 13.6 — ascending
+      const on = k <= i;
+      return `<rect x="${k * 4.2}" y="${14 - h}" width="2.8" height="${h}" rx="1" fill="${
+        on ? (ICON_TONE[i] ?? 'var(--color-muted)') : 'var(--color-rule)'
+      }"/>`;
+    })
+    .join('');
+
+  return `<svg viewBox="0 0 16 14" width="${size}" height="${(size * 14) / 16}" role="img" aria-label="${label}" class="shrink-0">${bars}</svg>`;
+}
