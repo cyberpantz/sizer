@@ -1659,6 +1659,482 @@
      "note": "Published equivalents differ; both retained without reconciliation."
     }
    ]
+  },
+  {
+   "slug": "cotopaxi-allpa-35",
+   "brand": "Cotopaxi",
+   "model": "Allpa 35L Travel Pack",
+   "line": null,
+   "type": "backpack",
+   "soft": 1,
+   "wheels": 0,
+   "role": "overhead",
+   "variant": "Allpa 35L Travel Pack \u2014 Cotopaxi Black, recycled-fabric version",
+   "manufacturer_source": {
+    "url": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+    "retrieved": "2026-08-31",
+    "title": "Cotopaxi Allpa 35L Travel Pack",
+    "local": "resources/bags/2026-08-31-cotopaxi-allpa-35.md"
+   },
+   "notes": "Rendered manufacturer page read in browser. Other sizes 20L, 28L, 42L and 50L; only 35L imported. Weight also printed as 2 lb 15 oz; preserved here, not converted into decimal pounds. Capacity also 2135cu in. Imperial and metric dimensions differ slightly; both retained without reconciliation. USD $230, no sale shown. No interior size, expansion amount, SKU or explicit empty-weight qualifier found. Current recycled-fabric version; reviews may describe an older generation.",
+   "claimed_in": {
+    "v": [
+     22,
+     12,
+     10
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+    "at": "2026-08-31",
+    "quote": "Specs",
+    "note": "Unqualified triple in Specs, not explicitly described as overall or packing size. Includes no statement about straps/grab handles. Claimed dimensions only."
+   },
+   "claimed_cm": {
+    "v": [
+     56,
+     30,
+     25
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+    "at": "2026-08-31",
+    "quote": "Specs",
+    "note": "Unqualified triple in Specs, not explicitly described as overall or packing size. Includes no statement about straps/grab handles. Claimed dimensions only."
+   },
+   "weight_kg": {
+    "v": 1.33,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+    "at": "2026-08-31",
+    "quote": "Specs"
+   },
+   "capacity_l": {
+    "v": 35,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+    "at": "2026-08-31",
+    "quote": "Specs"
+   },
+   "price_usd": {
+    "v": 230,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+    "at": "2026-08-31",
+    "quote": "$230",
+    "list": true
+   },
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        22,
+        12,
+        10
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        56,
+        30,
+        25
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Printed unit equivalents differ; retained without conversion."
+    }
+   ]
+  },
+  {
+   "slug": "eagle-creek-cargo-hauler-xt",
+   "brand": "Eagle Creek",
+   "model": "Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel",
+   "line": null,
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "variant": "21.5-inch / 32L Carry-On \u2014 Black, current recycled-fabric model",
+   "manufacturer_source": {
+    "url": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+    "retrieved": "2026-08-31",
+    "title": "Eagle Creek Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel",
+    "local": "resources/bags/2026-08-31-eagle-creek-cargo-hauler-xt.md"
+   },
+   "notes": "Current Black 21.5-inch/32L model, not 29-inch/90L or 32-inch/120L. Weight also printed 5 lb. 9 oz., retained without conversion. Internal capacity has inconsistent 32 L and 2,441 cu. in. claims; neither selected as the sole manufacturer capacity. Product generation differs from older 40L listings. USD list $299; signup discount not applied. No interior dimension triple, expansion amount or numeric SKU found.",
+   "external_in": {
+    "v": [
+     21.5,
+     13.75,
+     7.75
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+    "at": "2026-08-31",
+    "quote": "External Dimensions",
+    "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us."
+   },
+   "external_cm": {
+    "v": [
+     55,
+     35,
+     20
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+    "at": "2026-08-31",
+    "quote": "External Dimensions",
+    "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us."
+   },
+   "weight_kg": {
+    "v": 2.5,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "price_usd": {
+    "v": 299,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+    "at": "2026-08-31",
+    "quote": "$299.00",
+    "list": true
+   },
+   "conflicts": [
+    {
+     "field": "external_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        21.5,
+        13.75,
+        7.75
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        55,
+        35,
+        20
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Printed equivalents differ; both retained."
+    },
+    {
+     "field": "capacity_l",
+     "values": [
+      {
+       "src": "manufacturer litres",
+       "v": 32,
+       "unit": "L"
+      },
+      {
+       "src": "manufacturer cubic inches",
+       "v": 2441,
+       "unit": "cu. in."
+      }
+     ],
+     "note": "Published volume equivalents inconsistent; unresolved."
+    }
+   ]
+  },
+  {
+   "slug": "eagle-creek-gear-warrior-xe",
+   "brand": "Eagle Creek",
+   "model": "Gear Warrior XE 2-Wheel Convertible",
+   "line": null,
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "variant": "21.75-inch / 40L Convertible Carry-On, Black",
+   "manufacturer_source": {
+    "url": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+    "retrieved": "2026-08-31",
+    "title": "Eagle Creek Gear Warrior XE 2-Wheel Convertible",
+    "local": "resources/bags/2026-08-31-eagle-creek-gear-warrior-xe.md"
+   },
+   "notes": "Current redesigned convertible carry-on. Printed weight 8 lb. 0 oz. (3.6 kg); mixed imperial units retained here without conversion. Expanded exterior 21.75 x 14 x 12 in. (55 x 35 x 31 cm). Standard capacity 40 L (2,441 cu. in.); expanded 50 L (3,637 cu. in.), whose units disagree. Expansion adds 10 liters according to Details. No interior triple, numeric SKU, or explicit empty-weight qualifier found. USD 449 regular price; newsletter discount not applied.",
+   "external_in": {
+    "v": [
+     21.75,
+     14,
+     10
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+    "at": "2026-08-31",
+    "quote": "External Dimensions",
+    "note": "Standard (unexpanded) exterior. Page explicitly includes wheels, handles, and all other components. Printed inches and cm differ; neither is reconciled."
+   },
+   "external_cm": {
+    "v": [
+     55,
+     35,
+     26
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+    "at": "2026-08-31",
+    "quote": "External Dimensions",
+    "note": "Standard (unexpanded) exterior. Page explicitly includes wheels, handles, and all other components. Printed inches and cm differ; neither is reconciled."
+   },
+   "weight_kg": {
+    "v": 3.6,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 40,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+    "at": "2026-08-31",
+    "quote": "Internal Capacity"
+   },
+   "price_usd": {
+    "v": 449,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+    "at": "2026-08-31",
+    "quote": "$449.00",
+    "list": true
+   },
+   "conflicts": [
+    {
+     "field": "external_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        21.75,
+        14,
+        10
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimeters",
+       "v": [
+        55,
+        35,
+        26
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Printed dimension units are not exact equivalents; retained as printed."
+    },
+    {
+     "field": "capacity_l",
+     "values": [
+      {
+       "src": "manufacturer expanded liters",
+       "v": 50,
+       "unit": "L"
+      },
+      {
+       "src": "manufacturer expanded cubic inches",
+       "v": 3637,
+       "unit": "cu. in."
+      }
+     ],
+     "note": "Expanded capacities disagree across units. Standard capacity is separately printed as 40 L."
+    }
+   ]
+  },
+  {
+   "slug": "osprey-transporter-wheeled-38",
+   "brand": "Osprey",
+   "model": "Transporter Wheeled Carry-On 38",
+   "line": null,
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "variant": "38L, O/S, current NanoTough model; URL requests Pine Leaf Green, selector unresolved",
+   "manufacturer_source": {
+    "url": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+    "retrieved": "2026-08-31",
+    "title": "Osprey Transporter Wheeled Carry-On 38",
+    "local": "resources/bags/2026-08-31-osprey-transporter-wheeled-38.md"
+   },
+   "notes": "Current NanoTough version, O/S 38L specification table. Volume also printed 2319 IN\u00b3. USD page displays As low as Current Price $300.00 but color/size selectors unresolved/out of stock: regular variant price unverified and omitted. Missing interior dimensions, expansion amount, SKU, explicit empty-weight qualifier. Requested color Pine Leaf Green cannot be confirmed by rendered selector.",
+   "claimed_in": {
+    "v": [
+     21.7,
+     13.8,
+     9.1
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+    "at": "2026-08-31",
+    "quote": "DIMENSIONS",
+    "note": "Page does not identify these as overall versus packing dimensions or explicitly include wheels and handles. Both printed units retained without conversion."
+   },
+   "claimed_cm": {
+    "v": [
+     55,
+     35,
+     23
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+    "at": "2026-08-31",
+    "quote": "DIMENSIONS",
+    "note": "Page does not identify these as overall versus packing dimensions or explicitly include wheels and handles. Both printed units retained without conversion."
+   },
+   "weight_lb": {
+    "v": 5.94,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+    "at": "2026-08-31",
+    "quote": "WEIGHT"
+   },
+   "weight_kg": {
+    "v": 2.696,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+    "at": "2026-08-31",
+    "quote": "WEIGHT"
+   },
+   "capacity_l": {
+    "v": 38,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+    "at": "2026-08-31",
+    "quote": "VOLUME"
+   },
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        21.7,
+        13.8,
+        9.1
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimeters",
+       "v": [
+        55,
+        35,
+        23
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Printed dimension units differ; no reconciliation."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer pounds",
+       "v": 5.94,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer kilograms",
+       "v": 2.696,
+       "unit": "kg"
+      }
+     ],
+     "note": "Printed weights are not exact equivalents; both retained."
+    }
+   ]
+  },
+  {
+   "slug": "quince-small",
+   "brand": "Quince",
+   "model": "Small Carry-On Suitcase",
+   "line": "quince-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Small Carry-On, non-expandable; Venetian Red displayed",
+   "manufacturer_source": {
+    "url": "https://www.quince.com/unisex/small-carry-on-hard-shell-suitcase",
+    "retrieved": "2026-08-31",
+    "title": "Quince Small Carry-On Suitcase",
+    "local": "resources/bags/2026-08-31-quince-small.md"
+   },
+   "notes": "Non-expandable Small Carry-On. Interior published only as 20.1 x 13.5 inches with label Internal dimensions excluding wheels; no depth, so no invented triple. USD119.90 regular price; USD275 Traditional retail is a comparison, not Quince former/list price. No metric dimensions, numeric SKU or explicit empty-weight qualifier found. Expandable Small Carry-On is a separate product.",
+   "claimed_in": {
+    "v": [
+     22.24,
+     14.05,
+     9.17
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.quince.com/unisex/small-carry-on-hard-shell-suitcase",
+    "at": "2026-08-31",
+    "quote": "External dimensions including wheels",
+    "note": "Page labels these external including wheels, but does not explicitly confirm handles are counted. Conservatively stored as claimed per intake brief."
+   },
+   "weight_lb": {
+    "v": 6.2,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://www.quince.com/unisex/small-carry-on-hard-shell-suitcase",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 40,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://www.quince.com/unisex/small-carry-on-hard-shell-suitcase",
+    "at": "2026-08-31",
+    "quote": "Capacity"
+   },
+   "price_usd": {
+    "v": 119.9,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://www.quince.com/unisex/small-carry-on-hard-shell-suitcase",
+    "at": "2026-08-31",
+    "quote": "$119.90",
+    "list": true
+   },
+   "conflicts": []
   }
  ]
 }

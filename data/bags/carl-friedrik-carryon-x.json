@@ -94,13 +94,13 @@
  ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Specifications panel opened in browser; US locale confirmed. Hybrid Carry-on X, not Core Carry-on X, which appears beside it in comparison. Grey/Cognac bag without add-ons; USD list $745, no sale shown. Both unit systems retained despite differences. No packing dimensions, expansion amount, numeric SKU or explicit empty-weight qualifier found.",
  "manufacturer_source": {
   "url": "https://www.carlfriedrik.com/products/the-carry-on-x",
   "retrieved": "2026-08-31",
   "title": "Carl Friedrik Carry-on X",
   "local": "resources/bags/2026-08-31-carl-friedrik-carryon-x.md"
  },
- "notes": "Specifications panel opened in browser; US locale confirmed. Hybrid Carry-on X, not Core Carry-on X, which appears beside it in comparison. Grey/Cognac bag without add-ons; USD list $745, no sale shown. Both unit systems retained despite differences. No packing dimensions, expansion amount, numeric SKU or explicit empty-weight qualifier found.",
  "claimed_in": {
   "v": [
    22,

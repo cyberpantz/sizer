@@ -2,31 +2,45 @@
  "slug": "eagle-creek-gear-warrior-xe",
  "brand": "Eagle Creek",
  "model": "Gear Warrior XE 2-Wheel Convertible",
- "variant": null,
+ "variant": "21.75-inch / 40L Convertible Carry-On, Black",
  "line": null,
  "type": "2-wheel roller",
  "soft": 1,
  "wheels": 2,
  "role": "overhead",
- "fits_personal_item": null,
- "external_cm": null,
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55,
+   35,
+   26
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+  "at": "2026-08-31",
+  "quote": "External Dimensions",
+  "note": "Standard (unexpanded) exterior. Page explicitly includes wheels, handles, and all other components. Printed inches and cm differ; neither is reconciled."
+ },
  "claimed_packing_cm": null,
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.63,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "kg"
+  "v": 3.6,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+  "at": "2026-08-31",
+  "quote": "Weight"
  },
  "capacity_l": {
-  "v": 60,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "L"
+  "v": 40,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+  "at": "2026-08-31",
+  "quote": "Internal Capacity"
  },
  "reviews": [
   {
@@ -47,9 +61,79 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "external_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      21.75,
+      14,
+      10
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimeters",
+     "v": [
+      55,
+      35,
+      26
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Printed dimension units are not exact equivalents; retained as printed."
+  },
+  {
+   "field": "capacity_l",
+   "values": [
+    {
+     "src": "manufacturer expanded liters",
+     "v": 50,
+     "unit": "L"
+    },
+    {
+     "src": "manufacturer expanded cubic inches",
+     "v": 3637,
+     "unit": "cu. in."
+    }
+   ],
+   "note": "Expanded capacities disagree across units. Standard capacity is separately printed as 40 L."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Current redesigned convertible carry-on. Printed weight 8 lb. 0 oz. (3.6 kg); mixed imperial units retained here without conversion. Expanded exterior 21.75 x 14 x 12 in. (55 x 35 x 31 cm). Standard capacity 40 L (2,441 cu. in.); expanded 50 L (3,637 cu. in.), whose units disagree. Expansion adds 10 liters according to Details. No interior triple, numeric SKU, or explicit empty-weight qualifier found. USD 449 regular price; newsletter discount not applied.",
+ "manufacturer_source": {
+  "url": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+  "retrieved": "2026-08-31",
+  "title": "Eagle Creek Gear Warrior XE 2-Wheel Convertible",
+  "local": "resources/bags/2026-08-31-eagle-creek-gear-warrior-xe.md"
+ },
+ "external_in": {
+  "v": [
+   21.75,
+   14,
+   10
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+  "at": "2026-08-31",
+  "quote": "External Dimensions",
+  "note": "Standard (unexpanded) exterior. Page explicitly includes wheels, handles, and all other components. Printed inches and cm differ; neither is reconciled."
+ },
+ "price_usd": {
+  "v": 449,
+  "unit": "USD",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/gear-warrior-xe-2-wheeled-convertible-carry-on",
+  "at": "2026-08-31",
+  "quote": "$449.00",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

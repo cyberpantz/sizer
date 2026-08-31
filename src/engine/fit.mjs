@@ -214,8 +214,17 @@ export function createEngine(overrides = {}) {
   /** Carriers we cannot score leave the denominator, exactly like ones that no
    *  longer fly. "Clears 41 of 58" must not silently become "41 of 58" when six
    *  of those 58 were never researched. */
+  /* A carrier that permits NO cabin bag on its cheapest fare leaves the
+     denominator too, and for a different reason from the two above.
+     `no_cabin_bag` is a fact about the FARE, not about the bag: Ryanair, Wizz
+     and Frontier sell you a seat and a personal item, and every suitcase ever
+     made fails them equally. Counting them tells a reader nothing about which
+     bag to buy, and makes "clears every airline" unreachable by construction —
+     the top shelf empties and the page stops discriminating.
+     Reported separately so the page can say it, which it must: "no bag clears
+     these three without buying up" is among the most useful things we know. */
   function coverage(bag, carriers) {
-    const live = carriers.filter((c) => c.flying !== false && !c.cabin_unknown);
+    const live = carriers.filter((c) => c.flying !== false && !c.cabin_unknown && !c.no_cabin_bag);
     let clears = 0,
       line = 0;
     for (const c of live) {
@@ -233,6 +242,9 @@ export function createEngine(overrides = {}) {
          statement to "6 of these no longer fly" and the page should say which. */
       unknown: carriers.filter((c) => c.cabin_unknown).length,
       not_flying: carriers.filter((c) => c.flying === false).length,
+      /* Airlines whose cheapest fare includes no cabin bag at any size. Not a
+         failure of the bag, and not a gap in our research — a finding. */
+      no_cabin_bag: carriers.filter((c) => c.no_cabin_bag && c.flying !== false).length,
       ratio: live.length ? (clears + line) / live.length : 0,
     };
   }

@@ -2,19 +2,38 @@
  "slug": "eagle-creek-cargo-hauler-xt",
  "brand": "Eagle Creek",
  "model": "Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel",
- "variant": null,
+ "variant": "21.5-inch / 32L Carry-On — Black, current recycled-fabric model",
  "line": null,
  "type": "2-wheel roller",
  "soft": 1,
  "wheels": 2,
  "role": "overhead",
- "fits_personal_item": null,
- "external_cm": null,
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55,
+   35,
+   20
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+  "at": "2026-08-31",
+  "quote": "External Dimensions",
+  "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us."
+ },
  "claimed_packing_cm": null,
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
- "weight_kg": null,
+ "weight_kg": {
+  "v": 2.5,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
  "capacity_l": null,
  "reviews": [
   {
@@ -39,10 +58,80 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "external_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      21.5,
+      13.75,
+      7.75
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      55,
+      35,
+      20
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Printed equivalents differ; both retained."
+  },
+  {
+   "field": "capacity_l",
+   "values": [
+    {
+     "src": "manufacturer litres",
+     "v": 32,
+     "unit": "L"
+    },
+    {
+     "src": "manufacturer cubic inches",
+     "v": 2441,
+     "unit": "cu. in."
+    }
+   ],
+   "note": "Published volume equivalents inconsistent; unresolved."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Current Black 21.5-inch/32L model, not 29-inch/90L or 32-inch/120L. Weight also printed 5 lb. 9 oz., retained without conversion. Internal capacity has inconsistent 32 L and 2,441 cu. in. claims; neither selected as the sole manufacturer capacity. Product generation differs from older 40L listings. USD list $299; signup discount not applied. No interior dimension triple, expansion amount or numeric SKU found.",
+ "manufacturer_source": {
+  "url": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+  "retrieved": "2026-08-31",
+  "title": "Eagle Creek Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel",
+  "local": "resources/bags/2026-08-31-eagle-creek-cargo-hauler-xt.md"
+ },
+ "external_in": {
+  "v": [
+   21.5,
+   13.75,
+   7.75
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+  "at": "2026-08-31",
+  "quote": "External Dimensions",
+  "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us."
+ },
+ "price_usd": {
+  "v": 299,
+  "unit": "USD",
+  "src": "manufacturer",
+  "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
+  "at": "2026-08-31",
+  "quote": "$299.00",
+  "list": true
+ },
  "compliance_claimed": true,
  "observed": [],
- "compliance_unbacked": true
+ "compliance_unbacked": false
 }

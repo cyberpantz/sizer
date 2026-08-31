@@ -2,7 +2,7 @@
  "slug": "cotopaxi-allpa-35",
  "brand": "Cotopaxi",
  "model": "Allpa 35L Travel Pack",
- "variant": null,
+ "variant": "Allpa 35L Travel Pack — Cotopaxi Black, recycled-fabric version",
  "line": null,
  "type": "backpack",
  "soft": 1,
@@ -11,22 +11,36 @@
  "fits_personal_item": null,
  "external_cm": null,
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   56,
+   30,
+   25
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+  "at": "2026-08-31",
+  "quote": "Specs",
+  "note": "Unqualified triple in Specs, not explicitly described as overall or packing size. Includes no statement about straps/grab handles. Claimed dimensions only."
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 1.68,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "kg"
+  "v": 1.33,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+  "at": "2026-08-31",
+  "quote": "Specs"
  },
  "capacity_l": {
   "v": 35,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "L"
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+  "at": "2026-08-31",
+  "quote": "Specs"
  },
  "reviews": [
   {
@@ -47,9 +61,63 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      22,
+      12,
+      10
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      56,
+      30,
+      25
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Printed unit equivalents differ; retained without conversion."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Rendered manufacturer page read in browser. Other sizes 20L, 28L, 42L and 50L; only 35L imported. Weight also printed as 2 lb 15 oz; preserved here, not converted into decimal pounds. Capacity also 2135cu in. Imperial and metric dimensions differ slightly; both retained without reconciliation. USD $230, no sale shown. No interior size, expansion amount, SKU or explicit empty-weight qualifier found. Current recycled-fabric version; reviews may describe an older generation.",
+ "manufacturer_source": {
+  "url": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+  "retrieved": "2026-08-31",
+  "title": "Cotopaxi Allpa 35L Travel Pack",
+  "local": "resources/bags/2026-08-31-cotopaxi-allpa-35.md"
+ },
+ "claimed_in": {
+  "v": [
+   22,
+   12,
+   10
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+  "at": "2026-08-31",
+  "quote": "Specs",
+  "note": "Unqualified triple in Specs, not explicitly described as overall or packing size. Includes no statement about straps/grab handles. Claimed dimensions only."
+ },
+ "price_usd": {
+  "v": 230,
+  "unit": "USD",
+  "src": "manufacturer",
+  "ref": "https://www.cotopaxi.com/products/allpa-35l-travel-pack-4?variant=41266075828285",
+  "at": "2026-08-31",
+  "quote": "$230",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

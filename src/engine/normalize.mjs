@@ -74,6 +74,86 @@ export const CARRIER_STATUS = new Set(['operating', 'ceased', 'merged', 'suspend
    distinguish a Ryanair Basic from a Ryanair Basic + Priority. */
 export const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'first']);
 
+/* BASIC IS A TIER OF ECONOMY, NOT A CLASS BESIDE IT.
+ *
+ * This one modelling error produced two opposite bugs at once.
+ *
+ * `cabin_class` is null on 97 of the 99 cabin rows in the dataset — carriers
+ * publish a fare brand, not a travel class. So the class fallback only ever
+ * matched a row literally NAMED "economy", and the five carriers who never use
+ * that word — Ryanair, easyJet, Wizz, Vueling, Frontier — resolved to nothing,
+ * became `cabin_unknown`, and were dropped from the coverage denominator of
+ * every number on the site. "Goes anywhere" meant "goes anywhere except the
+ * five airlines that actually measure".
+ *
+ * The patch for that, applied on one page only, was to prefer `basic`
+ * outright — which then answered on Basic Economy for the 18 carriers that
+ * publish both, and told Air France and KLM passengers they get no cabin bag.
+ *
+ * Both vanish once basic is modelled as what it is: the entry TIER of the
+ * economy cabin. Ask for economy and you get the airline's economy row where
+ * one exists, and its cheapest economy tier where the airline sells nothing
+ * else.
+ *
+ * Ordered cheapest-first, because a fallback is a guess and the cautious guess
+ * is the most restrictive fare the airline actually sells. Membership is an
+ * explicit list: an unrecognised brand is NOT assumed to be economy, or a
+ * business row could be handed to someone who booked coach. */
+export const ECONOMY_TIERS = [
+  'basic',
+  'light',
+  'lite',
+  'saver',
+  'standard',
+  'classic',
+  'value',
+  'economy',
+  'convenience',
+  'comfort',
+  'comfort_flex',
+  'family',
+  'flex',
+  'plus',
+  'inclusive_plus',
+  'fly_grande',
+  'fly_pro',
+  'max',
+];
+const ECONOMY_RANK = new Map(ECONOMY_TIERS.map((id, i) => [id, i]));
+
+/** Cabins ABOVE economy. Listed so they can be recognised and refused, rather
+ *  than falling through and being served to someone who booked coach. */
+export const PREMIUM_TIERS = new Set(['premium_economy', 'business', 'first', 'scootplus']);
+
+/** Fare names that are really a PAID ADD-ON sold on top of a fare. Ryanair
+ *  Priority is €6 on a Basic ticket, not a class of travel. */
+export const ADDON_FARES = new Set(['priority', 'carry_on', 'two_pieces']);
+
+/** Is this fare brand a tier of the given cabin class? */
+export const isTierOf = (fare, cabinClass) => cabinClass === 'economy' && ECONOMY_RANK.has(fare);
+
+/* EVERY FARE BRAND MUST BE CLASSIFIED, AND AN UNKNOWN ONE MUST BE LOUD.
+ *
+ * Airlines call the same rung different things — Basic, Light, Lite, Saver,
+ * Blue Basic, Wanna Get Away, Hand Baggage Only. No list can be complete, and
+ * that is the danger: an unrecognised brand resolves to nothing, the carrier
+ * becomes `cabin_unknown`, and it silently leaves the coverage denominator of
+ * every figure on the site. That is precisely the bug that hid Ryanair,
+ * easyJet, Wizz, Vueling and Frontier, and it would come back one carrier at a
+ * time as the set grows toward 100.
+ *
+ * So the failure is moved from runtime to the test suite: a fare brand this
+ * function cannot place fails the build and names the carrier, and somebody
+ * decides which rung it is. A guess costs a reader money; a failing test costs
+ * five minutes. */
+export function classifyFare(fare) {
+  if (fare == null) return 'unnamed';
+  if (ADDON_FARES.has(fare)) return 'addon';
+  if (PREMIUM_TIERS.has(fare)) return 'premium';
+  if (ECONOMY_RANK.has(fare)) return 'economy';
+  return null;
+}
+
 /* Carriers publish both units, and the two disagree.
    United's carry-on is "22 x 14 x 9 in (56 x 35 x 23 cm)" — but 14 in is
    35.56 cm, not 35. A 35.5 cm bag passes the inch limit and fails the published
@@ -288,7 +368,17 @@ export const isSized = (record) =>
  *  callers, which is treated as whichever axis the record happens to use.
  *  Add-ons are applied last and win, because that is what buying one does. */
 export function resolveFare(record, booking) {
-  const b = typeof booking === 'string' ? { fare: booking } : (booking ?? {});
+  /* A bare string is the legacy call shape, and it was read as a FARE only —
+     so `toCarrier(record, 'economy')` never reached the cabin-class fallback
+     and a carrier selling nothing called "economy" resolved to nothing. The
+     real pages escaped it because loadCarriers() passes { class: 'economy' },
+     which made the same string mean two different things depending on which
+     caller you were. A name that IS a cabin class fills both axes; anything
+     else stays a fare, so 'basic' cannot start matching business rows. */
+  const b =
+    typeof booking === 'string'
+      ? { fare: booking, ...(CABIN_CLASS.has(booking) ? { class: booking } : {}) }
+      : (booking ?? {});
   const all = (record.allowances ?? []).filter((a) => a.type === 'cabin');
 
   /* Route filtering happens BEFORE fare matching, so a conditional row cannot
@@ -336,6 +426,79 @@ export function resolveFare(record, booking) {
   }
   const byClass = reachable.find((a) => eq(a.cabin_class, b.class) || eq(a.fare_class, b.class));
   if (byClass) return { row: byClass, matched: 'class' };
+
+  /* NOTHING IS NAMED FOR THE CLASS — fall back to the cheapest tier OF it.
+   *
+   * Ryanair publishes `basic` and `priority`; neither is the string "economy",
+   * and `cabin_class` is null on almost every row in the dataset. Without this
+   * the carrier resolved to nothing and was reported as unresearched, which
+   * dropped it from the coverage denominator of every figure on the site.
+   *
+   * Reached only AFTER an exact match has failed, which is what keeps the two
+   * failure modes apart: a carrier publishing a real `economy` row is answered
+   * on that row (Air France and KLM keep their cabin bag), and a carrier
+   * selling nothing but Basic is answered on Basic, because that IS their
+   * economy.
+   *
+   * Cheapest-first, because this branch is a guess and basic economy is the
+   * no-frills tier where you pay extra for everything — assuming the more
+   * generous fare would promise an allowance the reader has not bought.
+   * `matched: 'class'` still, since we resolved a class and not a named fare;
+   * the page can say it answered on the cheapest fare sold. */
+  const tiers = reachable
+    .filter((a) => !a.addon && isTierOf(a.fare_class, b.class))
+    .sort((x, y) => ECONOMY_RANK.get(x.fare_class) - ECONOMY_RANK.get(y.fare_class));
+  if (tiers.length) return { row: tiers[0], matched: 'class', tier: tiers[0].fare_class };
+
+  /* The same fallback for a class whose only rows are an explicit absence —
+     "this fare includes no cabin bag" is an ANSWER, and a far more useful one
+     than "we have not researched this airline". */
+  const absent = (record.allowances ?? [])
+    .filter((a) => a.type === 'cabin' && !a.addon && a.cabin_absence)
+    .filter((a) => isTierOf(a.fare_class, b.class))
+    .sort((x, y) => ECONOMY_RANK.get(x.fare_class) - ECONOMY_RANK.get(y.fare_class));
+  if (absent.length && routeApplies(absent[0], b.route).applies === true) {
+    return {
+      row: null,
+      matched: 'class',
+      absence: absent[0].cabin_absence,
+      tier: absent[0].fare_class,
+    };
+  }
+
+  /* THE ONLY CABIN ROW IS BEHIND A PAYWALL — that is a finding, not a gap.
+   *
+   * Ryanair, Wizz and Frontier publish no cabin allowance for their base fare
+   * at all. What they publish is a personal-item row for Basic, and a cabin
+   * row reachable only by buying Priority (or Frontier's carry-on). The
+   * records say exactly that, correctly.
+   *
+   * The engine was reading "no cabin row I can reach" as NOT_RESEARCHED — a
+   * fact about US — and dropping the three airlines readers most want answered
+   * out of the coverage denominator entirely. But a record that documents what
+   * an add-on buys is a record somebody read the fare table for, and the
+   * absence of a free cabin bag beside a priced one is the single most
+   * important thing these carriers publish.
+   *
+   * Deliberately narrow: it fires only when a cabin row exists for this same
+   * tier AND is gated behind an add-on. Silence on its own still means
+   * unresearched — inferring a ban from nothing is how a half-finished record
+   * turns into a confident claim. */
+  const paywalled = all.filter(
+    (a) => a.addon && !bought.has(a.addon) && isTierOf(a.fare_class, b.class)
+  );
+  const researchedTier = (record.allowances ?? []).some(
+    (a) => a.type !== 'cabin' && !a.addon && isTierOf(a.fare_class, b.class)
+  );
+  if (paywalled.length && researchedTier) {
+    return {
+      row: null,
+      matched: 'class',
+      absence: CABIN_ABSENCE.NOT_PERMITTED,
+      tier: paywalled[0].fare_class,
+      addon_available: paywalled[0].addon,
+    };
+  }
 
   /* Nothing matched — but if a route-conditional row exists that we could not
      evaluate, the honest answer is "it depends", not "no". */

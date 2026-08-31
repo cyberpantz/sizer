@@ -69,17 +69,54 @@ describe('against the real catalogue', () => {
     }
   });
 
-  test('unanswerable carriers are excluded from every denominator', () => {
-    const unknown = carriers.filter((c) => c.cabin_unknown).length;
+  test('a denominator counts only airlines the answer can discriminate between', () => {
+    /* THREE reasons to leave the denominator, and they are not the same claim:
+     *
+     *   cabin_unknown — we have not researched it. A fact about US.
+     *   not_flying    — the airline has stopped. A fact about THEM.
+     *   no_cabin_bag  — their cheapest fare includes no cabin bag at any size.
+     *                   A fact about the FARE.
+     *
+     * The third is the one this test grew to cover. Ryanair, Wizz and Frontier
+     * sell a seat and a personal item; every suitcase ever made fails them
+     * equally, so counting them says nothing about which bag to buy and makes
+     * "clears every airline" unreachable by construction — the top shelf
+     * empties and the page stops discriminating at all.
+     *
+     * Excluded, but never hidden: coverage reports the count separately so a
+     * page can say it, and "no bag clears these three without buying up" is
+     * among the most useful things this site knows. */
+    const excluded = carriers.filter(
+      (c) => c.cabin_unknown || c.flying === false || c.no_cabin_bag
+    ).length;
     for (const s of shelves) {
       for (const { coverage } of s.bags) {
         assert.equal(
           coverage.of,
-          carriers.length - unknown,
-          'a coverage claim must not count airlines we cannot answer for'
+          carriers.length - excluded,
+          'a coverage claim must not count airlines the bag cannot be judged against'
         );
       }
     }
+  });
+
+  test('an excluded airline is reported, never silently dropped', () => {
+    /* A denominator that quietly shrinks is how "clears 41 of 52" becomes a
+       claim nobody can check. Each exclusion has to be countable from the
+       result itself. */
+    const [{ coverage }] = shelves.flatMap((s) => s.bags);
+    assert.equal(typeof coverage.unknown, 'number');
+    assert.equal(typeof coverage.not_flying, 'number');
+    assert.equal(
+      typeof coverage.no_cabin_bag,
+      'number',
+      'coverage does not report how many airlines allow no cabin bag at all'
+    );
+    assert.equal(
+      coverage.of + coverage.unknown + coverage.not_flying + coverage.no_cabin_bag,
+      carriers.length,
+      'the exclusions do not account for every carrier — one is being dropped unreported'
+    );
   });
 
   test('no bag is presented as measured until someone measures one', () => {

@@ -2,7 +2,7 @@
  "slug": "osprey-transporter-wheeled-38",
  "brand": "Osprey",
  "model": "Transporter Wheeled Carry-On 38",
- "variant": null,
+ "variant": "38L, O/S, current NanoTough model; URL requests Pine Leaf Green, selector unresolved",
  "line": null,
  "type": "2-wheel roller",
  "soft": 1,
@@ -11,11 +11,37 @@
  "fits_personal_item": null,
  "external_cm": null,
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55,
+   35,
+   23
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+  "at": "2026-08-31",
+  "quote": "DIMENSIONS",
+  "note": "Page does not identify these as overall versus packing dimensions or explicitly include wheels and handles. Both printed units retained without conversion."
+ },
  "measured_cm": null,
  "measured_at": null,
- "weight_kg": null,
- "capacity_l": null,
+ "weight_kg": {
+  "v": 2.696,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+  "at": "2026-08-31",
+  "quote": "WEIGHT"
+ },
+ "capacity_l": {
+  "v": 38,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+  "at": "2026-08-31",
+  "quote": "VOLUME"
+ },
  "reviews": [
   {
    "src": "packhacker-international",
@@ -40,9 +66,78 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      21.7,
+      13.8,
+      9.1
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimeters",
+     "v": [
+      55,
+      35,
+      23
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Printed dimension units differ; no reconciliation."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer pounds",
+     "v": 5.94,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer kilograms",
+     "v": 2.696,
+     "unit": "kg"
+    }
+   ],
+   "note": "Printed weights are not exact equivalents; both retained."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Current NanoTough version, O/S 38L specification table. Volume also printed 2319 IN³. USD page displays As low as Current Price $300.00 but color/size selectors unresolved/out of stock: regular variant price unverified and omitted. Missing interior dimensions, expansion amount, SKU, explicit empty-weight qualifier. Requested color Pine Leaf Green cannot be confirmed by rendered selector.",
+ "manufacturer_source": {
+  "url": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+  "retrieved": "2026-08-31",
+  "title": "Osprey Transporter Wheeled Carry-On 38",
+  "local": "resources/bags/2026-08-31-osprey-transporter-wheeled-38.md"
+ },
+ "claimed_in": {
+  "v": [
+   21.7,
+   13.8,
+   9.1
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+  "at": "2026-08-31",
+  "quote": "DIMENSIONS",
+  "note": "Page does not identify these as overall versus packing dimensions or explicitly include wheels and handles. Both printed units retained without conversion."
+ },
+ "weight_lb": {
+  "v": 5.94,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://www.osprey.com/transportertm-wheeled-carry-on?color=Pine+Leaf+Green&size=O/S",
+  "at": "2026-08-31",
+  "quote": "WEIGHT"
+ },
  "compliance_claimed": true,
  "observed": [],
  "compliance_unbacked": true
