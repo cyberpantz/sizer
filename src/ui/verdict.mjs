@@ -4,11 +4,33 @@
    The engine returns bands and figures. All wording lives here, so a copy change
    is one edit and cannot disagree with itself. */
 
+/* ONE PART OF SPEECH ACROSS ALL FOUR.
+
+   These were "It fits" / "Just fits" / "Risky" / "It won't fit" — a sentence,
+   a verb fragment, an adjective and another sentence. Read down a column of
+   airlines your eye re-parses at every row, which is what made them feel off
+   even though each one on its own was fine.
+
+   Two more reasons they had to change:
+
+   - "It" has no antecedent in a table whose rows are airlines. "Ryanair … It
+     won't fit" takes a beat to bind to the bag rather than to Ryanair.
+   - The sentences overclaimed. `wont` means over the published limit AT AN
+     AIRLINE THAT CHECKS — not that the object cannot physically go in the bin.
+     "It won't fit" sounds like geometry; what we hold is a policy breach.
+
+   "Tight" rather than "Just fits" because the old label led with "fits" and
+   buried the thing worth knowing, which is that there is no margin left.
+
+   "Over" states only what we measured. It is completed by the detail beside
+   it — "2.5 cm too deep" — rather than by asserting what a gate agent will do.
+   Note that `gamble` is also over the limit: the two differ on enforcement,
+   and "Risky" is where that judgement is expressed. */
 export const BAND_COPY = {
-  clears: { label: 'It fits', tone: 'good', token: 'var(--green)' },
-  line: { label: 'Just fits', tone: 'caution', token: 'var(--amber)' },
+  clears: { label: 'Fits', tone: 'good', token: 'var(--green)' },
+  line: { label: 'Tight', tone: 'caution', token: 'var(--amber)' },
   gamble: { label: 'Risky', tone: 'warn', token: 'var(--orange)' },
-  wont: { label: "It won't fit", tone: 'bad', token: 'var(--red)' },
+  wont: { label: 'Over', tone: 'bad', token: 'var(--red)' },
 };
 
 /* Editorial policy 16: we report measurements, not accusations. "Turned away",

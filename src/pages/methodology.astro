@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { loadBags, loadCarriers, coverageStats } from '../lib/data.mjs';
 import { EPS_CM, gambleCeiling } from '../engine/constants.mjs';
 import { DIM_SOURCE } from '../engine/normalize.mjs';
+import { BAND_COPY } from '../ui/verdict.mjs';
 
 const bags = await loadBags();
 const carriers = await loadCarriers();
@@ -29,12 +30,21 @@ const SOURCE_ROWS = [
   [DIM_SOURCE.RESELLER, 'A marketplace or retail listing', 'Never'],
 ];
 
-const BANDS = [
-  ['It fits', 'Inside the limit with room to spare.'],
-  ['Just fits', 'Legal, but with no margin — and the airline measures.'],
-  ['Risky', "Over the limit, at an airline that often doesn't check."],
-  ["It won't fit", 'Over the limit at an airline that does check.'],
-];
+/* Labels come from BAND_COPY, never retyped.
+
+   This page held its own copy of all four and they had already drifted once
+   before ui/verdict.mjs existed. Renaming them there would have left the page
+   that EXPLAINS the bands describing labels the site no longer uses — the
+   worst possible place for that drift to land.
+
+   Only the meanings live here, because only this page states them. */
+const BAND_MEANING = {
+  clears: 'Inside the limit with room to spare.',
+  line: 'Legal, but with no margin — and the airline measures.',
+  gamble: "Over the limit, at an airline that often doesn't check.",
+  wont: 'Over the limit at an airline that does check.',
+};
+const BANDS = Object.entries(BAND_COPY).map(([id, c]) => [c.label, BAND_MEANING[id]]);
 
 const CEILINGS = [
   [1, 3, 'Effectively never measured'],
@@ -104,9 +114,9 @@ const CEILINGS = [
     <section class="border-t border-rule py-10">
       <h2 class="text-2xl font-semibold tracking-tight">Four answers, not two</h2>
       <p class="mt-3 max-w-3xl text-ink-2">
-        "Fits" and "doesn't fit" is the wrong shape for this question, because
-        airlines differ in how hard they check. A bag a centimetre over is a
-        non-event at one airline and a fee at another.
+        Yes or no is the wrong shape for this question, because airlines differ
+        in how hard they check. A bag a centimetre over is a non-event at one
+        airline and a fee at another.
       </p>
       <dl class="mt-6 grid gap-4 sm:grid-cols-2">
         {BANDS.map(([label, meaning]) => (
