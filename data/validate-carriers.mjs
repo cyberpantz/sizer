@@ -63,6 +63,25 @@ for (const { file, rec } of records) {
      and show as unanswerable. Conflating them is the bug this replaced. */
   /* Fares carry three axes now. A row may state cabin_class, fare_class/
      fare_brand and addon; the last gates the row behind a purchase. */
+  /* A carrier that publishes both units and contradicts itself is normal — but
+     it must publish both for us to notice. A row with only max_cm on a carrier
+     that states inches on its site is a transcription that dropped half the
+     evidence. */
+  for (const a of rec.allowances ?? []) {
+    if (a.max_in && (!Array.isArray(a.max_in) || a.max_in.length !== 3)) {
+      bad(`${id}/${a.fare_class ?? a.addon}: max_in must be 3 numbers`);
+    }
+    if (a.max_in && a.max_cm) {
+      const conv = a.max_in.map((v) => v * 2.54);
+      const worst = Math.max(...conv.map((v, i) => Math.abs(v - a.max_cm[i])));
+      if (worst > 2) {
+        bad(
+          `${id}/${a.fare_class ?? a.addon}: max_cm and max_in differ by ${worst.toFixed(1)}cm — one is a typo, not a rounding difference`
+        );
+      }
+    }
+  }
+
   const CLASSES = ['economy', 'premium_economy', 'business', 'first'];
   for (const a of rec.allowances ?? []) {
     if (a.cabin_class && !CLASSES.includes(a.cabin_class)) {

@@ -1,0 +1,108 @@
+{
+ "variant": "International Rollaboard",
+ "line": "travelpro-maxlite5",
+ "role": "overhead",
+ "fits_personal_item": false,
+ "claimed_packing_cm": {
+  "v": [
+   50.8,
+   38.1,
+   19.7
+  ],
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+  "at": "2026-08-30"
+ },
+ "claimed_cm": {
+  "v": [
+   55.2,
+   40,
+   19.7
+  ],
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+  "at": "2026-08-30"
+ },
+ "measured_cm": null,
+ "measured_at": null,
+ "reviews": [],
+ "conflicts": [
+  {
+   "field": "external_cm",
+   "values": [
+    {
+     "src": "manufacturer (rounded cm)",
+     "v": [
+      55,
+      40,
+      20
+     ]
+    },
+    {
+     "src": "manufacturer (alternate cm)",
+     "v": [
+      55.2,
+      40,
+      19.7
+     ]
+    }
+   ],
+   "note": "Two triples on the same product page; retained the more precise alternate cm triple, not a measured triple."
+  }
+ ],
+ "mentions": 0,
+ "needs_measurement": true,
+ "slug": "travelpro-maxlite5-international-rollaboard",
+ "brand": "Travelpro",
+ "model": "Maxlite 5 International Expandable Carry-On Rollaboard",
+ "type": "2-wheel roller",
+ "soft": 1,
+ "wheels": 2,
+ "manufacturer_source": {
+  "url": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+  "retrieved": "2026-08-30",
+  "title": "Travelpro Maxlite 5 International Expandable Carry-On Rollaboard",
+  "local": "resources/bags/2026-08-30-international-global.md"
+ },
+ "external_cm": {
+  "v": [
+   55.2,
+   40,
+   19.7
+  ],
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+  "at": "2026-08-30",
+  "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+ },
+ "weight_kg": {
+  "v": 2.45,
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+  "at": "2026-08-30",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 45,
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+  "at": "2026-08-30",
+  "unit": "L"
+ },
+ "expands_cm": {
+  "v": 5.08,
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+  "at": "2026-08-30",
+  "unit": "cm"
+ },
+ "notes": "EU store, SKU 401174347G. Source prints both 55 x 40 x 20 and 55.2 x 40.0 x 19.7 cm overall. Stored the more precise alternate cm triple; retained both claims below. Different from the existing International spinner. Expansion is up to 2 inches. Width exceeds a 35 cm allowance.",
+ "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  4.4,
+  1.9,
+  0
+ ],
+ "observed": [],
+ "compliance_unbacked": false
+}

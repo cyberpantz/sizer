@@ -1,0 +1,85 @@
+{
+ "variant": "Global 2-Wheel",
+ "line": "briggs-riley-baseline",
+ "role": "overhead",
+ "fits_personal_item": false,
+ "claimed_packing_cm": {
+  "v": [
+   50.8,
+   38,
+   20
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+  "at": "2026-08-30"
+ },
+ "claimed_cm": {
+  "v": [
+   53.3,
+   38.1,
+   22.9
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+  "at": "2026-08-30"
+ },
+ "measured_cm": null,
+ "measured_at": null,
+ "reviews": [],
+ "conflicts": [],
+ "mentions": 0,
+ "needs_measurement": true,
+ "slug": "briggs-riley-baseline-global-2-wheel",
+ "brand": "Briggs & Riley",
+ "model": "Baseline Global 21\" 2-Wheel Expandable Carry-On",
+ "type": "2-wheel roller",
+ "soft": 1,
+ "wheels": 2,
+ "manufacturer_source": {
+  "url": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+  "retrieved": "2026-08-30",
+  "title": "Briggs & Riley Baseline Global 21\" 2-Wheel Expandable Carry-On",
+  "local": "resources/bags/2026-08-30-international-global.md"
+ },
+ "external_cm": {
+  "v": [
+   53.3,
+   38.1,
+   22.9
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+  "at": "2026-08-30",
+  "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+ },
+ "weight_kg": {
+  "v": 4.4,
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+  "at": "2026-08-30",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 39,
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+  "at": "2026-08-30",
+  "unit": "L"
+ },
+ "expands_cm": {
+  "v": 6.3,
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+  "at": "2026-08-30",
+  "unit": "cm"
+ },
+ "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 39–52 L. Different wheel configuration and packing space from the spinner. Exceeds 35 cm width and 20 cm depth envelopes.",
+ "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  2.5,
+  0.1,
+  2.9
+ ],
+ "observed": [],
+ "compliance_unbacked": false
+}

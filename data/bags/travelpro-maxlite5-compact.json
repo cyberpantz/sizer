@@ -15,10 +15,10 @@
    35.6,
    22.9
   ],
-  "src": "review",
+  "src": "manufacturer",
   "ref": "travelpro-store",
   "at": "2026-08-30",
-  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+  "note": "Manufacturer-published overall dimensions. Not independently measured by us."
  },
  "claimed_packing_cm": null,
  "claimed_cm": null,
@@ -26,14 +26,14 @@
  "measured_at": null,
  "weight_kg": {
   "v": 2.31,
-  "src": "review",
+  "src": "manufacturer",
   "ref": "travelpro-store",
   "at": "2026-08-30",
   "unit": "kg"
  },
  "capacity_l": {
   "v": 38,
-  "src": "review",
+  "src": "manufacturer",
   "ref": "travelpro-store",
   "at": "2026-08-30",
   "unit": "L"
@@ -58,6 +58,7 @@
   },
   {
    "src": "travelpro-store",
+   "kind": "manufacturer",
    "publication": "Travelpro (manufacturer store)",
    "url": "https://travelpro.com/products/maxlite%C2%AE-5-international-expandable-carry-on-spinner",
    "at": "2026-08-30",

@@ -73,9 +73,11 @@ Hand-enter from each carrier's official baggage page. One JSON file per carrier,
 
 **Cross-check against [CarryFit](https://github.com/AxelUser/carry-fit)**, which is open source and covers 172 airlines. Use it to catch omissions and disagreements — a disagreement is a signal to go read the airline page a third time. Do not copy it wholesale: their data has the same manufacturer-vs-external problem on the bag side, their licence terms need reading, and a dataset you didn't verify is a dataset you can't defend.
 
-### The launch 50
+### The launch 100
 
 Scoped to the audience in [01-mvp.md](01-mvp.md): **US passengers flying to Europe and Asia.** Selection follows the realistic itinerary — a domestic connection, a long-haul, and the budget carrier onward — not fleet size.
+
+**MVP requires 100 carriers.** The dataset currently has 58 records, leaving 42 additions. The groups below are the original 50-carrier candidate shortlist, not the current roster or the complete launch list; candidates still require eligibility and source checks. Use `data/carriers/_index.json` for the current roster and prioritize additional US–Europe, US–Asia, and European budget airlines.
 
 **US mainline (10)** — the long-haul and the domestic connection
 American, United, Delta, Southwest, JetBlue, Alaska, Hawaiian, Spirit, Frontier, Allegiant

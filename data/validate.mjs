@@ -11,9 +11,17 @@ const bad = (s) => {
   console.log(`  FAIL  ${s}`);
   fail++;
 };
+const factFields = [
+  'external_cm',
+  'claimed_cm',
+  'claimed_packing_cm',
+  'weight_kg',
+  'capacity_l',
+  'expands_cm',
+];
 
 for (const b of bags) {
-  for (const f of ['external_cm', 'weight_kg', 'capacity_l']) {
+  for (const f of factFields) {
     const v = b[f];
     if (v == null) continue;
     if (typeof v !== 'object' || !('v' in v) || !v.src)
@@ -31,7 +39,18 @@ for (const b of bags) {
   }
   if (b.weight_kg && (b.weight_kg.v <= 0 || b.weight_kg.v > 15))
     bad(`${b.slug} implausible weight`);
-  if (!b.reviews.length) bad(`${b.slug} has no review provenance at all`);
+  if (!b.reviews.length && !b.manufacturer_source?.url)
+    bad(`${b.slug} has neither review nor manufacturer provenance`);
+  if (b.manufacturer_source) {
+    const source = b.manufacturer_source;
+    if (!source.url?.startsWith('https://') || !/^\d{4}-\d{2}-\d{2}$/.test(source.retrieved ?? ''))
+      bad(`${b.slug} has incomplete manufacturer provenance`);
+    for (const f of factFields) {
+      const v = b[f];
+      if (v?.src === 'manufacturer' && (v.ref !== source.url || v.at !== source.retrieved))
+        bad(`${b.slug}.${f} does not match its manufacturer source`);
+    }
+  }
   for (const r of b.reviews)
     if (r.verbatim && !r.url) bad(`${b.slug} quotes verbatim with no link`);
 }

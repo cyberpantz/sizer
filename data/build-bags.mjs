@@ -1,4 +1,4 @@
-/* Builds data/bags/*.json from the review mentions plus a hand-kept identity table.
+/* Builds data/bags/*.json from review mentions, identity, and manufacturer-bags.json.
    Rules, and they are not negotiable:
      - No dimension is ever invented. If no source printed one, the field is null.
      - Review-published dimensions are src "review". They are NOT "measured".
@@ -42,6 +42,8 @@ function preserved(slug) {
 
 const R = JSON.parse(readFileSync(new URL('reviews/mentions.json', here)));
 const S = JSON.parse(readFileSync(new URL('reviews/sources.json', here))).sources;
+const manufacturerBags = JSON.parse(readFileSync(new URL('manufacturer-bags.json', here))).bags;
+const sourceKind = (ref) => (S[ref].kind === 'manufacturer' ? 'manufacturer' : 'review');
 
 const CM = (i) => +(i * 2.54).toFixed(1);
 const desc = (a) => [...a].sort((x, y) => y - x);
@@ -76,7 +78,7 @@ for (const [slug, ms] of byBag) {
     rows.length
       ? {
           v: get(rows[0]),
-          src: 'review',
+          src: sourceKind(rows[0].source),
           ref: rows[0].source,
           at: S[rows[0].source].updated,
           unit,
@@ -117,10 +119,13 @@ for (const [slug, ms] of byBag) {
     external_cm: dim
       ? {
           v: desc(dim.claimed.dimensions_in.map(CM)),
-          src: 'review',
+          src: sourceKind(dim.source),
           ref: dim.source,
           at: S[dim.source].updated,
-          note: "Publication's own measurement. Not ours. Re-measure before this drives a verdict.",
+          note:
+            sourceKind(dim.source) === 'manufacturer'
+              ? 'Manufacturer-published overall dimensions. Not independently measured by us.'
+              : "Publication's own measurement. Not ours. Re-measure before this drives a verdict.",
         }
       : null,
     /* Where a manufacturer publishes BOTH figures, keep the packing one too. The
@@ -146,6 +151,7 @@ for (const [slug, ms] of byBag) {
 
     reviews: ms.map((m) => ({
       src: m.source,
+      ...(sourceKind(m.source) === 'manufacturer' ? { kind: 'manufacturer' } : {}),
       publication: S[m.source].publication,
       url: S[m.source].url,
       at: S[m.source].updated,
@@ -169,6 +175,30 @@ for (const [slug, ms] of byBag) {
     needs_measurement: true,
     /* Last, so it overwrites the generated nulls above rather than the reverse. */
     ...preserved(slug),
+  });
+}
+
+/* Manufacturer-only research must survive rebuilds without fabricated reviews.
+   A slug collision needs an explicit merge, never a silent overwrite. */
+const seenSlugs = new Set(bags.map((b) => b.slug));
+for (const record of manufacturerBags) {
+  if (seenSlugs.has(record.slug)) throw new Error(`Duplicate bag slug: ${record.slug}`);
+  seenSlugs.add(record.slug);
+  bags.push({
+    variant: null,
+    line: null,
+    role: 'overhead',
+    fits_personal_item: null,
+    claimed_packing_cm: null,
+    claimed_cm: null,
+    measured_cm: null,
+    measured_at: null,
+    reviews: [],
+    conflicts: [],
+    mentions: 0,
+    needs_measurement: true,
+    ...record,
+    ...preserved(record.slug),
   });
 }
 

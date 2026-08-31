@@ -1,0 +1,85 @@
+{
+ "variant": "International Rollaboard",
+ "line": "travelpro-platinum-elite",
+ "role": "overhead",
+ "fits_personal_item": false,
+ "claimed_packing_cm": {
+  "v": [
+   50.8,
+   38.1,
+   19.6
+  ],
+  "src": "manufacturer",
+  "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+  "at": "2026-08-30"
+ },
+ "claimed_cm": {
+  "v": [
+   55.2,
+   40,
+   19.6
+  ],
+  "src": "manufacturer",
+  "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+  "at": "2026-08-30"
+ },
+ "measured_cm": null,
+ "measured_at": null,
+ "reviews": [],
+ "conflicts": [],
+ "mentions": 0,
+ "needs_measurement": true,
+ "slug": "travelpro-platinum-elite-international-rollaboard",
+ "brand": "Travelpro",
+ "model": "Platinum Elite International Carry-On Rollaboard",
+ "type": "2-wheel roller",
+ "soft": 1,
+ "wheels": 2,
+ "manufacturer_source": {
+  "url": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+  "retrieved": "2026-08-30",
+  "title": "Travelpro Platinum Elite International Carry-On Rollaboard",
+  "local": "resources/bags/2026-08-30-international-global.md"
+ },
+ "external_cm": {
+  "v": [
+   55.2,
+   40,
+   19.6
+  ],
+  "src": "manufacturer",
+  "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+  "at": "2026-08-30",
+  "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+ },
+ "weight_kg": {
+  "v": 3.35,
+  "src": "manufacturer",
+  "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+  "at": "2026-08-30",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 45,
+  "src": "manufacturer",
+  "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+  "at": "2026-08-30",
+  "unit": "L"
+ },
+ "expands_cm": {
+  "v": 5.08,
+  "src": "manufacturer",
+  "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+  "at": "2026-08-30",
+  "unit": "cm"
+ },
+ "notes": "Canadian aviation-professional store specification; regional availability and purchase eligibility need checking. Manufacturer cm values retained; inch values differ slightly by rounding. Expansion is up to 2 inches. Width exceeds a 35 cm allowance.",
+ "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  4.4,
+  1.9,
+  0
+ ],
+ "observed": [],
+ "compliance_unbacked": false
+}

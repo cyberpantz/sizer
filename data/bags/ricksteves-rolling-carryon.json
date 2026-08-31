@@ -15,10 +15,10 @@
    34.3,
    22.9
   ],
-  "src": "review",
+  "src": "manufacturer",
   "ref": "ricksteves-store",
   "at": "2026-08-30",
-  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+  "note": "Manufacturer-published overall dimensions. Not independently measured by us."
  },
  "claimed_packing_cm": {
   "v": [
@@ -35,14 +35,14 @@
  "measured_at": null,
  "weight_kg": {
   "v": 2.95,
-  "src": "review",
+  "src": "manufacturer",
   "ref": "ricksteves-store",
   "at": "2026-08-30",
   "unit": "kg"
  },
  "capacity_l": {
   "v": 40,
-  "src": "review",
+  "src": "manufacturer",
   "ref": "ricksteves-store",
   "at": "2026-08-30",
   "unit": "L"
@@ -50,6 +50,7 @@
  "reviews": [
   {
    "src": "ricksteves-store",
+   "kind": "manufacturer",
    "publication": "Rick Steves' Europe (manufacturer store)",
    "url": "https://store.ricksteves.com/collections/carry-on-luggage",
    "at": "2026-08-30",

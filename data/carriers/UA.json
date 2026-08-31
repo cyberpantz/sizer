@@ -26,38 +26,75 @@
  "allowances": [
   {
    "fare_class": "basic",
-   "type": "cabin",
+   "cabin_class": "economy",
+   "type": "personal",
    "max_cm": [
     43,
     25,
     22
    ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "On domestic routes this fare gives you a personal item only — no full-size carry-on. This catches people out constantly, because American and Delta's basic fares do include one.",
-   "source_url": "",
-   "verified_at": null
-  },
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    56,
-    35,
-    22
+   "max_in": [
+    17,
+    10,
+    9
    ],
    "max_kg": null,
    "includes_wheels": true,
    "count": 1,
-   "note": "Full carry-on plus a personal item.",
-   "source_url": "",
-   "verified_at": null
+   "note": "Basic Economy: personal item only on most routes.",
+   "cabin_absence": "not_permitted",
+   "source_url": "https://www.united.com/en/us/fly/baggage/carry-on-bags.html",
+   "verified_at": "2026-08-30"
+  },
+  {
+   "fare_class": "economy",
+   "cabin_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    56,
+    35,
+    23
+   ],
+   "max_in": [
+    22,
+    14,
+    9
+   ],
+   "max_kg": null,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Must include handle and wheels \u2014 United states this explicitly.",
+   "source_url": "https://www.united.com/en/us/fly/baggage/carry-on-bags.html",
+   "verified_at": "2026-08-30"
+  },
+  {
+   "fare_class": "economy",
+   "cabin_class": "economy",
+   "type": "personal",
+   "max_cm": [
+    43,
+    25,
+    22
+   ],
+   "max_in": [
+    17,
+    10,
+    9
+   ],
+   "max_kg": null,
+   "includes_wheels": true,
+   "count": 1,
+   "source_url": "https://www.united.com/en/us/fly/baggage/carry-on-bags.html",
+   "verified_at": "2026-08-30"
   }
  ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+ "source_url": "https://www.united.com/en/us/fly/baggage/carry-on-bags.html",
+ "verified_at": "2026-08-30",
+ "verified_by": "claude (page read in full via browser)",
+ "placeholder": false,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish.",
+ "audit_note": "Allowances read from united.com 2026-08-30. NOT yet modelled: Basic Economy includes a carry-on on South America / transatlantic / transpacific routes (route conditions unsupported); status and credit-card exemptions; three-point fee schedule with an April 2026 purchase-date cutoff; CommutAir is personal-item-only unlike other United Express operators. See docs/21-schema-gaps.md.",
+ "research_status": "official_allowances_researched",
+ "publication_ready": false,
+ "research_dossier": "resources/carriers/UA-united.md"
 }

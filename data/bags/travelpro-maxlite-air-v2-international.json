@@ -1,0 +1,85 @@
+{
+ "variant": "International",
+ "line": "travelpro-maxlite-air-v2",
+ "role": "overhead",
+ "fits_personal_item": false,
+ "claimed_packing_cm": {
+  "v": [
+   46.4,
+   39.4,
+   19.8
+  ],
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+  "at": "2026-08-30"
+ },
+ "claimed_cm": {
+  "v": [
+   55,
+   40,
+   19.8
+  ],
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+  "at": "2026-08-30"
+ },
+ "measured_cm": null,
+ "measured_at": null,
+ "reviews": [],
+ "conflicts": [],
+ "mentions": 0,
+ "needs_measurement": true,
+ "slug": "travelpro-maxlite-air-v2-international",
+ "brand": "Travelpro",
+ "model": "Maxlite Air V2 International Carry-On Hardside Spinner",
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "manufacturer_source": {
+  "url": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+  "retrieved": "2026-08-30",
+  "title": "Travelpro Maxlite Air V2 International Carry-On Hardside Spinner",
+  "local": "resources/bags/2026-08-30-international-global.md"
+ },
+ "external_cm": {
+  "v": [
+   55,
+   40,
+   19.8
+  ],
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+  "at": "2026-08-30",
+  "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+ },
+ "weight_kg": {
+  "v": 4.94,
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+  "at": "2026-08-30",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 38,
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+  "at": "2026-08-30",
+  "unit": "L"
+ },
+ "expands_cm": {
+  "v": 5.08,
+  "src": "manufacturer",
+  "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+  "at": "2026-08-30",
+  "unit": "cm"
+ },
+ "notes": "EU store specification. Published weight is 4.94 kg despite lightweight marketing; retained as printed, requires confirmation rather than guessing a replacement. Source shows 2-inch expansion. Width exceeds a 35 cm allowance.",
+ "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  8.6,
+  0.6,
+  0
+ ],
+ "observed": [],
+ "compliance_unbacked": false
+}

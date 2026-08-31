@@ -1,0 +1,454 @@
+{
+ "note": "Hand-maintained manufacturer-only research input for build-bags.mjs. No independent reviews or physical measurements implied. Unexpanded dimensions; each size/configuration is a separate record.",
+ "bags": [
+  {
+   "slug": "travelpro-maxlite5-international-rollaboard",
+   "brand": "Travelpro",
+   "model": "Maxlite 5 International Expandable Carry-On Rollaboard",
+   "line": "travelpro-maxlite5",
+   "variant": "International Rollaboard",
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+    "retrieved": "2026-08-30",
+    "title": "Travelpro Maxlite 5 International Expandable Carry-On Rollaboard",
+    "local": "resources/bags/2026-08-30-international-global.md"
+   },
+   "external_cm": {
+    "v": [
+     55.2,
+     40,
+     19.7
+    ],
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+    "at": "2026-08-30",
+    "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+   },
+   "claimed_cm": {
+    "v": [
+     55.2,
+     40,
+     19.7
+    ],
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+    "at": "2026-08-30"
+   },
+   "claimed_packing_cm": {
+    "v": [
+     50.8,
+     38.1,
+     19.7
+    ],
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+    "at": "2026-08-30"
+   },
+   "weight_kg": {
+    "v": 2.45,
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+    "at": "2026-08-30",
+    "unit": "kg"
+   },
+   "capacity_l": {
+    "v": 45,
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+    "at": "2026-08-30",
+    "unit": "L"
+   },
+   "expands_cm": {
+    "v": 5.08,
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/en-gb/products/maxlite-r-5-international-expandable-carry-on-rollaboard-r?variant=47157887402309",
+    "at": "2026-08-30",
+    "unit": "cm"
+   },
+   "conflicts": [
+    {
+     "field": "external_cm",
+     "values": [
+      {
+       "src": "manufacturer (rounded cm)",
+       "v": [
+        55,
+        40,
+        20
+       ]
+      },
+      {
+       "src": "manufacturer (alternate cm)",
+       "v": [
+        55.2,
+        40,
+        19.7
+       ]
+      }
+     ],
+     "note": "Two triples on the same product page; retained the more precise alternate cm triple, not a measured triple."
+    }
+   ],
+   "notes": "EU store, SKU 401174347G. Source prints both 55 x 40 x 20 and 55.2 x 40.0 x 19.7 cm overall. Stored the more precise alternate cm triple; retained both claims below. Different from the existing International spinner. Expansion is up to 2 inches. Width exceeds a 35 cm allowance."
+  },
+  {
+   "slug": "travelpro-platinum-elite-international-rollaboard",
+   "brand": "Travelpro",
+   "model": "Platinum Elite International Carry-On Rollaboard",
+   "line": "travelpro-platinum-elite",
+   "variant": "International Rollaboard",
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+    "retrieved": "2026-08-30",
+    "title": "Travelpro Platinum Elite International Carry-On Rollaboard",
+    "local": "resources/bags/2026-08-30-international-global.md"
+   },
+   "external_cm": {
+    "v": [
+     55.2,
+     40,
+     19.6
+    ],
+    "src": "manufacturer",
+    "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+    "at": "2026-08-30",
+    "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+   },
+   "claimed_cm": {
+    "v": [
+     55.2,
+     40,
+     19.6
+    ],
+    "src": "manufacturer",
+    "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+    "at": "2026-08-30"
+   },
+   "claimed_packing_cm": {
+    "v": [
+     50.8,
+     38.1,
+     19.6
+    ],
+    "src": "manufacturer",
+    "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+    "at": "2026-08-30"
+   },
+   "weight_kg": {
+    "v": 3.35,
+    "src": "manufacturer",
+    "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+    "at": "2026-08-30",
+    "unit": "kg"
+   },
+   "capacity_l": {
+    "v": 45,
+    "src": "manufacturer",
+    "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+    "at": "2026-08-30",
+    "unit": "L"
+   },
+   "expands_cm": {
+    "v": 5.08,
+    "src": "manufacturer",
+    "ref": "https://aviation.travelpro.ca/products/platinum-r-elite-international-expandable-carry-on-rollaboard",
+    "at": "2026-08-30",
+    "unit": "cm"
+   },
+   "conflicts": [],
+   "notes": "Canadian aviation-professional store specification; regional availability and purchase eligibility need checking. Manufacturer cm values retained; inch values differ slightly by rounding. Expansion is up to 2 inches. Width exceeds a 35 cm allowance."
+  },
+  {
+   "slug": "travelpro-maxlite-air-v2-international",
+   "brand": "Travelpro",
+   "model": "Maxlite Air V2 International Carry-On Hardside Spinner",
+   "line": "travelpro-maxlite-air-v2",
+   "variant": "International",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+    "retrieved": "2026-08-30",
+    "title": "Travelpro Maxlite Air V2 International Carry-On Hardside Spinner",
+    "local": "resources/bags/2026-08-30-international-global.md"
+   },
+   "external_cm": {
+    "v": [
+     55,
+     40,
+     19.8
+    ],
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+    "at": "2026-08-30",
+    "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+   },
+   "claimed_cm": {
+    "v": [
+     55,
+     40,
+     19.8
+    ],
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+    "at": "2026-08-30"
+   },
+   "claimed_packing_cm": {
+    "v": [
+     46.4,
+     39.4,
+     19.8
+    ],
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+    "at": "2026-08-30"
+   },
+   "weight_kg": {
+    "v": 4.94,
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+    "at": "2026-08-30",
+    "unit": "kg"
+   },
+   "capacity_l": {
+    "v": 38,
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+    "at": "2026-08-30",
+    "unit": "L"
+   },
+   "expands_cm": {
+    "v": 5.08,
+    "src": "manufacturer",
+    "ref": "https://eu.travelpro.com/products/maxlite%C2%AE-air-v2-international-carry-on-hardside-spinner",
+    "at": "2026-08-30",
+    "unit": "cm"
+   },
+   "conflicts": [],
+   "notes": "EU store specification. Published weight is 4.94 kg despite lightweight marketing; retained as printed, requires confirmation rather than guessing a replacement. Source shows 2-inch expansion. Width exceeds a 35 cm allowance."
+  },
+  {
+   "slug": "briggs-riley-baseline-global-spinner",
+   "brand": "Briggs & Riley",
+   "model": "Baseline Global 21\" Carry-On Expandable Spinner",
+   "line": "briggs-riley-baseline",
+   "variant": "Global Spinner",
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://www.briggs-riley.com/products/global-carry-on-spinner",
+    "retrieved": "2026-08-30",
+    "title": "Briggs & Riley Baseline Global 21\" Carry-On Expandable Spinner",
+    "local": "resources/bags/2026-08-30-international-global.md"
+   },
+   "external_cm": {
+    "v": [
+     53.3,
+     38.1,
+     22.9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-spinner",
+    "at": "2026-08-30",
+    "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+   },
+   "claimed_cm": {
+    "v": [
+     53.3,
+     38.1,
+     22.9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-spinner",
+    "at": "2026-08-30"
+   },
+   "claimed_packing_cm": {
+    "v": [
+     48.26,
+     38,
+     20
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-spinner",
+    "at": "2026-08-30"
+   },
+   "weight_kg": {
+    "v": 4.5,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-spinner",
+    "at": "2026-08-30",
+    "unit": "kg"
+   },
+   "capacity_l": {
+    "v": 37,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-spinner",
+    "at": "2026-08-30",
+    "unit": "L"
+   },
+   "expands_cm": {
+    "v": 6.3,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-spinner",
+    "at": "2026-08-30",
+    "unit": "cm"
+   },
+   "conflicts": [],
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 37–49 L. Global name does not overcome the 38.1 cm width or 22.9 cm depth; exceeds 35 cm width and 20 cm depth envelopes."
+  },
+  {
+   "slug": "briggs-riley-baseline-global-2-wheel",
+   "brand": "Briggs & Riley",
+   "model": "Baseline Global 21\" 2-Wheel Expandable Carry-On",
+   "line": "briggs-riley-baseline",
+   "variant": "Global 2-Wheel",
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+    "retrieved": "2026-08-30",
+    "title": "Briggs & Riley Baseline Global 21\" 2-Wheel Expandable Carry-On",
+    "local": "resources/bags/2026-08-30-international-global.md"
+   },
+   "external_cm": {
+    "v": [
+     53.3,
+     38.1,
+     22.9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+    "at": "2026-08-30",
+    "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+   },
+   "claimed_cm": {
+    "v": [
+     53.3,
+     38.1,
+     22.9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+    "at": "2026-08-30"
+   },
+   "claimed_packing_cm": {
+    "v": [
+     50.8,
+     38,
+     20
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+    "at": "2026-08-30"
+   },
+   "weight_kg": {
+    "v": 4.4,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+    "at": "2026-08-30",
+    "unit": "kg"
+   },
+   "capacity_l": {
+    "v": 39,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+    "at": "2026-08-30",
+    "unit": "L"
+   },
+   "expands_cm": {
+    "v": 6.3,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-2-wheel-carry-on",
+    "at": "2026-08-30",
+    "unit": "cm"
+   },
+   "conflicts": [],
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 29.2 cm; capacity 39–52 L. Different wheel configuration and packing space from the spinner. Exceeds 35 cm width and 20 cm depth envelopes."
+  },
+  {
+   "slug": "briggs-riley-zdx-global-spinner",
+   "brand": "Briggs & Riley",
+   "model": "ZDX Global 21\" Carry-On Expandable Spinner",
+   "line": "briggs-riley-zdx",
+   "variant": "Global Spinner",
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+    "retrieved": "2026-08-30",
+    "title": "Briggs & Riley ZDX Global 21\" Carry-On Expandable Spinner",
+    "local": "resources/bags/2026-08-30-international-global.md"
+   },
+   "external_cm": {
+    "v": [
+     53.3,
+     38.1,
+     22.9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+    "at": "2026-08-30",
+    "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+   },
+   "claimed_cm": {
+    "v": [
+     53.3,
+     38.1,
+     22.9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+    "at": "2026-08-30"
+   },
+   "claimed_packing_cm": {
+    "v": [
+     48.9,
+     38.1,
+     20.3
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+    "at": "2026-08-30"
+   },
+   "weight_kg": {
+    "v": 3.6,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+    "at": "2026-08-30",
+    "unit": "kg"
+   },
+   "capacity_l": {
+    "v": 37.9,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+    "at": "2026-08-30",
+    "unit": "L"
+   },
+   "expands_cm": {
+    "v": 5,
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+    "at": "2026-08-30",
+    "unit": "cm"
+   },
+   "conflicts": [],
+   "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 27.9 cm; capacity 37.9–47.3 L. Exceeds 35 cm width and 20 cm depth envelopes; do not infer universal compliance from Global."
+  }
+ ]
+}

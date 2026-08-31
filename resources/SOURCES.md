@@ -77,6 +77,16 @@ that.
 | NY Mag Strategist (original) | Obtained only as a local summary |
 | Travel + Leisure (originals) | Same |
 
+## Carrier pages
+
+| Source | Tier | Read? | What it gave us | URL |
+|---|---|---|---|---|
+| United — carry-on bags | 1 | **full, via browser** | Allowances; the units contradiction; route conditions; gate-check retrieval | [link](https://www.united.com/en/us/fly/baggage/carry-on-bags.html) |
+
+⚠️ united.com is **client-rendered** — a plain fetch returns a JavaScript shell
+with no content. It had to be read in a browser. Expect the same on other
+carrier sites, and never record an empty fetch as "no data".
+
 ## Carrier status
 
 | Source | Tier | Read? | What it gave us | URL |

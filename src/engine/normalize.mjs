@@ -74,6 +74,40 @@ export const CARRIER_STATUS = new Set(['operating', 'ceased', 'merged', 'suspend
    distinguish a Ryanair Basic from a Ryanair Basic + Priority. */
 export const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'first']);
 
+/* Carriers publish both units, and the two disagree.
+   United's carry-on is "22 x 14 x 9 in (56 x 35 x 23 cm)" — but 14 in is
+   35.56 cm, not 35. A 35.5 cm bag passes the inch limit and fails the published
+   centimetre limit, on the same page, from the same airline.
+
+   Both numbers are theirs. We hold both, compare against the SMALLER on each
+   axis, and say so — being wrong toward caution costs a reader some
+   convenience; the other direction costs them a gate fee. */
+export const IN_TO_CM = 2.54;
+
+/** Reconcile a published inch figure with a published centimetre figure.
+ *  Returns the effective limit plus whether the source contradicts itself. */
+export function reconcileUnits(cm, inches, epsCm = 0.3) {
+  if (!cm && !inches) return null;
+  if (!inches) return { cm, from: 'cm', conflict: false };
+  const converted = inches.map((v) => +(v * IN_TO_CM).toFixed(2));
+  if (!cm) return { cm: converted, from: 'in', conflict: false };
+
+  const diff = converted.map((v, i) => +(v - cm[i]).toFixed(2));
+  const conflict = diff.some((d) => Math.abs(d) > epsCm);
+  return {
+    /* Axis by axis, not whole-array: United is 0.56 cm looser in inches on
+       width and 0.14 cm tighter on depth. Picking one unit wholesale would be
+       generous on the axis that actually binds. */
+    cm: cm.map((v, i) => Math.min(v, converted[i])),
+    published_cm: cm,
+    published_in: inches,
+    converted_cm: converted,
+    diff_cm: diff,
+    conflict,
+    from: conflict ? 'stricter_of_both' : 'agreed',
+  };
+}
+
 /** An add-on is bought on top of a fare and REPLACES the allowance it upgrades.
  *  Kept separate from the fare because the same add-on appears across fares and
  *  because the page has to be able to say "this costs €6 and changes the answer". */
@@ -174,6 +208,17 @@ export function resolveFare(record, booking) {
   return { row: null, matched: null };
 }
 
+function buildAllowance(row, subject) {
+  const u = reconcileUnits(row.max_cm, row.max_in);
+  return {
+    max_cm: assertDims(u.cm, subject),
+    max_kg: row.max_kg ?? null,
+    /* Kept so a page can show the airline's own figures rather than ours, and
+       flag when they disagree — that disagreement is a finding worth printing. */
+    units: u,
+  };
+}
+
 export function toCarrier(record, fareClass) {
   const subject = record?.iata ?? record?.name ?? '(unnamed carrier)';
   if (!record) throw new EngineInputError('no carrier record given', subject);
@@ -204,9 +249,7 @@ export function toCarrier(record, fareClass) {
     matched_on: resolved.matched,
     strictness,
     /* Never a zero-size row — a naive comparison would let one pass. */
-    allowance: cabin
-      ? { max_cm: assertDims(cabin.max_cm, subject), max_kg: cabin.max_kg ?? null }
-      : null,
+    allowance: cabin ? buildAllowance(cabin, subject) : null,
     /* Only an EXPLICIT finding means "no cabin bag". Everything else is unknown:
        silence from a half-researched carrier must never read as a ban. */
     no_cabin_bag: absence === CABIN_ABSENCE.NOT_PERMITTED,

@@ -63,6 +63,28 @@ One row per **fare class × bag type**. Denormalized on purpose — allowances a
 }
 ```
 
+### Two published units that disagree
+
+Carriers publish both, and the two contradict each other. [United's carry-on](https://www.united.com/en/us/fly/baggage/carry-on-bags.html) is *"22 × 14 × 9 in (56 × 35 × 23 cm)"* — but 14 in is **35.56 cm**, not 35.
+
+| | in → cm | published cm | difference |
+|---|---|---|---|
+| Carry-on | 55.88 × 35.56 × 22.86 | 56 × 35 × 23 | −0.12 / **+0.56** / −0.14 |
+| Personal item | 43.18 × 25.4 × 22.86 | 43 × 25 × 22 | +0.18 / +0.4 / **+0.86** |
+
+**A 35.5 cm wide bag passes their inch limit and fails their centimetre limit.** Same page, same airline, and the gap exceeds our own `EPS_CM` of 0.3 — so it is not rounding noise we can absorb.
+
+```jsonc
+"max_cm": [56, 35, 23],
+"max_in": [22, 14, 9]
+```
+
+`reconcileUnits()` takes the **stricter figure on each axis independently** — United is looser in inches on width and tighter on length and depth, so picking one unit wholesale would be generous on whichever axis happens to bind. Both published figures are kept so a page can show the airline its own numbers, along with `conflict: true` and the per-axis difference.
+
+Being wrong toward caution costs a reader some convenience. The other direction costs them a gate fee.
+
+`validate-carriers.mjs` rejects a `max_in` that isn't three numbers, and flags a `max_cm`/`max_in` pair differing by more than 2 cm — that is a transcription error, not a unit disagreement.
+
 ### Fares are three axes, not one string
 
 Across the researched set, `fare_class` held all of:
@@ -210,6 +232,8 @@ If we don't take the maker's word on size, there's no principled reason to take 
 `src` is one of **`measured`** (we did it, with a date), **`manufacturer`** (their claim, unverified), **`review`** (a third party tested it, attributed), or **`observed`** (physically checkable but not measured — shell material, wheel count).
 
 The UI renders `manufacturer` differently from `measured` everywhere, without exception. A page full of manufacturer claims dressed as facts is the thing we exist to fix; doing it ourselves on the fields we happen not to have measured would be worse than not launching.
+
+Manufacturer-only catalog research is maintained in `data/manufacturer-bags.json` and included by `data/build-bags.mjs`. Each record carries `manufacturer_source` (official product URL, retrieval date, title, and research dossier), and each specification carries `src: "manufacturer"`, its URL in `ref`, and retrieval date in `at`. `external_cm` is populated only when the source establishes overall dimensions including wheels and handles; `claimed_packing_cm` remains separate. These research records have empty `reviews`, null physical measurements, and `needs_measurement: true`. They are catalog candidates, not measured recommendations. The builder also respects `kind: "manufacturer"` on legacy store sources instead of labeling their specifications as review measurements.
 
 ### Third-party reviews — cited, never absorbed
 

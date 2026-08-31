@@ -1,0 +1,85 @@
+{
+ "variant": "Global Spinner",
+ "line": "briggs-riley-zdx",
+ "role": "overhead",
+ "fits_personal_item": false,
+ "claimed_packing_cm": {
+  "v": [
+   48.9,
+   38.1,
+   20.3
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+  "at": "2026-08-30"
+ },
+ "claimed_cm": {
+  "v": [
+   53.3,
+   38.1,
+   22.9
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+  "at": "2026-08-30"
+ },
+ "measured_cm": null,
+ "measured_at": null,
+ "reviews": [],
+ "conflicts": [],
+ "mentions": 0,
+ "needs_measurement": true,
+ "slug": "briggs-riley-zdx-global-spinner",
+ "brand": "Briggs & Riley",
+ "model": "ZDX Global 21\" Carry-On Expandable Spinner",
+ "type": "softside spinner",
+ "soft": 1,
+ "wheels": 4,
+ "manufacturer_source": {
+  "url": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+  "retrieved": "2026-08-30",
+  "title": "Briggs & Riley ZDX Global 21\" Carry-On Expandable Spinner",
+  "local": "resources/bags/2026-08-30-international-global.md"
+ },
+ "external_cm": {
+  "v": [
+   53.3,
+   38.1,
+   22.9
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+  "at": "2026-08-30",
+  "note": "Manufacturer-published overall dimensions including wheels and closed carry handles; unexpanded. Not measured by us."
+ },
+ "weight_kg": {
+  "v": 3.6,
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+  "at": "2026-08-30",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 37.9,
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+  "at": "2026-08-30",
+  "unit": "L"
+ },
+ "expands_cm": {
+  "v": 5,
+  "src": "manufacturer",
+  "ref": "https://www.briggs-riley.com/products/zdx-global-21-carry-on-expandable-spinner",
+  "at": "2026-08-30",
+  "unit": "cm"
+ },
+ "notes": "Source exterior dimensions explicitly include wheels and handles. Expanded depth 27.9 cm; capacity 37.9–47.3 L. Exceeds 35 cm width and 20 cm depth envelopes; do not infer universal compliance from Global.",
+ "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  4.4,
+  0,
+  2.6
+ ],
+ "observed": [],
+ "compliance_unbacked": false
+}
