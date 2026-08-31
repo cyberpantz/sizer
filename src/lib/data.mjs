@@ -15,10 +15,43 @@
    because a guard reporting coverage it does not have is how the mockup drift
    and the dead drift-checker regex both survived. If the source is unreachable,
    THROW. */
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import { isPromotable, isSized, toBag, toCarrier } from '../engine/normalize.mjs';
 
-const root = new URL('../../data/', import.meta.url);
+/* WHERE data/ IS, WHICH IS NOT WHERE THIS FILE THINKS IT IS.
+ *
+ * `new URL('../../data/', import.meta.url)` is correct while this module sits
+ * at src/lib/. It stops being correct the moment a bundler moves it: Astro
+ * emits it as dist/.prerender/chunks/data_XXXX.mjs, where '../../data/'
+ * resolves to dist/data/ — which does not exist.
+ *
+ * So `astro build` died in getStaticPaths with
+ * "ENOENT: scandir .../dist/data/bags/", and it died that way on every
+ * machine. The whole site could not build, and nothing caught it because the
+ * tests import this module directly from source, where the relative path is
+ * fine. Every check we had ran on the one layout where the bug is invisible.
+ *
+ * Both candidates are tried and the FIRST ONE THAT EXISTS wins. No silent
+ * fallback beyond that: if neither is there, readAll throws, per the rule at
+ * the top of this file. A loader that quietly finds nothing is the failure
+ * this module is built to refuse. */
+function resolveRoot() {
+  const candidates = [
+    new URL('../../data/', import.meta.url), // running from source
+    pathToFileURL(`${process.cwd()}/data/`), // running from a bundle, cwd = repo
+  ];
+  const hit = candidates.find((u) => existsSync(u));
+  if (!hit) {
+    throw new Error(
+      `data/ not found. Looked in:\n  ${candidates.map((u) => u.pathname).join('\n  ')}`
+    );
+  }
+  return hit;
+}
+
+export const DATA_ROOT = resolveRoot();
+const root = DATA_ROOT;
 
 /** Swap this one function for `fetch` when the endpoints land. Its contract:
  *  return every record, or throw. Never return a partial set — a short read

@@ -14,16 +14,21 @@
   data-resolved="false"
   class="inline-flex overflow-hidden rounded-chip border border-rule-strong group"
 >
-  <button type="button" data-unit="cm" aria-pressed="true"
-    class="font-mono text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
+  {/* "Metric" and "Imperial", not "cm" and "in".
+      The control switches LENGTH AND WEIGHT — centimetres to inches and
+      kilograms to pounds — so labelling it with a length unit described half
+      of what it does. A reader who wants pounds had no reason to think this
+      button was for them. */}
+  <button type="button" data-unit="cm" aria-pressed="true" aria-label="Show metric units, centimetres and kilograms"
+    class="text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
            aria-pressed:bg-blue aria-pressed:text-on-blue
            group-data-[resolved=false]:aria-pressed:bg-surface-2
-           group-data-[resolved=false]:aria-pressed:text-ink-2">cm</button>
-  <button type="button" data-unit="in" aria-pressed="false"
-    class="font-mono text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
+           group-data-[resolved=false]:aria-pressed:text-ink-2">Metric</button>
+  <button type="button" data-unit="in" aria-pressed="false" aria-label="Show imperial units, inches and pounds"
+    class="text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
            aria-pressed:bg-blue aria-pressed:text-on-blue
            group-data-[resolved=false]:aria-pressed:bg-surface-2
-           group-data-[resolved=false]:aria-pressed:text-ink-2">in</button>
+           group-data-[resolved=false]:aria-pressed:text-ink-2">Imperial</button>
 </div>
 
 <script>

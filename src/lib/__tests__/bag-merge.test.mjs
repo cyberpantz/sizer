@@ -49,16 +49,26 @@ describe('manufacturer data merged onto a review record', () => {
        * So: the record must arrive SIZED, from the manufacturer, in whichever
        * unit and at whichever confidence the page supports. Whether it may be
        * promoted is isPromotable()'s question, tested separately below. */
-      const sized = b.external_cm ?? b.claimed_cm;
+      const dims = [b.external_cm, b.claimed_cm, b.claimed_packing_cm].filter(Boolean);
       assert.ok(
-        sized,
+        dims.length,
         `${m.slug} was researched at the maker but the built record has no dimensions — ` +
           'if it came back in imperial, the build must convert it, not skip it'
       );
-      assert.equal(
-        sized.src,
-        'manufacturer',
-        `${m.slug} was researched at the maker but its dimensions still say ${sized.src}`
+      /* AT LEAST ONE dimension must carry the maker's name, not specifically
+         external_cm.
+         This asserted `(external_cm ?? claimed_cm).src === 'manufacturer'` and
+         failed on the Away Carry-On Flex, correctly researched: Away prints
+         only an interior triple, so the maker figure lands as claimed_cm while
+         external_cm rightly keeps the review measurement it already had. The
+         `??` picked external_cm, found "review", and called a good record bad.
+         The rule is that the research SURVIVES. Which rung it lands on is
+         DIM_SOURCE's business, and whether it may be recommended is
+         isPromotable's — both tested separately. */
+      assert.ok(
+        dims.some((d) => d.src === 'manufacturer'),
+        `${m.slug} was researched at the maker but no dimension says so — ` +
+          `sources are ${dims.map((d) => d.src).join(', ')}`
       );
       for (const field of ['external_in', 'claimed_packing_in', 'weight_lb', 'price_usd']) {
         if (m[field]) assert.deepEqual(b[field], m[field], `${m.slug}: ${field} lost during merge`);

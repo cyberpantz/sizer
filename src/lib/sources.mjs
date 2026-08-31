@@ -5,11 +5,19 @@
    rather than restating either, so the page cannot drift from the register the
    way a hand-copied table would. */
 import { readFileSync } from 'node:fs';
+import { DATA_ROOT } from './data.mjs';
 
-const root = new URL('../../', import.meta.url);
+/* ONE PLACE KNOWS WHERE data/ IS, and until now there were two.
+   data.mjs opens with "The only thing that knows where data lives" — and this
+   file quietly kept its own `new URL('../../', import.meta.url)`. That is
+   correct from source and wrong from a bundle, so `astro build` got past the
+   loader that had been fixed and died in this one instead, on
+   dist/data/carriers/. Importing the resolved root means the next move cannot
+   fix half the problem. */
+const root = DATA_ROOT;
 
 export async function loadSources() {
-  const reviews = JSON.parse(readFileSync(new URL('data/reviews/sources.json', root))).sources;
+  const reviews = JSON.parse(readFileSync(new URL('reviews/sources.json', root))).sources;
   return Object.entries(reviews).map(([id, s]) => ({
     id,
     publication: s.publication,
@@ -30,7 +38,7 @@ export async function loadSources() {
 /** Carriers whose own page someone has actually opened. */
 export async function loadCarrierSources() {
   const { readdirSync } = await import('node:fs');
-  const dir = new URL('data/carriers/', root);
+  const dir = new URL('carriers/', root);
   return readdirSync(dir)
     .filter((f) => f.endsWith('.json') && !f.startsWith('_'))
     .map((f) => JSON.parse(readFileSync(new URL(f, dir))))

@@ -2,7 +2,7 @@
  "slug": "beis-hybrid-roller",
  "brand": "Béis",
  "model": "The Hybrid Carry-On Roller",
- "variant": null,
+ "variant": "Hybrid Carry-On, Black, 44956435906696",
  "line": "beis-roller",
  "type": "hardside spinner",
  "soft": 0,
@@ -21,22 +21,36 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55.5,
+   35.5,
+   23
+  ],
+  "unit": "cm",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31",
+  "note": "Unqualified Dimensions label; does not explicitly include handles and wheels. Printed H x L x D mapped to H x W x D, without changing values."
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
   "v": 3.81,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31"
  },
  "capacity_l": {
   "v": 35,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Capacity",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -57,9 +71,110 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": [
+      22,
+      14,
+      9
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer",
+     "v": [
+      55.5,
+      35.5,
+      23
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Original printed unit systems retained; do not silently reconcile any differences."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": 8.39,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer",
+     "v": 3.81,
+     "unit": "kg"
+    }
+   ],
+   "note": "Original printed unit systems retained; do not silently reconcile any differences."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Current coupling-system Hybrid Carry-On, distinct from Small and standard Carry-On. Expanded volume 41L. No interior triple, separate SKU or explicit empty-weight qualifier found. USD298 regular, no sale shown.",
+ "manufacturer_source": {
+  "url": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "retrieved": "2026-08-31",
+  "title": "Béis The Hybrid Carry-On Roller",
+  "local": "resources/bags/2026-08-31-beis-hybrid-roller.md"
+ },
+ "claimed_in": {
+  "v": [
+   22,
+   14,
+   9
+  ],
+  "unit": "in",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31",
+  "note": "Unqualified Dimensions label; does not explicitly include handles and wheels. Printed H x L x D mapped to H x W x D, without changing values."
+ },
+ "weight_lb": {
+  "v": 8.39,
+  "unit": "lbs",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31"
+ },
+ "expands_in": {
+  "v": 2,
+  "unit": "in",
+  "quote": "Expandable up to",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31"
+ },
+ "price_usd": {
+  "v": 298,
+  "unit": "USD",
+  "quote": "$298",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31",
+  "list": true
+ },
+ "expands_cm": {
+  "v": 5.08,
+  "unit": "cm",
+  "quote": "Expandable up to",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-hybrid-carry-on-roller-in-black?variant=44956435906696",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "expands_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source."
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

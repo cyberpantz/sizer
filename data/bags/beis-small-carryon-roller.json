@@ -2,7 +2,7 @@
  "slug": "beis-small-carryon-roller",
  "brand": "Béis",
  "model": "The Small Carry-On Roller",
- "variant": "Small",
+ "variant": "Small Carry-On Roller, Black, current redesigned model",
  "line": "beis-roller",
  "type": "hardside spinner",
  "soft": 0,
@@ -21,17 +21,37 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   54.6,
+   34.3,
+   20.5
+  ],
+  "unit": "cm",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "note": "Unqualified dimensions, wheels/handles inclusion unstated. Printed L x H x D reordered to H x W x D in both units."
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.25,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "v": 3.2,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
+  "at": "2026-08-31"
  },
- "capacity_l": null,
+ "capacity_l": {
+  "v": 31,
+  "unit": "L",
+  "quote": "Capacity",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
+  "at": "2026-08-31"
+ },
  "reviews": [
   {
    "src": "tl-international",
@@ -51,9 +71,78 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": [
+      21.5,
+      13.5,
+      8.07
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer",
+     "v": [
+      54.6,
+      34.3,
+      20.5
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Original printed unit systems retained; do not silently reconcile any differences."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": 7.15,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer",
+     "v": 3.2,
+     "unit": "kg"
+    }
+   ],
+   "note": "Original printed unit systems retained; do not silently reconcile any differences."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
+  "retrieved": "2026-08-31",
+  "title": "Béis The Small Carry-On Roller",
+  "local": "resources/bags/2026-08-31-beis-small-carryon-roller.md"
+ },
+ "notes": "Source order: 13.50 L x 21.50 H x 8.07 D inches; 34.3 x 54.6 x 20.5 cm. Current redesigned Small model may differ from earlier reviewed generation. Missing interior triple, quantified expansion, explicit empty-weight qualifier and confirmed SKU. Embedded USD248 not used as separately verified list price.",
+ "claimed_in": {
+  "v": [
+   21.5,
+   13.5,
+   8.07
+  ],
+  "unit": "in",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "note": "Unqualified dimensions, wheels/handles inclusion unstated. Printed L x H x D reordered to H x W x D in both units."
+ },
+ "weight_lb": {
+  "v": 7.15,
+  "unit": "lbs",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
+  "at": "2026-08-31"
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

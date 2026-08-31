@@ -444,7 +444,7 @@ const FIGURE_W = cursor;
         <p class="mt-4 text-ink-2">
           Weight catches people out in the cabin too. Cabin weight caps in our
           data run from{' '}
-          <strong class="text-ink">{f.weight.lowestCap.kg} kg</strong> at{' '}
+          <strong class="text-ink" data-kg={f.weight.lowestCap.kg}>{f.weight.lowestCap.kg} kg</strong> at{' '}
           {f.weight.lowestCap.carriers.join(', ')} upwards, and{' '}
           {f.weight.strictCapCarriers} airlines cap a cabin bag at{' '}
           {f.weight.cap} kg or less. That matters more than it sounds:{' '}

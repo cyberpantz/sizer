@@ -1,0 +1,129 @@
+{
+ "variant": "40L",
+ "line": "tortuga-lite",
+ "role": "overhead",
+ "fits_personal_item": null,
+ "claimed_packing_cm": null,
+ "claimed_cm": {
+  "v": [
+   55,
+   35,
+   20
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Unqualified Dimensions label; page does not explicitly distinguish overall from packing dimensions or state whether handles/straps are included. Both printed units retained unchanged."
+ },
+ "measured_cm": null,
+ "measured_at": null,
+ "reviews": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      22,
+      14,
+      8
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimeters",
+     "v": [
+      55,
+      35,
+      20
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Printed units differ; neither converted nor reconciled."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer pounds",
+     "v": 3.5,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer kilograms",
+     "v": 1.6,
+     "unit": "kg"
+    }
+   ],
+   "note": "Both printed weights preserved, not exact equivalents."
+  }
+ ],
+ "mentions": 0,
+ "needs_measurement": true,
+ "slug": "tortuga-lite-40",
+ "brand": "Tortuga",
+ "model": "Lite Backpack 40L",
+ "type": "backpack",
+ "soft": 1,
+ "wheels": 0,
+ "manufacturer_source": {
+  "url": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+  "retrieved": "2026-08-31",
+  "title": "Tortuga Lite Backpack 40L",
+  "local": "resources/bags/2026-08-31-tortuga-lite-40.md"
+ },
+ "claimed_in": {
+  "v": [
+   22,
+   14,
+   8
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Unqualified Dimensions label; page does not explicitly distinguish overall from packing dimensions or state whether handles/straps are included. Both printed units retained unchanged."
+ },
+ "weight_lb": {
+  "v": 3.5,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "weight_kg": {
+  "v": 1.6,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "capacity_l": {
+  "v": 40,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+  "at": "2026-08-31",
+  "quote": "Volume"
+ },
+ "price_usd": {
+  "v": 250,
+  "unit": "USD",
+  "src": "manufacturer",
+  "ref": "https://www.tortugabackpacks.com/products/travel-backpack-lite-40l",
+  "at": "2026-08-31",
+  "quote": "Regular price",
+  "list": true
+ },
+ "notes": "Official Specs panel read in browser. 40L Lite, 630D CORDURA nylon, stowable straps. Regular USD250, no sale shown. Distinct from unresolved tortuga-40 review record; no reviews transferred. Missing: interior dimensions, quantified expansion, SKU, explicit empty-weight or hip-belt-inclusion qualification. No manual conversions or universal airline-fit guarantee.",
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

@@ -186,18 +186,18 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
         <dl class="mt-6 overflow-hidden rounded-card border border-rule bg-surface">
           <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
             <dt class="text-[0.9375rem] text-muted">Outside, as an airline measures it</dt>
-            <dd class="font-mono text-xl font-semibold">{dims(bag.external_cm)} cm</dd>
+            <dd class="font-mono text-xl font-semibold" data-dims={JSON.stringify(bag.external_cm)}>{dims(bag.external_cm)} cm</dd>
           </div>
           {record.claimed_packing_cm && (
             <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
               <dt class="text-[0.9375rem] text-muted">Packing space inside</dt>
-              <dd class="font-mono text-lg text-muted">{dims(record.claimed_packing_cm.v)} cm</dd>
+              <dd class="font-mono text-lg text-muted" data-dims={JSON.stringify(record.claimed_packing_cm.v)}>{dims(record.claimed_packing_cm.v)} cm</dd>
             </div>
           )}
           {bag.weight_kg && (
             <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
               <dt class="text-[0.9375rem] text-muted">Weight, empty</dt>
-              <dd class="font-mono text-lg">{bag.weight_kg} kg</dd>
+              <dd class="font-mono text-lg" data-kg={bag.weight_kg}>{bag.weight_kg} kg</dd>
             </div>
           )}
           {bag.expands_cm > 0 && (
@@ -226,7 +226,15 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           {gap && (
             <p class="mt-2 max-w-[62ch] text-[0.875rem] text-muted">
               Wheels, handle and feet add{' '}
-              <strong class="text-ink">{gap.filter((v) => v > 0).map((v) => `${v} cm`).join(', ')}</strong>{' '}
+              {/* One span per figure, each with its own data-cm hook. Joined
+                  here rather than in a single string so the units toggle can
+                  reach them — and this is the only emitter of [data-cm], a
+                  loop that had been iterating an empty set. */}
+              <strong class="text-ink">
+                {gap.filter((v) => v > 0).map((v, i) => (
+                  <Fragment>{i > 0 && ', '}<span data-cm={v}>{v} cm</span></Fragment>
+                ))}
+              </strong>{' '}
               over the packing figure. That difference is the whole reason a bag
               sold as carry-on size gets stopped.
             </p>
@@ -345,7 +353,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           {siblings.map(({ bag: sib, cov: c }) => (
             <a href={`/bags/${sib.slug}/`} class="block rounded-card border border-rule bg-surface p-4 no-underline hover:border-blue">
               <span class="block font-semibold text-ink">{sib.model}</span>
-              <span class="mt-1 block font-mono text-[0.84375rem] text-muted">{dims(sib.external_cm)} cm</span>
+              <span class="mt-1 block font-mono text-[0.84375rem] text-muted" data-dims={JSON.stringify(sib.external_cm)}>{dims(sib.external_cm)} cm</span>
               <span class="mt-2 block text-[0.9375rem] text-ink-2">Clears {c.pass} of {c.of}</span>
             </a>
           ))}
@@ -400,7 +408,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
             <a href={`/bags/${alt.slug}/`} class="block rounded-card border border-rule bg-surface p-4 no-underline hover:border-blue">
               <span class="block text-[0.8125rem] text-muted">{alt.brand}</span>
               <span class="block font-semibold text-ink">{alt.model}</span>
-              <span class="mt-1 block font-mono text-[0.84375rem] text-muted">{dims(alt.external_cm)} cm</span>
+              <span class="mt-1 block font-mono text-[0.84375rem] text-muted" data-dims={JSON.stringify(alt.external_cm)}>{dims(alt.external_cm)} cm</span>
               <span class="mt-2 block text-[0.9375rem] text-ink-2">Clears {c.pass} of {c.of}</span>
             </a>
           ))}

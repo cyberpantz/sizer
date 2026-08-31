@@ -2,7 +2,7 @@
  "slug": "calpak-luka-mini",
  "brand": "Calpak",
  "model": "Luka Soft-Sided Mini Carry-On",
- "variant": "Mini",
+ "variant": "Luka Soft-Sided Mini Carry-On Luggage, Walnut",
  "line": "calpak-luka",
  "type": "underseat",
  "soft": 1,
@@ -10,12 +10,69 @@
  "role": "underseat",
  "fits_personal_item": null,
  "external_cm": null,
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   34.925,
+   34.925,
+   19.05
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Interior",
+  "note": "Explicitly labelled Interior; separate from exterior. Original inches retained. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_cm": {
+  "v": [
+   40.64,
+   36.195,
+   22.86
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Exterior (Including wheel)",
+  "note": "Exterior explicitly includes wheels but does not explicitly include handles; retained as claimed per brief. Interior is separately labelled. Printed inches only; no manual conversion. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
- "weight_kg": null,
- "capacity_l": null,
+ "weight_kg": {
+  "v": 2.404027,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Weight",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
+ },
+ "capacity_l": {
+  "v": 22.5,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Capacity"
+ },
  "reviews": [
   {
    "src": "packhacker-international",
@@ -42,6 +99,56 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Official Specifications panel read in browser on 2026-08-31. Mini size, Walnut selected; distinct from full-size Luka carry-on. Regular USD185, sale USD148, Final Sale. Personalization USD25 excluded. No metric dimensions, weight in kilograms, expansion amount or confirmed SKU found; weight not explicitly labelled empty. Manufacturer underseat claim is not a universal fit guarantee.",
+ "manufacturer_source": {
+  "url": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "retrieved": "2026-08-31",
+  "title": "Calpak Luka Soft-Sided Mini Carry-On",
+  "local": "resources/bags/2026-08-31-calpak-luka-mini.md"
+ },
+ "claimed_in": {
+  "v": [
+   16,
+   14.25,
+   9
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Exterior (Including wheel)",
+  "note": "Exterior explicitly includes wheels but does not explicitly include handles; retained as claimed per brief. Interior is separately labelled. Printed inches only; no manual conversion."
+ },
+ "claimed_packing_in": {
+  "v": [
+   13.75,
+   13.75,
+   7.5
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Interior",
+  "note": "Explicitly labelled Interior; separate from exterior. Original inches retained."
+ },
+ "weight_lb": {
+  "v": 5.3,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "price_usd": {
+  "v": 185,
+  "unit": "USD",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/luka-mini-carry-on-luggage",
+  "at": "2026-08-31",
+  "quote": "Original price",
+  "list": true
+ },
  "compliance_claimed": true,
  "observed": [],
  "compliance_unbacked": true

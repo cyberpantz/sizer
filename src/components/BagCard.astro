@@ -99,13 +99,17 @@ const gap = packing && packing.join() !== bag.external_cm.join() ? packing : nul
       {gap && (
         <div class="mt-1 flex justify-between gap-3">
           <dt class="text-muted">Packing size</dt>
-          <dd class="font-mono text-[0.875rem] text-muted">{gap.join(' × ')} cm</dd>
+          <dd class="font-mono text-[0.875rem] text-muted" data-dims={JSON.stringify(gap)}>{gap.join(' × ')} cm</dd>
         </div>
       )}
       {bag.weight_kg && (
         <div class="mt-1 flex justify-between gap-3">
           <dt class="text-muted">Empty</dt>
-          <dd class="font-mono text-[0.875rem] text-ink">{bag.weight_kg} kg</dd>
+          {/* data-kg, or the units toggle cannot reach it. Weight was printed
+              as a bare "kg" string, so flipping to imperial gave a reader
+              inches for the size and kilograms for the weight — half a
+              conversion, which is worse than none because it looks finished. */}
+          <dd class="font-mono text-[0.875rem] text-ink" data-kg={bag.weight_kg}>{bag.weight_kg} kg</dd>
         </div>
       )}
     </dl>
