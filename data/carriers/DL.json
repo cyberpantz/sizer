@@ -54,7 +54,8 @@
       "count": 1,
       "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",
       "verified_at": "2026-08-31",
-      "note": "Underseat item; no numerical dimensions published on reviewed page."
+      "note": "Underseat item; no numerical dimensions published on reviewed page.",
+      "absence": "not_published"
     },
     {
       "fare_class": "economy",
@@ -85,7 +86,8 @@
       "count": 1,
       "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",
       "verified_at": "2026-08-31",
-      "note": "Underseat item; no numerical dimensions published on reviewed page."
+      "note": "Underseat item; no numerical dimensions published on reviewed page.",
+      "absence": "not_published"
     }
   ],
   "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",

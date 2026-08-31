@@ -1,6 +1,6 @@
 /* CI gate. The failure mode this exists to prevent: a review's number quietly
    becoming "ours" somewhere between here and the page. */
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 
 const dir = new URL('bags/', import.meta.url);
 /* `!startsWith('_')` — the convention every other loader in this repo uses.
@@ -59,8 +59,17 @@ for (const b of bags) {
   for (const r of b.reviews)
     if (r.verbatim && !r.url) bad(`${b.slug} quotes verbatim with no link`);
 }
-const slugs = new Set(bags.map((b) => b.slug));
-for (const m of M.mentions) if (!slugs.has(m.bag)) bad(`mention references unknown bag ${m.bag}`);
+/* A MENTION MAY POINT AT A BAG WE DELIBERATELY DO NOT CARRY.
+   Travel + Leisure really did name the Amazon Basics carry-on, and that citation
+   stays true after we decide not to publish the bag — the sources are facts, the
+   register is a decision, and neither gets edited to satisfy the other. So an
+   excluded slug is a known bag; only a slug nobody has ever heard of is a typo. */
+const excludedPath = new URL('excluded-bags.json', import.meta.url);
+const excluded = existsSync(excludedPath)
+  ? Object.keys(JSON.parse(readFileSync(excludedPath)).bags)
+  : [];
+const known = new Set([...bags.map((b) => b.slug), ...excluded]);
+for (const m of M.mentions) if (!known.has(m.bag)) bad(`mention references unknown bag ${m.bag}`);
 
 console.log(
   `${bags.length} bags checked · ${bags.filter((b) => b.measured_cm).length} measured · ${bags.filter((b) => b.external_cm).length} sized`

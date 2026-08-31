@@ -60,7 +60,8 @@
       "count": 1,
       "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",
       "verified_at": "2026-08-31",
-      "note": "Must fit beneath seat; no numeric dimensions on reviewed policy."
+      "note": "Must fit beneath seat; no numeric dimensions on reviewed policy.",
+      "absence": "not_published"
     },
     {
       "fare_class": "economy",
@@ -91,7 +92,8 @@
       "count": 1,
       "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",
       "verified_at": "2026-08-31",
-      "note": "Must fit beneath seat; no numeric dimensions on reviewed policy."
+      "note": "Must fit beneath seat; no numeric dimensions on reviewed policy.",
+      "absence": "not_published"
     }
   ],
   "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",

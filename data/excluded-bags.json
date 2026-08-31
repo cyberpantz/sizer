@@ -1,8 +1,8 @@
 {
  "note": "Bags deliberately NOT in the catalogue. Kept as a register so a future intake does not re-add them and re-run the same dead end. Removing a bag silently would leave nothing to explain why it never comes back.",
  "bags": {
-  "amazon-21-expandable": {
-   "reason": "Amazon-owned brand. Our own intake brief forbids marketplace sources, so no permitted manufacturer specification exists and none ever will \u2014 this is a rule we chose, not a gap someone can close. See resources/bags/2026-08-31-amazon-21-expandable-gap.md",
+  "amazon-21": {
+   "reason": "Amazon Basics is an Amazon-owned brand. Our own intake brief forbids marketplace sources, so no permitted manufacturer specification exists and none ever will — this is a rule we chose, not a gap anyone can close. The record carried no dimensions of any kind. See resources/bags/2026-08-31-amazon-21-gap.md",
    "removed": "2026-08-31"
   },
   "pacsafe-venturesafe-exp45": {

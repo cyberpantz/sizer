@@ -53,7 +53,8 @@
       "source_url": "https://www.jal.co.jp/jp/en/inter/baggage/inflight/",
       "verified_at": "2026-08-31",
       "allowance_group": "cabin_total",
-      "group_max_kg": 10
+      "group_max_kg": 10,
+      "absence": "not_researched"
     }
   ],
   "source_url": "https://www.jal.co.jp/jp/en/inter/baggage/inflight/",

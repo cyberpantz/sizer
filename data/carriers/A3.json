@@ -52,7 +52,8 @@
       "count": 1,
       "allowance_group": "light_cabin_choice",
       "group_max_count": 1,
-      "note": "Light: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Alternative to the cabin bag, not additional."
+      "note": "Light: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Alternative to the cabin bag, not additional.",
+      "absence": "not_published"
     },
     {
       "fare_class": "basic",
@@ -96,7 +97,8 @@
       "max_kg": null,
       "includes_wheels": null,
       "count": 1,
-      "note": "Flex: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag."
+      "note": "Flex: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag.",
+      "absence": "not_published"
     },
     {
       "fare_class": "economy",
@@ -140,7 +142,8 @@
       "max_kg": null,
       "includes_wheels": null,
       "count": 1,
-      "note": "ComfortFlex: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag."
+      "note": "ComfortFlex: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag.",
+      "absence": "not_published"
     },
     {
       "fare_class": "comfort_flex",
@@ -184,7 +187,8 @@
       "max_kg": null,
       "includes_wheels": null,
       "count": 1,
-      "note": "Family: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag."
+      "note": "Family: handbag or thin laptop case fitting under the seat; numerical personal-item limits not published in the reviewed table. Additional to the cabin bag.",
+      "absence": "not_published"
     },
     {
       "fare_class": "family",

@@ -50,5 +50,6 @@
   "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
   "checked_allowance_status": "not_researched",
   "audit_note": "Read Economy and route exceptions. Standard Economy 7 kg; departures from Brazil allow 10 kg; India additionally limits total dimensions to 115 cm. No additional ordinary personal bag is promised in Economy. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
-  "research_dossier": "resources/carriers/EK-allowance-audit-2026-08-31.md"
+  "research_dossier": "resources/carriers/EK-allowance-audit-2026-08-31.md",
+  "personal_absence": "not_researched"
 }

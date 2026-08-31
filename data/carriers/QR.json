@@ -54,7 +54,8 @@
       "count": 1,
       "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
       "verified_at": "2026-08-31",
-      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on.",
+      "absence": "not_published"
     },
     {
       "fare_class": "lite",
@@ -85,7 +86,8 @@
       "count": 1,
       "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
       "verified_at": "2026-08-31",
-      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on.",
+      "absence": "not_published"
     },
     {
       "fare_class": "classic",
@@ -116,7 +118,8 @@
       "count": 1,
       "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
       "verified_at": "2026-08-31",
-      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on.",
+      "absence": "not_published"
     },
     {
       "fare_class": "convenience",
@@ -147,7 +150,8 @@
       "count": 1,
       "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
       "verified_at": "2026-08-31",
-      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on.",
+      "absence": "not_published"
     },
     {
       "fare_class": "comfort",
@@ -178,7 +182,8 @@
       "count": 1,
       "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
       "verified_at": "2026-08-31",
-      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on.",
+      "absence": "not_published"
     }
   ],
   "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",

@@ -121,14 +121,53 @@ for (const { file, rec } of records) {
     if (a.cabin_absence && !ABSENCE.includes(a.cabin_absence)) {
       bad(`${id}/${a.fare_class}: unknown cabin_absence "${a.cabin_absence}"`);
     }
+    if (a.absence && !ABSENCE.includes(a.absence)) {
+      bad(`${id}/${a.fare_class}: unknown absence "${a.absence}"`);
+    }
   }
   if (rec.cabin_absence && !ABSENCE.includes(rec.cabin_absence)) {
     bad(`${id}: unknown cabin_absence "${rec.cabin_absence}"`);
   }
+  if (rec.personal_absence && !ABSENCE.includes(rec.personal_absence)) {
+    bad(`${id}: unknown personal_absence "${rec.personal_absence}"`);
+  }
+
+  /* A SIZELESS PERSONAL ROW MUST SAY WHICH KIND OF SILENCE IT IS.
+     Eight carriers — Delta, Southwest, Qatar, Aegean, Air Serbia and three
+     Chinese majors — publish no personal-item dimensions at all. That is a
+     FINDING, and a better answer than any number we could print: the real limit
+     is the space under the seat, which varies by aircraft. But it was recorded
+     only as English prose inside `note`, so nothing could distinguish it from a
+     row nobody researched. Same distinction as cabin_absence, same cost when it
+     is missing, and it went unenforced for exactly as long as nobody asked. */
+  const personal = (rec.allowances ?? []).filter((a) => a.type === 'personal');
+  for (const a of personal) {
+    if (a.max_cm || typeof a.linear_max_cm === 'number') continue;
+    if (!a.absence) {
+      bad(
+        `${id}/${a.fare_class}: personal row with no size and no absence — say whether the airline ` +
+          `publishes none (not_published) or nobody has looked (not_researched)`
+      );
+    }
+  }
+  if (!personal.length && !rec.personal_absence) {
+    bad(
+      `${id}: no personal rows and no personal_absence — silence here is not evidence that the ` +
+        `carrier grants no under-seat bag`
+    );
+  }
+  /* A CABIN ROW NEEDS A RULE, NOT NECESSARILY A BOX.
+     Singapore publishes no three-axis limit at all — their entire cabin rule is
+     "sum of dimensions must not exceed 115 cm". buildAllowance() learned to
+     represent that; this validator had not, so a correctly researched record
+     failed the gate for holding the airline's actual published rule. One of the
+     two must exist, and that is what is checked. */
   for (const a of cabin) {
-    if (!Array.isArray(a.max_cm) || a.max_cm.length !== 3)
-      bad(`${id}/${a.fare_class}: max_cm must be 3 numbers`);
-    else if (a.max_cm.some((n) => !Number.isFinite(n) || n <= 0))
+    const linear = typeof a.linear_max_cm === 'number';
+    if (!Array.isArray(a.max_cm) || a.max_cm.length !== 3) {
+      if (!linear)
+        bad(`${id}/${a.fare_class}: needs max_cm (3 numbers) or a linear_max_cm — it has neither`);
+    } else if (a.max_cm.some((n) => !Number.isFinite(n) || n <= 0))
       bad(`${id}/${a.fare_class}: implausible max_cm`);
     /* A zero-size row would silently pass a naive comparison. Absence is the
        signal for "no cabin bag", never a row of zeroes. */

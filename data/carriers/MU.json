@@ -43,7 +43,8 @@
       "count": 1,
       "note": "One additional under-seat item. Numerical dimensions not published; null does not mean unlimited.",
       "source_url": "https://global.ceair.com/global/en_static/Announcement/BaggageService/CarryonBaggage/",
-      "verified_at": "2026-08-30"
+      "verified_at": "2026-08-30",
+      "absence": "not_published"
     },
     {
       "fare_class": "economy",
@@ -81,7 +82,8 @@
       "count": 1,
       "note": "One additional under-seat item. Numerical dimensions not published; null does not mean unlimited.",
       "source_url": "https://global.ceair.com/global/en_static/Announcement/BaggageService/CarryonBaggage/",
-      "verified_at": "2026-08-30"
+      "verified_at": "2026-08-30",
+      "absence": "not_published"
     },
     {
       "fare_class": "basic",

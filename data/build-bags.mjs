@@ -5,7 +5,7 @@
        Nothing in this repo is "measured" until we have measured it ourselves.
      - Every value carries {v, src, at, ref}. A bare number is a bug.
    Run: node data/build-bags.mjs */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { IDENTITY } from './bag-identity.mjs';
 
 const here = new URL('.', import.meta.url);
@@ -125,7 +125,7 @@ function convertUnits(record) {
 const byBag = new Map();
 for (const m of R.mentions) (byBag.get(m.bag) ?? byBag.set(m.bag, []).get(m.bag)).push(m);
 
-const bags = [];
+let bags = [];
 for (const [slug, ms] of byBag) {
   const id = IDENTITY[slug];
   if (!id) {
@@ -426,18 +426,51 @@ for (const b of bags) applyBrandPolicy(b);
  * build refuses to emit anything on it. */
 /* Kept OUTSIDE data/bags/ on purpose. A register of things that are not bags
    has no business in the directory every loader globs for bags — validate.mjs
-   read it as a record and crashed on the first missing field. */
+   read it as a record and crashed on the first missing field.
+
+   THE REGISTER FILTERS; IT DOES NOT SCOLD. The first version threw and told the
+   operator to "remove them from the source data", which was wrong twice over.
+
+   1. It aimed at the wrong file. The sources are FACTS — Travel + Leisure
+      really did name that bag, and editing mentions.json to make the build pass
+      would falsify a citation to express a decision about our catalogue. The
+      register is where the decision belongs, so the register is what acts.
+
+   2. It could not detect its own typo. The register keyed
+      `amazon-21-expandable`; the catalogue slug was `amazon-21`. Nothing
+      matched, so the guard passed — cleanly, silently, and vacuously — and an
+      Amazon Basics bag with no dimensions at all stayed on the site after it
+      had been excluded. A guard that only ever fires on a match cannot tell
+      "nothing to exclude" from "excluding nothing".
+
+   The check below is the load-bearing half. A register key must be a slug
+   IDENTITY knows, because IDENTITY is the roster a future intake would re-add a
+   bag FROM — an entry naming a slug that is not in it can never block anything,
+   and is a typo or a stale rename wearing the costume of a decision.
+
+   Deliberately NOT keyed on the bags produced this run: an exclusion that has
+   already done its work removes nothing on every subsequent build, and that is
+   success, not staleness. */
 const excludedPath = new URL('excluded-bags.json', here);
 const excluded = existsSync(excludedPath) ? JSON.parse(readFileSync(excludedPath)).bags : {};
-const smuggled = bags.filter((b) => excluded[b.slug]);
-if (smuggled.length) {
+const phantom = Object.keys(excluded).filter((slug) => !IDENTITY[slug]);
+if (phantom.length) {
   throw new Error(
-    `${smuggled.length} excluded bag(s) reached the build:\n` +
-      smuggled.map((b) => `  ${b.slug} — ${excluded[b.slug].reason}`).join('\n') +
-      '\nRemove them from the source data, or delete the entry in data/bags/_excluded.json ' +
-      'if the reason no longer holds.'
+    `${phantom.length} entry/entries in excluded-bags.json name a slug bag-identity.mjs ` +
+      `has never heard of:\n` +
+      phantom.map((s) => `  ${s}`).join('\n') +
+      '\nA register entry only blocks a bag it can name. Fix the slug, or delete ' +
+      'the entry if the bag it referred to has been renamed away.'
   );
 }
+const dropped = bags.filter((b) => excluded[b.slug]);
+for (const b of dropped) console.log(`excluded ${b.slug} — ${excluded[b.slug].reason}`);
+bags = bags.filter((b) => !excluded[b.slug]);
+
+/* Records for bags that have since been excluded would otherwise sit in
+   data/bags/ forever, because the writer only ever writes and every loader
+   globs the directory. */
+for (const b of dropped) rmSync(new URL(`bags/${b.slug}.json`, here), { force: true });
 
 mkdirSync(new URL('bags/', here), { recursive: true });
 for (const b of bags)

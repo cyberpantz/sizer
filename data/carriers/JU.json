@@ -43,7 +43,8 @@
       "count": 1,
       "note": "One additional under-seat item. Numerical dimensions not published; null does not mean unlimited.",
       "source_url": "https://www.airserbia.com/en/explore/services/baggage",
-      "verified_at": "2026-08-30"
+      "verified_at": "2026-08-30",
+      "absence": "not_published"
     },
     {
       "fare_class": "economy",
