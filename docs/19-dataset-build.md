@@ -12,7 +12,13 @@ The stance: get a fixture set rich enough to test the methodology and the filter
 
 The right question is whether every band, filter, shelf, advisory and comparison surface has at least one real bag standing in it. `data/fixture-audit.mjs` answers it and should be run whenever the catalogue changes.
 
-**Current state: 12 of 14 launch paths exercised, 6 deferred.** 52 bags, 29 of them sized.
+It reads `data/` through the **same loaders the pages use**. It used to parse the
+mockup, which let the audit and the landing page disagree about the catalogue —
+and they did: the audit reported 4 bags on the top shelf while the page showed 5.
+An audit measuring a different dataset than the product reads as coverage while
+providing none.
+
+**Current state: 14 of 14 launch paths exercised, 6 deferred.** 61 bags, 40 sized, **0 measured by us**. 58 carriers, 3 of which we cannot answer for.
 
 Not every gap blocks. The audit splits **blocking** from **deferred** — a path is deferred when the product ships fine without it, or when it's waiting on data we haven't collected. Without that split everything looks equally urgent and nothing gets prioritised.
 
@@ -39,12 +45,17 @@ A separate derived flag, `fits_personal_item`, records whether an overhead carry
 
 > First thing it caught: the Kenneth Cole **Underseater**, at 43.2 × 33 × 22.9 cm, does not fit the personal-item allowance on Ryanair, Wizz or Vueling. A bag named for the space it doesn't fit in. That is exactly the kind of finding this site exists to publish.
 
-### What actually blocks launch — two things
+### Nothing blocks launch on fixture coverage any more
 
-| Path | Have | Need |
+Both former blockers cleared once Frank's carrier and bag work landed:
+
+| Path | Was | Now |
 |---|---|---|
-| **Carry-on shelf: "goes anywhere"** | **1** | 5 |
-| filter: 2-wheel roller | 3 | 4 |
+| Carry-on shelf: "goes anywhere" | 1 | **5** |
+| filter: 2-wheel roller | 3 | **7** |
+
+⚠️ **That is coverage of product paths, not readiness to publish.** The deferred
+list still holds the one that matters:
 
 Everything else is deferred:
 
@@ -55,7 +66,8 @@ Everything else is deferred:
 | filter: duffel | 1 | Niche form factor |
 | bag over a 7 kg cap empty | 0 | The "tight" advisory tier already renders; "over" is a rare edge |
 | cross-source conflicts | 2 | Grows on its own as sources are added |
-| bags cited by 2+ publications | 5 | Same |
+| bags cited by 2+ publications | 7 | Same |
+| **bags measured by us** | **0** | **THE product claim.** Nothing may be promoted until this moves — see the release gate below |
 
 **The top row, scoped honestly, is one bag.** The Patagonia Black Hole 40L duffel, at 24 of 24 — and it has no wheels.
 
