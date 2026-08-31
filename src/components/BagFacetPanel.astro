@@ -37,8 +37,18 @@ const SECTIONS = [
   {
     axis: 'weight',
     legend: 'Weight, empty',
-    note: 'Several Asian carriers cap cabin weight at 7 kg. The empty bag comes out of that.',
-    options: WEIGHT_FACETS.map((f) => ({ ...f, n: optionCounts.weight?.[f.id] ?? 0 })),
+    /* Every figure here is a real weight, so every one needs a conversion
+       hook. The note used to read "...cap cabin weight at 7 kg" as one string
+       and stayed in kilograms with the toggle set to imperial. */
+    noteCap: 7,
+    options: WEIGHT_FACETS.map((f) => ({
+      ...f,
+      n: optionCounts.weight?.[f.id] ?? 0,
+      /* Built here, not stored, so the number and its unit never live in the
+         same string. `hintCap` is the cabin limit the remainder is measured
+         against; the remainder itself is arithmetic, not a second fact. */
+      hintLeft: f.hintCap == null ? null : +(f.hintCap - f.max).toFixed(2),
+    })),
   },
   {
     axis: 'shell',
@@ -120,6 +130,12 @@ const live = SECTIONS.length > 0;
         <fieldset class="mb-5 last:mb-0 border-0 p-0">
           <legend class="mb-1 text-[0.9375rem] font-semibold text-ink">{s.legend}</legend>
           {s.note && <p class="mb-2 text-[0.8125rem] leading-snug text-muted">{s.note}</p>}
+          {s.noteCap && (
+            <p class="mb-2 text-[0.8125rem] leading-snug text-muted">
+              Several Asian carriers cap cabin weight at{' '}
+              <span data-kg={s.noteCap}>{s.noteCap} kg</span>. The empty bag comes out of that.
+            </p>
+          )}
 
           {s.options.map((o) => (
             <label class="flex cursor-pointer items-start gap-2.5 rounded-chip py-1.5 hover:bg-surface-2">
@@ -130,9 +146,22 @@ const live = SECTIONS.length > 0;
                 class="mt-1 h-4 w-4 shrink-0 cursor-pointer accent-blue"
               />
               <span class="min-w-0">
-                <span class="text-[0.9375rem] text-ink">{o.label}</span>
+                {/* A weight option's figure is wrapped on its own so the units
+                    toggle can rewrite it. "Under 2.5 kg" as a single string is
+                    unreachable, which is exactly how these stayed metric. */}
+                <span class="text-[0.9375rem] text-ink">
+                  {o.max == null ? o.label : (
+                    <Fragment>{o.prefix} <span data-kg={o.max}>{o.max} kg</span></Fragment>
+                  )}
+                </span>
                 <span class="ml-1.5 font-mono text-[0.8125rem] text-muted">{o.n}</span>
-                {o.hint && (
+                {o.hintLeft != null && (
+                  <span class="block text-[0.8125rem] leading-snug text-muted">
+                    Leaves <span data-kg={o.hintLeft}>{o.hintLeft} kg</span> to pack against a{' '}
+                    <span data-kg={o.hintCap}>{o.hintCap} kg</span> cabin cap.
+                  </span>
+                )}
+                {o.hint && o.hintLeft == null && (
                   <span class="block text-[0.8125rem] leading-snug text-muted">{o.hint}</span>
                 )}
               </span>

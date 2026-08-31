@@ -2,7 +2,7 @@
  "slug": "herschel-heritage",
  "brand": "Herschel",
  "model": "Heritage Hardshell Carry-On",
- "variant": null,
+ "variant": "35L Carry-On, Ivy Green; not Large Carry-On",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -20,23 +20,61 @@
   "at": "2026-02-23",
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   45.085,
+   32.385,
+   21.59
+  ],
+  "unit": "cm",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions.  Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_cm": {
+  "v": [
+   50.1904,
+   32.9946,
+   22.9108
+  ],
+  "unit": "cm",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "at": "2026-08-31",
+  "note": "Dimensions are not explicitly qualified as including wheels and handles. Stored as claimed, separate from labelled internal dimensions. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
   "v": 2.8,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "at": "2026-08-31"
  },
  "capacity_l": {
   "v": 35,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Volume",
+  "src": "manufacturer",
+  "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -57,10 +95,113 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_in",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": [
+      19.76,
+      12.99,
+      9.02
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer",
+     "v": [
+      19.75,
+      13,
+      9
+     ],
+     "unit": "in"
+    }
+   ],
+   "note": "Dimensions section versus official size-guide image alternative text; unresolved."
+  },
+  {
+   "field": "weight_lb",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": 6.17,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer",
+     "v": 6.15,
+     "unit": "lb"
+    }
+   ],
+   "note": "Weight section versus Features; both preserved."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": 6.17,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer",
+     "v": 2.8,
+     "unit": "kg"
+    }
+   ],
+   "note": "Original printed unit systems retained; do not silently reconcile any differences."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "retrieved": "2026-08-31",
+  "title": "Herschel Heritage Hardshell Carry-On",
+  "local": "resources/bags/2026-08-31-herschel-heritage.md"
+ },
+ "notes": "Features weight6.15lb differs from Weight section6.17lbs; both print2.8kg. Size-guide image alt text gives19.75x13x9in, differing from19.76x12.99x9.02in dimensions section. USD230 displayed with Sale flag and no usable regular comparison; price withheld. Metric dimensions, expansion amount, SKU and explicit empty-weight wording not found.",
+ "claimed_in": {
+  "v": [
+   19.76,
+   12.99,
+   9.02
+  ],
+  "unit": "in",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "at": "2026-08-31",
+  "note": "Dimensions are not explicitly qualified as including wheels and handles. Stored as claimed, separate from labelled internal dimensions."
+ },
+ "claimed_packing_in": {
+  "v": [
+   17.75,
+   12.75,
+   8.5
+  ],
+  "unit": "in",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions. "
+ },
+ "weight_lb": {
+  "v": 6.17,
+  "unit": "lbs",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+  "at": "2026-08-31"
+ },
  "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  5.1,
+  0.6,
+  1.3
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

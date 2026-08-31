@@ -2,7 +2,7 @@
  "slug": "bellroy-transit",
  "brand": "Bellroy",
  "model": "Transit Carry-On",
- "variant": null,
+ "variant": "Standard Transit Carry-On, Black; not Large or Check-In",
  "line": "bellroy-carryon",
  "type": "hardside spinner",
  "soft": 0,
@@ -20,8 +20,44 @@
   "at": "2026-02-23",
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   49.53,
+   34.544,
+   21.082
+  ],
+  "unit": "cm",
+  "quote": "Internal dimensions",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions.  Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_cm": {
+  "v": [
+   55.626,
+   35.052,
+   22.606
+  ],
+  "unit": "cm",
+  "quote": "External dimensions (including wheels)",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+  "at": "2026-08-31",
+  "note": "Maximum external dimensions including wheels; handles not explicitly included, so claimed only. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
@@ -33,10 +69,11 @@
  },
  "capacity_l": {
   "v": 34,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Capacity",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -82,7 +119,54 @@
  "conflicts": [],
  "mentions": 2,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+  "retrieved": "2026-08-31",
+  "title": "Bellroy Transit Carry-On",
+  "local": "resources/bags/2026-08-31-bellroy-transit.md"
+ },
+ "notes": "Product specifications distinguish Volume 41L from Capacity 34L; capacity field uses explicitly labelled capacity. Weight 109.3oz preserved here without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found. Size options include standard Carry-On, Carry-On Large, Check-In and Check-In Large.",
+ "claimed_in": {
+  "v": [
+   21.9,
+   13.8,
+   8.9
+  ],
+  "unit": "in",
+  "quote": "External dimensions (including wheels)",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+  "at": "2026-08-31",
+  "note": "Maximum external dimensions including wheels; handles not explicitly included, so claimed only."
+ },
+ "claimed_packing_in": {
+  "v": [
+   19.5,
+   13.6,
+   8.3
+  ],
+  "unit": "in",
+  "quote": "Internal dimensions",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions. "
+ },
+ "price_usd": {
+  "v": 299,
+  "unit": "USD",
+  "quote": "Matte polycarbonate (US$299)",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+  "at": "2026-08-31",
+  "list": true
+ },
  "compliance_claimed": true,
+ "wheel_handle_delta_cm": [
+  6.1,
+  0.6,
+  1.5
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

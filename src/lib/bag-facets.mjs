@@ -47,15 +47,23 @@ import { bandOf, cutPoints } from './price-band.mjs';
  * suitcase leaves under 2 kg to pack. That is the difference between a bag
  * that works on those routes and one that cannot, and nothing else on this
  * page surfaces it. */
+/* NO UNIT IS BAKED INTO A LABEL.
+ *
+ * These read "Under 2.5 kg" and stayed in kilograms with the toggle set to
+ * imperial — the numbers came from `max`, but the word "kg" was part of the
+ * string, so nothing could reach it. Same bug as the hard-coded weights on the
+ * cards, one layer further out, and the guard written for that one missed it
+ * because it only searched .astro markup. A unit living inside a label is
+ * invisible to every tool that looks for a unit next to a number.
+ *
+ * So a facet carries only the FIGURE and the words around it. The component
+ * assembles the label with a conversion hook around the number, which is what
+ * lets the toggle rewrite it in place. `cap` is the cabin weight limit the
+ * hint is measured against, carried the same way for the same reason. */
 export const WEIGHT_FACETS = [
-  {
-    id: 'w-25',
-    label: 'Under 2.5 kg',
-    hint: 'Leaves 4.5 kg to pack against a 7 kg cabin cap.',
-    max: 2.5,
-  },
-  { id: 'w-30', label: 'Under 3 kg', hint: null, max: 3 },
-  { id: 'w-35', label: 'Under 3.5 kg', hint: null, max: 3.5 },
+  { id: 'w-25', prefix: 'Under', max: 2.5, hintCap: 7 },
+  { id: 'w-30', prefix: 'Under', max: 3, hintCap: null },
+  { id: 'w-35', prefix: 'Under', max: 3.5, hintCap: null },
 ];
 
 /** The heaviest threshold a bag satisfies — the narrowest bucket it lands in.

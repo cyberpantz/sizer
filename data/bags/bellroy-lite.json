@@ -2,7 +2,7 @@
  "slug": "bellroy-lite",
  "brand": "Bellroy",
  "model": "Lite Carry-On",
- "variant": null,
+ "variant": "Lite Carry-On, Clay, Dura Lite Nylon",
  "line": "bellroy-carryon",
  "type": "2-wheel roller",
  "soft": 0,
@@ -20,23 +20,61 @@
   "at": "2026-02-23",
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   49.022,
+   33.02,
+   16.002
+  ],
+  "unit": "cm",
+  "quote": "Internal dimensions",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions.  Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_cm": {
+  "v": [
+   51.054,
+   34.544,
+   23.114
+  ],
+  "unit": "cm",
+  "quote": "External dimensions (including wheels)",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "at": "2026-08-31",
+  "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
   "v": 2.1,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "unit": "kg",
+  "quote": "Super lightweight at 2.1kg",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "at": "2026-08-31"
  },
  "capacity_l": {
   "v": 38,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Capacity",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -60,7 +98,54 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "retrieved": "2026-08-31",
+  "title": "Bellroy Lite Carry-On",
+  "local": "resources/bags/2026-08-31-bellroy-lite.md"
+ },
+ "notes": "Browser product specifications read. Volume and capacity both 38L; specs also print weight 74.1oz, retained without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found.",
+ "claimed_in": {
+  "v": [
+   20.1,
+   13.6,
+   9.1
+  ],
+  "unit": "in",
+  "quote": "External dimensions (including wheels)",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "at": "2026-08-31",
+  "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred."
+ },
+ "claimed_packing_in": {
+  "v": [
+   19.3,
+   13,
+   6.3
+  ],
+  "unit": "in",
+  "quote": "Internal dimensions",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions. "
+ },
+ "price_usd": {
+  "v": 289,
+  "unit": "USD",
+  "quote": "Recycled fabric (US$289)",
+  "src": "manufacturer",
+  "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+  "at": "2026-08-31",
+  "list": true
+ },
  "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  2.1,
+  1.5,
+  7.1
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

@@ -2,7 +2,7 @@
  "slug": "bagsmart-roamer",
  "brand": "Bagsmart",
  "model": "Roamer Expandable Carry-On",
- "variant": null,
+ "variant": "20-inch, Dark Sea Green; SKU BM0105016AN244",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -21,22 +21,43 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55,
+   35,
+   23
+  ],
+  "unit": "cm",
+  "quote": "Compressed Size",
+  "src": "manufacturer",
+  "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+  "at": "2026-08-31",
+  "note": "Compressed/unexpanded size. Page does not specify inclusion of wheels and handles; retained as claimed, not qualified external dimensions."
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.2,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "v": 3.197809,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published pounds figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": {
   "v": 35,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Capacity: Zipper expandable, 35-42L",
+  "src": "manufacturer",
+  "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -57,9 +78,71 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": [
+      21.7,
+      13.9,
+      9
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer",
+     "v": [
+      55,
+      35,
+      23
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Original printed unit systems retained; do not silently reconcile any differences."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+  "retrieved": "2026-08-31",
+  "title": "Bagsmart Roamer Expandable Carry-On",
+  "local": "resources/bags/2026-08-31-bagsmart-roamer.md"
+ },
+ "notes": "Sale USD109.99; regular USD149.99. Expanded Size: 21.7 x 13.9 x 10.06 inches / 55 x 35 x 25.5 cm. Base/expanded capacity 35/42 L. Also prints weight 3197g, retained here without conversion. No interior triple, dimensional expansion increment or explicit empty-weight wording found. Printed unit systems are not reconciled.",
+ "claimed_in": {
+  "v": [
+   21.7,
+   13.9,
+   9
+  ],
+  "unit": "in",
+  "quote": "Compressed Size",
+  "src": "manufacturer",
+  "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+  "at": "2026-08-31",
+  "note": "Compressed/unexpanded size. Page does not specify inclusion of wheels and handles; retained as claimed, not qualified external dimensions."
+ },
+ "weight_lb": {
+  "v": 7.05,
+  "unit": "pounds",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+  "at": "2026-08-31"
+ },
+ "price_usd": {
+  "v": 149.99,
+  "unit": "USD",
+  "quote": "$109.99 ~~ $149.99 ~~",
+  "src": "manufacturer",
+  "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+  "at": "2026-08-31",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

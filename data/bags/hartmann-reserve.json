@@ -2,7 +2,7 @@
  "slug": "hartmann-reserve",
  "brand": "Hartmann",
  "model": "Reserve Carry-On",
- "variant": null,
+ "variant": "Reserve Carry-On, Midnight Navy, 1507341552",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -11,25 +11,59 @@
  "fits_personal_item": false,
  "external_cm": {
   "v": [
-   58.4,
+   58.42,
    38.1,
    25.4
   ],
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+  "unit": "cm",
+  "quote": "External Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+  "at": "2026-08-31",
+  "note": "External tooltip explicitly includes handles and wheels; internal tooltip excludes them and calls them packing dimensions. H x L x W stored in upright H x W x D order. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "external_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
  },
- "claimed_packing_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   53.086,
+   37.084,
+   23.622
+  ],
+  "unit": "cm",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions.  Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 4.31,
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "unit": "kg"
+  "v": 4.309105,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": null,
  "reviews": [
@@ -51,10 +85,94 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "external_cm",
+   "from": "review (tl-carryon)",
+   "to": "manufacturer (https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html)",
+   "delta_cm": [
+    0.02,
+    0,
+    0
+   ],
+   "agrees": true,
+   "detail": "Superseded by the manufacturer's own overall figure. The two agree to within 0.02 cm, so the earlier number was sound — it simply could not be recommended on.",
+   "at": "2026-08-31"
+  },
+  {
+   "field": "external_in",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": [
+      23,
+      15,
+      10
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer",
+     "v": [
+      323,
+      15,
+      10
+     ],
+     "unit": "in"
+    }
+   ],
+   "note": "Specifications and main description show 23 H; separate description shows 323 H, an apparent typo retained verbatim. Active figure follows explicitly qualified specification table."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+  "retrieved": "2026-08-31",
+  "title": "Hartmann Reserve Carry-On",
+  "local": "resources/bags/2026-08-31-hartmann-reserve.md"
+ },
+ "notes": "Specifications and main description agree on 23-inch height, but another description prints 323-inch height. Both retained as conflict, not silently corrected. Current USD450 versus Comp. Value USD600; comparison value not assumed regular list price. Metric dimensions, capacity, expansion amount and explicit empty-weight wording not found.",
+ "external_in": {
+  "v": [
+   23,
+   15,
+   10
+  ],
+  "unit": "in",
+  "quote": "External Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+  "at": "2026-08-31",
+  "note": "External tooltip explicitly includes handles and wheels; internal tooltip excludes them and calls them packing dimensions. H x L x W stored in upright H x W x D order."
+ },
+ "claimed_packing_in": {
+  "v": [
+   20.9,
+   14.6,
+   9.3
+  ],
+  "unit": "in",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions. "
+ },
+ "weight_lb": {
+  "v": 9.5,
+  "unit": "lbs",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+  "at": "2026-08-31"
+ },
  "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  5.3,
+  1,
+  1.8
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

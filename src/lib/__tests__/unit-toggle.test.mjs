@@ -73,6 +73,43 @@ describe('the units toggle', () => {
     );
   });
 
+  test('no unit is baked into a label or hint string', () => {
+    /* THE SURFACE THE FIRST GUARD MISSED.
+     *
+     * That guard searched .astro markup for a number printed beside a literal
+     * unit. The /bags filter labels lived in bag-facets.mjs as plain strings —
+     * "Under 2.5 kg", "Leaves 4.5 kg to pack against a 7 kg cabin cap" — so it
+     * never looked at them, and they stayed in kilograms with the toggle set
+     * to imperial. Frank found them by using the page.
+     *
+     * A unit inside a string is unreachable by definition: there is no element
+     * to hook and no number to convert, because both are one opaque token. So
+     * the rule for these modules is stronger than "carry a hook" — a
+     * user-facing string may not contain a unit AT ALL. Carry the figure and
+     * let the component assemble the label around a hook.
+     *
+     * Scoped to the modules that feed labels into the UI. Comments and test
+     * fixtures are stripped or excluded; prose in a comment is not a label. */
+    const UI_DATA = ['src/lib/bag-facets.mjs', 'src/lib/price-band.mjs', 'src/ui/strictness.mjs'];
+    const LABEL_KEYS = /\b(label|hint|prefix|legend|note|detail|blurb|title)\s*:\s*(['"`])(.*?)\2/g;
+
+    const offenders = [];
+    for (const file of UI_DATA) {
+      const src = stripComments(readFileSync(file, 'utf8'));
+      for (const [, key, , text] of src.matchAll(LABEL_KEYS)) {
+        if (!/\d\s*(kg|lb|lbs|cm|in|inch)\b/i.test(text)) continue;
+        offenders.push(`${file}: ${key}: "${text}"`);
+      }
+    }
+    assert.deepEqual(
+      offenders,
+      [],
+      'a unit is baked into a user-facing string, so the toggle cannot convert it:\n  ' +
+        `${offenders.join('\n  ')}\n` +
+        'Carry the figure instead and wrap it in a data-kg / data-cm span at render.'
+    );
+  });
+
   test('the toggle names the SYSTEM, not one of its units', () => {
     /* It switches length and weight together. Labelling it "cm / in" described
        half of what it does, and gave a reader who wanted pounds no reason to

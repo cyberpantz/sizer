@@ -3201,6 +3201,998 @@
     "ref": "https://beistravel.com/products/the-small-carry-on-roller-in-black",
     "at": "2026-08-31"
    }
+  },
+  {
+   "slug": "monos-hybrid",
+   "brand": "Monos",
+   "model": "Hybrid Carry-On",
+   "line": "monos-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Hybrid Carry-On (not Plus); opened URL renders Orchid",
+   "manufacturer_source": {
+    "url": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
+    "retrieved": "2026-08-31",
+    "title": "Monos Hybrid Carry-On",
+    "local": "resources/bags/2026-08-31-monos-hybrid.md"
+   },
+   "notes": "Hybrid Carry-On size only. Page renders Orchid for requested variant. Current displayed USD370 has malformed original-price USD0 markup; no reliable regular price recorded. Interior dimensions, expansion amount, SKU and explicit empty-weight wording not found. Manufacturer weight may differ from older reviews.",
+   "conflicts": [
+    {
+     "field": "external_cm",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        22,
+        14,
+        9
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        55.88,
+        35.56,
+        22.86
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Original printed unit systems retained; do not silently reconcile any differences."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": 9.7,
+       "unit": "lb"
+      },
+      {
+       "src": "manufacturer",
+       "v": 4.4,
+       "unit": "kg"
+      }
+     ],
+     "note": "Original printed unit systems retained; do not silently reconcile any differences."
+    }
+   ],
+   "external_in": {
+    "v": [
+     22,
+     14,
+     9
+    ],
+    "unit": "in",
+    "quote": "Exterior measurements",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
+    "at": "2026-08-31",
+    "note": "Manufacturer states: Measurements include wheels and fixed handles."
+   },
+   "external_cm": {
+    "v": [
+     55.88,
+     35.56,
+     22.86
+    ],
+    "unit": "cm",
+    "quote": "Exterior measurements",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
+    "at": "2026-08-31",
+    "note": "Manufacturer states: Measurements include wheels and fixed handles."
+   },
+   "weight_lb": {
+    "v": 9.7,
+    "unit": "lb",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
+    "at": "2026-08-31"
+   },
+   "weight_kg": {
+    "v": 4.4,
+    "unit": "kg",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 34.2,
+    "unit": "L",
+    "quote": "Volume",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
+    "at": "2026-08-31"
+   }
+  },
+  {
+   "slug": "bagsmart-roamer",
+   "brand": "Bagsmart",
+   "model": "Roamer Expandable Carry-On",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "20-inch, Dark Sea Green; SKU BM0105016AN244",
+   "manufacturer_source": {
+    "url": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+    "retrieved": "2026-08-31",
+    "title": "Bagsmart Roamer Expandable Carry-On",
+    "local": "resources/bags/2026-08-31-bagsmart-roamer.md"
+   },
+   "notes": "Sale USD109.99; regular USD149.99. Expanded Size: 21.7 x 13.9 x 10.06 inches / 55 x 35 x 25.5 cm. Base/expanded capacity 35/42 L. Also prints weight 3197g, retained here without conversion. No interior triple, dimensional expansion increment or explicit empty-weight wording found. Printed unit systems are not reconciled.",
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        21.7,
+        13.9,
+        9
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        55,
+        35,
+        23
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Original printed unit systems retained; do not silently reconcile any differences."
+    }
+   ],
+   "claimed_in": {
+    "v": [
+     21.7,
+     13.9,
+     9
+    ],
+    "unit": "in",
+    "quote": "Compressed Size",
+    "src": "manufacturer",
+    "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+    "at": "2026-08-31",
+    "note": "Compressed/unexpanded size. Page does not specify inclusion of wheels and handles; retained as claimed, not qualified external dimensions."
+   },
+   "claimed_cm": {
+    "v": [
+     55,
+     35,
+     23
+    ],
+    "unit": "cm",
+    "quote": "Compressed Size",
+    "src": "manufacturer",
+    "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+    "at": "2026-08-31",
+    "note": "Compressed/unexpanded size. Page does not specify inclusion of wheels and handles; retained as claimed, not qualified external dimensions."
+   },
+   "weight_lb": {
+    "v": 7.05,
+    "unit": "pounds",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 35,
+    "unit": "L",
+    "quote": "Capacity: Zipper expandable, 35-42L",
+    "src": "manufacturer",
+    "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 149.99,
+    "unit": "USD",
+    "quote": "$109.99 ~~ $149.99 ~~",
+    "src": "manufacturer",
+    "ref": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "july-carryon-max",
+   "brand": "July",
+   "model": "Carry-on Max",
+   "line": "july-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Carry On Max Expandable, Moss with packable tote and CaseSafe tracking",
+   "manufacturer_source": {
+    "url": "https://july.com/us/luggage/carry-on-max/",
+    "retrieved": "2026-08-31",
+    "title": "July Carry-on Max",
+    "local": "resources/bags/2026-08-31-july-carryon-max.md"
+   },
+   "notes": "Browser-hydrated CaseSafe variant: 50L base, 62L expanded; expanded depth 10.6 inches. Separate tote 20L, 0.84lbs, 15H x16.1W x7.9D inches, excluded from suitcase capacity. Page warns unsuitable for AU/EU/UK carry-on specifications. Earlier non-CaseSafe page showed different price/spec rounding; not mixed with selected variant. Metric measurements, dimensional expansion increment, SKU and explicit empty-weight wording not found.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     23,
+     16,
+     9
+    ],
+    "unit": "in",
+    "quote": "External dimensions (including wheels)",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on-max/",
+    "at": "2026-08-31",
+    "note": "Unexpanded. Label explicitly includes wheels but does not explicitly include handles; saved as claimed. Interior label says excluding wheels, which may mean body rather than usable packing space."
+   },
+   "claimed_packing_in": {
+    "v": [
+     21.5,
+     15.5,
+     9
+    ],
+    "unit": "in",
+    "quote": "Internal dimensions (excluding wheels)",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on-max/",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_lb": {
+    "v": 8.16,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on-max/",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 50,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on-max/",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 355,
+    "unit": "USD",
+    "quote": "$355 US",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on-max/",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "bellroy-lite",
+   "brand": "Bellroy",
+   "model": "Lite Carry-On",
+   "line": "bellroy-carryon",
+   "type": "2-wheel roller",
+   "soft": 0,
+   "wheels": 2,
+   "role": "overhead",
+   "variant": "Lite Carry-On, Clay, Dura Lite Nylon",
+   "manufacturer_source": {
+    "url": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+    "retrieved": "2026-08-31",
+    "title": "Bellroy Lite Carry-On",
+    "local": "resources/bags/2026-08-31-bellroy-lite.md"
+   },
+   "notes": "Browser product specifications read. Volume and capacity both 38L; specs also print weight 74.1oz, retained without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     20.1,
+     13.6,
+     9.1
+    ],
+    "unit": "in",
+    "quote": "External dimensions (including wheels)",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+    "at": "2026-08-31",
+    "note": "Maximum external dimensions including wheels. Handle inclusion not explicitly stated; retained as claimed. Soft fabric may flex but no compressed fit inferred."
+   },
+   "claimed_packing_in": {
+    "v": [
+     19.3,
+     13,
+     6.3
+    ],
+    "unit": "in",
+    "quote": "Internal dimensions",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_kg": {
+    "v": 2.1,
+    "unit": "kg",
+    "quote": "Super lightweight at 2.1kg",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 38,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 289,
+    "unit": "USD",
+    "quote": "Recycled fabric (US$289)",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "dagne-dover-smaller-seattle",
+   "brand": "Dagne Dover",
+   "model": "Smaller Seattle Carry-on",
+   "line": "dagne-seattle",
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Smaller 20.5-inch, Warm Dust; not Larger 23.5-inch",
+   "manufacturer_source": {
+    "url": "https://www.dagnedover.com/collections/seattle-carry-on-rolling-luggage#WarmDust-Smaller-20.5inch",
+    "retrieved": "2026-08-31",
+    "title": "Dagne Dover Smaller Seattle Carry-on",
+    "local": "resources/bags/2026-08-31-dagne-dover-smaller-seattle.md"
+   },
+   "notes": "Official product URL redirects in browser to selected collection product. Weight printed as 9 lbs 2 oz; preserved here without converting to decimal pounds. No metric dimensions, interior dimensions, expansion amount, SKU or explicit empty-weight wording found. Browser price USD595; no sale reduction visible.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     20.5,
+     13,
+     8.75
+    ],
+    "unit": "in",
+    "quote": "Size",
+    "src": "manufacturer",
+    "ref": "https://www.dagnedover.com/collections/seattle-carry-on-rolling-luggage#WarmDust-Smaller-20.5inch",
+    "at": "2026-08-31",
+    "note": "Source prints 13 L x 8.75 W x 20.5 H inches; stored upright H x W x D. No explicit wheels/handles inclusion, so claimed only."
+   },
+   "capacity_l": {
+    "v": 33,
+    "unit": "L",
+    "quote": "Volume",
+    "src": "manufacturer",
+    "ref": "https://www.dagnedover.com/collections/seattle-carry-on-rolling-luggage#WarmDust-Smaller-20.5inch",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 595,
+    "unit": "USD",
+    "quote": "$595",
+    "src": "manufacturer",
+    "ref": "https://www.dagnedover.com/collections/seattle-carry-on-rolling-luggage#WarmDust-Smaller-20.5inch",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "calpak-luka",
+   "brand": "Calpak",
+   "model": "Luka Carry-On",
+   "line": "calpak-luka",
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Standard Carry-On, Oatmeal; not Mini",
+   "manufacturer_source": {
+    "url": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
+    "retrieved": "2026-08-31",
+    "title": "Calpak Luka Carry-On",
+    "local": "resources/bags/2026-08-31-calpak-luka.md"
+   },
+   "notes": "Regular USD215, sale USD172. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found. Standard soft-sided carry-on, not the separately catalogued Mini.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     21,
+     13.75,
+     9
+    ],
+    "unit": "in",
+    "quote": "Exterior (Including wheel)",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
+    "at": "2026-08-31",
+    "note": "Exterior includes wheel; handles not explicitly included, so claimed only."
+   },
+   "claimed_packing_in": {
+    "v": [
+     19,
+     13.75,
+     7.5
+    ],
+    "unit": "in",
+    "quote": "Interior",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_lb": {
+    "v": 6.4,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 31,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 215,
+    "unit": "USD",
+    "quote": "Original price",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "delsey-chatelet-air-2",
+   "brand": "Delsey",
+   "model": "Chatelet Air 2.0 21-inch Spinner",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "21-inch Carry-On Plus Spinner, Navy, SKU 40167680522",
+   "manufacturer_source": {
+    "url": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
+    "retrieved": "2026-08-31",
+    "title": "Delsey Chatelet Air 2.0 21-inch Spinner",
+    "local": "resources/bags/2026-08-31-delsey-chatelet-air-2.md"
+   },
+   "notes": "Navy variant; no metric dimensions, expansion amount or explicit empty-weight wording found. Regular USD349.99 with no reduction shown. Not the smaller international carry-on or a checked size.",
+   "conflicts": [],
+   "external_in": {
+    "v": [
+     22.75,
+     15,
+     10
+    ],
+    "unit": "in",
+    "quote": "Exterior dimensions (includes wheels and handles)",
+    "src": "manufacturer",
+    "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
+    "at": "2026-08-31",
+    "note": "Manufacturer explicitly includes wheels and handles. Official 21-inch product is labelled Carry-On Plus; these are its complete exterior measurements."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.25,
+     13.75,
+     9.75
+    ],
+    "unit": "in",
+    "quote": "Interior dimensions",
+    "src": "manufacturer",
+    "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_lb": {
+    "v": 7.7,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 44,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 349.99,
+    "unit": "USD",
+    "quote": "$349.99",
+    "src": "manufacturer",
+    "ref": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "bellroy-transit",
+   "brand": "Bellroy",
+   "model": "Transit Carry-On",
+   "line": "bellroy-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Standard Transit Carry-On, Black; not Large or Check-In",
+   "manufacturer_source": {
+    "url": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+    "retrieved": "2026-08-31",
+    "title": "Bellroy Transit Carry-On",
+    "local": "resources/bags/2026-08-31-bellroy-transit.md"
+   },
+   "notes": "Product specifications distinguish Volume 41L from Capacity 34L; capacity field uses explicitly labelled capacity. Weight 109.3oz preserved here without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found. Size options include standard Carry-On, Carry-On Large, Check-In and Check-In Large.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     21.9,
+     13.8,
+     8.9
+    ],
+    "unit": "in",
+    "quote": "External dimensions (including wheels)",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+    "at": "2026-08-31",
+    "note": "Maximum external dimensions including wheels; handles not explicitly included, so claimed only."
+   },
+   "claimed_packing_in": {
+    "v": [
+     19.5,
+     13.6,
+     8.3
+    ],
+    "unit": "in",
+    "quote": "Internal dimensions",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "capacity_l": {
+    "v": 34,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 299,
+    "unit": "USD",
+    "quote": "Matte polycarbonate (US$299)",
+    "src": "manufacturer",
+    "ref": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "hartmann-reserve",
+   "brand": "Hartmann",
+   "model": "Reserve Carry-On",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Reserve Carry-On, Midnight Navy, 1507341552",
+   "manufacturer_source": {
+    "url": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+    "retrieved": "2026-08-31",
+    "title": "Hartmann Reserve Carry-On",
+    "local": "resources/bags/2026-08-31-hartmann-reserve.md"
+   },
+   "notes": "Specifications and main description agree on 23-inch height, but another description prints 323-inch height. Both retained as conflict, not silently corrected. Current USD450 versus Comp. Value USD600; comparison value not assumed regular list price. Metric dimensions, capacity, expansion amount and explicit empty-weight wording not found.",
+   "conflicts": [
+    {
+     "field": "external_in",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        23,
+        15,
+        10
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        323,
+        15,
+        10
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Specifications and main description show 23 H; separate description shows 323 H, an apparent typo retained verbatim. Active figure follows explicitly qualified specification table."
+    }
+   ],
+   "external_in": {
+    "v": [
+     23,
+     15,
+     10
+    ],
+    "unit": "in",
+    "quote": "External Dimensions",
+    "src": "manufacturer",
+    "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+    "at": "2026-08-31",
+    "note": "External tooltip explicitly includes handles and wheels; internal tooltip excludes them and calls them packing dimensions. H x L x W stored in upright H x W x D order."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.9,
+     14.6,
+     9.3
+    ],
+    "unit": "in",
+    "quote": "Internal Dimensions",
+    "src": "manufacturer",
+    "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_lb": {
+    "v": 9.5,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
+    "at": "2026-08-31"
+   }
+  },
+  {
+   "slug": "lojel-cubo-small-lite",
+   "brand": "Lojel",
+   "model": "Cubo Small Lite",
+   "line": "lojel-cubo",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Cubo Small Lite; not Cubo Small or Fit Lite",
+   "manufacturer_source": {
+    "url": "https://us.lojel.com/product/cubo-small-lite/",
+    "retrieved": "2026-08-31",
+    "title": "Lojel Cubo Small Lite",
+    "local": "resources/bags/2026-08-31-lojel-cubo-small-lite.md"
+   },
+   "notes": "Expanded depth 9in /23cm and capacity35L. Size chart width14.2in/36cm differs from specs14in/35.5cm. Prose height21in/53cm differs from specs21.1in/53.5cm. Prose weight6.6lbs differs from specs6.4lbs, both paired2.9kg; without divider6.1lbs/2.7kg. No interior triple, dimensional expansion increment, SKU, exact variant price or explicit empty-weight wording found.",
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        53.5,
+        35.5,
+        20
+       ],
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        53.5,
+        36,
+        20
+       ],
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        53,
+        35.5,
+        20
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Overview & Specs versus Small Lite size chart versus prose; unresolved."
+    },
+    {
+     "field": "claimed_in",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        21.1,
+        14,
+        7.8
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        21.1,
+        14.2,
+        7.8
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        21,
+        14,
+        7.8
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Overview & Specs versus Small Lite size chart versus prose; unresolved."
+    },
+    {
+     "field": "weight_lb",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": 6.4,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer",
+       "v": 6.6,
+       "unit": "lbs"
+      }
+     ],
+     "note": "Specification table and prose disagree."
+    },
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        21.1,
+        14,
+        7.8
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        53.5,
+        35.5,
+        20
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Original printed unit systems retained; do not silently reconcile any differences."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": 6.4,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer",
+       "v": 2.9,
+       "unit": "kg"
+      }
+     ],
+     "note": "Original printed unit systems retained; do not silently reconcile any differences."
+    }
+   ],
+   "claimed_in": {
+    "v": [
+     21.1,
+     14,
+     7.8
+    ],
+    "unit": "in",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://us.lojel.com/product/cubo-small-lite/",
+    "at": "2026-08-31",
+    "note": "Unexpanded figures from Overview & Specs; wheels and handles inclusion not explicit. Conflicting size-chart width and prose height retained; not qualified as external."
+   },
+   "claimed_cm": {
+    "v": [
+     53.5,
+     35.5,
+     20
+    ],
+    "unit": "cm",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://us.lojel.com/product/cubo-small-lite/",
+    "at": "2026-08-31",
+    "note": "Unexpanded figures from Overview & Specs; wheels and handles inclusion not explicit. Conflicting size-chart width and prose height retained; not qualified as external."
+   },
+   "weight_lb": {
+    "v": 6.4,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://us.lojel.com/product/cubo-small-lite/",
+    "at": "2026-08-31"
+   },
+   "weight_kg": {
+    "v": 2.9,
+    "unit": "kg",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://us.lojel.com/product/cubo-small-lite/",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 29,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://us.lojel.com/product/cubo-small-lite/",
+    "at": "2026-08-31"
+   }
+  },
+  {
+   "slug": "herschel-heritage",
+   "brand": "Herschel",
+   "model": "Heritage Hardshell Carry-On",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "35L Carry-On, Ivy Green; not Large Carry-On",
+   "manufacturer_source": {
+    "url": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+    "retrieved": "2026-08-31",
+    "title": "Herschel Heritage Hardshell Carry-On",
+    "local": "resources/bags/2026-08-31-herschel-heritage.md"
+   },
+   "notes": "Features weight6.15lb differs from Weight section6.17lbs; both print2.8kg. Size-guide image alt text gives19.75x13x9in, differing from19.76x12.99x9.02in dimensions section. USD230 displayed with Sale flag and no usable regular comparison; price withheld. Metric dimensions, expansion amount, SKU and explicit empty-weight wording not found.",
+   "conflicts": [
+    {
+     "field": "claimed_in",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        19.76,
+        12.99,
+        9.02
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        19.75,
+        13,
+        9
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Dimensions section versus official size-guide image alternative text; unresolved."
+    },
+    {
+     "field": "weight_lb",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": 6.17,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer",
+       "v": 6.15,
+       "unit": "lb"
+      }
+     ],
+     "note": "Weight section versus Features; both preserved."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": 6.17,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer",
+       "v": 2.8,
+       "unit": "kg"
+      }
+     ],
+     "note": "Original printed unit systems retained; do not silently reconcile any differences."
+    }
+   ],
+   "claimed_in": {
+    "v": [
+     19.76,
+     12.99,
+     9.02
+    ],
+    "unit": "in",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+    "at": "2026-08-31",
+    "note": "Dimensions are not explicitly qualified as including wheels and handles. Stored as claimed, separate from labelled internal dimensions."
+   },
+   "claimed_packing_in": {
+    "v": [
+     17.75,
+     12.75,
+     8.5
+    ],
+    "unit": "in",
+    "quote": "Internal Dimensions",
+    "src": "manufacturer",
+    "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_kg": {
+    "v": 2.8,
+    "unit": "kg",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+    "at": "2026-08-31"
+   },
+   "weight_lb": {
+    "v": 6.17,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 35,
+    "unit": "L",
+    "quote": "Volume",
+    "src": "manufacturer",
+    "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
+    "at": "2026-08-31"
+   }
   }
  ]
 }
