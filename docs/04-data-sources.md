@@ -224,7 +224,7 @@ Measurement is the only thing that works. That is the argument, and it is why th
 2. Telescoping handle fully retracted
 3. Measure the **widest point** on each axis — wheels, feet, handle housing, side pockets at rest
 4. Record to 0.5 cm
-5. **Photograph the tape against the bag on the binding dimension.** This photo is the proof and it is the moat in one image.
+5. ⚠️ **Superseded.** This step read: *"Photograph the tape against the bag on the binding dimension. This photo is the proof and it is the moat in one image."* Nobody is measuring bags — see [19-dataset-build.md](19-dataset-build.md). The proof is now the manufacturer's own page, linked and dated on every bag page. A photograph of our own tape measure would be the strongest claim on the site and we cannot make it.
 6. Record date and measurer
 
 Publish this as `/methodology`. A method anyone can replicate is a method people believe.
@@ -452,6 +452,9 @@ The one dataset that's genuinely easy — and the one worth the least.
 Awin's own spec rates its `dimensions` column as populated in a third to two-thirds of feeds, and it's free text: `'12 x 30 cm'`, `'15 inches'`. Treat feed dimensions as a hint for the manual queue, never as display data.
 
 **Use feeds for the spine only:** name, image, price, URL, stock, GTIN.
+
+⚠️ **`image` is not free to take.** Feed rights vary per merchant and Amazon
+forbids hosting outright — [23-product-images.md](23-product-images.md).
 
 ### Priority
 

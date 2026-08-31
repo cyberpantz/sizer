@@ -113,7 +113,7 @@ Ordered by fit with the trust-first positioning.
 
 **FTC (16 CFR Part 255).** Disclosure must appear at the point of recommendation, before the link, in the same visual block. A sitewide footer disclaimer does **not** satisfy the standard. The 2023 revision also made merchants jointly responsible, so networks will enforce it on you.
 
-**Amazon operating agreement.** Requires the exact string *"As an Amazon Associate I earn from qualifying purchases."* Violating that clause is expressly a material breach. Images may not be cached; ASINs may be stored indefinitely — use the ASIN as the durable join key.
+**Amazon operating agreement.** Requires the exact string *"As an Amazon Associate I earn from qualifying purchases."* Violating that clause is expressly a material breach. Images may not be stored or cached at all (a link, for 24 hours, is the whole allowance); ASINs may be stored indefinitely — use the ASIN as the durable join key. Product images are a decision of their own: [23-product-images.md](23-product-images.md).
 
 ---
 

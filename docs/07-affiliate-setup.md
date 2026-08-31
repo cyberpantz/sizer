@@ -55,7 +55,8 @@ Lower value than Awin (4% vs 15–20%) but necessary for coverage — plenty of 
 - **Launch link-only, no Amazon prices.** You may only display Amazon prices obtained via the Creators API, which requires **10 qualifying sales in a trailing 30 days**. Manual or scraped prices violate the agreement. Enforce with a CI check.
 - **No price tracking or price-drop alerts.** Prohibited outright.
 - Display the exact string **"As an Amazon Associate I earn from qualifying purchases."** Omitting it is expressly a material breach.
-- Don't cache Amazon images. Store ASINs — those you may keep indefinitely, and they're your durable join key.
+- **Amazon images may not be stored or cached AT ALL** — §2(h) allows storing a *link* for 24 hours and nothing more. Store ASINs; those you may keep indefinitely, and they're your durable join key. Read at source and quoted in [23-product-images.md](23-product-images.md), along with the bigger problem: §2(c)(i) restricts Product Advertising Content to sites whose *principal purpose* is driving sales to Amazon, which is not what this site is.
+- **For every OTHER network merchant, read the image clause when you apply.** Rights are set per merchant and vary; no image ships without a recorded grant. Treat it as a line item on the application, not an afterthought.
 - Note the April 2026 update: purchases from customers referred via paid or boosted ads linking to Amazon are disqualified. Relevant if you ever run paid acquisition.
 
 ---
