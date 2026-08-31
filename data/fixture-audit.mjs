@@ -2,6 +2,8 @@
    A fixture set is rich enough when every band, filter, group and edge case has
    at least one real bag standing in it. */
 import { readFileSync, readdirSync } from "node:fs";
+import { readMockup } from "../scripts/read-mockup.mjs";
+const { AIR } = readMockup();
 const dir = new URL("bags/", import.meta.url);
 const all = readdirSync(dir).filter(f => f.endsWith(".json") && f !== "_index.json")
   .map(f => JSON.parse(readFileSync(new URL(f, dir))));
@@ -11,8 +13,6 @@ const sized = all.filter(b => b.external_cm);
    anywhere" answers a question nobody asked. Under-seat is its own category. */
 const carryon = sized.filter(b => b.role === "overhead");
 const underseat = sized.filter(b => b.role === "underseat");
-const html = readFileSync(new URL("../mockup/index.html", import.meta.url), "utf8");
-const AIR = eval(html.match(/const AIR=\[[\s\S]*?\n\];/)[0].replace(/^const AIR=/, ""));
 const std = a => a.f.economy ? "economy" : (a.f.priority ? "priority" : (a.f.plus ? "plus" : Object.keys(a.f)[0]));
 const desc = a => [...a].sort((x, y) => y - x);
 const EPS_CM = 0.3;
