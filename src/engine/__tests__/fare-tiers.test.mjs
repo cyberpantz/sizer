@@ -129,11 +129,27 @@ describe('the economy ladder', () => {
     assert.equal(r.row, null, 'a premium cabin was served to an economy booking');
   });
 
-  test('the ladder ascends, cheapest first', () => {
-    assert.equal(ECONOMY_TIERS[0], 'basic', 'basic must be the bottom rung');
-    assert.ok(ECONOMY_TIERS.indexOf('basic') < ECONOMY_TIERS.indexOf('standard'));
-    assert.ok(ECONOMY_TIERS.indexOf('standard') < ECONOMY_TIERS.indexOf('plus'));
+  test('ECONOMY_TIERS is membership only — its order means nothing', () => {
+    /* This test used to assert the list ascended cheapest-first, and that
+       assertion outlived the design by one commit. The order WAS load-bearing;
+       it is not any more, because ranking rungs by name across airlines is a
+       fiction — "standard" is easyJet's bottom tier and LOT's middle one.
+       Leaving the old assertion in place would enforce a property nothing
+       reads, and quietly teach the next person that the order matters.
+       Shuffling the list must change nothing. */
+    const shuffled = [...ECONOMY_TIERS].reverse();
+    for (const f of shuffled) assert.equal(isTierOf(f, 'economy'), true, `${f} lost membership`);
     assert.equal(new Set(ECONOMY_TIERS).size, ECONOMY_TIERS.length, 'duplicate rung');
+
+    /* And the thing that DOES decide order is the data, not this list. */
+    const r = resolveFare(rec([cabin('max', [40, 30, 20]), cabin('basic', [56, 45, 25])]), {
+      class: 'economy',
+    });
+    assert.deepEqual(
+      r.row.max_cm,
+      [40, 30, 20],
+      'the name "basic" outranked a smaller allowance — the list is being read as an order'
+    );
   });
 });
 
