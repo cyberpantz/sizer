@@ -53,8 +53,8 @@ export function score(query, { name, code } = {}) {
   const c = fold(code);
   const n = fold(name);
 
-  if (c && c === q) return EXACT_CODE;
-  if (c && c.startsWith(q)) return CODE_PREFIX;
+  if (c === q) return EXACT_CODE;
+  if (c?.startsWith(q)) return CODE_PREFIX;
   if (n.startsWith(q)) return NAME_PREFIX;
 
   /* Word starts. "fra" should find "Air France" but a query spanning a space
@@ -70,12 +70,14 @@ export function score(query, { name, code } = {}) {
 
 /** Filter and rank. Returns a new array; never mutates the input. */
 export function search(query, items, { limit = Number.POSITIVE_INFINITY } = {}) {
-  return items
-    .map((item) => ({ item, s: score(query, item) }))
-    .filter((x) => x.s !== NO_MATCH)
-    /* Alphabetical tiebreak, so equal matches keep a stable, predictable
+  return (
+    items
+      .map((item) => ({ item, s: score(query, item) }))
+      .filter((x) => x.s !== NO_MATCH)
+      /* Alphabetical tiebreak, so equal matches keep a stable, predictable
        order rather than the dataset's file order. */
-    .sort((a, b) => a.s - b.s || String(a.item.name).localeCompare(String(b.item.name)))
-    .slice(0, limit)
-    .map((x) => x.item);
+      .sort((a, b) => a.s - b.s || String(a.item.name).localeCompare(String(b.item.name)))
+      .slice(0, limit)
+      .map((x) => x.item)
+  );
 }
