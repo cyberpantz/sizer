@@ -50,6 +50,7 @@ Manufacturers publish *packing* dimensions; airlines measure *external* ones, wh
 | **Checked bags** | Data collected week one; shown in the failed-carry-on flow. Dedicated pages are queue item 5. | [01](01-mvp.md#checked-bags-specifically) |
 | **Architecture** | Read path = version-controlled JSON, server-rendered. Write path = thin serverless + store, for email, click tracking and corrections only. | [01](01-mvp.md#architecture) |
 | **Typeface** | Figtree + IBM Plex Mono. Barlow is gone. | [02](02-design-system.md#the-stack) |
+| **CSS** | Tailwind v4, palette declared in `@theme` in `src/styles/app.css`. The one hard rule — blue is the only interactive colour — is checked in `verify-build.mjs` against the built HTML. | [20](20-scaffold-plan.md) |
 | **Name** | *Sizer* is a working placeholder, not a decision | [09](09-naming.md) |
 | **Engine placement** | Build time for static pages, browser for the interactive query. Same pure module. | [17](17-tech-stack.md) |
 | **Components** | Repetition is the trigger — three uses. Header/nav/footer + interactive pieces with tests. Everything else a plain page. | [17](17-tech-stack.md) |

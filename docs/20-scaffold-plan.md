@@ -29,13 +29,14 @@ Four duplicated sources of truth remain. They must not be carried into component
 astro.config.mjs      output: 'hybrid', @astrojs/cloudflare
 src/pages/            routes
 src/components/       Header, Nav, Footer, UnitToggle
-src/styles/tokens.css extracted from the mockups (5 copies today)
+src/styles/app.css     Tailwind v4 + @theme palette
 ```
 
 - `npm run dev` serves a blank layout
 - Engine imported from `src/engine/` — **no inlining**; `build-mockups.mjs` retires when the last mockup does
+- Tailwind v4 via `@tailwindcss/vite`. Palette in `@theme`, reachable as utilities (`bg-paper`) and as `var(--color-paper)`
 
-**Accept:** dev server runs; `npm test` still green; tokens.css is the only place colours are defined.
+**Accept:** dev server runs; `npm test` still green; `@theme` is the only place colours are defined; **no status colour on an interactive element** — tamper-tested.
 
 ---
 

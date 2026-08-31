@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
+import tailwind from '@tailwindcss/vite';
 
 /* Static by default, server-rendered where a page needs a request.
    Promoted pages (landing, /luggage-for/[carrier]) build to static HTML with
@@ -11,6 +12,7 @@ export default defineConfig({
   site: 'https://example.invalid',   // real domain pending the naming decision
   build: { format: 'directory' },
   vite: {
+    plugins: [tailwind()],
     /* The engine and UI modules are plain .mjs and shared with the build
        scripts and tests. No bundler magic; they must stay importable by Node. */
     resolve: { preserveSymlinks: true },
