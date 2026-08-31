@@ -6,10 +6,10 @@ import { shelve } from '../lib/shelves.mjs';
 
 /* Everything here runs at build time. The engine is pure, so the same functions
    run in the browser for the interactive check — see docs/17-tech-stack.md. */
-const bags = loadBags();
-const carriers = loadCarriers();
+const bags = await loadBags();
+const carriers = await loadCarriers();
 const shelves = shelve(bags, carriers);
-const stats = coverageStats();
+const stats = await coverageStats();
 
 /* The number we can honestly stand behind: carriers the engine can actually
    answer for, not the number of files in data/carriers/. */

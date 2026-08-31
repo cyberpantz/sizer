@@ -36,11 +36,14 @@ describe('bucketing', () => {
   });
 });
 
+/* Loaded once at module scope. The loaders are async because they will read
+   endpoints rather than disk soon; awaiting inside describe() is not allowed. */
+const bags = await loadBags();
+const carriers = await loadCarriers();
+
 describe('against the real catalogue', () => {
   /* These run on data/, so they fail when the data regresses — which is the
      point. The landing page makes exactly these claims. */
-  const bags = loadBags();
-  const carriers = loadCarriers();
   const shelves = shelve(bags, carriers);
 
   test('the top shelf is not empty', () => {

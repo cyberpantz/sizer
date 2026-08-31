@@ -14,8 +14,8 @@ import { evaluate, coverage } from '../src/engine/fit.mjs';
 import { loadBags, loadCarriers } from '../src/lib/data.mjs';
 import { shelve } from '../src/lib/shelves.mjs';
 
-const allBags = loadBags({ role: null });
-const carriers = loadCarriers();
+const allBags = await loadBags({ role: null });
+const carriers = await loadCarriers();
 const carryon = allBags.filter((b) => b.role !== 'underseat' && b.record.role !== 'underseat');
 const underseat = allBags.filter((b) => b.record.role === 'underseat');
 
