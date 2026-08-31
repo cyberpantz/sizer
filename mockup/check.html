@@ -221,11 +221,14 @@ footer p{max-width:72ch;margin:0}
 
 <script>
 /* BAGS:START — generated from data/bags/, do not edit */
+const AIRLINES = 52;
 const BAGS = [
  {
   "s": "amazon-21-expandable",
   "b": "Amazon Basics",
   "m": "Expandable Hardside 21\" Spinner",
+  "t": "spinner",
+  "cov": 1,
   "c": [
    55.1,
    37.6,
@@ -244,6 +247,8 @@ const BAGS = [
   "s": "away-aluminum",
   "b": "Away",
   "m": "The Carry-On",
+  "t": "spinner",
+  "cov": 41,
   "c": [
    54.6,
    34.3,
@@ -262,6 +267,8 @@ const BAGS = [
   "s": "away-carryon-flex",
   "b": "Away",
   "m": "The Carry-On Flex",
+  "t": "spinner",
+  "cov": 27,
   "c": [
    55.1,
    36.6,
@@ -280,6 +287,8 @@ const BAGS = [
   "s": "bagsmart-roamer",
   "b": "Bagsmart",
   "m": "Roamer Expandable Carry-On",
+  "t": "spinner",
+  "cov": 41,
   "c": [
    55.1,
    35.3,
@@ -298,6 +307,8 @@ const BAGS = [
   "s": "beis-hybrid-roller",
   "b": "Béis",
   "m": "The Hybrid Carry-On Roller",
+  "t": "spinner",
+  "cov": 14,
   "c": [
    55.9,
    35.6,
@@ -316,6 +327,8 @@ const BAGS = [
   "s": "beis-small-carryon-roller",
   "b": "Béis",
   "m": "The Small Carry-On Roller",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    53.3,
    33,
@@ -334,6 +347,8 @@ const BAGS = [
   "s": "bellroy-lite",
   "b": "Bellroy",
   "m": "Lite Carry-On",
+  "t": "roller",
+  "cov": 42,
   "c": [
    51.1,
    34.5,
@@ -352,6 +367,8 @@ const BAGS = [
   "s": "bellroy-transit",
   "b": "Bellroy",
   "m": "Transit Carry-On",
+  "t": "spinner",
+  "cov": 16,
   "c": [
    55.6,
    35.1,
@@ -370,6 +387,8 @@ const BAGS = [
   "s": "brics-xbag-rolling-duffel",
   "b": "Bric's",
   "m": "X-Bag 21\" Rolling Carry-On Duffle",
+  "t": "roller",
+  "cov": 5,
   "c": [
    55.9,
    31.8,
@@ -388,6 +407,8 @@ const BAGS = [
   "s": "briggs-riley-baseline-global-2-wheel",
   "b": "Briggs & Riley",
   "m": "Baseline Global 21\" 2-Wheel Expandable Carry-On",
+  "t": "roller",
+  "cov": 29,
   "c": [
    50.8,
    38,
@@ -406,6 +427,8 @@ const BAGS = [
   "s": "briggs-riley-baseline-global-spinner",
   "b": "Briggs & Riley",
   "m": "Baseline Global 21\" Carry-On Expandable Spinner",
+  "t": "spinner",
+  "cov": 29,
   "c": [
    48.26,
    38,
@@ -424,6 +447,8 @@ const BAGS = [
   "s": "briggs-riley-zdx-global-spinner",
   "b": "Briggs & Riley",
   "m": "ZDX Global 21\" Carry-On Expandable Spinner",
+  "t": "spinner",
+  "cov": 29,
   "c": [
    48.9,
    38.1,
@@ -442,6 +467,8 @@ const BAGS = [
   "s": "calpak-luka",
   "b": "Calpak",
   "m": "Luka Carry-On",
+  "t": "spinner",
+  "cov": 43,
   "c": [
    53.3,
    34.9,
@@ -460,6 +487,8 @@ const BAGS = [
   "s": "dagne-dover-smaller-seattle",
   "b": "Dagne Dover",
   "m": "Smaller Seattle Carry-on",
+  "t": "spinner",
+  "cov": 51,
   "c": [
    52.1,
    33,
@@ -478,6 +507,8 @@ const BAGS = [
   "s": "delsey-chatelet-air-2",
   "b": "Delsey",
   "m": "Chatelet Air 2.0 21-inch Spinner",
+  "t": "spinner",
+  "cov": 1,
   "c": [
    57.8,
    38.1,
@@ -496,6 +527,8 @@ const BAGS = [
   "s": "hartmann-reserve",
   "b": "Hartmann",
   "m": "Reserve Carry-On",
+  "t": "spinner",
+  "cov": 1,
   "c": [
    58.4,
    38.1,
@@ -514,6 +547,8 @@ const BAGS = [
   "s": "herschel-heritage",
   "b": "Herschel",
   "m": "Heritage Hardshell Carry-On",
+  "t": "spinner",
+  "cov": 43,
   "c": [
    50.2,
    33,
@@ -532,6 +567,8 @@ const BAGS = [
   "s": "july-carryon-max",
   "b": "July",
   "m": "Carry-on Max",
+  "t": "spinner",
+  "cov": 1,
   "c": [
    58.4,
    40.6,
@@ -550,6 +587,8 @@ const BAGS = [
   "s": "lojel-cubo-small-lite",
   "b": "Lojel",
   "m": "Cubo Small Lite",
+  "t": "spinner",
+  "cov": 43,
   "c": [
    53.6,
    36.1,
@@ -568,6 +607,8 @@ const BAGS = [
   "s": "monos-hybrid",
   "b": "Monos",
   "m": "Hybrid Carry-On",
+  "t": "spinner",
+  "cov": 14,
   "c": [
    55.9,
    35.6,
@@ -586,6 +627,8 @@ const BAGS = [
   "s": "pacsafe-venturesafe-exp45",
   "b": "Pacsafe",
   "m": "Venturesafe EXP45 ECONYL",
+  "t": "backpack",
+  "cov": 50,
   "c": [
    55.1,
    33,
@@ -604,6 +647,8 @@ const BAGS = [
   "s": "patagonia-black-hole-40",
   "b": "Patagonia",
   "m": "Black Hole Duffel 40L",
+  "t": "duffel",
+  "cov": 52,
   "c": [
    50,
    31.8,
@@ -622,6 +667,8 @@ const BAGS = [
   "s": "ricksteves-rolling-carryon",
   "b": "Rick Steves",
   "m": "Rolling Carry-On",
+  "t": "roller",
+  "cov": 43,
   "c": [
    50.8,
    34.3,
@@ -640,6 +687,8 @@ const BAGS = [
   "s": "ricksteves-spinner-carryon",
   "b": "Rick Steves",
   "m": "Spinner Carry-On",
+  "t": "spinner",
+  "cov": 12,
   "c": [
    49.5,
    35.6,
@@ -658,6 +707,8 @@ const BAGS = [
   "s": "samsonite-freeform",
   "b": "Samsonite",
   "m": "Freeform Carry-on Spinner",
+  "t": "spinner",
+  "cov": 1,
   "c": [
    58.4,
    38.1,
@@ -676,6 +727,8 @@ const BAGS = [
   "s": "samsonite-proxis",
   "b": "Samsonite",
   "m": "Proxis Global Carry-On Spinner",
+  "t": "spinner",
+  "cov": 14,
   "c": [
    55.9,
    35.6,
@@ -693,16 +746,18 @@ const BAGS = [
  {
   "s": "samsonite-uplift",
   "b": "Samsonite",
-  "m": "Uplift Hardside Carry-On",
+  "m": "UpLIFT Hardside Carry-On Spinner",
+  "t": "spinner",
+  "cov": 14,
   "c": [
-   55.9,
-   35.6,
-   22.9
+   49.25,
+   34.49,
+   23.01
   ],
   "x": [
-   55.9,
-   35.6,
-   22.9
+   55.88,
+   35.56,
+   22.86
   ],
   "soft": 0,
   "kg": 2.3,
@@ -712,6 +767,8 @@ const BAGS = [
   "s": "thule-aion",
   "b": "Thule",
   "m": "Aion Carry-On Spinner",
+  "t": "spinner",
+  "cov": 42,
   "c": [
    55.1,
    35.1,
@@ -730,6 +787,8 @@ const BAGS = [
   "s": "travelers-choice-maxporter-ii",
   "b": "Traveler's Choice",
   "m": "Maxporter II Carry-On Spinner",
+  "t": "spinner",
+  "cov": 14,
   "c": [
    55.9,
    35.6,
@@ -748,6 +807,8 @@ const BAGS = [
   "s": "travelpro-maxlite-air-v2-international",
   "b": "Travelpro",
   "m": "Maxlite Air V2 International Carry-On Hardside Spinner",
+  "t": "spinner",
+  "cov": 35,
   "c": [
    46.4,
    39.4,
@@ -766,6 +827,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-21",
   "b": "Travelpro",
   "m": "Maxlite 5 21\" Expandable Spinner",
+  "t": "spinner",
+  "cov": 1,
   "c": [
    58.4,
    36.8,
@@ -784,6 +847,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-compact",
   "b": "Travelpro",
   "m": "Maxlite 5 Compact Carry-On Spinner",
+  "t": "spinner",
+  "cov": 14,
   "c": [
    55.9,
    35.6,
@@ -802,6 +867,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-international",
   "b": "Travelpro",
   "m": "Maxlite 5 International Expandable Carry-On Spinner",
+  "t": "spinner",
+  "cov": 35,
   "c": [
    48.3,
    38.1,
@@ -820,6 +887,8 @@ const BAGS = [
   "s": "travelpro-maxlite5-international-rollaboard",
   "b": "Travelpro",
   "m": "Maxlite 5 International Expandable Carry-On Rollaboard",
+  "t": "roller",
+  "cov": 35,
   "c": [
    50.8,
    38.1,
@@ -838,6 +907,8 @@ const BAGS = [
   "s": "travelpro-platinum-elite-international-rollaboard",
   "b": "Travelpro",
   "m": "Platinum Elite International Carry-On Rollaboard",
+  "t": "roller",
+  "cov": 35,
   "c": [
    50.8,
    38.1,
@@ -856,6 +927,8 @@ const BAGS = [
   "s": "travelpro-versapack",
   "b": "Travelpro",
   "m": "VersaPack+ Carry-On Spinner",
+  "t": "spinner",
+  "cov": 1,
   "c": [
    58.4,
    36.8,
@@ -874,6 +947,8 @@ const BAGS = [
   "s": "tumi-19-degree-lite",
   "b": "Tumi",
   "m": "19 Degree Lite Carry-On",
+  "t": "spinner",
+  "cov": 14,
   "c": [
    55.4,
    35.6,
@@ -892,6 +967,8 @@ const BAGS = [
   "s": "tumi-alpha-dual-access",
   "b": "Tumi",
   "m": "Alpha International Dual Access Carry-on",
+  "t": "spinner",
+  "cov": 14,
   "c": [
    55.9,
    35.6,
@@ -910,6 +987,8 @@ const BAGS = [
   "s": "vera-bradley-adair-duffel",
   "b": "Vera Bradley",
   "m": "Adair Rolling Duffel",
+  "t": "roller",
+  "cov": 15,
   "c": [
    53.3,
    33,
@@ -1004,7 +1083,7 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "economy": {
     "d": [
      55,
      35,
@@ -1013,7 +1092,7 @@ const AIR = {
     "kg": 12,
     "hold": null
    },
-   "economy": {
+   "basic": {
     "d": [
      55,
      35,
@@ -1101,18 +1180,18 @@ const AIR = {
   "f": {
    "basic": {
     "d": [
-     56,
-     36,
-     23
+     55.88,
+     35.56,
+     22.86
     ],
     "kg": null,
     "hold": null
    },
    "economy": {
     "d": [
-     56,
-     36,
-     23
+     55.88,
+     35.56,
+     22.86
     ],
     "kg": null,
     "hold": null
@@ -1131,7 +1210,7 @@ const AIR = {
      45,
      25
     ],
-    "kg": 23,
+    "kg": null,
     "hold": null
    },
    "economy": {
@@ -1140,7 +1219,7 @@ const AIR = {
      45,
      25
     ],
-    "kg": 23,
+    "kg": null,
     "hold": null
    }
   }
@@ -1335,7 +1414,7 @@ const AIR = {
     "d": [
      55,
      38,
-     20
+     22
     ],
     "kg": 7,
     "hold": null
@@ -1374,22 +1453,22 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "carry_on": {
     "d": [
-     46,
-     36,
-     20
+     60.96,
+     40.64,
+     25.4
     ],
-    "kg": null,
+    "kg": 15.8757,
     "hold": null
    },
-   "economy": {
+   "basic": {
     "d": [
-     61,
-     46,
-     25
+     60.96,
+     40.64,
+     25.4
     ],
-    "kg": null,
+    "kg": 15.8757,
     "hold": null
    }
   }
@@ -1426,16 +1505,16 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "priority": {
     "d": [
+     55,
      40,
-     30,
      20
     ],
     "kg": 10,
     "hold": null
    },
-   "priority": {
+   "basic": {
     "d": [
      55,
      40,
@@ -1563,7 +1642,7 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "economy": {
     "d": [
      55,
      35,
@@ -1572,7 +1651,34 @@ const AIR = {
     "kg": 12,
     "hold": null
    },
-   "economy": {
+   "light": {
+    "d": [
+     55,
+     35,
+     25
+    ],
+    "kg": 12,
+    "hold": null
+   },
+   "standard": {
+    "d": [
+     55,
+     35,
+     25
+    ],
+    "kg": 12,
+    "hold": null
+   },
+   "flex": {
+    "d": [
+     55,
+     35,
+     25
+    ],
+    "kg": 12,
+    "hold": null
+   },
+   "basic": {
     "d": [
      55,
      35,
@@ -1589,16 +1695,34 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "economy": {
     "d": [
+     55,
      40,
-     30,
-     15
+     23
     ],
     "kg": 8,
     "hold": null
    },
-   "economy": {
+   "light": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "hold": null
+   },
+   "comfort": {
+    "d": [
+     55,
+     40,
+     23
+    ],
+    "kg": 8,
+    "hold": null
+   },
+   "flex": {
     "d": [
      55,
      40,
@@ -1803,6 +1927,42 @@ const AIR = {
     ],
     "kg": 7,
     "hold": null
+   },
+   "lite": {
+    "d": [
+     50,
+     37,
+     25
+    ],
+    "kg": 7,
+    "hold": null
+   },
+   "classic": {
+    "d": [
+     50,
+     37,
+     25
+    ],
+    "kg": 7,
+    "hold": null
+   },
+   "convenience": {
+    "d": [
+     50,
+     37,
+     25
+    ],
+    "kg": 7,
+    "hold": null
+   },
+   "comfort": {
+    "d": [
+     50,
+     37,
+     25
+    ],
+    "kg": 7,
+    "hold": null
    }
   }
  },
@@ -1871,17 +2031,7 @@ const AIR = {
   "st": 6,
   "regional": 0,
   "gate": null,
-  "f": {
-   "economy": {
-    "d": [
-     55,
-     40,
-     20
-    ],
-    "kg": 7,
-    "hold": null
-   }
-  }
+  "f": {}
  },
  "TK": {
   "n": "Turkish",
@@ -1931,6 +2081,15 @@ const AIR = {
     ],
     "kg": 10,
     "hold": null
+   },
+   "scootplus": {
+    "d": [
+     54,
+     38,
+     23
+    ],
+    "kg": 15,
+    "hold": null
    }
   }
  },
@@ -1940,16 +2099,25 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "plus": {
     "d": [
+     56,
      45,
-     36,
-     20
+     25
     ],
     "kg": 15,
     "hold": null
    },
-   "plus": {
+   "basic": {
+    "d": [
+     56,
+     45,
+     25
+    ],
+    "kg": 15,
+    "hold": null
+   },
+   "inclusive_plus": {
     "d": [
      56,
      45,
@@ -2069,16 +2237,34 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "two_pieces": {
     "d": [
+     55,
      40,
-     30,
      20
     ],
     "kg": 10,
     "hold": null
    },
-   "economy": {
+   "basic": {
+    "d": [
+     55,
+     40,
+     20
+    ],
+    "kg": 10,
+    "hold": null
+   },
+   "fly_grande": {
+    "d": [
+     55,
+     40,
+     20
+    ],
+    "kg": 10,
+    "hold": null
+   },
+   "fly_pro": {
     "d": [
      55,
      40,
@@ -2095,16 +2281,16 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
-   "basic": {
+   "priority": {
     "d": [
+     55,
      40,
-     30,
-     20
+     23
     ],
     "kg": 10,
     "hold": null
    },
-   "priority": {
+   "basic": {
     "d": [
      55,
      40,
@@ -2121,11 +2307,20 @@ const AIR = {
   "regional": 0,
   "gate": null,
   "f": {
+   "basic": {
+    "d": [
+     60.96,
+     40.64,
+     25.4
+    ],
+    "kg": null,
+    "hold": null
+   },
    "economy": {
     "d": [
-     61,
-     41,
-     25
+     60.96,
+     40.64,
+     25.4
     ],
     "kg": null,
     "hold": null
@@ -2171,9 +2366,9 @@ const AIR = {
 const FL={economy:"Economy",basic:"Basic",priority:"Priority"};
 
 let S={
-  bags:["osprey"],
+  bags:[BAGS[0].s],
   legs:[
-    {from:"ITH",to:"JFK",c:"UAX",f:"economy"},
+    {from:"ITH",to:"JFK",c:"UA",f:"economy"},
     {from:"JFK",to:"CDG",c:"AF", f:"economy"},
     {from:"CDG",to:"BCN",c:"FR", f:"basic"},
   ],
@@ -2292,8 +2487,15 @@ function weight({ bag, carrier, config }) {
   const cap = carrier.allowance?.max_kg,
     kg = bag.weight_kg;
   if (!cap || !kg) return null;
+  /* `shared` means the cap covers the carry-on AND the personal item together
+     — see buildAllowance. The arithmetic is unchanged; what changes is what we
+     are allowed to claim the remainder is FOR. Saying "that leaves 5.4 kg to
+     pack" when 5.4 kg has to cover the laptop bag too is the kind of
+     over-generous answer that costs a fee. */
+  const shared = carrier.allowance?.weight_shared === true;
   const left = +(cap - kg).toFixed(2);
-  if (left <= 0) return { id: 'weight', level: 'over', bag_kg: kg, cap_kg: cap, left_kg: left };
+  if (left <= 0)
+    return { id: 'weight', level: 'over', bag_kg: kg, cap_kg: cap, left_kg: left, shared };
   if (kg / cap >= config.WEIGHT_TIGHT_RATIO) {
     return {
       id: 'weight',
@@ -2301,6 +2503,7 @@ function weight({ bag, carrier, config }) {
       bag_kg: kg,
       cap_kg: cap,
       left_kg: left,
+      shared,
       share: +(kg / cap).toFixed(2),
     };
   }
@@ -2515,9 +2718,10 @@ function createEngine(overrides = {}) {
       delta_cm: d.cm,
       dimension: d.dimension,
       no_cabin_bag: false,
-      /* Surfaced so a caller can refuse to promote a bag we haven't measured.
-         The release gate depends on it. */
-      measured: bag.measured,
+      /* The release gate: may this bag be RECOMMENDED, not merely displayed?
+         See isPromotable — manufacturer's own overall figure, or ours. */
+      promotable: isPromotable(bag),
+      dim_source: bag.dim_source,
       advisories: runAdvisories({ bag, carrier, deltaCm: d.cm }),
     };
   }
@@ -2690,6 +2894,58 @@ const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'first'])
    convenience; the other direction costs them a gate fee. */
 const IN_TO_CM = 2.54;
 
+/* Where a dimension came from, ranked by how much it can be trusted.
+
+   The original plan was "we measure every bag ourselves". That is not
+   happening, and it was load-bearing — the release gate, the tier table and the
+   moat argument all rested on it.
+
+   The replacement is narrower and actually achievable: **go to the
+   manufacturer, never the reseller.** A marketplace listing is the weakest
+   source in this whole category — the same bag carries different dimensions
+   across sellers, usually with no note of which figure is being quoted — and it
+   is also the easiest one to scrape, which is why every competitor uses it.
+
+   The distinction that matters is not who measured, it is WHICH FIGURE:
+   the overall size, wheels and handle included, is the one an airline checks. */
+const DIM_SOURCE = {
+  /* Manufacturer states an overall / with-wheels figure explicitly.
+     Travelpro: "the overall dimensions, which include wheels and carry handles".
+     This is what we build on. */
+  MAKER_OVERALL: 'maker_overall',
+  /* Manufacturer publishes one figure without saying which it is. Usable, and
+     flagged — it is probably the packing body, which runs small. */
+  MAKER_UNSPECIFIED: 'maker_unspecified',
+  /* Manufacturer's packing/case figure, explicitly labelled as such. Never
+     compared against an airline limit on its own. */
+  MAKER_PACKING: 'maker_packing',
+  /* A publication measured it. Attributed, and second to the maker's own
+     overall figure because their method is rarely stated. */
+  REVIEW: 'review',
+  /* Reseller or marketplace. NOT TRUSTED — recorded for conflict detection
+     only, never used as the operative dimension. */
+  RESELLER: 'reseller',
+  /* We put a tape on it. Still supported; nobody is planning to. */
+  MEASURED: 'measured',
+};
+
+/** Sources we will compute a published verdict from, best first. */
+const TRUSTED_DIM_SOURCES = [
+  DIM_SOURCE.MEASURED,
+  DIM_SOURCE.MAKER_OVERALL,
+  DIM_SOURCE.REVIEW,
+  DIM_SOURCE.MAKER_UNSPECIFIED,
+];
+
+/** The release gate. A bag may only be PROMOTED — recommended, shelved, put in
+ *  front of someone as an answer — on a dimension we can stand behind.
+ *  Browsing and comparison are fine on weaker sources, as long as the page says
+ *  so; a recommendation is us putting our name to it. */
+function isPromotable(bag) {
+  const src = bag?.dim_source;
+  return src === DIM_SOURCE.MEASURED || src === DIM_SOURCE.MAKER_OVERALL;
+}
+
 /* Route regions. An allowance can depend on where you are flying, not just what
    you bought: United Basic Economy includes no carry-on domestically and DOES
    include one transatlantic. Same fare, same passenger, opposite answers.
@@ -2803,8 +3059,9 @@ function toBag(record) {
     model: record.model,
     external_cm: assertDims(external, subject),
     provenance: provenanceOf(record.measured_cm ?? record.external_cm ?? record.claimed_cm),
-    /* Whether the number is ours is a first-class fact, not a footnote: nothing
-       may ship as a promoted recommendation on someone else's tape measure. */
+    /* Which figure this is, and therefore what we may do with it. A first-class
+       fact rather than a footnote — see DIM_SOURCE. */
+    dim_source: dimSourceOf(record),
     measured: Boolean(unwrap(record.measured_cm)),
     weight_kg: unwrap(record.weight_kg) ?? null,
     soft: Boolean(record.soft),
@@ -2812,6 +3069,22 @@ function toBag(record) {
     shell: shellOf(record),
     expands_cm: unwrap(record.expands_cm) ?? 0,
   };
+}
+
+/** Classify a bag record's operative dimension.
+ *
+ *  Explicit `dim_source` wins. Otherwise infer, conservatively: a record that
+ *  carries BOTH a packing figure and an external one is a manufacturer that
+ *  published both, which is the good case. A bare `claimed_cm` is unspecified —
+ *  assume the worse reading rather than the flattering one. */
+function dimSourceOf(record) {
+  if (record?.dim_source) return record.dim_source;
+  if (unwrap(record?.measured_cm)) return DIM_SOURCE.MEASURED;
+  const ext = record?.external_cm;
+  if (ext?.src === 'review') return DIM_SOURCE.REVIEW;
+  if (unwrap(record?.claimed_packing_cm) && unwrap(ext)) return DIM_SOURCE.MAKER_OVERALL;
+  if (unwrap(ext) || unwrap(record?.claimed_cm)) return DIM_SOURCE.MAKER_UNSPECIFIED;
+  return null;
 }
 
 /** True when a record can be evaluated at all. Cheaper than try/catch in a loop. */
@@ -2859,6 +3132,18 @@ function resolveFare(record, booking) {
   }
   const byFare = reachable.find((a) => eq(a.fare_class, b.fare) || eq(a.fare_brand, b.fare));
   if (byFare) return { row: byFare, matched: 'fare' };
+  /* A known Basic fare must not inherit regular Economy's overhead bag.
+     Purchased add-ons above can override it; a cabin-class fallback cannot. */
+  const namedFare = (record.allowances ?? []).find(
+    (a) => (eq(a.fare_class, b.fare) || eq(a.fare_brand, b.fare)) && a.cabin_absence
+  );
+  if (namedFare) {
+    if (routeApplies(namedFare, b.route).applies === null)
+      return { row: null, matched: null, route_dependent: true };
+    if (routeApplies(namedFare, b.route).applies === false)
+      return { row: null, matched: null, absence: CABIN_ABSENCE.OUT_OF_SCOPE };
+    return { row: null, matched: 'fare', absence: namedFare.cabin_absence };
+  }
   const byClass = reachable.find((a) => eq(a.cabin_class, b.class) || eq(a.fare_class, b.class));
   if (byClass) return { row: byClass, matched: 'class' };
 
@@ -2870,11 +3155,34 @@ function resolveFare(record, booking) {
   return { row: null, matched: null };
 }
 
-function buildAllowance(row, subject) {
+function buildAllowance(row, subject, rows = []) {
   const u = reconcileUnits(row.max_cm, row.max_in);
   return {
     max_cm: assertDims(u.cm, subject),
     max_kg: row.max_kg ?? null,
+    /* IS THAT WEIGHT CAP FOR THIS BAG, OR FOR BOTH BAGS?
+
+       Air France, KLM, Cathay, JAL, ANA and Scoot publish ONE cabin weight
+       covering the carry-on AND the personal item together. The figure lands
+       on the cabin row because that is where a weight belongs, and the
+       personal row carries null — so read naively it says the whole 10 kg is
+       available for the suitcase.
+
+       It is not, and the error runs in the expensive direction. We told
+       someone flying ANA that a 4.6 kg suitcase "leaves 5.4 kg to pack". Add
+       the laptop bag they are also carrying and the truth is nearer 3.4.
+
+       `allowance_group` is the airline's own grouping, recorded during
+       research and, until now, read by nothing. */
+    weight_shared: row.allowance_group
+      ? rows.some(
+          (r) =>
+            r !== row &&
+            r.allowance_group === row.allowance_group &&
+            r.fare_class === row.fare_class &&
+            r.type === 'personal'
+        )
+      : false,
     /* Kept so a page can show the airline's own figures rather than ours, and
        flag when they disagree — that disagreement is a finding worth printing. */
     units: u,
@@ -2899,7 +3207,10 @@ function toCarrier(record, fareClass) {
     ? null
     : resolved.route_dependent
       ? CABIN_ABSENCE.ROUTE_DEPENDENT
-      : (fareRow?.cabin_absence ?? record.cabin_absence ?? CABIN_ABSENCE.NOT_RESEARCHED);
+      : (resolved.absence ??
+        fareRow?.cabin_absence ??
+        record.cabin_absence ??
+        CABIN_ABSENCE.NOT_RESEARCHED);
   const strictness = unwrap(record.strictness?.score ?? record.strictness);
   if (typeof strictness !== 'number' || strictness < 1 || strictness > 10) {
     throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
@@ -2915,7 +3226,7 @@ function toCarrier(record, fareClass) {
     route_dependent: Boolean(resolved.route_dependent),
     strictness,
     /* Never a zero-size row — a naive comparison would let one pass. */
-    allowance: cabin ? buildAllowance(cabin, subject) : null,
+    allowance: cabin ? buildAllowance(cabin, subject, rows) : null,
     /* Only an EXPLICIT finding means "no cabin bag". Everything else is unknown:
        silence from a half-researched carrier must never read as a ban. */
     no_cabin_bag: absence === CABIN_ABSENCE.NOT_PERMITTED,
@@ -2997,7 +3308,7 @@ const RISKWHY={
 
 function renderInputs(){
   $("bagbox").innerHTML = S.bags.map(id=>{
-    const b=BAGS.find(x=>x.id===id);
+    const b=BAGS.find(x=>x.s===id);
     return `<div class="item"><span class="n">${b.b} ${b.m}
       <span class="d">${U.dims(b.x)} · ${U.kg(b.kg)} ${U.wl()} empty</span></span>
       <button class="rm" data-rmbag="${id}" aria-label="Remove ${b.m}">×</button></div>`;
@@ -3026,52 +3337,28 @@ function renderInputs(){
   document.querySelectorAll("[data-rmleg]").forEach(b=>b.onclick=()=>{
     if(S.legs.length>1){S.legs.splice(+b.dataset.rmleg,1);draw()}});
   $("addbag").onclick=()=>{
-    const next=BAGS.find(b=>!S.bags.includes(b.id));
-    if(next){S.bags.push(next.id);draw()}};
+    const next=BAGS.find(b=>!S.bags.includes(b.s));
+    if(next){S.bags.push(next.s);draw()}};
   $("addleg").onclick=()=>{
     S.legs.push({from:"BCN",to:"LHR",c:"AA",f:"economy"});draw()};
 }
 
 /* Most people won't buy a new bag — they'll put the one they own in the hold.
    Say which flights actually need that, what it costs, and where it's free. */
-function planHTML(rows,fits){
+function planHTML(rows){
   const bad=rows.filter(x=>x.r.band==="wont"||x.r.band==="gamble");
   if(!bad.length) return "";
-  const free=bad.filter(x=>x.a.gate==="free");
-  const paid=bad.filter(x=>x.a.gate!=="free");
-  const cheapest=fits.slice().sort((a,b)=>a.p-b.p)[0];
   return `<div class="plan">
     <p class="cap">What to do about it</p>
-    <h3>${paid.length? `You'd need to put this bag in the hold on ${paid.length} of your ${rows.length} flights.`
-                     : "Nothing to pay — see below."}</h3>
-    <div class="plist">
-      ${paid.map(x=>`<div class="prow">
-        <span class="pn">${x.i+1}</span>
-        <span><b>${x.a.n}</b> <span class="pr">${x.l.from} → ${x.l.to}</span>
-          <span class="pd">${x.al.hold==="included on this fare"
-            ? "A checked bag is already included on this ticket — you just have to use it."
-            : "Add a checked bag: <b>"+x.al.hold+"</b>"}</span>
-          ${x.al.upgrade?`<span class="pd alt">Or: ${x.al.upgrade} — cheaper than the hold bag if it's only the cabin size stopping you.</span>`:""}
-        </span></div>`).join("")}
-      ${free.map(x=>`<div class="prow ok">
-        <span class="pn">${x.i+1}</span>
-        <span><b>${x.a.n}</b> <span class="pr">${x.l.from} → ${x.l.to}</span>
-          <span class="pd"><b>Nothing to do, and nothing to pay.</b> On a regional jet the bag is
-          taken at the aircraft door and handed straight back to you at the door on arrival.
-          That is not a checked bag and there is no fee.</span>
-        </span></div>`).join("")}
-    </div>
-    <p class="pwarn"><b>One booking or several?</b> If these flights are on a single ticket, a checked bag
-      goes all the way to your final stop — you can't check it for one leg and carry it on the next.
-      Booked separately, you can pick and choose.</p>
-    ${cheapest?`<p class="pmath">Fees for this trip come to roughly the cost of
-      <b>${cheapest.b} ${cheapest.m}</b> at <b>$${cheapest.p}</b> — which clears every flight here, and the next trip too.
-      Worth weighing before you pay twice.</p>`:""}
+    <h3>Check your options on ${bad.length} of your ${rows.length} flights.</h3>
+    <p class="pwarn">Consider a smaller bag, a cabin-bag add-on where available, or checking your bag.
+      Confirm the allowance and price with the airline before paying. We do not have verified fees
+      for this example, and a regional flight does not guarantee a free gate check.</p>
   </div>`;
 }
 
 function renderAnswer(){
-  const bag=BAGS.find(b=>b.id===S.bags[0]);
+  const bag=BAGS.find(b=>b.s===S.bags[0]);
   const rows=S.legs.map((l,i)=>{
     const a=AIR[l.c], al=a.f[l.f];
     return {i,l,a,al,r:fit(bag,al,a.st,S.risk)};
@@ -3080,7 +3367,7 @@ function renderAnswer(){
   const worst=rows.reduce((m,x)=>order[x.r.band]>order[m.r.band]?x:m,rows[0]);
   const env=envelope(S.legs);
   const fits=BAGS.filter(b=>{
-    const e=desc(b.x).slice(); if(b.soft)e[2]=Math.max(0,e[2]-2);
+    const e=desc(b.x);
     return e.every((v,i)=>v<=env[i]);
   });
   const bad=rows.filter(x=>x.r.band==="wont").length;
@@ -3116,26 +3403,25 @@ function renderAnswer(){
       <p class="envwhy">Set by <b>${(()=>{const b=S.legs.map(l=>AIR[l.c]);const e2=envelope(S.legs);
         const who=S.legs.filter(l=>desc(AIR[l.c].f[l.f].d).some((v,i)=>v===e2[i])).map(l=>AIR[l.c].n);
         return [...new Set(who)].join(" and ")})()}</b> — the tightest limit on your itinerary.
-        Anything within this box clears every flight you've listed.</p>
+        This is a size comparison only. Fare entitlement, packed weight and aircraft space still need checking.</p>
       ${fits.length?`<div class="fits">${fits.map(b=>`<div class="fitcard">
           <span class="n">${b.b} ${b.m}</span>
           <span class="d">${U.dims(b.x)} · ${U.kg(b.kg)} ${U.wl()}</span>
-          <a href="bag.html">$${b.p} · see our measurements →</a></div>`).join("")}</div>`
-        :`<p class="envwhy" style="color:var(--red)">None of the bags we've measured fit this envelope. On a trip this tight you're looking at an under-seat bag, or checking one.</p>`}
+          <a href="bag.html?bag=${encodeURIComponent(b.s)}">View bag →</a></div>`).join("")}</div>`
+        :`<p class="envwhy" style="color:var(--red)">None of the catalogued bags fit this envelope by their published dimensions. On a trip this tight you're looking at an under-seat bag, or checking one.</p>`}
     </div>
 
     ${planHTML(rows,fits)}
     <div class="share">
       <button>Copy link to this trip</button>
       <button>Email me this answer</button>
-      <span class="u">sizer.com/check?bag=${bag.id}&legs=${S.legs.map(l=>l.c+"."+l.f).join(",")}</span>
+      <span class="u">sizer.com/check?bag=${bag.s}&legs=${S.legs.map(l=>l.c+"."+l.f).join(",")}</span>
     </div>
   </div>`;
 }
 function draw(){renderInputs();renderAnswer()}
 document.querySelectorAll("#risk button").forEach(b=>b.onclick=()=>{S.risk=b.dataset.r;draw()});
 function rerender(){ draw(); }
-draw();
 
 /* ---- units: metric default for everyone, never locale-inferred ----
    The data is metric (airlines publish cm). Imperial-only would tell an EU or
@@ -3163,6 +3449,9 @@ const U = {
 };
 document.querySelectorAll('.units button').forEach(b=>b.onclick=()=>U.set(b.dataset.u));
 document.querySelectorAll('.units button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.u===U.unit));
+
+// Render only after both the generated catalogue and unit formatter are ready.
+draw();
 </script>
 </body>
 </html>

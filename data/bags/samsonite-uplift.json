@@ -1,7 +1,7 @@
 {
  "slug": "samsonite-uplift",
  "brand": "Samsonite",
- "model": "Uplift Hardside Carry-On",
+ "model": "UpLIFT Hardside Carry-On Spinner",
  "variant": null,
  "line": null,
  "type": "hardside spinner",
@@ -11,25 +11,36 @@
  "fits_personal_item": false,
  "external_cm": {
   "v": [
-   55.9,
-   35.6,
-   22.9
+   55.88,
+   35.56,
+   22.86
   ],
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
+  "at": "2026-08-31",
+  "note": "Samsonite's own figure, given three times on the page as \"Overall Dimensions\", \"Exterior Dimensions\" and \"External Dimensions\": 22 x 14 x 9 in. Unexpanded. Not measured by us."
  },
- "claimed_packing_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   49.25,
+   34.49,
+   23.01
+  ],
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
+  "at": "2026-08-31",
+  "note": "Their \"Interior Dimensions\", 19.39 x 13.58 x 9.06 in."
+ },
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
   "v": 2.3,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
+  "at": "2026-08-31",
+  "unit": "kg",
+  "note": "5.07 lb on the page; the spec table rounds to 5.1 lb."
  },
  "capacity_l": null,
  "reviews": [
@@ -51,10 +62,51 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "external_cm",
+   "from": "review (tl-international)",
+   "to": "manufacturer (https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html)",
+   "delta_cm": [
+    -0.02,
+    -0.04,
+    -0.04
+   ],
+   "agrees": true,
+   "detail": "Superseded by the manufacturer's own overall figure. The two agree to within 0.04 cm, so the earlier number was sound — it simply could not be recommended on.",
+   "at": "2026-08-31"
+  },
+  {
+   "field": "claimed_packing_cm",
+   "with": "external_cm",
+   "detail": "Samsonite publishes an interior width of 9.06 in against an exterior width of 9 in. The inside of a suitcase cannot be wider than the outside. It is 1.5 mm and changes no verdict; recorded because it is why we never derive an external size from an internal one, not because it discredits the overall figure.",
+   "source": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
+   "at": "2026-08-31"
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Polycarbonate. Already in the catalogue on Travel + Leisure's measurement, which agreed with Samsonite to within a millimetre. Upgraded to the maker's own overall figure so it can be recommended rather than only displayed.",
+ "manufacturer_source": {
+  "url": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
+  "retrieved": "2026-08-31",
+  "title": "UpLIFT Hardside Carry-On Spinner — Samsonite US",
+  "sku": "1520295963"
+ },
+ "expands_cm": {
+  "v": 2.54,
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/uplift-hardside-carry-on-spinner/152029XXXX.html",
+  "at": "2026-08-31",
+  "unit": "cm",
+  "note": "\"Expands 1-Inch\". Compliant closed; the expander takes the depth to 25.4 cm."
+ },
  "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  6.6,
+  1.1,
+  -0.2
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

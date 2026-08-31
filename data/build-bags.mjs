@@ -178,26 +178,85 @@ for (const [slug, ms] of byBag) {
   });
 }
 
-/* Manufacturer-only research must survive rebuilds without fabricated reviews.
-   A slug collision needs an explicit merge, never a silent overwrite. */
-const seenSlugs = new Set(bags.map((b) => b.slug));
+/* Manufacturer research, merged onto whatever the reviews already produced.
+
+   A slug collision used to throw, with a comment saying it "needs an explicit
+   merge, never a silent overwrite". This is that merge, and it is the whole
+   workflow docs/19 describes: 31 of our sized bags rest on a review
+   publication's tape measure, every one of them is ALREADY in the catalogue
+   through that review, and upgrading one means replacing its dimension with
+   the manufacturer's own overall figure — not adding a second record.
+
+   Who wins what:
+     - DIMENSIONS, weight, expansion: the manufacturer. That is the point of
+       the upgrade, and docs/19 ranks maker_overall above review.
+     - REVIEWS, mentions, awards, caveats: the review side. The manufacturer
+       entry has none, and spreading it over the top would erase them.
+     - CONFLICTS: the union, plus one generated below if the two sources
+       actually disagree.
+
+   Nothing is dropped silently: a field the manufacturer record does not carry
+   keeps whatever the review gave it. */
+const bySlug = new Map(bags.map((b) => [b.slug, b]));
 for (const record of manufacturerBags) {
-  if (seenSlugs.has(record.slug)) throw new Error(`Duplicate bag slug: ${record.slug}`);
-  seenSlugs.add(record.slug);
-  bags.push({
-    variant: null,
-    line: null,
-    role: 'overhead',
-    fits_personal_item: null,
-    claimed_packing_cm: null,
-    claimed_cm: null,
-    measured_cm: null,
-    measured_at: null,
-    reviews: [],
-    conflicts: [],
-    mentions: 0,
-    needs_measurement: true,
+  const prior = bySlug.get(record.slug);
+
+  if (!prior) {
+    const fresh = {
+      variant: null,
+      line: null,
+      role: 'overhead',
+      fits_personal_item: null,
+      claimed_packing_cm: null,
+      claimed_cm: null,
+      measured_cm: null,
+      measured_at: null,
+      reviews: [],
+      conflicts: [],
+      mentions: 0,
+      needs_measurement: true,
+      ...record,
+      ...preserved(record.slug),
+    };
+    bags.push(fresh);
+    bySlug.set(record.slug, fresh);
+    continue;
+  }
+
+  /* Do the two sources agree? Recorded either way, because "the maker and an
+     independent publication measured the same object and got the same answer"
+     is worth as much to a reader as a disagreement — and a disagreement is a
+     finding this site exists to publish.
+
+     0.3 cm is the engine's EPS_CM: below it nothing resolves, so calling that
+     a conflict would cry wolf on rounding. */
+  const EPS = 0.3;
+  const before = prior.external_cm;
+  const after = record.external_cm;
+  const crossSource = [];
+  if (before?.v && after?.v && before.src !== after.src) {
+    const gap = after.v.map((v, i) => +(v - before.v[i]).toFixed(2));
+    const worst = Math.max(...gap.map(Math.abs));
+    crossSource.push({
+      field: 'external_cm',
+      from: `${before.src}${before.ref ? ` (${before.ref})` : ''}`,
+      to: `${after.src} (${after.ref})`,
+      delta_cm: gap,
+      agrees: worst <= EPS,
+      detail:
+        worst <= EPS
+          ? `Superseded by the manufacturer's own overall figure. The two agree to within ${worst} cm, so the earlier number was sound — it simply could not be recommended on.`
+          : `Superseded by the manufacturer's own overall figure, which differs by up to ${worst} cm. Both are recorded; the maker's is the one an airline's limit is compared against.`,
+      at: after.at ?? null,
+    });
+  }
+
+  Object.assign(prior, {
     ...record,
+    /* Review-side facts the manufacturer entry knows nothing about. */
+    reviews: prior.reviews,
+    mentions: prior.mentions,
+    conflicts: [...(prior.conflicts ?? []), ...crossSource, ...(record.conflicts ?? [])],
     ...preserved(record.slug),
   });
 }
