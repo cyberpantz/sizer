@@ -98,13 +98,13 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Browser product specifications read. Volume and capacity both 38L; specs also print weight 74.1oz, retained without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found.",
  "manufacturer_source": {
   "url": "https://bellroy.com/products/lite-carry-on?color=clay&material=dura_lite_nylon",
   "retrieved": "2026-08-31",
   "title": "Bellroy Lite Carry-On",
   "local": "resources/bags/2026-08-31-bellroy-lite.md"
  },
- "notes": "Browser product specifications read. Volume and capacity both 38L; specs also print weight 74.1oz, retained without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found.",
  "claimed_in": {
   "v": [
    20.1,

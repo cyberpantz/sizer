@@ -2,7 +2,7 @@
  "slug": "patagonia-black-hole-40",
  "brand": "Patagonia",
  "model": "Black Hole Duffel 40L",
- "variant": null,
+ "variant": "40L, style49339; opened page renders Sastrugi: Summit Blue",
  "line": null,
  "type": "duffel",
  "soft": 1,
@@ -21,7 +21,25 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   50.038,
+   31.75,
+   21.59
+  ],
+  "unit": "cm",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+  "at": "2026-08-31",
+  "note": "Unqualified dimensions; page does not specify handles/straps included or packing versus exterior. Retained as claimed in printed order. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
@@ -33,10 +51,11 @@
  },
  "capacity_l": {
   "v": 40,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Gear Capacity",
+  "src": "manufacturer",
+  "ref": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -91,6 +110,35 @@
  ],
  "mentions": 2,
  "needs_measurement": true,
+ "notes": "Weight1045g (2lb4.9oz) retained without conversion. Gear capacity also2441cuin. Page renders Sastrugi: Summit Blue despite BLK query; dimensions belong40L style49339, not55/70/100L. No metric triple, separate interior dimensions, expansion amount or explicit empty-weight wording found.",
+ "manufacturer_source": {
+  "url": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+  "retrieved": "2026-08-31",
+  "title": "Patagonia Black Hole Duffel 40L",
+  "local": "resources/bags/2026-08-31-patagonia-black-hole-40.md"
+ },
+ "claimed_in": {
+  "v": [
+   19.7,
+   12.5,
+   8.5
+  ],
+  "unit": "in",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+  "at": "2026-08-31",
+  "note": "Unqualified dimensions; page does not specify handles/straps included or packing versus exterior. Retained as claimed in printed order."
+ },
+ "price_usd": {
+  "v": 165,
+  "unit": "USD",
+  "quote": "$165",
+  "src": "manufacturer",
+  "ref": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+  "at": "2026-08-31",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

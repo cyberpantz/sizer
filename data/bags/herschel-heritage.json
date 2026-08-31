@@ -155,13 +155,13 @@
  ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Features weight6.15lb differs from Weight section6.17lbs; both print2.8kg. Size-guide image alt text gives19.75x13x9in, differing from19.76x12.99x9.02in dimensions section. USD230 displayed with Sale flag and no usable regular comparison; price withheld. Metric dimensions, expansion amount, SKU and explicit empty-weight wording not found.",
  "manufacturer_source": {
   "url": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
   "retrieved": "2026-08-31",
   "title": "Herschel Heritage Hardshell Carry-On",
   "local": "resources/bags/2026-08-31-herschel-heritage.md"
  },
- "notes": "Features weight6.15lb differs from Weight section6.17lbs; both print2.8kg. Size-guide image alt text gives19.75x13x9in, differing from19.76x12.99x9.02in dimensions section. USD230 displayed with Sale flag and no usable regular comparison; price withheld. Metric dimensions, expansion amount, SKU and explicit empty-weight wording not found.",
  "claimed_in": {
   "v": [
    19.76,

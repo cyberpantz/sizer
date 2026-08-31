@@ -76,30 +76,6 @@
    "at": "2026-08-31"
   },
   {
-   "field": "external_cm",
-   "values": [
-    {
-     "src": "manufacturer",
-     "v": [
-      22,
-      14,
-      9
-     ],
-     "unit": "in"
-    },
-    {
-     "src": "manufacturer",
-     "v": [
-      55.88,
-      35.56,
-      22.86
-     ],
-     "unit": "cm"
-    }
-   ],
-   "note": "Original printed unit systems retained; do not silently reconcile any differences."
-  },
-  {
    "field": "weight_kg",
    "values": [
     {
@@ -118,13 +94,13 @@
  ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Hybrid Carry-On size only. Page renders Orchid for requested variant. Current displayed USD370 has malformed original-price USD0 markup; no reliable regular price recorded. Interior dimensions, expansion amount, SKU and explicit empty-weight wording not found. Manufacturer weight may differ from older reviews.",
  "manufacturer_source": {
   "url": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
   "retrieved": "2026-08-31",
   "title": "Monos Hybrid Carry-On",
   "local": "resources/bags/2026-08-31-monos-hybrid.md"
  },
- "notes": "Hybrid Carry-On size only. Page renders Orchid for requested variant. Current displayed USD370 has malformed original-price USD0 markup; no reliable regular price recorded. Interior dimensions, expansion amount, SKU and explicit empty-weight wording not found. Manufacturer weight may differ from older reviews.",
  "external_in": {
   "v": [
    22,

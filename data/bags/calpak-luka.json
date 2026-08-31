@@ -105,13 +105,13 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Regular USD215, sale USD172. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found. Standard soft-sided carry-on, not the separately catalogued Mini.",
  "manufacturer_source": {
   "url": "https://www.calpaktravel.com/products/luka-soft-sided-carry-on-luggage",
   "retrieved": "2026-08-31",
   "title": "Calpak Luka Carry-On",
   "local": "resources/bags/2026-08-31-calpak-luka.md"
  },
- "notes": "Regular USD215, sale USD172. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found. Standard soft-sided carry-on, not the separately catalogued Mini.",
  "claimed_in": {
   "v": [
    21,

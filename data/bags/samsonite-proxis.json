@@ -2,7 +2,7 @@
  "slug": "samsonite-proxis",
  "brand": "Samsonite",
  "model": "Proxis Global Carry-On Spinner",
- "variant": null,
+ "variant": "Proxis Global Carry-On Spinner, Honey Gold; item1418456856",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -11,25 +11,59 @@
  "fits_personal_item": false,
  "external_cm": {
   "v": [
-   55.9,
-   35.6,
-   22.9
+   55.88,
+   35.56,
+   22.86
   ],
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+  "unit": "cm",
+  "quote": "External Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+  "at": "2026-08-31",
+  "note": "Browser specification tooltip explicitly includes handles and wheels; internal tooltip identifies packing dimensions without handles/wheels. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "external_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
  },
- "claimed_packing_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   48.26,
+   33.274,
+   22.098
+  ],
+  "unit": "cm",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions.  Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 2.13,
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "unit": "kg"
+  "v": 2.131873,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": null,
  "reviews": [
@@ -51,10 +85,86 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "external_cm",
+   "from": "review (tl-carryon)",
+   "to": "manufacturer (https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html)",
+   "delta_cm": [
+    -0.02,
+    -0.04,
+    -0.04
+   ],
+   "agrees": true,
+   "detail": "Superseded by the manufacturer's own overall figure. The two agree to within 0.04 cm, so the earlier number was sound — it simply could not be recommended on.",
+   "at": "2026-08-31"
+  },
+  {
+   "field": "weight_lb",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": 4.7,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer",
+     "v": 4.6,
+     "unit": "lbs"
+    }
+   ],
+   "note": "Specifications and description versus top summary."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Top summary prints4.6lbs, specifications and description4.7lbs; unresolved conflict. Expandable, amount not found. Current USD400 and Comp. Value USD500; comparison price may be same or similar goods elsewhere, so not treated as regular list price. Metric dimensions, capacity and explicit empty-weight wording not found.",
+ "manufacturer_source": {
+  "url": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+  "retrieved": "2026-08-31",
+  "title": "Samsonite Proxis Global Carry-On Spinner",
+  "local": "resources/bags/2026-08-31-samsonite-proxis.md"
+ },
+ "external_in": {
+  "v": [
+   22,
+   14,
+   9
+  ],
+  "unit": "in",
+  "quote": "External Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+  "at": "2026-08-31",
+  "note": "Browser specification tooltip explicitly includes handles and wheels; internal tooltip identifies packing dimensions without handles/wheels."
+ },
+ "claimed_packing_in": {
+  "v": [
+   19,
+   13.1,
+   8.7
+  ],
+  "unit": "in",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+  "at": "2026-08-31",
+  "note": "Separately labelled packing/interior dimensions. "
+ },
+ "weight_lb": {
+  "v": 4.7,
+  "unit": "lbs",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+  "at": "2026-08-31"
+ },
  "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  7.6,
+  2.3,
+  0.8
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

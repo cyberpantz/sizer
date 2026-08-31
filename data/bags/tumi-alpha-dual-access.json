@@ -2,7 +2,7 @@
  "slug": "tumi-alpha-dual-access",
  "brand": "Tumi",
  "model": "Alpha International Dual Access Carry-on",
- "variant": null,
+ "variant": "Alpha International Dual Access4Wheeled Carry-On, Tan, style1227481847",
  "line": null,
  "type": "softside spinner",
  "soft": 1,
@@ -21,22 +21,49 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55.88,
+   35.56,
+   22.86
+  ],
+  "unit": "cm",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31",
+  "note": "Dimensions unqualified; wheels and handles inclusion not stated, so claimed only. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 4.85,
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "unit": "kg"
+  "v": 4.853413,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published LB figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": {
   "v": 35,
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Capacity",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -57,9 +84,84 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "expands_in",
+   "values": [
+    {
+     "src": "manufacturer",
+     "v": 2,
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer",
+     "v": 5,
+     "unit": "cm"
+    },
+    {
+     "src": "manufacturer",
+     "v": 0,
+     "unit": "in"
+    }
+   ],
+   "note": "Features give expansion increment up to2in/5cm; separate Expanded Depth field shows0.0in (different semantic field and apparent invalid placeholder). Preserved without reconciliation."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "FXT ballistic nylon, out of stock. Features describe expansion up to2in/5cm, but Expanded Depth field prints0.0in; unresolved, no expanded triple inferred. Metric dimensions, packing dimensions and explicit empty-weight wording not found. Regular USD1150.",
+ "manufacturer_source": {
+  "url": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "retrieved": "2026-08-31",
+  "title": "Tumi Alpha International Dual Access Carry-on",
+  "local": "resources/bags/2026-08-31-tumi-alpha-dual-access.md"
+ },
+ "claimed_in": {
+  "v": [
+   22,
+   14,
+   9
+  ],
+  "unit": "in",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31",
+  "note": "Dimensions unqualified; wheels and handles inclusion not stated, so claimed only."
+ },
+ "weight_lb": {
+  "v": 10.7,
+  "unit": "LB",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31"
+ },
+ "expands_in": {
+  "v": 2,
+  "unit": "in",
+  "quote": "Zipper to zipper expansion (up to 2\" or 5 cm)",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31"
+ },
+ "expands_cm": {
+  "v": 5,
+  "unit": "cm",
+  "quote": "Zipper to zipper expansion (up to 2\" or 5 cm)",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31"
+ },
+ "price_usd": {
+  "v": 1150,
+  "unit": "USD",
+  "quote": "List Price",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+  "at": "2026-08-31",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

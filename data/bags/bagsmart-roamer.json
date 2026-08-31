@@ -106,13 +106,13 @@
  ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Sale USD109.99; regular USD149.99. Expanded Size: 21.7 x 13.9 x 10.06 inches / 55 x 35 x 25.5 cm. Base/expanded capacity 35/42 L. Also prints weight 3197g, retained here without conversion. No interior triple, dimensional expansion increment or explicit empty-weight wording found. Printed unit systems are not reconciled.",
  "manufacturer_source": {
   "url": "https://www.bagsmart.com/products/roamer-carry-on?variant=41110545006674",
   "retrieved": "2026-08-31",
   "title": "Bagsmart Roamer Expandable Carry-On",
   "local": "resources/bags/2026-08-31-bagsmart-roamer.md"
  },
- "notes": "Sale USD109.99; regular USD149.99. Expanded Size: 21.7 x 13.9 x 10.06 inches / 55 x 35 x 25.5 cm. Base/expanded capacity 35/42 L. Also prints weight 3197g, retained here without conversion. No interior triple, dimensional expansion increment or explicit empty-weight wording found. Printed unit systems are not reconciled.",
  "claimed_in": {
   "v": [
    21.7,

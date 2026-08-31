@@ -3221,30 +3221,6 @@
    "notes": "Hybrid Carry-On size only. Page renders Orchid for requested variant. Current displayed USD370 has malformed original-price USD0 markup; no reliable regular price recorded. Interior dimensions, expansion amount, SKU and explicit empty-weight wording not found. Manufacturer weight may differ from older reviews.",
    "conflicts": [
     {
-     "field": "external_cm",
-     "values": [
-      {
-       "src": "manufacturer",
-       "v": [
-        22,
-        14,
-        9
-       ],
-       "unit": "in"
-      },
-      {
-       "src": "manufacturer",
-       "v": [
-        55.88,
-        35.56,
-        22.86
-       ],
-       "unit": "cm"
-      }
-     ],
-     "note": "Original printed unit systems retained; do not silently reconcile any differences."
-    },
-    {
      "field": "weight_kg",
      "values": [
       {
@@ -3449,7 +3425,7 @@
     "src": "manufacturer",
     "ref": "https://july.com/us/luggage/carry-on-max/",
     "at": "2026-08-31",
-    "note": "Separately labelled packing/interior dimensions. "
+    "note": "Page labels this Internal dimensions (excluding wheels); this may represent body dimensions rather than usable packing space. Not a measured interior."
    },
    "weight_lb": {
     "v": 8.16,
@@ -4192,6 +4168,715 @@
     "src": "manufacturer",
     "ref": "https://herschel.com/products/herschel-heritage-hardshell-carry-on-luggage",
     "at": "2026-08-31"
+   }
+  },
+  {
+   "slug": "samsonite-proxis",
+   "brand": "Samsonite",
+   "model": "Proxis Global Carry-On Spinner",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Proxis Global Carry-On Spinner, Honey Gold; item1418456856",
+   "manufacturer_source": {
+    "url": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+    "retrieved": "2026-08-31",
+    "title": "Samsonite Proxis Global Carry-On Spinner",
+    "local": "resources/bags/2026-08-31-samsonite-proxis.md"
+   },
+   "notes": "Top summary prints4.6lbs, specifications and description4.7lbs; unresolved conflict. Expandable, amount not found. Current USD400 and Comp. Value USD500; comparison price may be same or similar goods elsewhere, so not treated as regular list price. Metric dimensions, capacity and explicit empty-weight wording not found.",
+   "conflicts": [
+    {
+     "field": "weight_lb",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": 4.7,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer",
+       "v": 4.6,
+       "unit": "lbs"
+      }
+     ],
+     "note": "Specifications and description versus top summary."
+    }
+   ],
+   "external_in": {
+    "v": [
+     22,
+     14,
+     9
+    ],
+    "unit": "in",
+    "quote": "External Dimensions",
+    "src": "manufacturer",
+    "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+    "at": "2026-08-31",
+    "note": "Browser specification tooltip explicitly includes handles and wheels; internal tooltip identifies packing dimensions without handles/wheels."
+   },
+   "claimed_packing_in": {
+    "v": [
+     19,
+     13.1,
+     8.7
+    ],
+    "unit": "in",
+    "quote": "Internal Dimensions",
+    "src": "manufacturer",
+    "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_lb": {
+    "v": 4.7,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/proxis-global-carry-on-spinner/1418456856.html",
+    "at": "2026-08-31"
+   }
+  },
+  {
+   "slug": "brics-xbag-rolling-duffel",
+   "brand": "Bric's",
+   "model": "X-Bag 21\" Rolling Carry-On Duffle",
+   "line": null,
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "variant": "X-Collection Rolling Duffle28L, Black, BXL32510.101",
+   "manufacturer_source": {
+    "url": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+    "retrieved": "2026-08-31",
+    "title": "Bric's X-Bag 21\" Rolling Carry-On Duffle",
+    "local": "resources/bags/2026-08-31-brics-xbag-rolling-duffel.md"
+   },
+   "notes": "Current official name X-Collection Rolling Duffle28L, product codeBXL32510.101; catalogue calls it X-Bag21-inch. Official dimension is22in, retained without altering catalogue name. Sale USD204, regularUSD240. No metric dimensions, packing triple, expansion amount or explicit empty-weight wording found.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     22,
+     12.5,
+     10
+    ],
+    "unit": "in",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+    "at": "2026-08-31",
+    "note": "Manufacturer prints22 w x10 h x12.5 d inches for horizontal duffel. Stored longest-first [22,12.5,10] for upright fit comparison; axis order only changed, no unit conversion. Wheels/handle inclusion unspecified, so claimed only."
+   },
+   "weight_lb": {
+    "v": 5.5,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 28,
+    "unit": "L",
+    "quote": "Volume",
+    "src": "manufacturer",
+    "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 240,
+    "unit": "USD",
+    "quote": "Regular price",
+    "src": "manufacturer",
+    "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "patagonia-black-hole-40",
+   "brand": "Patagonia",
+   "model": "Black Hole Duffel 40L",
+   "line": null,
+   "type": "duffel",
+   "soft": 1,
+   "wheels": 0,
+   "role": "overhead",
+   "variant": "40L, style49339; opened page renders Sastrugi: Summit Blue",
+   "manufacturer_source": {
+    "url": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+    "retrieved": "2026-08-31",
+    "title": "Patagonia Black Hole Duffel 40L",
+    "local": "resources/bags/2026-08-31-patagonia-black-hole-40.md"
+   },
+   "notes": "Weight1045g (2lb4.9oz) retained without conversion. Gear capacity also2441cuin. Page renders Sastrugi: Summit Blue despite BLK query; dimensions belong40L style49339, not55/70/100L. No metric triple, separate interior dimensions, expansion amount or explicit empty-weight wording found.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     19.7,
+     12.5,
+     8.5
+    ],
+    "unit": "in",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+    "at": "2026-08-31",
+    "note": "Unqualified dimensions; page does not specify handles/straps included or packing versus exterior. Retained as claimed in printed order."
+   },
+   "capacity_l": {
+    "v": 40,
+    "unit": "L",
+    "quote": "Gear Capacity",
+    "src": "manufacturer",
+    "ref": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 165,
+    "unit": "USD",
+    "quote": "$165",
+    "src": "manufacturer",
+    "ref": "https://www.patagonia.com/product/black-hole-duffel-bag-40-liters/49339.html?dwvar_49339_color=BLK",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "travelpro-versapack",
+   "brand": "Travelpro",
+   "model": "VersaPack+ Carry-On Spinner",
+   "line": "travelpro-versapack",
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "VersaPack+ Carry-On, Desert Sage Green, SKU417246106; not Compact",
+   "manufacturer_source": {
+    "url": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
+    "retrieved": "2026-08-31",
+    "title": "Travelpro VersaPack+ Carry-On Spinner",
+    "local": "resources/bags/2026-08-31-travelpro-versapack.md"
+   },
+   "notes": "Regular USD325, saleUSD320. Compare-size panel prints23x14.5x9in versus qualified overall23x14.5x9.5in; conflict retained. Expansion up to2in, tapered. Metric measurements, expanded capacity and explicit empty-weight wording not found.",
+   "conflicts": [
+    {
+     "field": "external_in",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": [
+        23,
+        14.5,
+        9.5
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": [
+        23,
+        14.5,
+        9
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Qualified Features + Dimensions table versus carry-on size-comparison panel; not reconciled."
+    }
+   ],
+   "external_in": {
+    "v": [
+     23,
+     14.5,
+     9.5
+    ],
+    "unit": "in",
+    "quote": "Overall Dimensions (includes wheels and carry handles)",
+    "src": "manufacturer",
+    "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
+    "at": "2026-08-31",
+    "note": "Unexpanded overall dimensions explicitly include wheels and carry handles. Case dimensions separate; not a measured usable interior. Size-comparison panel disagrees on depth."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.5,
+     13.75,
+     9
+    ],
+    "unit": "in",
+    "quote": "Case Dimensions",
+    "src": "manufacturer",
+    "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
+    "at": "2026-08-31",
+    "note": "Separately labelled Case Dimensions; not a measured usable packing interior."
+   },
+   "weight_lb": {
+    "v": 7.7,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 47,
+    "unit": "L",
+    "quote": "Volume",
+    "src": "manufacturer",
+    "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
+    "at": "2026-08-31"
+   },
+   "expands_in": {
+    "v": 2,
+    "unit": "in",
+    "quote": "Tapered expansion option adds up to 2\u201d more packing capacity",
+    "src": "manufacturer",
+    "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 325,
+    "unit": "USD",
+    "quote": "Regular price",
+    "src": "manufacturer",
+    "ref": "https://travelpro.com/collections/versapack/products/versapack%C2%AE-carry-on-expandable-softside-spinner",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "thule-aion",
+   "brand": "Thule",
+   "model": "Aion Carry-On Spinner",
+   "line": null,
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Dark slate, TARS122, model3205020",
+   "manufacturer_source": {
+    "url": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+    "retrieved": "2026-08-31",
+    "title": "Thule Aion Carry-On Spinner",
+    "local": "resources/bags/2026-08-31-thule-aion.md"
+   },
+   "notes": "Dark slate carry-on spinner; other backpack/duffel Aion models excluded. Metric measurements, interior dimensions, expansion amount, reliable USDlist price and explicit empty-weight wording not found in retrieved product specs.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     21.7,
+     13.8,
+     9.1
+    ],
+    "unit": "in",
+    "quote": "Dimensions (LxWxH)",
+    "src": "manufacturer",
+    "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+    "at": "2026-08-31",
+    "note": "Printed LxWxH13.8x9.1x21.7in reordered upright HxWxD. No explicit wheels/handle inclusion, so claimed only."
+   },
+   "weight_lb": {
+    "v": 7.16,
+    "unit": "lb",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 35,
+    "unit": "L",
+    "quote": "Volume",
+    "src": "manufacturer",
+    "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+    "at": "2026-08-31"
+   }
+  },
+  {
+   "slug": "tumi-19-degree-lite",
+   "brand": "Tumi",
+   "model": "19 Degree Lite Carry-On",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "19 Degree Lite Carry-On, Blush, style1542004482; previously International4Wheeled Carry-On",
+   "manufacturer_source": {
+    "url": "https://www.tumi.com/p/carry-on-01542004482/",
+    "retrieved": "2026-08-31",
+    "title": "Tumi 19 Degree Lite Carry-On",
+    "local": "resources/bags/2026-08-31-tumi-19-degree-lite.md"
+   },
+   "notes": "Tegris shell 19 Degree Lite, not regular19Degree or Aluminum. List USD850. No metric measurements, interior triple, expansion amount or explicit empty-weight wording found.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     21.8,
+     14,
+     9
+    ],
+    "unit": "in",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+    "at": "2026-08-31",
+    "note": "Dimensions are unqualified; inclusion of wheels/handles not explicitly stated, so claimed only."
+   },
+   "weight_lb": {
+    "v": 6.3,
+    "unit": "LB",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 34,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 850,
+    "unit": "USD",
+    "quote": "List Price",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "vera-bradley-adair-duffel",
+   "brand": "Vera Bradley",
+   "model": "Adair Rolling Duffel",
+   "line": null,
+   "type": "2-wheel roller",
+   "soft": 1,
+   "wheels": 2,
+   "role": "overhead",
+   "variant": "Cottage Shells in Ripstop, SKU5016223451, UPC198931041343",
+   "manufacturer_source": {
+    "url": "https://verabradley.com/products/adair-rolling-duffel-bag-5016223451",
+    "retrieved": "2026-08-31",
+    "title": "Vera Bradley Adair Rolling Duffel",
+    "local": "resources/bags/2026-08-31-vera-bradley-adair-duffel.md"
+   },
+   "notes": "Regular USD215, saleUSD150.50. Handle drops8.5in and2in are separately stated, not added to dimensions. No metric measurements, interior triple, expansion amount or explicit empty-weight wording found.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     21,
+     13,
+     10
+    ],
+    "unit": "in",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://verabradley.com/products/adair-rolling-duffel-bag-5016223451",
+    "at": "2026-08-31",
+    "note": "Source prints21w x13h x10d inches for horizontal duffel; stored longest-first for upright fit. No explicit wheels/handle inclusion, so claimed only."
+   },
+   "weight_lb": {
+    "v": 4.82,
+    "unit": "lb",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://verabradley.com/products/adair-rolling-duffel-bag-5016223451",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 45,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://verabradley.com/products/adair-rolling-duffel-bag-5016223451",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 215,
+    "unit": "USD",
+    "quote": "$150.50 $215",
+    "src": "manufacturer",
+    "ref": "https://verabradley.com/products/adair-rolling-duffel-bag-5016223451",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "tumi-alpha-dual-access",
+   "brand": "Tumi",
+   "model": "Alpha International Dual Access Carry-on",
+   "line": null,
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Alpha International Dual Access4Wheeled Carry-On, Tan, style1227481847",
+   "manufacturer_source": {
+    "url": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+    "retrieved": "2026-08-31",
+    "title": "Tumi Alpha International Dual Access Carry-on",
+    "local": "resources/bags/2026-08-31-tumi-alpha-dual-access.md"
+   },
+   "notes": "FXT ballistic nylon, out of stock. Features describe expansion up to2in/5cm, but Expanded Depth field prints0.0in; unresolved, no expanded triple inferred. Metric dimensions, packing dimensions and explicit empty-weight wording not found. Regular USD1150.",
+   "conflicts": [
+    {
+     "field": "expands_in",
+     "values": [
+      {
+       "src": "manufacturer",
+       "v": 2,
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer",
+       "v": 5,
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer",
+       "v": 0,
+       "unit": "in"
+      }
+     ],
+     "note": "Features give expansion increment up to2in/5cm; separate Expanded Depth field shows0.0in (different semantic field and apparent invalid placeholder). Preserved without reconciliation."
+    }
+   ],
+   "claimed_in": {
+    "v": [
+     22,
+     14,
+     9
+    ],
+    "unit": "in",
+    "quote": "Dimensions",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+    "at": "2026-08-31",
+    "note": "Dimensions unqualified; wheels and handles inclusion not stated, so claimed only."
+   },
+   "weight_lb": {
+    "v": 10.7,
+    "unit": "LB",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 35,
+    "unit": "L",
+    "quote": "Capacity",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+    "at": "2026-08-31"
+   },
+   "expands_in": {
+    "v": 2,
+    "unit": "in",
+    "quote": "Zipper to zipper expansion (up to 2\" or 5 cm)",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+    "at": "2026-08-31"
+   },
+   "expands_cm": {
+    "v": 5,
+    "unit": "cm",
+    "quote": "Zipper to zipper expansion (up to 2\" or 5 cm)",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 1150,
+    "unit": "USD",
+    "quote": "List Price",
+    "src": "manufacturer",
+    "ref": "https://www.tumi.com/p/international-dual-access-4-wheeled-carry-on-01227481847/",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "travelers-choice-maxporter-ii",
+   "brand": "Traveler's Choice",
+   "model": "Maxporter II Carry-On Spinner",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "MaxPorter II Carry-On, Navy; not Medium or Large Trunk",
+   "manufacturer_source": {
+    "url": "https://www.travelerchoice.com/products/maxporter-carry-on-spinner-luggage",
+    "retrieved": "2026-08-31",
+    "title": "Traveler's Choice Maxporter II Carry-On Spinner",
+    "local": "resources/bags/2026-08-31-travelers-choice-maxporter-ii.md"
+   },
+   "notes": "Carry-On size, Navy, regular USD199.99. No metric measurements, expansion amount, SKU or explicit empty-weight wording found. Carry-on specs kept separate from medium/large trunk recommendations.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     22,
+     14,
+     9
+    ],
+    "unit": "in",
+    "quote": "Overall Dimensions",
+    "src": "manufacturer",
+    "ref": "https://www.travelerchoice.com/products/maxporter-carry-on-spinner-luggage",
+    "at": "2026-08-31",
+    "note": "Label says Overall Dimensions, but no explicit statement that wheels and handles are included was found; conservatively retained as claimed. Packing dimensions separately labelled."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.75,
+     13.5,
+     8.5
+    ],
+    "unit": "in",
+    "quote": "Packing Dimensions",
+    "src": "manufacturer",
+    "ref": "https://www.travelerchoice.com/products/maxporter-carry-on-spinner-luggage",
+    "at": "2026-08-31",
+    "note": "Separately labelled packing/interior dimensions. "
+   },
+   "weight_lb": {
+    "v": 8.14,
+    "unit": "lbs",
+    "quote": "Weight",
+    "src": "manufacturer",
+    "ref": "https://www.travelerchoice.com/products/maxporter-carry-on-spinner-luggage",
+    "at": "2026-08-31"
+   },
+   "capacity_l": {
+    "v": 39,
+    "unit": "Liters",
+    "quote": "Packing Capacity",
+    "src": "manufacturer",
+    "ref": "https://www.travelerchoice.com/products/maxporter-carry-on-spinner-luggage",
+    "at": "2026-08-31"
+   },
+   "price_usd": {
+    "v": 199.99,
+    "unit": "USD",
+    "quote": "$199.99",
+    "src": "manufacturer",
+    "ref": "https://www.travelerchoice.com/products/maxporter-carry-on-spinner-luggage",
+    "at": "2026-08-31",
+    "list": true
+   }
+  },
+  {
+   "slug": "kenneth-cole-underseater",
+   "brand": "Kenneth Cole Reaction",
+   "model": "Underseater Spinner",
+   "line": null,
+   "type": "underseat",
+   "soft": 1,
+   "wheels": 4,
+   "role": "underseat",
+   "variant": "Chelsea Chevron Quilted, UNDERSEATER size; not22-inch Carry-On",
+   "manufacturer_source": {
+    "url": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+    "retrieved": "2026-08-31",
+    "title": "Kenneth Cole Reaction Underseater Spinner",
+    "local": "resources/bags/2026-08-31-kenneth-cole-underseater.md"
+   },
+   "notes": "Catalogue identity confirmed as Chelsea by existing review image captions; dimensions/weight sourced solely from opened Kenneth Cole product page. Generic range expansion2in not assigned to underseater because its dedicated dimensions have no expansion range. No metric measurements, interior dimensions, capacity, exact size-specific USDprice, SKU or explicit empty-weight wording found.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     17,
+     13,
+     9
+    ],
+    "unit": "in",
+    "quote": "Underseater Dimensions",
+    "src": "manufacturer",
+    "ref": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+    "at": "2026-08-31",
+    "note": "Source HxLxD17x13x9in stored uprightHxWxD; wheels and handles inclusion not stated, so claimed only."
+   },
+   "weight_lb": {
+    "v": 5.6,
+    "unit": "lbs",
+    "quote": "Underseater Dimensions",
+    "src": "manufacturer",
+    "ref": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+    "at": "2026-08-31"
+   }
+  },
+  {
+   "slug": "samsonite-freeform",
+   "brand": "Samsonite",
+   "model": "Freeform Carry-on Spinner",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Freeform Carry-On Spinner; exact color/SKU not visible in supplied screenshot",
+   "manufacturer_source": {
+    "url": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+    "retrieved": "2026-08-31",
+    "title": "Samsonite Freeform Carry-On Spinner \u2014 user-supplied manufacturer-page screenshot",
+    "local": "resources/bags/2026-08-31-samsonite-freeform.md"
+   },
+   "notes": "Transcribed from user-supplied screenshot of the manufacturer page received 2026-08-31, archived at resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Product-family URL supplied for reference; screenshot does not display its exact URL or SKU. Direct browser access previously encountered human verification. No live-page verification claimed. Price, capacity, metric specifications and explicit empty-weight wording are not shown.",
+   "conflicts": [],
+   "claimed_in": {
+    "v": [
+     23,
+     15,
+     10
+    ],
+    "unit": "in",
+    "quote": "Exterior Dimensions: 23\u201dH x 15\u201dL x 10\u201dW",
+    "src": "manufacturer",
+    "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+    "at": "2026-08-31",
+    "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Explicitly labelled exterior, but screenshot does not state whether wheels and handles are included. Retained as claimed pending that confirmation. Source H x L x W mapped to upright H x W x D; no conversion."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.5,
+     14.5,
+     10
+    ],
+    "unit": "in",
+    "quote": "Interior Dimensions: 20.5\u201dH x 14.5\u201dL x 10\u201dW",
+    "src": "manufacturer",
+    "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+    "at": "2026-08-31",
+    "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Separately labelled interior dimensions, not measured by us; source H x L x W mapped to upright H x W x D."
+   },
+   "weight_lb": {
+    "v": 6.5,
+    "unit": "lbs",
+    "quote": "Weight: 6.5 lbs",
+    "src": "manufacturer",
+    "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+    "at": "2026-08-31",
+    "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png."
+   },
+   "expands_in": {
+    "v": 1,
+    "unit": "in",
+    "quote": "Expansion: 1\"",
+    "src": "manufacturer",
+    "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+    "at": "2026-08-31",
+    "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Expansion increment only; no expanded exterior triple inferred."
    }
   }
  ]

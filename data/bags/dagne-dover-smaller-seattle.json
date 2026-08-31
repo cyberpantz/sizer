@@ -79,13 +79,13 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Official product URL redirects in browser to selected collection product. Weight printed as 9 lbs 2 oz; preserved here without converting to decimal pounds. No metric dimensions, interior dimensions, expansion amount, SKU or explicit empty-weight wording found. Browser price USD595; no sale reduction visible.",
  "manufacturer_source": {
   "url": "https://www.dagnedover.com/collections/seattle-carry-on-rolling-luggage#WarmDust-Smaller-20.5inch",
   "retrieved": "2026-08-31",
   "title": "Dagne Dover Smaller Seattle Carry-on",
   "local": "resources/bags/2026-08-31-dagne-dover-smaller-seattle.md"
  },
- "notes": "Official product URL redirects in browser to selected collection product. Weight printed as 9 lbs 2 oz; preserved here without converting to decimal pounds. No metric dimensions, interior dimensions, expansion amount, SKU or explicit empty-weight wording found. Browser price USD595; no sale reduction visible.",
  "claimed_in": {
   "v": [
    20.5,

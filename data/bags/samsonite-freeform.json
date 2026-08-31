@@ -2,7 +2,7 @@
  "slug": "samsonite-freeform",
  "brand": "Samsonite",
  "model": "Freeform Carry-on Spinner",
- "variant": null,
+ "variant": "Freeform Carry-On Spinner; exact color/SKU not visible in supplied screenshot",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -20,16 +20,60 @@
   "at": "2026-06-10",
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   52.07,
+   36.83,
+   25.4
+  ],
+  "unit": "cm",
+  "quote": "Interior Dimensions: 20.5”H x 14.5”L x 10”W",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Separately labelled interior dimensions, not measured by us; source H x L x W mapped to upright H x W x D. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_cm": {
+  "v": [
+   58.42,
+   38.1,
+   25.4
+  ],
+  "unit": "cm",
+  "quote": "Exterior Dimensions: 23”H x 15”L x 10”W",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Explicitly labelled exterior, but screenshot does not state whether wheels and handles are included. Retained as claimed pending that confirmation. Source H x L x W mapped to upright H x W x D; no conversion. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 2.95,
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "unit": "kg"
+  "v": 2.948335,
+  "unit": "kg",
+  "quote": "Weight: 6.5 lbs",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
  },
  "capacity_l": null,
  "reviews": [
@@ -54,7 +98,78 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "retrieved": "2026-08-31",
+  "title": "Samsonite Freeform Carry-On Spinner — user-supplied manufacturer-page screenshot",
+  "local": "resources/bags/2026-08-31-samsonite-freeform.md"
+ },
+ "notes": "Transcribed from user-supplied screenshot of the manufacturer page received 2026-08-31, archived at resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Product-family URL supplied for reference; screenshot does not display its exact URL or SKU. Direct browser access previously encountered human verification. No live-page verification claimed. Price, capacity, metric specifications and explicit empty-weight wording are not shown.",
+ "claimed_in": {
+  "v": [
+   23,
+   15,
+   10
+  ],
+  "unit": "in",
+  "quote": "Exterior Dimensions: 23”H x 15”L x 10”W",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Explicitly labelled exterior, but screenshot does not state whether wheels and handles are included. Retained as claimed pending that confirmation. Source H x L x W mapped to upright H x W x D; no conversion."
+ },
+ "claimed_packing_in": {
+  "v": [
+   20.5,
+   14.5,
+   10
+  ],
+  "unit": "in",
+  "quote": "Interior Dimensions: 20.5”H x 14.5”L x 10”W",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Separately labelled interior dimensions, not measured by us; source H x L x W mapped to upright H x W x D."
+ },
+ "weight_lb": {
+  "v": 6.5,
+  "unit": "lbs",
+  "quote": "Weight: 6.5 lbs",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png."
+ },
+ "expands_in": {
+  "v": 1,
+  "unit": "in",
+  "quote": "Expansion: 1\"",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Expansion increment only; no expanded exterior triple inferred."
+ },
+ "expands_cm": {
+  "v": 2.54,
+  "unit": "cm",
+  "quote": "Expansion: 1\"",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/freeform-carry-on-spinner/78255XXXX.html",
+  "at": "2026-08-31",
+  "note": "Evidence: user-supplied manufacturer-page screenshot, resources/bags/2026-08-31-samsonite-freeform-user-screenshot.png. Expansion increment only; no expanded exterior triple inferred. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "expands_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  6.3,
+  1.3,
+  0
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

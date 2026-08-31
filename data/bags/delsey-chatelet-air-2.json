@@ -109,13 +109,13 @@
  ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Navy variant; no metric dimensions, expansion amount or explicit empty-weight wording found. Regular USD349.99 with no reduction shown. Not the smaller international carry-on or a checked size.",
  "manufacturer_source": {
   "url": "https://us.delsey.com/products/401676805-chatelet-air-20-20inch-carry-on-spinner?variant=46677983887583",
   "retrieved": "2026-08-31",
   "title": "Delsey Chatelet Air 2.0 21-inch Spinner",
   "local": "resources/bags/2026-08-31-delsey-chatelet-air-2.md"
  },
- "notes": "Navy variant; no metric dimensions, expansion amount or explicit empty-weight wording found. Regular USD349.99 with no reduction shown. Not the smaller international carry-on or a checked size.",
  "external_in": {
   "v": [
    22.75,

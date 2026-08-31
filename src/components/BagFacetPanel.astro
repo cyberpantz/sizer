@@ -151,7 +151,12 @@ const live = SECTIONS.length > 0;
                     unreachable, which is exactly how these stayed metric. */}
                 <span class="text-[0.9375rem] text-ink">
                   {o.max == null ? o.label : (
-                    <Fragment>{o.prefix} <span data-kg={o.max}>{o.max} kg</span></Fragment>
+                    /* {' '} rather than a literal space. Astro trims whitespace
+                       between an expression and an adjacent element, so
+                       `{o.prefix} <span>` rendered as "Under5.5 lb". The
+                       "Leaves ..." hints below kept their spaces because those
+                       are literal text, which is why only this one broke. */
+                    <Fragment>{o.prefix}{' '}<span data-kg={o.max}>{o.max} kg</span></Fragment>
                   )}
                 </span>
                 <span class="ml-1.5 font-mono text-[0.8125rem] text-muted">{o.n}</span>

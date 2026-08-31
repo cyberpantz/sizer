@@ -2,7 +2,7 @@
  "slug": "tumi-19-degree-lite",
  "brand": "Tumi",
  "model": "19 Degree Lite Carry-On",
- "variant": null,
+ "variant": "19 Degree Lite Carry-On, Blush, style1542004482; previously International4Wheeled Carry-On",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -21,22 +21,49 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55.372,
+   35.56,
+   22.86
+  ],
+  "unit": "cm",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+  "at": "2026-08-31",
+  "note": "Dimensions are unqualified; inclusion of wheels/handles not explicitly stated, so claimed only. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 2.86,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "v": 2.857617,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published LB figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": {
   "v": 34,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Capacity",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -60,6 +87,43 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Tegris shell 19 Degree Lite, not regular19Degree or Aluminum. List USD850. No metric measurements, interior triple, expansion amount or explicit empty-weight wording found.",
+ "manufacturer_source": {
+  "url": "https://www.tumi.com/p/carry-on-01542004482/",
+  "retrieved": "2026-08-31",
+  "title": "Tumi 19 Degree Lite Carry-On",
+  "local": "resources/bags/2026-08-31-tumi-19-degree-lite.md"
+ },
+ "claimed_in": {
+  "v": [
+   21.8,
+   14,
+   9
+  ],
+  "unit": "in",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+  "at": "2026-08-31",
+  "note": "Dimensions are unqualified; inclusion of wheels/handles not explicitly stated, so claimed only."
+ },
+ "weight_lb": {
+  "v": 6.3,
+  "unit": "LB",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+  "at": "2026-08-31"
+ },
+ "price_usd": {
+  "v": 850,
+  "unit": "USD",
+  "quote": "List Price",
+  "src": "manufacturer",
+  "ref": "https://www.tumi.com/p/carry-on-01542004482/",
+  "at": "2026-08-31",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

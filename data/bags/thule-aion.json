@@ -2,7 +2,7 @@
  "slug": "thule-aion",
  "brand": "Thule",
  "model": "Aion Carry-On Spinner",
- "variant": null,
+ "variant": "Dark slate, TARS122, model3205020",
  "line": null,
  "type": "softside spinner",
  "soft": 1,
@@ -21,22 +21,49 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55.118,
+   35.052,
+   23.114
+  ],
+  "unit": "cm",
+  "quote": "Dimensions (LxWxH)",
+  "src": "manufacturer",
+  "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+  "at": "2026-08-31",
+  "note": "Printed LxWxH13.8x9.1x21.7in reordered upright HxWxD. No explicit wheels/handle inclusion, so claimed only. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.25,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "v": 3.247704,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lb figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": {
   "v": 35,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Volume",
+  "src": "manufacturer",
+  "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -60,6 +87,34 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Dark slate carry-on spinner; other backpack/duffel Aion models excluded. Metric measurements, interior dimensions, expansion amount, reliable USDlist price and explicit empty-weight wording not found in retrieved product specs.",
+ "manufacturer_source": {
+  "url": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+  "retrieved": "2026-08-31",
+  "title": "Thule Aion Carry-On Spinner",
+  "local": "resources/bags/2026-08-31-thule-aion.md"
+ },
+ "claimed_in": {
+  "v": [
+   21.7,
+   13.8,
+   9.1
+  ],
+  "unit": "in",
+  "quote": "Dimensions (LxWxH)",
+  "src": "manufacturer",
+  "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+  "at": "2026-08-31",
+  "note": "Printed LxWxH13.8x9.1x21.7in reordered upright HxWxD. No explicit wheels/handle inclusion, so claimed only."
+ },
+ "weight_lb": {
+  "v": 7.16,
+  "unit": "lb",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://www.thule.com/en-us/luggage/carry-on-luggage/thule-aion-carry-on-spinner-_-3205020",
+  "at": "2026-08-31"
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

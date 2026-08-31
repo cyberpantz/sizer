@@ -31,7 +31,7 @@
   "src": "manufacturer",
   "ref": "https://july.com/us/luggage/carry-on-max/",
   "at": "2026-08-31",
-  "note": "Separately labelled packing/interior dimensions.  Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "note": "Page labels this Internal dimensions (excluding wheels); this may represent body dimensions rather than usable packing space. Not a measured interior. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
   "conversion": {
    "from_field": "claimed_packing_in",
    "factor": "2.54",
@@ -105,13 +105,13 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Browser-hydrated CaseSafe variant: 50L base, 62L expanded; expanded depth 10.6 inches. Separate tote 20L, 0.84lbs, 15H x16.1W x7.9D inches, excluded from suitcase capacity. Page warns unsuitable for AU/EU/UK carry-on specifications. Earlier non-CaseSafe page showed different price/spec rounding; not mixed with selected variant. Metric measurements, dimensional expansion increment, SKU and explicit empty-weight wording not found.",
  "manufacturer_source": {
   "url": "https://july.com/us/luggage/carry-on-max/",
   "retrieved": "2026-08-31",
   "title": "July Carry-on Max",
   "local": "resources/bags/2026-08-31-july-carryon-max.md"
  },
- "notes": "Browser-hydrated CaseSafe variant: 50L base, 62L expanded; expanded depth 10.6 inches. Separate tote 20L, 0.84lbs, 15H x16.1W x7.9D inches, excluded from suitcase capacity. Page warns unsuitable for AU/EU/UK carry-on specifications. Earlier non-CaseSafe page showed different price/spec rounding; not mixed with selected variant. Metric measurements, dimensional expansion increment, SKU and explicit empty-weight wording not found.",
  "claimed_in": {
   "v": [
    23,
@@ -136,7 +136,7 @@
   "src": "manufacturer",
   "ref": "https://july.com/us/luggage/carry-on-max/",
   "at": "2026-08-31",
-  "note": "Separately labelled packing/interior dimensions. "
+  "note": "Page labels this Internal dimensions (excluding wheels); this may represent body dimensions rather than usable packing space. Not a measured interior."
  },
  "weight_lb": {
   "v": 8.16,

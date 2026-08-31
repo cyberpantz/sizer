@@ -126,13 +126,13 @@
  ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Specifications and main description agree on 23-inch height, but another description prints 323-inch height. Both retained as conflict, not silently corrected. Current USD450 versus Comp. Value USD600; comparison value not assumed regular list price. Metric dimensions, capacity, expansion amount and explicit empty-weight wording not found.",
  "manufacturer_source": {
   "url": "https://shop.hartmann.com/color/blue/reserve-carry-on/1507341552.html",
   "retrieved": "2026-08-31",
   "title": "Hartmann Reserve Carry-On",
   "local": "resources/bags/2026-08-31-hartmann-reserve.md"
  },
- "notes": "Specifications and main description agree on 23-inch height, but another description prints 323-inch height. Both retained as conflict, not silently corrected. Current USD450 versus Comp. Value USD600; comparison value not assumed regular list price. Metric dimensions, capacity, expansion amount and explicit empty-weight wording not found.",
  "external_in": {
   "v": [
    23,

@@ -110,6 +110,27 @@ describe('the units toggle', () => {
     );
   });
 
+  test('no space between an expression and an element is left to Astro', () => {
+    /* Astro trims whitespace between an expression and an adjacent element, so
+     *   <Fragment>{o.prefix} <span>{o.max} kg</span></Fragment>
+     * rendered as "Under5.5 lb". The literal-text cases beside it ("Leaves
+     * ...") kept their spaces, which is exactly why only one of them broke and
+     * why it survived a source review — the two lines look identical.
+     *
+     * A space that must survive has to be {' '}. This is the pattern that
+     * cannot, and it only became visible when the surrounding text changed
+     * from a single string into assembled markup, so it will recur every time
+     * a label is broken apart for a conversion hook. */
+    const offenders = [];
+    for (const [file, src] of sources) {
+      for (const m of src.matchAll(/\}[ \t]+<(span|b|strong|a|em|code|Fragment)\b/g)) {
+        const line = src.slice(0, m.index).split('\n').length;
+        offenders.push(`${file}:${line} — }${' '}<${m[1]}  (use {' '})`);
+      }
+    }
+    assert.deepEqual(offenders, [], `a space Astro will trim:\n  ${offenders.join('\n  ')}`);
+  });
+
   test('the toggle names the SYSTEM, not one of its units', () => {
     /* It switches length and weight together. Labelling it "cm / in" described
        half of what it does, and gave a reader who wanted pounds no reason to

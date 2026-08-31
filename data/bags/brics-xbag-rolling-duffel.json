@@ -2,7 +2,7 @@
  "slug": "brics-xbag-rolling-duffel",
  "brand": "Bric's",
  "model": "X-Bag 21\" Rolling Carry-On Duffle",
- "variant": null,
+ "variant": "X-Collection Rolling Duffle28L, Black, BXL32510.101",
  "line": null,
  "type": "2-wheel roller",
  "soft": 1,
@@ -21,22 +21,49 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55.88,
+   31.75,
+   25.4
+  ],
+  "unit": "cm",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+  "at": "2026-08-31",
+  "note": "Manufacturer prints22 w x10 h x12.5 d inches for horizontal duffel. Stored longest-first [22,12.5,10] for upright fit comparison; axis order only changed, no unit conversion. Wheels/handle inclusion unspecified, so claimed only. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 2.49,
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "unit": "kg"
+  "v": 2.494745,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": {
   "v": 28,
-  "src": "review",
-  "ref": "tl-carryon",
-  "at": "2026-06-10",
-  "unit": "L"
+  "unit": "L",
+  "quote": "Volume",
+  "src": "manufacturer",
+  "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+  "at": "2026-08-31"
  },
  "reviews": [
   {
@@ -60,6 +87,43 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Current official name X-Collection Rolling Duffle28L, product codeBXL32510.101; catalogue calls it X-Bag21-inch. Official dimension is22in, retained without altering catalogue name. Sale USD204, regularUSD240. No metric dimensions, packing triple, expansion amount or explicit empty-weight wording found.",
+ "manufacturer_source": {
+  "url": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+  "retrieved": "2026-08-31",
+  "title": "Bric's X-Bag 21\" Rolling Carry-On Duffle",
+  "local": "resources/bags/2026-08-31-brics-xbag-rolling-duffel.md"
+ },
+ "claimed_in": {
+  "v": [
+   22,
+   12.5,
+   10
+  ],
+  "unit": "in",
+  "quote": "Dimensions",
+  "src": "manufacturer",
+  "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+  "at": "2026-08-31",
+  "note": "Manufacturer prints22 w x10 h x12.5 d inches for horizontal duffel. Stored longest-first [22,12.5,10] for upright fit comparison; axis order only changed, no unit conversion. Wheels/handle inclusion unspecified, so claimed only."
+ },
+ "weight_lb": {
+  "v": 5.5,
+  "unit": "lbs",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+  "at": "2026-08-31"
+ },
+ "price_usd": {
+  "v": 240,
+  "unit": "USD",
+  "quote": "Regular price",
+  "src": "manufacturer",
+  "ref": "https://bricstore.com/products/x-bag-rolling-duffel-bag?currency=USD&stkn=a698dba1f745&variant=43456363364508",
+  "at": "2026-08-31",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

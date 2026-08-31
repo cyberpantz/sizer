@@ -2,7 +2,7 @@
  "slug": "kenneth-cole-underseater",
  "brand": "Kenneth Cole Reaction",
  "model": "Underseater Spinner",
- "variant": null,
+ "variant": "Chelsea Chevron Quilted, UNDERSEATER size; not22-inch Carry-On",
  "line": null,
  "type": "underseat",
  "soft": 1,
@@ -21,15 +21,41 @@
   "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
  },
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   43.18,
+   33.02,
+   22.86
+  ],
+  "unit": "cm",
+  "quote": "Underseater Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+  "at": "2026-08-31",
+  "note": "Source HxLxD17x13x9in stored uprightHxWxD; wheels and handles inclusion not stated, so claimed only. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 2.54,
-  "src": "review",
-  "ref": "tl-international",
-  "at": "2026-02-23",
-  "unit": "kg"
+  "v": 2.540104,
+  "unit": "kg",
+  "quote": "Underseater Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+  "at": "2026-08-31",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": {
   "v": 34,
@@ -60,6 +86,34 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Catalogue identity confirmed as Chelsea by existing review image captions; dimensions/weight sourced solely from opened Kenneth Cole product page. Generic range expansion2in not assigned to underseater because its dedicated dimensions have no expansion range. No metric measurements, interior dimensions, capacity, exact size-specific USDprice, SKU or explicit empty-weight wording found.",
+ "manufacturer_source": {
+  "url": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+  "retrieved": "2026-08-31",
+  "title": "Kenneth Cole Reaction Underseater Spinner",
+  "local": "resources/bags/2026-08-31-kenneth-cole-underseater.md"
+ },
+ "claimed_in": {
+  "v": [
+   17,
+   13,
+   9
+  ],
+  "unit": "in",
+  "quote": "Underseater Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+  "at": "2026-08-31",
+  "note": "Source HxLxD17x13x9in stored uprightHxWxD; wheels and handles inclusion not stated, so claimed only."
+ },
+ "weight_lb": {
+  "v": 5.6,
+  "unit": "lbs",
+  "quote": "Underseater Dimensions",
+  "src": "manufacturer",
+  "ref": "https://www.kennethcole.com/products/chelsea-chevron-quilted-expandable-suitcase",
+  "at": "2026-08-31"
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

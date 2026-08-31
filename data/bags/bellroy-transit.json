@@ -119,13 +119,13 @@
  "conflicts": [],
  "mentions": 2,
  "needs_measurement": true,
+ "notes": "Product specifications distinguish Volume 41L from Capacity 34L; capacity field uses explicitly labelled capacity. Weight 109.3oz preserved here without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found. Size options include standard Carry-On, Carry-On Large, Check-In and Check-In Large.",
  "manufacturer_source": {
   "url": "https://bellroy.com/products/transit-carry-on?color=black&material=matte_polycarbonate&size=standard",
   "retrieved": "2026-08-31",
   "title": "Bellroy Transit Carry-On",
   "local": "resources/bags/2026-08-31-bellroy-transit.md"
  },
- "notes": "Product specifications distinguish Volume 41L from Capacity 34L; capacity field uses explicitly labelled capacity. Weight 109.3oz preserved here without conversion. No metric dimensions, expansion amount, SKU or explicit empty-weight wording found. Size options include standard Carry-On, Carry-On Large, Check-In and Check-In Large.",
  "claimed_in": {
   "v": [
    21.9,
