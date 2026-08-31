@@ -1,18 +1,27 @@
 ---
-/* The affiliate disclosure is required by the Amazon Associates operating
-   agreement and by the FTC on every page carrying an outbound link — not only
-   the ones that have one today. Putting it in the layout is how it stays put.
-   docs/07-affiliate-setup.md */
+/* The affiliate disclosure is DERIVED, never asserted.
+
+   This used to print "As an Amazon Associate we earn from qualifying
+   purchases" on every page, written in advance from docs/07 so it could not be
+   forgotten once monetisation landed. The instinct was sound and the result
+   was a false claim on all 63 pages: there is no Associates account, no tag,
+   no outbound affiliate link and no revenue.
+
+   A disclosure is a factual claim about us, and it gets the same standard as a
+   claim about a bag — see src/lib/affiliate.mjs. When a programme goes live
+   there, this appears by itself. Until then the footer says nothing about
+   money, because there is nothing true to say. */
+import { disclosure } from '../lib/affiliate.mjs';
+
+const text = disclosure();
 ---
 <footer class="border-t border-rule mt-20 py-8 pb-16">
   <div class="mx-auto max-w-page px-6">
-    <p class="text-muted text-[0.8125rem] max-w-2xl leading-relaxed">
-      As an Amazon Associate we earn from qualifying purchases. We may earn a
-      commission on other links too. It does not change what we recommend —
-      we publish the measurements either way.
-    </p>
-    <nav class="flex gap-6 mt-4">
-      <a href="/methodology/" class="text-ink-2 text-[0.8125rem]">How we measure</a>
+    {text && (
+      <p class="text-muted text-[0.8125rem] max-w-2xl leading-relaxed">{text}</p>
+    )}
+    <nav class:list={['flex gap-6', text && 'mt-4']}>
+      <a href="/methodology/" class="text-ink-2 text-[0.8125rem]">How we work it out</a>
       <a href="/sources/" class="text-ink-2 text-[0.8125rem]">Sources</a>
     </nav>
   </div>
