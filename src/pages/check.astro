@@ -138,9 +138,10 @@ const RISK = [
      a verdict computed in this browser is byte-identical to one computed at
      build time. */
   import { h, render } from 'preact';
-  import AirlinePicker from '../components/AirlinePicker.jsx';
+  import Picker from '../components/Picker.jsx';
   import { createEngine, desc, engine as DEFAULT } from '../engine/fit.mjs';
   import { toBag, toCarrier } from '../engine/normalize.mjs';
+  import { fareLabel } from '../ui/fare.mjs';
   import { createUnits } from '../ui/units.mjs';
   import { advisoryLine, bandLabel } from '../ui/verdict.mjs';
 
@@ -199,6 +200,7 @@ const RISK = [
   const state = { bags: [], legs: [], risk: 'balanced' };
   let DATA = null;
   let CARRIER_ITEMS = [];
+  let BAG_ITEMS = [];
 
   /* ---------- boot ---------- */
 
@@ -211,18 +213,26 @@ const RISK = [
        every keystroke would defeat the useMemo inside the component and make
        58 airlines feel like a lag. */
     CARRIER_ITEMS = DATA.carriers.map((c) => ({ value: c.iata, name: c.name, code: c.iata }));
+    /* Brand and model in one searchable string, so "away big" and "briggs"
+       both land. No code — a bag has no equivalent of an IATA code. */
+    BAG_ITEMS = DATA.bags.map((b) => ({ value: b.slug, name: `${b.brand} ${b.model}` }));
 
     /* Registered once, here, NOT in renderInputs — that runs on every state
        change and would stack a listener per render, so one click would fire
        the handler N times and the trip would jump. */
-    document.addEventListener('sizer:airline', (e) => {
-      const { leg, value } = e.detail;
-      const c = carrierOf(value);
-      if (!c || !state.legs[leg]) return;
-      /* Fares do not survive a carrier change — "Priority" means nothing on
-         the next airline, and silently keeping it would answer a question
-         about a fare that does not exist. */
-      state.legs[leg] = { iata: c.iata, fare: c.fares[0] };
+    document.addEventListener('sizer:pick', (e) => {
+      const { kind, index, value } = e.detail;
+      if (kind === 'bag') {
+        if (!bagOf(value)) return;
+        state.bags[index] = value;
+      } else {
+        const c = carrierOf(value);
+        if (!c || !state.legs[index]) return;
+        /* Fares do not survive a carrier change — "Priority" means nothing on
+           the next airline, and silently keeping it would answer a question
+           about a fare that does not exist. */
+        state.legs[index] = { iata: c.iata, fare: c.fares[0] };
+      }
       draw();
     });
 
@@ -255,13 +265,18 @@ const RISK = [
       })
       .filter(Boolean);
 
-    state.bags = bags.length ? bags : [DATA.bags[0].slug];
+    /* NO BAG IS PRESELECTED. Opening on whatever sorts first in the catalogue
+       put a specific product in front of the reader as though it were their
+       answer — an accidental endorsement, on a site whose whole claim is that
+       it recommends carefully. An empty slot asks the question the page is
+       for. */
+    state.bags = bags.length ? bags : [''];
     state.legs = legs.length ? legs : [{ iata: DATA.carriers[0].iata, fare: DATA.carriers[0].fares[0] }];
     if (['strict', 'balanced', 'chance'].includes(p.get('risk'))) state.risk = p.get('risk');
   }
 
   const permalink = () =>
-    `${location.origin}${location.pathname}?bags=${state.bags.join(',')}` +
+    `${location.origin}${location.pathname}?bags=${state.bags.filter(Boolean).join(',')}` +
     `&legs=${state.legs.map((l) => `${l.iata}.${l.fare}`).join(',')}&risk=${state.risk}`;
 
   /* ---------- model ---------- */
@@ -296,28 +311,44 @@ const RISK = [
   /* ---------- inputs ---------- */
 
   function renderInputs() {
-    /* Every bag in the list carries its own verdict, because "the ones you're
-       choosing between" is only a useful panel if it says which one wins. */
+    /* THE BAG IS A CONTROL, NOT A CAPTION.
+
+       This panel used to render the chosen bag as static text with a remove
+       button that only appeared once a second bag existed. So the page opened
+       on whatever sorted first in the catalogue — an Amazon Basics spinner —
+       and there was no way to change it. The primary question this page asks,
+       "which bag do you own", had no input at all.
+
+       Same Picker as the airlines. Two pickers would drift; the only
+       difference here is the label and which slot the answer lands in. */
     el('[data-bagbox]').innerHTML =
       state.bags
-        .map((slug) => {
-          const b = bagOf(slug);
-          const { worst } = score(slug);
+        .map((slug, i) => {
+          const b = slug ? bagOf(slug) : null;
+          const { worst } = b ? score(slug) : { worst: null };
           const band = worst?.result.band;
-          return `<div class="flex items-center gap-3 border-b border-rule py-3 last:border-b-0">
-            <span class="min-w-0 flex-1">
-              <span class="block text-[1.03125rem] font-semibold leading-tight">${esc(b.brand)} ${esc(b.model)}</span>
-              <span class="mt-0.5 block font-mono text-[0.84375rem] text-muted">${esc(U.dims(b.external_cm))}${
-                b.weight_kg ? ` · ${esc(U.mass(b.weight_kg))} ${esc(U.massLabel())} empty` : ''
-              }</span>
-            </span>
-            <span class="shrink-0 rounded-full px-2.5 py-1 text-[0.875rem] font-semibold ${
-              band ? TAG[band] : UNKNOWN_TAG
-            }">${esc(bandLabel(band))}</span>
+          return `<div class="border-b border-rule py-3 last:border-b-0">
+            <div class="flex items-start gap-2">
+              <div class="min-w-0 flex-1" data-bag-mount="${i}"></div>
+              ${
+                b
+                  ? `<span class="mt-6 shrink-0 rounded-full px-2.5 py-1 text-[0.875rem] font-semibold ${
+                      band ? TAG[band] : UNKNOWN_TAG
+                    }">${esc(bandLabel(band))}</span>`
+                  : ''
+              }
+              ${
+                state.bags.length > 1
+                  ? `<button type="button" data-rmbag="${i}" aria-label="Remove bag ${i + 1}"
+                       class="mt-5 shrink-0 cursor-pointer rounded-chip px-2.5 py-2 text-xl leading-none text-muted hover:bg-blue-wash hover:text-blue">×</button>`
+                  : ''
+              }
+            </div>
             ${
-              state.bags.length > 1
-                ? `<button type="button" data-rmbag="${esc(slug)}" aria-label="Remove ${esc(b.model)}"
-                     class="shrink-0 cursor-pointer rounded-chip px-2.5 py-2 text-xl leading-none text-muted hover:bg-blue-wash hover:text-blue">×</button>`
+              b
+                ? `<p class="mt-1 font-mono text-[0.84375rem] text-muted">${esc(U.dims(b.external_cm))}${
+                    b.weight_kg ? ` · ${esc(U.mass(b.weight_kg))} ${esc(U.massLabel())} empty` : ''
+                  }</p>`
                 : ''
             }
           </div>`;
@@ -341,7 +372,7 @@ const RISK = [
                 ${c.fares
                   .map(
                     (f) =>
-                      `<option value="${esc(f)}"${f === leg.fare ? ' selected' : ''}>${esc(f)} ticket</option>`
+                      `<option value="${esc(f)}"${f === leg.fare ? ' selected' : ''}>${esc(fareLabel(f, c.fare_names?.[f]))}</option>`
                   )
                   .join('')}
               </select>
@@ -372,9 +403,12 @@ const RISK = [
   }
 
   function wireInputs() {
+    /* By INDEX, not by slug. Filtering on slug removed every copy of a bag, so
+       picking the same model into two slots to compare fares — a perfectly
+       reasonable thing to do — made one × delete both. */
     for (const b of root.querySelectorAll('[data-rmbag]')) {
       b.addEventListener('click', () => {
-        state.bags = state.bags.filter((s) => s !== b.dataset.rmbag);
+        state.bags.splice(+b.dataset.rmbag, 1);
         draw();
       });
     }
@@ -385,8 +419,9 @@ const RISK = [
       });
     }
     root.querySelector('[data-addbag]').addEventListener('click', () => {
-      const next = DATA.bags.find((b) => !state.bags.includes(b.slug));
-      if (next) state.bags.push(next.slug);
+      /* An empty slot, not "the next bag we happen to have". Silently adding a
+         product is the same accidental endorsement as preselecting one. */
+      state.bags.push('');
       draw();
     });
     root.querySelector('[data-addleg]').addEventListener('click', () => {
@@ -397,26 +432,42 @@ const RISK = [
     /* Downshift, mounted imperatively rather than as an Astro island.
 
        An island has to exist in the server-rendered template, and these rows
-       are built here from a variable-length array — one per leg, added and
-       removed as the trip changes. Preact's own render() handles that; the
-       @astrojs/preact integration is still what configures the JSX transform.
+       are built here from variable-length arrays — one per bag, one per leg,
+       added and removed as the trip changes. Preact's own render() handles
+       that; @astrojs/preact is still what configures the JSX transform.
 
-       The picker reports a choice on `sizer:airline` (see AirlinePicker.jsx —
-       Astro cannot pass a function across an island boundary, so a DOM event
-       is the contract), and the handler below is registered ONCE in boot(),
-       not here, because renderInputs() runs on every state change. */
+       Rebuilding on every state change is safe ONLY because typing never
+       redraws: the picker filters its own list locally and calls back once, on
+       commit. If a keystroke went through draw() the input would be destroyed
+       under the person using it.
+
+       h(), not Picker({...}) — calling a component as a plain function runs
+       its hooks outside a render context and throws. There is no JSX in an
+       .astro script to hide that. */
+    for (const mount of root.querySelectorAll('[data-bag-mount]')) {
+      const i = +mount.dataset.bagMount;
+      render(
+        h(Picker, {
+          items: BAG_ITEMS,
+          value: state.bags[i],
+          label: state.bags.length > 1 ? `Bag ${i + 1}` : 'Your bag',
+          kind: 'bag',
+          index: i,
+          placeholder: 'Choose the bag you own…',
+        }),
+        mount
+      );
+    }
+
     for (const mount of root.querySelectorAll('[data-carrier-mount]')) {
       const i = +mount.dataset.carrierMount;
-      /* h(), not AirlinePicker({...}). Calling the component as a plain
-         function executes its hooks outside a render context and throws —
-         Preact has to own the invocation. There is no JSX in an .astro script
-         to hide that for us. */
       render(
-        h(AirlinePicker, {
+        h(Picker, {
           items: CARRIER_ITEMS,
           value: state.legs[i].iata,
           label: `Airline for flight ${i + 1}`,
-          legIndex: i,
+          kind: 'airline',
+          index: i,
         }),
         mount
       );
@@ -476,7 +527,7 @@ const RISK = [
       bind ? ' bg-red-wash' : ''
     }">
       <span class="grid h-6 w-6 place-items-center rounded-full bg-surface-2 font-mono text-[0.8125rem] text-muted">${x.i + 1}</span>
-      <span class="font-semibold">${esc(x.carrier.name)}<span class="block text-[0.875rem] font-normal text-muted">${esc(x.leg.fare)} ticket · ${source(x.leg.iata)}</span></span>
+      <span class="font-semibold">${esc(x.carrier.name)}<span class="block text-[0.875rem] font-normal text-muted">${esc(fareLabel(x.leg.fare, carrierOf(x.leg.iata)?.fare_names?.[x.leg.fare]))} · ${source(x.leg.iata)}</span></span>
       <span class="text-[0.9375rem] text-ink-2">${detail}${
         weight ? ` · ${weight.level === 'over' ? 'over on weight' : 'tight on weight'}` : ''
       }</span>
@@ -599,7 +650,23 @@ const RISK = [
   }
 
   function renderAnswer() {
-    const primary = state.bags[0];
+    const primary = state.bags.find(Boolean);
+
+    /* Nothing chosen yet. Say what the page will do rather than showing an
+       empty panel — and say it in terms of the thing that makes this tool
+       different from a per-airline lookup. */
+    if (!primary) {
+      el('[data-answer]').innerHTML = `
+        <div class="rounded-card border border-dashed border-rule-strong bg-surface p-[1.625rem]">
+          <p class="text-lg font-semibold text-ink">Choose a bag to see the answer</p>
+          <p class="mt-2 max-w-[56ch] text-ink-2">
+            We check it against every flight you list, name the leg that decides
+            the trip, and draw the biggest bag that survives all of them. Your
+            airlines are already set — pick a bag on the left.
+          </p>
+        </div>`;
+      return;
+    }
     const { rows, worst, bag: bagOfEngine } = score(primary);
     const b = bagOf(primary);
     const band = worst.result.band;

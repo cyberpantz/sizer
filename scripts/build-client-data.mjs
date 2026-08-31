@@ -28,12 +28,23 @@ const carrierRecords = await loadCarriers();
 const carriers = [];
 for (const c of carrierRecords) {
   const fares = [...new Set((c.record.allowances ?? []).map((a) => a.fare_class).filter(Boolean))];
+  /* The airline's own word for each fare — "Light", "SMART" — which beats
+     anything we can derive from the key, because it is what the reader saw
+     when they booked. Only about a fifth of rows have one; ui/fare.mjs falls
+     back and also rejects the ones that were assembled from a key rather than
+     read off a page. */
+  const fareNames = {};
+  for (const a of c.record.allowances ?? []) {
+    if (a.fare_class && a.fare_name && !fareNames[a.fare_class])
+      fareNames[a.fare_class] = a.fare_name;
+  }
   carriers.push({
     iata: c.iata,
     name: c.name,
     region: c.record.region ?? null,
     strictness: c.strictness,
     fares: fares.length ? fares : ['economy'],
+    fare_names: fareNames,
     /* Only what toCarrier() reads, so the browser resolves a booking exactly
        as the build does — same code, same answer. Evidence, dossiers and audit
        notes are research, not runtime: they belong on the carrier page, not in

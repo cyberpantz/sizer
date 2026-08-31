@@ -6,15 +6,11 @@
    unverifiable claim is the thing this site exists not to publish. The rule is
    cheap to state and easy to lose in a refactor, so it is a test.
 
-   The uncomfortable half is the second test. 22 of the 58 carriers here are
-   still `placeholder: true` — Ryanair, Lufthansa, American, Delta, British
-   Airways, Emirates, Singapore among them — and they produce verdicts on the
-   live page today. They have no source URL because nobody has read their page.
-   That is a real gap, and the requirement is not that it disappears; it is
-   that the UI SAYS SO rather than printing the same confident sentence with
-   the link quietly missing. */
+   Placeholder status must survive catalogue generation, including when the
+   researched dataset has no placeholders left. Compare against source records
+   rather than requiring an obsolete positive placeholder count. */
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { describe, test } from 'node:test';
 
 const D = JSON.parse(readFileSync('public/catalogue.json', 'utf8'));
@@ -51,38 +47,39 @@ describe('provenance in the UI', () => {
   });
 
   test('every place that names a carrier as the reason also cites it', () => {
-    /* Three surfaces name an airline as the cause of an answer: the per-leg
+    /* Pin the BEHAVIOUR, not the exact sentence.
+
+       The first version matched the literal string "ticket · ${source(" and
+       failed the moment the fare label beside it changed — the citation was
+       still there, the copy around it had moved. A guard that breaks on a
+       wording change gets "fixed" by deleting it, and then the rule it was
+       protecting goes unwatched.
+
+       Three surfaces name an airline as the cause of an answer: the per-leg
        table, the comparator heading, and the envelope's "set by". Each must
-       call source(). */
-    for (const marker of [
-      'ticket · ${source(',
-      'Your bag against',
-      'the tightest limit on your itinerary',
+       call source() inside its own render function. */
+    for (const [surface, fn] of [
+      ['the per-leg table', 'function legRow'],
+      ['the comparator', 'function comparator'],
+      ['the envelope', 'function renderAnswer'],
     ]) {
-      assert.ok(page.includes(marker), `check.astro no longer contains "${marker}"`);
+      const start = page.indexOf(fn);
+      assert.ok(start > -1, `${fn} is gone — does ${surface} still exist?`);
+      const end = page.indexOf('\n  }\n', start);
+      const body = page.slice(start, end === -1 ? undefined : end);
+      assert.match(body, /\bsource\(/, `${surface} names an airline without citing it`);
     }
-    /* Count call sites, not one spelling of them: two are `${source(...)}` and
-       one is `setters.map((x) => source(x.iata))`. An earlier version of this
-       test matched only the first spelling and reported a violation that did
-       not exist — a guard that cries wolf gets switched off. */
-    const sourceCalls = (page.match(/(?<!function )\bsource\(/g) ?? []).length;
-    assert.ok(
-      sourceCalls >= 3,
-      `only ${sourceCalls} source() calls — a surface that names an airline has stopped citing it`
-    );
   });
 
-  test('placeholder carriers are still counted honestly, not hidden', () => {
-    /* If a placeholder were quietly excluded from the catalogue the links
-       problem would "go away" while the site simply answered for fewer
-       airlines without saying so. They ship; they are marked. */
-    const placeholders = D.carriers.filter((c) => c.record.placeholder);
-    assert.ok(
-      placeholders.length > 0,
-      'placeholders vanished from the payload — were they dropped?'
-    );
-    for (const c of placeholders) {
-      assert.equal(c.record.source_url, null, `${c.name} is a placeholder but claims a source`);
+  test('every source carrier ships with its actual placeholder status', () => {
+    const records = readdirSync('data/carriers')
+      .filter((name) => name.endsWith('.json') && !name.startsWith('_'))
+      .map((name) => JSON.parse(readFileSync(`data/carriers/${name}`, 'utf8')));
+    assert.equal(D.carriers.length, records.length);
+    for (const record of records) {
+      const shipped = D.carriers.find((c) => c.iata === record.iata);
+      assert.ok(shipped, `${record.iata} was dropped from the payload`);
+      assert.equal(shipped.record.placeholder, record.placeholder === true, record.iata);
     }
   });
 });

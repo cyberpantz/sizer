@@ -1,8 +1,13 @@
-/* The airline picker: Downshift's useCombobox, our markup.
+/* One picker, for anything with a long list: Downshift's useCombobox, our
+   markup.
 
-   Replaces a <select> of 58 options heading for 100 — a control that got
-   measurably worse with every carrier we added, which is a perverse
-   relationship with the main job on this project.
+   Replaces a <select> of 58 airlines heading for 100, AND a <select> of 39
+   bags — controls that got measurably worse with every record we added, which
+   is a perverse relationship with the main job on this project.
+
+   ONE component for both, because two would drift. The only thing that differs
+   between an airline and a bag here is the label and which slot the answer
+   belongs to, and both are props.
 
    WHY DOWNSHIFT AND NOT MY OWN. I started writing one and it was the wrong
    call: keyboard handling, aria-activedescendant, the live region that
@@ -19,14 +24,13 @@
    boundary — props are serialised. So the picker announces a choice with a
    CustomEvent and the page script listens. That keeps every verdict decision
    in the page, where the engine is, and leaves this component responsible for
-   one thing: choosing an airline.
+   one thing: choosing an item.
 
    DELIBERATE BEHAVIOUR, each of which is easy to get wrong:
 
    - Never invents a choice. Typing something that matches nothing leaves the
-     previous airline selected and says so. A picker that silently keeps the
-     old value behind new text is how someone checks a bag against the wrong
-     airline.
+     previous selection and says so. A picker that silently keeps the old value
+     behind new text is how someone checks a bag against the wrong airline.
    - Escape restores rather than clears. "Forget what I typed" must not also
      mean "forget what I chose".
    - Opening shows everything. Someone who does not know the airline's name
@@ -42,7 +46,18 @@ import { search } from '../ui/search.mjs';
    shown instead of silently cutting the list. */
 const MAX_VISIBLE = 50;
 
-export default function AirlinePicker({ items = [], value, label, legIndex = 0, name }) {
+export default function Picker({
+  items = [],
+  value,
+  label,
+  /* Which list this is ("airline" | "bag") and which slot in it. Both travel
+     back out on the event so the page can put the answer in the right place
+     without this component knowing anything about trips or catalogues. */
+  kind = 'item',
+  index = 0,
+  placeholder = 'Type to search',
+  name,
+}) {
   /* The input is CONTROLLED and holds the query, not the choice. The chosen
      airline shows as the placeholder, so an abandoned search never leaves
      misleading text sitting in a field that still points somewhere else. */
@@ -81,8 +96,8 @@ export default function AirlinePicker({ items = [], value, label, legIndex = 0, 
       /* The page owns the trip and the engine; this component owns one field.
          See the header — Astro cannot hand us a callback. */
       document.dispatchEvent(
-        new CustomEvent('sizer:airline', {
-          detail: { leg: legIndex, value: selectedItem.value },
+        new CustomEvent('sizer:pick', {
+          detail: { kind, index, value: selectedItem.value },
         })
       );
     },
@@ -100,7 +115,7 @@ export default function AirlinePicker({ items = [], value, label, legIndex = 0, 
       <div class="relative mt-1">
         <input
           {...getInputProps({
-            placeholder: selected ? selected.name : 'Type to search',
+            placeholder: selected ? selected.name : placeholder,
             spellcheck: false,
             autocomplete: 'off',
           })}
@@ -109,7 +124,7 @@ export default function AirlinePicker({ items = [], value, label, legIndex = 0, 
         <button
           type="button"
           {...getToggleButtonProps()}
-          aria-label="Show all airlines"
+          aria-label={`Show all ${kind}s`}
           class="absolute inset-y-0 right-0 grid w-9 cursor-pointer place-items-center text-muted hover:text-blue"
         >
           ▾
@@ -129,7 +144,7 @@ export default function AirlinePicker({ items = [], value, label, legIndex = 0, 
       >
         {isOpen && visible.length === 0 && (
           <li class="px-3 py-2 text-[0.9375rem] text-muted">
-            No airline matches “{query}”. {selected ? `Still set to ${selected.name}.` : ''}
+            No {kind} matches “{query}”. {selected ? `Still set to ${selected.name}.` : ''}
           </li>
         )}
 
