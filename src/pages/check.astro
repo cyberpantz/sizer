@@ -179,10 +179,20 @@ const RISK = [
     wont: 'text-red',
   };
   const UNKNOWN_TAG = 'bg-surface-2 text-muted';
+  /* The same four bands as CSS custom properties, for SVG attributes — which
+     take colours, not utility classes. */
+  const INK = {
+    clears: 'var(--color-green)',
+    line: 'var(--color-amber)',
+    gamble: 'var(--color-orange)',
+    wont: 'var(--color-red)',
+  };
 
   const el = (sel) => root.querySelector(sel);
   const esc = (s) =>
     String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+  const dedupeBy = (xs, key) => [...new Map(xs.map((x) => [key(x), x])).values()];
 
   const state = { bags: [], legs: [], risk: 'balanced' };
   let DATA = null;
@@ -434,7 +444,7 @@ const RISK = [
       bind ? ' bg-red-wash' : ''
     }">
       <span class="grid h-6 w-6 place-items-center rounded-full bg-surface-2 font-mono text-[0.8125rem] text-muted">${x.i + 1}</span>
-      <span class="font-semibold">${esc(x.carrier.name)}<span class="block text-[0.875rem] font-normal text-muted">${esc(x.leg.fare)} ticket</span></span>
+      <span class="font-semibold">${esc(x.carrier.name)}<span class="block text-[0.875rem] font-normal text-muted">${esc(x.leg.fare)} ticket · ${source(x.leg.iata)}</span></span>
       <span class="text-[0.9375rem] text-ink-2">${detail}${
         weight ? ` · ${weight.level === 'over' ? 'over on weight' : 'tight on weight'}` : ''
       }</span>
@@ -444,9 +454,121 @@ const RISK = [
     </div>`;
   }
 
+  /* ---------- provenance ---------- */
+
+  /* Whenever this page NAMES an airline as the reason for an answer, it has to
+     hand the reader the page that answer came from. "Set by Ryanair — the
+     tightest limit on your itinerary" is a claim about a company, and a claim
+     nobody can check is exactly what this site exists not to publish.
+
+     Two states, and the second one matters more:
+
+       - we have read their page: link it, dated.
+       - we have NOT: say so, in place of the link. 22 of the 58 carriers here
+         are still placeholder records — Ryanair, Lufthansa, American, Delta,
+         British Airways among them — and they produce verdicts today. Quietly
+         dropping the link on exactly those records would leave our weakest
+         numbers wearing the same confident sentence as our best ones. */
+  function source(iata) {
+    const rec = carrierOf(iata)?.record;
+    if (rec?.source_url) {
+      const when = rec.verified_at
+        ? ` · read ${new Date(rec.verified_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`
+        : '';
+      return `<a href="${esc(rec.source_url)}" rel="nofollow noopener" target="_blank" class="text-blue">their baggage page ↗</a><span class="text-muted">${esc(when)}</span>`;
+    }
+    return `<span class="text-muted">no source recorded — this airline's page has not been read yet</span>`;
+  }
+
+  /* ---------- the comparator ---------- */
+
+  /* Your bag drawn against the box that decides the trip.
+
+     Everything above this is words and numbers, and a size problem is neither
+     — it is a shape sticking out of a frame. This draws that.
+
+     Three things keep it honest, and all three are the reason it is built from
+     the engine's own arrays rather than from the published dimensions:
+
+     1. SORTED, NOT NAMED. The engine compares largest-to-largest because a bag
+        rotates; "height" is the manufacturer's convention, not a constraint.
+        So the axes are labelled longest / second / shortest, and the drawing
+        cannot imply an orientation the verdict never assumed.
+     2. EFFECTIVE, NOT PUBLISHED. A soft bag gets SOFT_COMPRESS_CM off its
+        smallest side before the verdict is decided. Draw the published figure
+        and the picture contradicts the answer beside it — a bag shown poking
+        out of the box under the word "It fits". The caption says when this has
+        happened rather than quietly redrawing the bag smaller.
+     3. ONE SOURCE. `E.effective(bag)` and `desc(allowance)` are literally the
+        two arrays `delta()` subtracts. The picture cannot disagree with the
+        verdict, because it is the same subtraction. */
+  const AXIS = ['Longest side', 'Second side', 'Shortest side'];
+
+  function comparator(bagRecord, engineBag, carrier, band) {
+    if (!carrier?.allowance) return '';
+    const E = ENGINES[state.risk] ?? ENGINES.balanced;
+    const bag = E.effective(engineBag);
+    const box = desc(carrier.allowance.max_cm);
+
+    /* Front elevation uses the two largest axes; the third gets its own bar,
+       because a flat drawing that pretends to show depth is a lie with a
+       vanishing point. */
+    const W = 250;
+    const H = 190;
+    const pad = 26;
+    const span = Math.max(bag[0], box[0], bag[1], box[1]);
+    const k = Math.min((H - pad * 2) / span, (W - pad * 2) / span);
+    const rect = (long, wide, attrs) =>
+      `<rect x="${pad}" y="${H - pad - long * k}" width="${wide * k}" height="${long * k}" rx="4" ${attrs}/>`;
+
+    const stroke = band ? INK[band] : 'var(--color-muted)';
+
+    const bar = (i) => {
+      const over = +(bag[i] - box[i]).toFixed(1);
+      const widest = Math.max(bag[i], box[i]);
+      const pct = (v) => `${(v / widest) * 100}%`;
+      return `<div class="grid grid-cols-[7.5rem_1fr_5.5rem] items-center gap-3 py-2">
+        <span class="text-[0.875rem] text-muted">${AXIS[i]}</span>
+        <span class="relative block h-6">
+          <span class="absolute inset-y-0 left-0 rounded-sm bg-surface-2" style="width:${pct(box[i])}"></span>
+          <span class="absolute inset-y-1 left-0 rounded-sm" style="width:${pct(bag[i])};background:${stroke};opacity:.55"></span>
+          <span class="absolute inset-y-0 w-px bg-ink-2" style="left:${pct(box[i])}"></span>
+        </span>
+        <span class="text-right font-mono text-[0.8125rem] ${over > 0 ? 'text-red' : 'text-ink-2'}">${
+          over > 0 ? `+${esc(U.len(over))}` : esc(U.len(Math.abs(over)))
+        } ${esc(U.lenLabel())}</span>
+      </div>`;
+    };
+
+    return `<div class="mt-6 rounded-card border border-rule bg-surface-2 p-5">
+      <p class="text-[0.875rem] font-semibold text-ink">Your bag against ${esc(carrier.name)}'s limit</p>
+      <p class="mt-0.5 text-[0.8125rem]">${source(carrier.iata)}</p>
+      <div class="mt-3 flex flex-wrap items-center gap-6">
+        <svg viewBox="0 0 ${W} ${H}" class="h-[190px] w-[250px] shrink-0" role="img"
+          aria-label="The bag drawn to scale inside the airline's published allowance, longest side against second-longest">
+          ${rect(box[0], box[1], 'fill="var(--color-surface)" stroke="var(--color-rule-strong)" stroke-width="2" stroke-dasharray="6 4"')}
+          ${rect(bag[0], bag[1], `fill="${stroke}" fill-opacity=".14" stroke="${stroke}" stroke-width="2.5"`)}
+          <text x="${pad}" y="${H - 8}" font-size="11" font-family="IBM Plex Mono" fill="var(--color-muted)">bag ${esc(U.len(bag[1]))}×${esc(U.len(bag[0]))}</text>
+          <text x="${W - pad}" y="${H - 8}" text-anchor="end" font-size="11" font-family="IBM Plex Mono" fill="var(--color-rule-strong)">limit ${esc(U.len(box[1]))}×${esc(U.len(box[0]))}</text>
+        </svg>
+        <div class="min-w-[19rem] flex-1">
+          ${[0, 1, 2].map(bar).join('')}
+        </div>
+      </div>
+      <p class="mt-2 text-[0.8125rem] text-muted">
+        Compared longest side to longest side — a bag turns, so the maker's
+        labels for its sides are not a constraint.${
+          bagRecord.soft
+            ? ` Drawn ${esc(U.len(DEFAULT.config.SOFT_COMPRESS_CM))} ${esc(U.lenLabel())} thinner on the shortest side than published, because a soft bag compresses and the verdict already allows for it.`
+            : ''
+        }
+      </p>
+    </div>`;
+  }
+
   function renderAnswer() {
     const primary = state.bags[0];
-    const { rows, worst } = score(primary);
+    const { rows, worst, bag: bagOfEngine } = score(primary);
     const b = bagOf(primary);
     const band = worst.result.band;
 
@@ -456,14 +578,16 @@ const RISK = [
        a guess is worse than no envelope. */
     const scorable = rows.filter((x) => !x.result.unknown && x.carrier.allowance);
     const env = DEFAULT.envelope(scorable.map((x) => x.carrier));
+    /* Carried as {name, iata} rather than a bare name, because every airline
+       named as the reason for a number now has to be linkable back to the page
+       that number came from. A Set of strings cannot do that. */
     const setters = env
-      ? [
-          ...new Set(
-            scorable
-              .filter((x) => desc(x.carrier.allowance.max_cm).some((v, i) => v === env[i]))
-              .map((x) => x.carrier.name)
-          ),
-        ]
+      ? dedupeBy(
+          scorable
+            .filter((x) => desc(x.carrier.allowance.max_cm).some((v, i) => v === env[i]))
+            .map((x) => ({ name: x.carrier.name, iata: x.leg.iata })),
+          (x) => x.iata
+        )
       : [];
     const fits = env
       ? DATA.bags.filter((x) => desc(x.external_cm).every((v, i) => v <= env[i]))
@@ -482,6 +606,8 @@ const RISK = [
           band ? WORD[band] : 'text-muted'
         }">${esc(bandLabel(band))}</p>
         <p class="mt-3 max-w-[56ch] text-lg text-ink-2">${explain(worst, rows)}</p>
+
+        ${comparator(b, bagOfEngine, worst.carrier, band)}
 
         <div class="mt-6 overflow-hidden rounded-card border border-rule">
           ${rows.map((x) => legRow(x, worst)).join('')}
@@ -505,7 +631,8 @@ const RISK = [
               ? `<p class="mt-1.5 text-[clamp(1.9rem,4.6vw,2.7rem)] font-bold leading-none tracking-tight tabular-nums">${env
                   .map((v) => esc(U.len(v)))
                   .join('<span class="px-1.5 text-[0.66em] text-muted">×</span>')}<span class="ml-1.5 text-[0.42em] font-normal text-muted">${esc(U.lenLabel())}</span></p>
-                 <p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-ink-2">Set by <b class="font-semibold text-ink">${esc(setters.join(' and '))}</b> — the tightest limit on your itinerary. This is a size comparison only: fare entitlement, packed weight and the aircraft's own bins still need checking.</p>
+                 <p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-ink-2">Set by <b class="font-semibold text-ink">${esc(setters.map((x) => x.name).join(' and '))}</b> — the tightest limit on your itinerary. This is a size comparison only: fare entitlement, packed weight and the aircraft's own bins still need checking.</p>
+                 <p class="mt-1.5 text-[0.8125rem]">Check it yourself: ${setters.map((x) => source(x.iata)).join(' · ')}</p>
                  ${
                    fits.length
                      ? `<div class="mt-5 grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(13rem,1fr))]">${fits

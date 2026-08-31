@@ -9,6 +9,17 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { loadBags, loadCarriers } from '../src/lib/data.mjs';
 
+/** Where a carrier's allowance was read from. Per-allowance first — a fare can
+ *  be documented on a different page from the airline's index — then the
+ *  record's own. Empty strings are NOT a source; several records carry one. */
+function primarySource(record) {
+  const rows = record.allowances ?? [];
+  const row = rows.find((a) => a.source_url) ?? null;
+  const url = row?.source_url || record.source_url || null;
+  if (!url) return null;
+  return { url, at: row?.verified_at ?? record.verified_at ?? null };
+}
+
 const bags = await loadBags();
 
 /* Every fare of every carrier, because the fare is half the answer — Ryanair
@@ -42,6 +53,19 @@ for (const c of carrierRecords) {
           }
         : null,
       cabin_absence: c.record.cabin_absence,
+      /* Provenance travels with the data to the browser.
+
+         Any airline the page NAMES as the reason for an answer — "set by
+         Ryanair", "Ryanair decides this trip" — has to come with a way for the
+         reader to check it. A claim they cannot verify is the thing this site
+         exists not to be, and a link is two fields.
+
+         `placeholder` ships too, and is the uncomfortable one: 22 carriers,
+         including most of the famous ones, currently produce verdicts from
+         records nobody has read. The page must be able to say so. */
+      source_url: primarySource(c.record)?.url ?? null,
+      verified_at: primarySource(c.record)?.at ?? null,
+      placeholder: c.record.placeholder === true,
       allowances: (c.record.allowances ?? []).map((a) => ({
         type: a.type,
         fare_class: a.fare_class,

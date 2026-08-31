@@ -107,7 +107,11 @@ describe('editorial policy — name the behaviour, not the actor', () => {
             : []
       );
     for (const f of walk('src')) {
-      const src = readFileSync(f, 'utf8');
+      /* Comments are not shipped copy, and they are where the reasoning about
+         this rule lives — a note explaining why we do NOT make a claim was
+         itself flagged as making it. A guard that fails on its own rationale
+         gets deleted rather than fixed. */
+      const src = readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
       const hit = CLASS_ACCUSATION.exec(src);
       assert.equal(hit, null, `${f} accuses a class of actors: "${hit?.[0]}"`);
     }
