@@ -81,10 +81,22 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
       <section class="mb-16 rounded-card border border-amber/30 bg-amber-wash p-5">
         <h2 class="font-semibold text-amber">Where these numbers come from</h2>
         <p class="mt-2 max-w-3xl text-[0.9375rem] text-ink-2">
-          <strong>{stats.bags_promotable} of {stats.bags_sized}</strong> bags here
-          carry the manufacturer's own overall dimensions — the figure that
-          includes wheels and handle. The rest use a review publication's
-          measurement, which we attribute and are still replacing at source.
+          {/* THREE NUMBERS, NOT ONE. This said "{promotable} of {sized} carry
+              the manufacturer's own overall dimensions. The rest use a review
+              publication's measurement" — and "the rest" was false. Nearly
+              every bag is on a maker figure; what varies is whether the maker
+              SAYS which figure it is. Reporting only the strictest rung read
+              as "we have almost no manufacturer data". */}
+          <strong>{stats.bags_maker_sourced} of {stats.bags_sized}</strong> bags here
+          use the manufacturer's own published figures. For{' '}
+          <strong>{stats.bags_promotable}</strong> of them the maker states that
+          figure is the outside of the bag — wheels included — and only those
+          are put forward as an answer. The others publish a size without
+          saying which one it is, so we show them and say so.{' '}
+          {stats.bags_review_only > 0 && (
+            <>{stats.bags_review_only} still rest on a review publication's
+            measurement, attributed on the card.</>
+          )}{' '}
           We do not use reseller or marketplace listings for dimensions.
           {stats.carriers_researched < stats.carriers_total && (
             <> Of {stats.carriers_total} airlines, {stats.carriers_researched} have

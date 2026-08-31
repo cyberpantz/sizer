@@ -66,15 +66,30 @@ describe('wheels decide the rung', () => {
     assert.equal(isPromotable(toBag(r)), false);
   });
 
-  test('the old inference still stands where no flag was set', () => {
-    /* A maker publishing a separate packing figure alongside an exterior one
-       is distinguishing the two. Kept so the change adds a rule rather than
-       replacing one and silently demoting records nobody re-read. */
+  test("a figure much bigger than the maker's OWN packing figure is the exterior", () => {
+    /* The ladder assumes an unlabelled maker figure is "probably the packing
+       body, which runs small". Where a maker publishes both, that is checkable
+       — and false every time it can be checked: the unlabelled figure runs
+       3.2 to 6.4 cm larger on all five bags carrying the pair. That gap is the
+       wheels.
+       Evidence from inside one manufacturer's page, so it does not lean on a
+       review measurement, which here is usually the spec sheet quoted back. */
     const r = rec({
-      external_cm: dim([56, 40, 23]),
+      claimed_cm: dim([56, 40, 23]),
       claimed_packing_cm: dim([52, 37, 20]),
     });
     assert.equal(dimSourceOf(r), DIM_SOURCE.MAKER_OVERALL);
+  });
+
+  test('a figure the SAME size as the packing figure proves nothing', () => {
+    /* The rule has to compare values, not merely notice that a packing figure
+       exists — which is all the old one did. Two figures within rounding of
+       each other are the same body, and the label still tells us nothing. */
+    const r = rec({
+      claimed_cm: dim([52.1, 37, 20]),
+      claimed_packing_cm: dim([52, 37, 20]),
+    });
+    assert.equal(dimSourceOf(r), DIM_SOURCE.MAKER_UNSPECIFIED);
   });
 
   test('a review measurement outranks nothing — the flag cannot promote it', () => {
@@ -211,18 +226,29 @@ describe('the real catalogue', () => {
 
   test('no bag is recommendable on a figure nobody labelled', async () => {
     /* The release gate, checked against the whole catalogue rather than
-       reasoned about. Every promotable bag must reach that rung through a
-       stated inclusion, a separate packing figure, or our own tape measure. */
+       reasoned about. There are exactly THREE ways onto the recommendable
+       rung, and a bag reaching it by any other route is a bug:
+         1. we measured it ourselves
+         2. the maker states wheels are included
+         3. the figure is materially bigger than the maker's OWN packing
+            figure, so it is the exterior whatever the label omits
+       Nothing else. In particular, not "a packing figure exists" — the old
+       version of this test accepted mere presence, which is what let an
+       unlabelled figure through without comparing the values. */
     const { loadBags } = await import('../../lib/data.mjs');
+    const { rankedDimensions } = await import('../normalize.mjs');
     const offenders = [];
     for (const b of await loadBags()) {
       if (!isPromotable(b)) continue;
       const r = b.record;
-      const field = r.external_cm?.v ? r.external_cm : r.claimed_cm;
-      const stated = field?.includes_wheels === true;
-      const hasPacking = Boolean(r.claimed_packing_cm?.v && r.external_cm?.v);
-      const measured = Boolean(r.measured_cm?.v);
-      if (!stated && !hasPacking && !measured) offenders.push(b.slug);
+      const best = rankedDimensions(r)[0];
+      const measured = best?.key === 'measured_cm';
+      const stated = best?.field?.includes_wheels === true;
+      const packing = r.claimed_packing_cm?.v;
+      const gapProven =
+        Boolean(packing && best?.field?.v) &&
+        Math.max(...best.field.v.map((v, i) => v - (packing[i] ?? 0))) >= 1;
+      if (!measured && !stated && !gapProven) offenders.push(`${b.slug} (${best?.key})`);
     }
     assert.deepEqual(
       offenders,

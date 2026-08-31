@@ -433,10 +433,33 @@ function rungOfField(field, key, record) {
   /* Manufacturer figure. Wheels decide — see the flag rules below. */
   if (field.includes_wheels === true) return DIM_SOURCE.MAKER_OVERALL;
   if (field.includes_wheels === false) return DIM_SOURCE.MAKER_PACKING;
-  /* No flag. A maker publishing a separate packing figure alongside an
-     `external_*` one is distinguishing the two, which is the old inference and
-     still sound. Anything else is unlabelled. */
-  if (key === 'external_cm' && unwrap(record?.claimed_packing_cm)) return DIM_SOURCE.MAKER_OVERALL;
+  /* NO FLAG — SO ASK THE MAKER'S OWN PACKING FIGURE.
+   *
+   * The ladder assumes an unlabelled maker figure is "probably the packing
+   * body, which runs small". Where the maker publishes BOTH, that assumption
+   * is checkable, and it is false every time it can be checked: the unlabelled
+   * figure runs 3.2 to 6.4 cm LARGER than the same maker's packing figure on
+   * all five bags that carry the pair. That gap is the wheels.
+   *
+   * A figure materially bigger than the maker's own packing size is the
+   * exterior, whatever the label omits to say. This is evidence from inside
+   * one manufacturer's own page, so it does not depend on a review — which
+   * matters, because the reviews here mostly quote the spec sheet rather than
+   * measure, and "they agree" would be the same number twice.
+   *
+   * The old rule only checked that a packing figure EXISTED, and only on
+   * `external_cm`. It now compares the values, and applies to whichever field
+   * the intake filed the figure under — Herschel, Samsonite Freeform and
+   * Traveler's Choice all put it in `claimed_cm` and were missed. */
+  const packing = unwrap(record?.claimed_packing_cm);
+  const here = unwrap(field);
+  if (packing && here && key !== 'claimed_packing_cm') {
+    const biggest = Math.max(...here.map((v, i) => v - (packing[i] ?? 0)));
+    /* 1 cm: comfortably past rounding, comfortably short of a wheel. A gap
+       near zero means the two figures ARE the same body and the label tells
+       us nothing new. */
+    if (biggest >= 1) return DIM_SOURCE.MAKER_OVERALL;
+  }
   return DIM_SOURCE.MAKER_UNSPECIFIED;
 }
 

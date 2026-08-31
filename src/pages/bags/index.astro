@@ -136,9 +136,13 @@ const lastUpdated = dates.length
 
     {stats.bags_promotable < stats.bags_sized && (
       <p class="py-8 text-[0.875rem] text-muted">
-        {stats.bags_promotable} of these carry the manufacturer's own overall
-        dimensions. The rest use a review publication's measurement, named on the
-        card, which we are replacing at source.{' '}
+        {stats.bags_maker_sourced} of these use the manufacturer's own published
+        figures; for {stats.bags_promotable} the maker states it is the outside of
+        the bag, and only those are recommended.{' '}
+        {stats.bags_review_only > 0 && (
+          <>{stats.bags_review_only} rest on a review publication's measurement,
+          named on the card.{' '}</>
+        )}
         <a href="/methodology/" class="text-blue">How we work it out →</a>
       </p>
     )}

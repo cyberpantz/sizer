@@ -17,7 +17,14 @@
    THROW. */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { isPromotable, isSized, toBag, toCarrier } from '../engine/normalize.mjs';
+import {
+  DIM_SOURCE,
+  dimSourceOf,
+  isPromotable,
+  isSized,
+  toBag,
+  toCarrier,
+} from '../engine/normalize.mjs';
 
 /* WHERE data/ IS, WHICH IS NOT WHERE THIS FILE THINKS IT IS.
  *
@@ -108,6 +115,21 @@ export async function coverageStats() {
     /* The number that matters for the release gate: dimensions we can put a
        recommendation behind. */
     bags_promotable: bags.filter((b) => isSized(b) && isPromotable(toBag(b))).length,
+    /* HOW MANY USE THE MAKER'S OWN FIGURES AT ALL — which is not the same
+       question as how many we may recommend, and the page conflated them.
+       "26 of 61 carry the manufacturer's own dimensions" read as "we have
+       almost no manufacturer data", when in fact 57 of 59 bags are on a maker
+       figure and the gap is whether the maker LABELS it as the exterior. */
+    bags_maker_sourced: bags.filter(
+      (b) =>
+        isSized(b) &&
+        ['external_cm', 'claimed_cm', 'claimed_packing_cm', 'external_in', 'claimed_in'].some(
+          (k) => b[k]?.src === 'manufacturer'
+        )
+    ).length,
+    /* On a review publication's tape measure, with no maker figure that
+       outranks it. The genuinely thinnest part of the catalogue. */
+    bags_review_only: bags.filter((b) => isSized(b) && dimSourceOf(b) === DIM_SOURCE.REVIEW).length,
     carriers_total: carriers.length,
     carriers_researched: carriers.filter((c) => !c.placeholder).length,
     carriers_publishable: carriers.filter((c) => c.publication_ready).length,
