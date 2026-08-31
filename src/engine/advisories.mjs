@@ -43,8 +43,15 @@ export function weight({ bag, carrier, config }) {
   const cap = carrier.allowance?.max_kg,
     kg = bag.weight_kg;
   if (!cap || !kg) return null;
+  /* `shared` means the cap covers the carry-on AND the personal item together
+     — see buildAllowance. The arithmetic is unchanged; what changes is what we
+     are allowed to claim the remainder is FOR. Saying "that leaves 5.4 kg to
+     pack" when 5.4 kg has to cover the laptop bag too is the kind of
+     over-generous answer that costs a fee. */
+  const shared = carrier.allowance?.weight_shared === true;
   const left = +(cap - kg).toFixed(2);
-  if (left <= 0) return { id: 'weight', level: 'over', bag_kg: kg, cap_kg: cap, left_kg: left };
+  if (left <= 0)
+    return { id: 'weight', level: 'over', bag_kg: kg, cap_kg: cap, left_kg: left, shared };
   if (kg / cap >= config.WEIGHT_TIGHT_RATIO) {
     return {
       id: 'weight',
@@ -52,6 +59,7 @@ export function weight({ bag, carrier, config }) {
       bag_kg: kg,
       cap_kg: cap,
       left_kg: left,
+      shared,
       share: +(kg / cap).toFixed(2),
     };
   }

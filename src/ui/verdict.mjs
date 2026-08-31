@@ -45,10 +45,20 @@ export function advisoryLine(a, U) {
       return a.level === 'may_squeeze'
         ? `Over by ${U.len(a.over_cm)} ${U.lenLabel()}. A soft bag this close usually compresses into a sizer — but that is the gate agent's call.`
         : `Over by ${U.len(a.over_cm)} ${U.lenLabel()} and the shell is rigid. It will not compress.`;
-    case 'weight':
-      return a.level === 'over'
-        ? `The empty bag is ${U.mass(a.bag_kg)} ${U.massLabel()} against a ${U.mass(a.cap_kg)} ${U.massLabel()} limit — over before you pack.`
-        : `Their limit is ${U.mass(a.cap_kg)} ${U.massLabel()} and the empty bag is ${U.mass(a.bag_kg)} ${U.massLabel()} of it. That leaves ${U.mass(a.left_kg)} ${U.massLabel()} to pack.`;
+    case 'weight': {
+      /* A shared cap covers the carry-on AND the personal item. The remainder
+         is not "to pack" — it has to cover the second bag as well, and saying
+         otherwise is generous in the direction that costs money. */
+      const cap = a.shared
+        ? `${U.mass(a.cap_kg)} ${U.massLabel()} for this bag and your personal item TOGETHER`
+        : `${U.mass(a.cap_kg)} ${U.massLabel()}`;
+      if (a.level === 'over') {
+        return `The empty bag is ${U.mass(a.bag_kg)} ${U.massLabel()} against a limit of ${cap} — over before you pack.`;
+      }
+      return a.shared
+        ? `Their limit is ${cap}. The empty suitcase is already ${U.mass(a.bag_kg)} ${U.massLabel()} of it, leaving ${U.mass(a.left_kg)} ${U.massLabel()} for everything you pack AND whatever you carry on top.`
+        : `Their limit is ${cap} and the empty bag is ${U.mass(a.bag_kg)} ${U.massLabel()} of it. That leaves ${U.mass(a.left_kg)} ${U.massLabel()} to pack.`;
+    }
     case 'expansion':
       return `Compliant until you use the expander, which adds ${U.len(a.expands_cm)} ${U.lenLabel()}.`;
     default:

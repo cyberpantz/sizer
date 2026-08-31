@@ -322,6 +322,18 @@ export function resolveFare(record, booking) {
   }
   const byFare = reachable.find((a) => eq(a.fare_class, b.fare) || eq(a.fare_brand, b.fare));
   if (byFare) return { row: byFare, matched: 'fare' };
+  /* A known Basic fare must not inherit regular Economy's overhead bag.
+     Purchased add-ons above can override it; a cabin-class fallback cannot. */
+  const namedFare = (record.allowances ?? []).find(
+    (a) => (eq(a.fare_class, b.fare) || eq(a.fare_brand, b.fare)) && a.cabin_absence
+  );
+  if (namedFare) {
+    if (routeApplies(namedFare, b.route).applies === null)
+      return { row: null, matched: null, route_dependent: true };
+    if (routeApplies(namedFare, b.route).applies === false)
+      return { row: null, matched: null, absence: CABIN_ABSENCE.OUT_OF_SCOPE };
+    return { row: null, matched: 'fare', absence: namedFare.cabin_absence };
+  }
   const byClass = reachable.find((a) => eq(a.cabin_class, b.class) || eq(a.fare_class, b.class));
   if (byClass) return { row: byClass, matched: 'class' };
 
@@ -333,11 +345,34 @@ export function resolveFare(record, booking) {
   return { row: null, matched: null };
 }
 
-function buildAllowance(row, subject) {
+function buildAllowance(row, subject, rows = []) {
   const u = reconcileUnits(row.max_cm, row.max_in);
   return {
     max_cm: assertDims(u.cm, subject),
     max_kg: row.max_kg ?? null,
+    /* IS THAT WEIGHT CAP FOR THIS BAG, OR FOR BOTH BAGS?
+
+       Air France, KLM, Cathay, JAL, ANA and Scoot publish ONE cabin weight
+       covering the carry-on AND the personal item together. The figure lands
+       on the cabin row because that is where a weight belongs, and the
+       personal row carries null — so read naively it says the whole 10 kg is
+       available for the suitcase.
+
+       It is not, and the error runs in the expensive direction. We told
+       someone flying ANA that a 4.6 kg suitcase "leaves 5.4 kg to pack". Add
+       the laptop bag they are also carrying and the truth is nearer 3.4.
+
+       `allowance_group` is the airline's own grouping, recorded during
+       research and, until now, read by nothing. */
+    weight_shared: row.allowance_group
+      ? rows.some(
+          (r) =>
+            r !== row &&
+            r.allowance_group === row.allowance_group &&
+            r.fare_class === row.fare_class &&
+            r.type === 'personal'
+        )
+      : false,
     /* Kept so a page can show the airline's own figures rather than ours, and
        flag when they disagree — that disagreement is a finding worth printing. */
     units: u,
@@ -362,7 +397,10 @@ export function toCarrier(record, fareClass) {
     ? null
     : resolved.route_dependent
       ? CABIN_ABSENCE.ROUTE_DEPENDENT
-      : (fareRow?.cabin_absence ?? record.cabin_absence ?? CABIN_ABSENCE.NOT_RESEARCHED);
+      : (resolved.absence ??
+        fareRow?.cabin_absence ??
+        record.cabin_absence ??
+        CABIN_ABSENCE.NOT_RESEARCHED);
   const strictness = unwrap(record.strictness?.score ?? record.strictness);
   if (typeof strictness !== 'number' || strictness < 1 || strictness > 10) {
     throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
@@ -378,7 +416,7 @@ export function toCarrier(record, fareClass) {
     route_dependent: Boolean(resolved.route_dependent),
     strictness,
     /* Never a zero-size row — a naive comparison would let one pass. */
-    allowance: cabin ? buildAllowance(cabin, subject) : null,
+    allowance: cabin ? buildAllowance(cabin, subject, rows) : null,
     /* Only an EXPLICIT finding means "no cabin bag". Everything else is unknown:
        silence from a half-researched carrier must never read as a ban. */
     no_cabin_bag: absence === CABIN_ABSENCE.NOT_PERMITTED,

@@ -60,9 +60,9 @@ for (const c of carrierRecords) {
          reader to check it. A claim they cannot verify is the thing this site
          exists not to be, and a link is two fields.
 
-         `placeholder` ships too, and is the uncomfortable one: 22 carriers,
-         including most of the famous ones, currently produce verdicts from
-         records nobody has read. The page must be able to say so. */
+         `placeholder` ships too so future incomplete records can be identified.
+         The 2026-08-31 audit removed the remaining size placeholders;
+         researched allowances still require publication review. */
       source_url: primarySource(c.record)?.url ?? null,
       verified_at: primarySource(c.record)?.at ?? null,
       placeholder: c.record.placeholder === true,
@@ -74,6 +74,12 @@ for (const c of carrierRecords) {
         max_cm: a.max_cm,
         max_in: a.max_in,
         max_kg: a.max_kg,
+        /* Ships because toCarrier() reads it: it is what tells the engine
+           whether a cabin weight cap covers this bag alone or this bag plus
+           the personal item. It was absent, so the browser computed a
+           different — and more generous — answer than the build did, on the
+           axis a US traveller has never had to think about. */
+        allowance_group: a.allowance_group,
         applies_to: a.applies_to,
         cabin_absence: a.cabin_absence,
       })),
