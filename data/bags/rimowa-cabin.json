@@ -2,31 +2,45 @@
  "slug": "rimowa-cabin",
  "brand": "Rimowa",
  "model": "Essential Cabin",
- "variant": null,
+ "variant": "Essential Cabin — matte black, SKU 83253631",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
  "wheels": 4,
  "role": "overhead",
- "fits_personal_item": null,
- "external_cm": null,
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55,
+   39,
+   23
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+  "at": "2026-08-31",
+  "quote": "Measurement",
+  "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ."
+ },
  "claimed_packing_cm": null,
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.22,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "kg"
+  "v": 3.2,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+  "at": "2026-08-31",
+  "quote": "Weight"
  },
  "capacity_l": {
-  "v": 37,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "L"
+  "v": 36,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+  "at": "2026-08-31",
+  "quote": "Volume"
  },
  "reviews": [
   {
@@ -47,9 +61,102 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "external_cm",
+   "values": [
+    {
+     "src": "manufacturer metric",
+     "v": [
+      55,
+      39,
+      23
+     ],
+     "unit": "cm"
+    },
+    {
+     "src": "manufacturer imperial",
+     "v": [
+      21.7,
+      15.8,
+      9.1
+     ],
+     "unit": "in"
+    }
+   ],
+   "note": "Both published values retained without reconciliation; gallon standard not specified for volume."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer metric",
+     "v": 3.2,
+     "unit": "kg"
+    },
+    {
+     "src": "manufacturer imperial",
+     "v": 7.1,
+     "unit": "lbs"
+    }
+   ],
+   "note": "Both published values retained without reconciliation; gallon standard not specified for volume."
+  },
+  {
+   "field": "capacity_l",
+   "values": [
+    {
+     "src": "manufacturer metric",
+     "v": 36,
+     "unit": "L"
+    },
+    {
+     "src": "manufacturer imperial",
+     "v": 9.8,
+     "unit": "gal"
+    }
+   ],
+   "note": "Both published values retained without reconciliation; gallon standard not specified for volume."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Manufacturer-published metric and imperial values both retained. Includes wheels and handles. Unit equivalents disagree, particularly width; no reconciliation. Imperial volume also given as 9.8 gal without gallon-system specification; retained in source dossier. No interior dimensions or quantified expansion found. No sale shown. SKU 83253631; Cabin, not Cabin S, Check-In M/L or Trunk/Trunk Plus.",
+ "manufacturer_source": {
+  "url": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+  "retrieved": "2026-08-31",
+  "title": "RIMOWA Essential Cabin — matte black",
+  "local": "resources/bags/2026-08-31-rimowa-cabin.md"
+ },
+ "external_in": {
+  "v": [
+   21.7,
+   15.8,
+   9.1
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+  "at": "2026-08-31",
+  "quote": "Measurement",
+  "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ."
+ },
+ "weight_lb": {
+  "v": 7.1,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "price_usd": {
+  "v": 990,
+  "src": "manufacturer",
+  "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+  "at": "2026-08-31",
+  "list": true,
+  "quote": "$990.00"
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

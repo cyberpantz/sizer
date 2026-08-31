@@ -2,7 +2,7 @@
  "slug": "beis-carryon-roller",
  "brand": "Béis",
  "model": "The Carry-On Roller",
- "variant": null,
+ "variant": "Carry-On Roller — matte Black",
  "line": "beis-roller",
  "type": "hardside spinner",
  "soft": 0,
@@ -11,17 +11,37 @@
  "fits_personal_item": null,
  "external_cm": null,
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   58,
+   40,
+   25.4
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L × H × D; stored H × L × D. Not verified overall dimensions."
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.79,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "kg"
+  "v": 3.55,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "quote": "Weight"
  },
- "capacity_l": null,
+ "capacity_l": {
+  "v": 49,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "quote": "Capacity"
+ },
  "reviews": [
   {
    "src": "strategist-carryon",
@@ -41,9 +61,109 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      22.83,
+      15.7,
+      10
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      58,
+      40,
+      25.4
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Published unit equivalents are not exactly equal; both retained without reconciliation."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer pounds",
+     "v": 7.81,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer kilograms",
+     "v": 3.55,
+     "unit": "kg"
+    }
+   ],
+   "note": "Published weight equivalents are not exactly equal; both retained."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "FAQ calls dimensions exterior, but the reviewed text does not explicitly confirm inclusion of wheels and handles. Kept as claimed dimensions, not promoted as verified overall. Source order L × H × D is reordered to H × L × D without changing values. Capacity expands to 61 L. Both published units retained; dimensions and weight equivalents differ slightly, without reconciliation. No interior dimensions or numeric SKU found; no sale shown. Small Carry-On, Medium Check-In and Large Check-In are other size selections.",
+ "manufacturer_source": {
+  "url": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "retrieved": "2026-08-31",
+  "title": "BÉIS The Carry-On Roller in Black",
+  "local": "resources/bags/2026-08-31-beis-carryon-roller.md"
+ },
+ "claimed_in": {
+  "v": [
+   22.83,
+   15.7,
+   10
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L × H × D; stored H × L × D. Not verified overall dimensions."
+ },
+ "weight_lb": {
+  "v": 7.81,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "expands_in": {
+  "v": 2,
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "quote": "Expands an additional 2\""
+ },
+ "price_usd": {
+  "v": 268,
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "list": true,
+  "quote": "$268"
+ },
+ "expands_cm": {
+  "v": 5.08,
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+  "at": "2026-08-31",
+  "quote": "Expands an additional 2\"",
+  "conversion": {
+   "from_field": "expands_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source."
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

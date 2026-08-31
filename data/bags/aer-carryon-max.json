@@ -2,7 +2,7 @@
  "slug": "aer-carryon-max",
  "brand": "Aer",
  "model": "Carry-On Max",
- "variant": "Max",
+ "variant": "Carry-On Max — Black",
  "line": "aer-carryon",
  "type": "hardside spinner",
  "soft": 0,
@@ -11,22 +11,36 @@
  "fits_personal_item": null,
  "external_cm": null,
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   57,
+   38,
+   23
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on-max",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Height/width/depth as printed. Inclusion of wheels and handles not explicit; retained as claimed dimensions, not verified overall."
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.81,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "kg"
+  "v": 3.8,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on-max",
+  "at": "2026-08-31",
+  "quote": "Weight"
  },
  "capacity_l": {
   "v": 48,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "L"
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on-max",
+  "at": "2026-08-31",
+  "quote": "Volume"
  },
  "reviews": [
   {
@@ -47,9 +61,62 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      22.7,
+      15,
+      9
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      57,
+      38,
+      23
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Published equivalents differ; not reconciled."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Both printed unit systems retained without reconciliation; inch/cm and lb/kg equivalents differ. Current displayed price $319.00, but page also says Sale Sold Out with blank comparison price. List price not established; price_usd withheld. Black, Max size; smaller Carry-On separate. No packing dimensions, expansion amount or numeric SKU found.",
+ "manufacturer_source": {
+  "url": "https://aersf.com/products/carry-on-max",
+  "retrieved": "2026-08-31",
+  "title": "Aer Carry-On Max",
+  "local": "resources/bags/2026-08-31-aer-carryon-max.md"
+ },
+ "claimed_in": {
+  "v": [
+   22.7,
+   15,
+   9
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on-max",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Height/width/depth as printed. Inclusion of wheels and handles not explicit; retained as claimed dimensions, not verified overall."
+ },
+ "weight_lb": {
+  "v": 8.4,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on-max",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

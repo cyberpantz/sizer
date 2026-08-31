@@ -2,15 +2,51 @@
  "slug": "away-carryon",
  "brand": "Away",
  "model": "The Carry-On",
- "variant": null,
+ "variant": "Carry-On — Jet Black (Classic polycarbonate)",
  "line": "away-carryon",
  "type": "hardside spinner",
  "soft": 0,
  "wheels": 4,
  "role": "overhead",
- "fits_personal_item": null,
- "external_cm": null,
- "claimed_packing_cm": null,
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.118,
+   36.576,
+   22.86
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+  "at": "2026-08-31",
+  "unit": "cm",
+  "quote": "Exterior measurements",
+  "note": "Measurements include handles and wheels. Manufacturer exterior specification, not measured by us. Axis order is not explicitly labelled; published triple order retained. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "external_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_packing_cm": {
+  "v": [
+   51.054,
+   35.306,
+   19.05
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+  "at": "2026-08-31",
+  "unit": "cm",
+  "quote": "Interior measurements",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source."
+ },
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
@@ -47,10 +83,98 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "weight_lb",
+   "values": [
+    {
+     "v": 7.5,
+     "unit": "lbs",
+     "src": "manufacturer specifications",
+     "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+     "at": "2026-08-31",
+     "quote": "Weight"
+    },
+    {
+     "v": 7.1,
+     "unit": "lbs",
+     "src": "manufacturer product summary",
+     "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+     "at": "2026-08-31"
+    }
+   ],
+   "note": "Two different values on the same official product page; unresolved."
+  },
+  {
+   "field": "capacity_l",
+   "values": [
+    {
+     "v": 41,
+     "unit": "L",
+     "src": "manufacturer specifications",
+     "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+     "at": "2026-08-31",
+     "quote": "Capacity"
+    },
+    {
+     "v": 39.8,
+     "unit": "L",
+     "src": "manufacturer product summary",
+     "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+     "at": "2026-08-31"
+    }
+   ],
+   "note": "Two different values on the same official product page; unresolved."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Original published units only; build handles conversions. Weight and capacity conflict between specification section and product summary; both claims retained in conflicts, neither promoted as the sole manufacturer figure. Existing review weight and capacity remain review-attributed. No numeric SKU, expansion amount, or metric equivalents found. These figures are for the smaller Classic Carry-On, not Bigger, Flex or Aluminum. No distinct sale price: current and comparison prices both $275.",
+ "manufacturer_source": {
+  "url": "https://www.awaytravel.com/products/carry-on-jet-black",
+  "retrieved": "2026-08-31",
+  "title": "The Carry-On in Jet Black | Away",
+  "local": "resources/bags/2026-08-31-away-carryon.md"
+ },
+ "external_in": {
+  "v": [
+   21.7,
+   14.4,
+   9
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+  "at": "2026-08-31",
+  "unit": "in",
+  "quote": "Exterior measurements",
+  "note": "Measurements include handles and wheels. Manufacturer exterior specification, not measured by us. Axis order is not explicitly labelled; published triple order retained."
+ },
+ "claimed_packing_in": {
+  "v": [
+   20.1,
+   13.9,
+   7.5
+  ],
+  "src": "manufacturer",
+  "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+  "at": "2026-08-31",
+  "unit": "in",
+  "quote": "Interior measurements"
+ },
+ "price_usd": {
+  "v": 275,
+  "src": "manufacturer",
+  "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+  "at": "2026-08-31",
+  "list": true,
+  "quote": "$275"
+ },
  "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  4.1,
+  1.3,
+  3.8
+ ],
  "observed": [],
  "compliance_unbacked": false
 }

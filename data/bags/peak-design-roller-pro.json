@@ -2,7 +2,7 @@
  "slug": "peak-design-roller-pro",
  "brand": "Peak Design",
  "model": "Roller Pro",
- "variant": null,
+ "variant": "Roller Pro Carry-On — Black, bag only",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -10,12 +10,49 @@
  "role": "overhead",
  "fits_personal_item": null,
  "external_cm": null,
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   51.5,
+   35,
+   22
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "quote": "Internal Dimensions"
+ },
+ "claimed_cm": {
+  "v": [
+   55.6,
+   35.6,
+   23
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "quote": "External Dimensions",
+  "note": "Labelled external, normal state. Wheels/handles inclusion not explicit in reviewed specification; not promoted as verified overall."
+ },
  "measured_cm": null,
  "measured_at": null,
- "weight_kg": null,
- "capacity_l": null,
+ "weight_kg": {
+  "v": 3.9,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "capacity_l": {
+  "v": 34,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "quote": "Capacity"
+ },
  "reviews": [
   {
    "src": "packhacker-international",
@@ -40,9 +77,106 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      55.6,
+      35.6,
+      23
+     ],
+     "unit": "cm"
+    },
+    {
+     "src": "manufacturer inches",
+     "v": [
+      21.8,
+      14,
+      9
+     ],
+     "unit": "in"
+    }
+   ],
+   "note": "Published metric and imperial equivalents differ; both preserved."
+  },
+  {
+   "field": "claimed_packing_cm",
+   "values": [
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      51.5,
+      35,
+      22
+     ],
+     "unit": "cm"
+    },
+    {
+     "src": "manufacturer inches",
+     "v": [
+      20.3,
+      13.8,
+      8.7
+     ],
+     "unit": "in"
+    }
+   ],
+   "note": "Published metric and imperial equivalents differ; both preserved."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Specs opened in browser; US USD locale confirmed. External dimensions do not explicitly state inclusion of wheels and handles, so stored as claimed. Expanded external: 55.6 x 35.6 x 28 cm (21.8 x 14 x 11 in); expanded internal: 51.5 x 35 x 27 cm (20.3 x 13.8 x 10.6 in); capacity 39 L expanded. No expansion difference calculated. No numeric SKU found; only one size in product selector, three colors and optional bundles. Bag-only price, no sale shown. All published unit pairs retained without reconciliation.",
+ "manufacturer_source": {
+  "url": "https://www.peakdesign.com/products/roller-pro",
+  "retrieved": "2026-08-31",
+  "title": "Peak Design Roller Pro Carry-On",
+  "local": "resources/bags/2026-08-31-peak-design-roller-pro.md"
+ },
+ "claimed_in": {
+  "v": [
+   21.8,
+   14,
+   9
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "quote": "External Dimensions",
+  "note": "Labelled external, normal state. Wheels/handles inclusion not explicit in reviewed specification; not promoted as verified overall."
+ },
+ "claimed_packing_in": {
+  "v": [
+   20.3,
+   13.8,
+   8.7
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "quote": "Internal Dimensions"
+ },
+ "weight_lb": {
+  "v": 8.6,
+  "unit": "lb",
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "price_usd": {
+  "v": 599.95,
+  "src": "manufacturer",
+  "ref": "https://www.peakdesign.com/products/roller-pro",
+  "at": "2026-08-31",
+  "list": true,
+  "quote": "$599.95"
+ },
  "compliance_claimed": true,
  "observed": [],
  "compliance_unbacked": true

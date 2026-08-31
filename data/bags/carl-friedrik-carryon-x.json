@@ -2,7 +2,7 @@
  "slug": "carl-friedrik-carryon-x",
  "brand": "Carl Friedrik",
  "model": "Carry-on X",
- "variant": null,
+ "variant": "Hybrid Carry-on X — Grey / Cognac",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -11,11 +11,37 @@
  "fits_personal_item": null,
  "external_cm": null,
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   56,
+   38,
+   25
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+  "at": "2026-08-31",
+  "quote": "Height / Width / Depth",
+  "note": "Published Height, Width, Depth; does not explicitly say overall or include wheels/handles. Claimed only, not measured by us."
+ },
  "measured_cm": null,
  "measured_at": null,
- "weight_kg": null,
- "capacity_l": null,
+ "weight_kg": {
+  "v": 4.7,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "capacity_l": {
+  "v": 44,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+  "at": "2026-08-31",
+  "quote": "Volume"
+ },
  "reviews": [
   {
    "src": "packhacker-international",
@@ -40,9 +66,71 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      22,
+      15,
+      9.8
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      56,
+      38,
+      25
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Published equivalents differ; both retained without reconciliation."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://www.carlfriedrik.com/products/the-carry-on-x",
+  "retrieved": "2026-08-31",
+  "title": "Carl Friedrik Carry-on X",
+  "local": "resources/bags/2026-08-31-carl-friedrik-carryon-x.md"
+ },
+ "notes": "Specifications panel opened in browser; US locale confirmed. Hybrid Carry-on X, not Core Carry-on X, which appears beside it in comparison. Grey/Cognac bag without add-ons; USD list $745, no sale shown. Both unit systems retained despite differences. No packing dimensions, expansion amount, numeric SKU or explicit empty-weight qualifier found.",
+ "claimed_in": {
+  "v": [
+   22,
+   15,
+   9.8
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+  "at": "2026-08-31",
+  "quote": "Height / Width / Depth",
+  "note": "Published Height, Width, Depth; does not explicitly say overall or include wheels/handles. Claimed only, not measured by us."
+ },
+ "weight_lb": {
+  "v": 10.4,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "price_usd": {
+  "v": 745,
+  "unit": "USD",
+  "src": "manufacturer",
+  "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+  "at": "2026-08-31",
+  "quote": "Price",
+  "list": true
+ },
  "compliance_claimed": true,
  "observed": [],
  "compliance_unbacked": true

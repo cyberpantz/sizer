@@ -23,9 +23,10 @@
  * Progressive enhancement — every bag is already in the HTML. Without
  * JavaScript nothing is hidden and no filter lies about what is on the page.
  */
+import { FACET_MATCH } from '../lib/bag-facets.mjs';
 import BagFacetPanel from './BagFacetPanel.astro';
 
-const { counts, facetCounts } = Astro.props;
+const { counts, optionCounts, total } = Astro.props;
 
 export const GROUPS = [
   { id: 'spinner', label: 'Spinners', types: ['hardside spinner', 'softside spinner'] },
@@ -86,12 +87,19 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
       ))}
     </div>
 
-    <div class="ml-auto"><BagFacetPanel counts={facetCounts} /></div>
+    <div class="ml-auto"><BagFacetPanel optionCounts={optionCounts} total={total} /></div>
   </div>
 
   {/* Active facets, in the open. The panel closes over its own state, so
       without this a filtered page is indistinguishable from an empty one. */}
   <div data-facet-chips hidden class="mt-3 flex flex-wrap items-center gap-2"></div>
+
+  {/* What the filters actually did, announced. Shelf counts update, but a
+      reader who has just hidden two thirds of the page deserves the total —
+      and a screen-reader user gets nothing at all from cards silently
+      disappearing. aria-live is on the count, not the grid, so it reads one
+      short sentence instead of every card that moved. */}
+  <p data-filter-count hidden aria-live="polite" class="mt-3 text-[0.875rem] text-muted"></p>
 
   <div data-filter-note hidden class="mt-4 rounded-card bg-blue-wash p-5 text-[0.9375rem] leading-relaxed text-ink-2">
     <strong class="font-semibold text-ink" data-note-lead></strong>{' '}
@@ -99,7 +107,7 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
   </div>
 </div>
 
-<script define:vars={{ NOTES, GROUPS }}>
+<script define:vars={{ NOTES, GROUPS, FACET_MATCH, total }}>
   const root = document.querySelector('[data-filters]');
   const panel = root.querySelector('[data-filter-note]');
   const lead = root.querySelector('[data-note-lead]');
@@ -112,6 +120,7 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
   const badge = facetRoot?.querySelector('[data-facet-count]');
   const boxes = [...(facetRoot?.querySelectorAll('[data-facet]') ?? [])];
   const chips = root.querySelector('[data-facet-chips]');
+  const count = root.querySelector('[data-filter-count]');
 
   let shape = 'all';
 
@@ -119,7 +128,7 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
   const checked = () => boxes.filter((b) => b.checked);
 
   /* Selected values grouped by axis. Within an axis the test is OR (budget
-     OR midrange); across axes it is AND (budget AND clears most airlines).
+     OR midrange); across axes it is AND (budget AND softside).
      That is what every faceted search does, and getting it backwards makes
      every additional tick return fewer results until nothing is left. */
   function selection() {
@@ -128,10 +137,18 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
     return sel;
   }
 
+  /* An option can stand for SEVERAL stamped values — the weight options are
+     cumulative, so "under 3.5 kg" also matches a bag under 2.5 kg.
+     FACET_MATCH is imported rather than restated: the panel counts with it and
+     this matches with it, so a count can never describe a different set of
+     bags than the filter returns. */
+  const valuesFor = (axis, id) => FACET_MATCH[axis]?.[id] ?? [id];
+
   function matches(card, sel) {
     if (shape !== 'all' && !typesFor(shape).includes(card.dataset.bagType)) return false;
-    for (const [axis, wanted] of Object.entries(sel)) {
-      const key = { cov: 'bagCov', price: 'bagPrice', role: 'bagRole' }[axis];
+    for (const [axis, chosen] of Object.entries(sel)) {
+      const key = { weight: 'bagWeight', shell: 'bagShell', price: 'bagPrice', role: 'bagRole' }[axis];
+      const wanted = new Set([...chosen].flatMap((id) => valuesFor(axis, id)));
       if (!wanted.has(card.dataset[key] ?? '')) return false;
     }
     return true;
@@ -166,6 +183,24 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
     const any = [...document.querySelectorAll('[data-shelf]')].some((s) => !s.hidden);
     const empty = document.querySelector('[data-empty]');
     if (empty) empty.hidden = any;
+
+    /* A bag can sit on more than one shelf, so counting visible cards would
+       double-count. Count distinct slugs. */
+    const shown = new Set(
+      [...document.querySelectorAll('[data-bag-type]')]
+        .filter((c) => !c.hidden)
+        .map((c) => c.dataset.bagSlug)
+    ).size;
+
+    if (count) {
+      const filtered = shape !== 'all' || checked().length > 0;
+      count.hidden = !filtered;
+      count.textContent = filtered
+        ? shown === total
+          ? `All ${total} bags match.`
+          : `Showing ${shown} of ${total} bags.`
+        : '';
+    }
 
     renderChips();
   }
@@ -212,10 +247,32 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
 
   /* ---------- the popover ---------- */
 
+  /* EDGE DETECTION. The panel is anchored to the button's right edge, which is
+     correct while the button sits at the right of the filter row — but the
+     shape pills wrap at narrow widths and the button moves, so no static
+     anchor holds at every size. Anchored left it ran clean off the screen.
+
+     Measure after showing, then translate by however much it overhangs. Reset
+     first, or a second open compounds the previous nudge. */
+  const GUTTER = 12;
+  function position() {
+    if (!facetPanel) return;
+    facetPanel.style.transform = '';
+    const r = facetPanel.getBoundingClientRect();
+    const overRight = r.right - (window.innerWidth - GUTTER);
+    const overLeft = GUTTER - r.left;
+    /* Right first, then left — if the panel is wider than the viewport the
+       left edge wins, because losing the end of a line is recoverable and
+       losing the checkboxes is not. */
+    const shift = overRight > 0 ? -overRight : overLeft > 0 ? overLeft : 0;
+    if (shift) facetPanel.style.transform = `translateX(${Math.round(shift)}px)`;
+  }
+
   function openPanel(open) {
     if (!toggle || !facetPanel) return;
     facetPanel.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
+    if (open) position();
   }
 
   if (toggle && facetPanel) {
@@ -230,10 +287,7 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
       toggle.focus();
     });
 
-    facetRoot.querySelector('[data-facet-clear]')?.addEventListener('click', () => {
-      for (const b of boxes) b.checked = false;
-      apply();
-    });
+    facetRoot.querySelector('[data-facet-clear]')?.addEventListener('click', clearAll);
 
     /* Escape closes and RETURNS FOCUS to the button. Without the second half a
        keyboard user is dumped at the top of the document and has to tab back
@@ -250,6 +304,14 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
     document.addEventListener('pointerdown', (e) => {
       if (!facetRoot.contains(e.target)) openPanel(false);
     });
+
+    /* Re-measure while open. A resize or a scroll-driven layout shift moves
+       the button, and a panel positioned once is only correct once. */
+    for (const ev of ['resize', 'orientationchange']) {
+      window.addEventListener(ev, () => {
+        if (toggle.getAttribute('aria-expanded') === 'true') position();
+      });
+    }
   }
 
   for (const p of pills)
@@ -258,5 +320,19 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
       apply();
     });
 
-  renderChips();
+  /* Resets EVERY control, shape pill included. The empty state is reached by
+     any combination, so a "clear" that only cleared the popover would leave a
+     reader still staring at nothing, having done what the page told them. */
+  function clearAll() {
+    for (const b of boxes) b.checked = false;
+    shape = 'all';
+    apply();
+  }
+
+  document.querySelector('[data-clear-all]')?.addEventListener('click', () => {
+    clearAll();
+    toggle?.focus();
+  });
+
+  apply();
 </script>

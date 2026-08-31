@@ -2,7 +2,7 @@
  "slug": "aer-carryon-small",
  "brand": "Aer",
  "model": "Carry-On",
- "variant": "Small",
+ "variant": "Carry-On — Black",
  "line": "aer-carryon",
  "type": "hardside spinner",
  "soft": 0,
@@ -11,11 +11,37 @@
  "fits_personal_item": null,
  "external_cm": null,
  "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_cm": {
+  "v": [
+   55,
+   35,
+   23
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Height/width/depth as printed. Wheels and handles inclusion not explicit; claimed dimensions only."
+ },
  "measured_cm": null,
  "measured_at": null,
- "weight_kg": null,
- "capacity_l": null,
+ "weight_kg": {
+  "v": 3.7,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "capacity_l": {
+  "v": 41,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Volume"
+ },
  "reviews": [
   {
    "src": "packhacker-international",
@@ -40,9 +66,62 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer inches",
+     "v": [
+      21.7,
+      14,
+      9
+     ],
+     "unit": "in"
+    },
+    {
+     "src": "manufacturer centimetres",
+     "v": [
+      55,
+      35,
+      23
+     ],
+     "unit": "cm"
+    }
+   ],
+   "note": "Published equivalents differ; both retained."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Smaller Carry-On, not Max. Both published unit systems retained; equivalents disagree without reconciliation. Displayed $299.00; Sale Sold Out text and blank comparison price make list-price classification unclear, so price_usd withheld. No packing dimensions, expansion amount or numeric SKU found.",
+ "manufacturer_source": {
+  "url": "https://aersf.com/products/carry-on",
+  "retrieved": "2026-08-31",
+  "title": "Aer Carry-On",
+  "local": "resources/bags/2026-08-31-aer-carryon-small.md"
+ },
+ "claimed_in": {
+  "v": [
+   21.7,
+   14,
+   9
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Dimensions",
+  "note": "Height/width/depth as printed. Wheels and handles inclusion not explicit; claimed dimensions only."
+ },
+ "weight_lb": {
+  "v": 8.2,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://aersf.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
  "compliance_claimed": true,
  "observed": [],
  "compliance_unbacked": true

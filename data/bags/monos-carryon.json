@@ -2,20 +2,46 @@
  "slug": "monos-carryon",
  "brand": "Monos",
  "model": "Carry-On",
- "variant": null,
+ "variant": "Carry-On — Desert Taupe",
  "line": "monos-carryon",
  "type": "hardside spinner",
  "soft": 0,
  "wheels": 4,
  "role": "overhead",
- "fits_personal_item": null,
- "external_cm": null,
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.88,
+   35.56,
+   22.86
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://monos.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Exterior measurements",
+  "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published."
+ },
  "claimed_packing_cm": null,
  "claimed_cm": null,
  "measured_cm": null,
  "measured_at": null,
- "weight_kg": null,
- "capacity_l": null,
+ "weight_kg": {
+  "v": 2.99,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://monos.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "capacity_l": {
+  "v": 39.9,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://monos.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Volume"
+ },
  "reviews": [
   {
    "src": "packhacker-international",
@@ -40,10 +66,55 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer pounds",
+     "v": 6.6,
+     "unit": "lb"
+    },
+    {
+     "src": "manufacturer kilograms",
+     "v": 2.99,
+     "unit": "kg"
+    }
+   ],
+   "note": "Published weight equivalents differ; both retained."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Published inch and cm dimensions both retained. Includes wheels and fixed handles. Weight equivalents differ slightly; no reconciliation. Selected Desert Taupe shown sold out. Current displayed price $275 USD but crossed-out original price is $0; list/sale classification ambiguous, so no price_usd supplied. No interior dimensions, quantified expansion or numeric SKU found. Other models include Plus, Pro and Pro Plus. Page title says 21-inch while current exterior specs state 22-inch height; specs stored and title discrepancy flagged.",
+ "manufacturer_source": {
+  "url": "https://monos.com/products/carry-on",
+  "retrieved": "2026-08-31",
+  "title": "Monos Carry-On",
+  "local": "resources/bags/2026-08-31-monos-carryon.md"
+ },
+ "external_in": {
+  "v": [
+   22,
+   14,
+   9
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://monos.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Exterior measurements",
+  "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published."
+ },
+ "weight_lb": {
+  "v": 6.6,
+  "unit": "lb",
+  "src": "manufacturer",
+  "ref": "https://monos.com/products/carry-on",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
  "compliance_claimed": true,
  "observed": [],
- "compliance_unbacked": true
+ "compliance_unbacked": false
 }

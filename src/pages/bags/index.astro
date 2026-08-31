@@ -2,7 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import BagCard from '../../components/BagCard.astro';
 import BagFilters, { GROUPS } from '../../components/BagFilters.astro';
-import { facetCounts, facetsFor } from '../../lib/bag-facets.mjs';
+import {
+  ROLE_FACETS,
+  SHELL_FACETS,
+  WEIGHT_FACETS,
+  facetsFor,
+  optionCount,
+} from '../../lib/bag-facets.mjs';
+import { BAND_IDS } from '../../lib/price-band.mjs';
 import { loadBags, loadCarriers, coverageStats } from '../../lib/data.mjs';
 import { shelve } from '../../lib/shelves.mjs';
 
@@ -24,7 +31,24 @@ const counts = Object.fromEntries(
    shelf. */
 const entries = shelves.flatMap((s) => s.bags);
 const facets = facetsFor(entries);
-const facetTotals = facetCounts(facets);
+
+/* Counted per OPTION, not per stamped value, because the weight options are
+   cumulative — "under 3.5 kg" has to include every bag under 2.5 kg too.
+   Counting the raw buckets would print a number beside a checkbox that is not
+   the number of cards ticking it leaves on screen. */
+const AXES = {
+  weight: WEIGHT_FACETS.map((f) => f.id),
+  shell: SHELL_FACETS.map((f) => f.id),
+  price: BAND_IDS,
+  role: ROLE_FACETS.map((f) => f.id),
+};
+const optionCounts = Object.fromEntries(
+  Object.entries(AXES).map(([axis, ids]) => [
+    axis,
+    Object.fromEntries(ids.map((id) => [id, optionCount(facets, axis, id)])),
+  ])
+);
+const bagTotal = new Set(entries.map((e) => e.bag.slug)).size;
 
 /* "Last updated" has to mean something: the most recent day anyone read a
    source, not the day the site was rebuilt. */
@@ -69,7 +93,7 @@ const lastUpdated = dates.length
       </p>
     </section>
 
-    <BagFilters counts={counts} facetCounts={facetTotals} total={bags.length} />
+    <BagFilters counts={counts} optionCounts={optionCounts} total={bagTotal} />
 
     {shelves.map((shelf) => shelf.bags.length > 0 && (
       <section data-shelf class="border-b border-rule py-10">
@@ -84,10 +108,12 @@ const lastUpdated = dates.length
         <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {shelf.bags.map(({ bag, coverage }) => (
             <div
+              data-bag-slug={bag.slug}
               data-bag-type={bag.record.type}
-              data-bag-role={facets.get(bag.slug)?.role ?? ''}
+              data-bag-weight={facets.get(bag.slug)?.weight ?? ''}
+              data-bag-shell={facets.get(bag.slug)?.shell ?? ''}
               data-bag-price={facets.get(bag.slug)?.price ?? ''}
-              data-bag-cov={facets.get(bag.slug)?.cov ?? ''}
+              data-bag-role={facets.get(bag.slug)?.role ?? ''}
             >
               <BagCard bag={bag} coverage={coverage} />
             </div>
@@ -96,8 +122,16 @@ const lastUpdated = dates.length
       </section>
     ))}
 
+    {/* Said without naming a cause. The old copy read "matches that shape",
+        written when a shape pill was the only way to empty the page — a reader
+        who emptied it with a weight filter was told the wrong thing about
+        their own catalogue. The button is the point: an empty page with no way
+        back out is a dead end. */}
     <p data-empty hidden class="py-10 text-ink-2">
-      Nothing in the catalogue matches that shape yet.
+      No bag in the catalogue matches all of those at once.{' '}
+      <button type="button" data-clear-all class="cursor-pointer text-blue underline underline-offset-2">
+        Clear the filters
+      </button>
     </p>
 
     {stats.bags_promotable < stats.bags_sized && (

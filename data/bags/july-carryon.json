@@ -2,7 +2,7 @@
  "slug": "july-carryon",
  "brand": "July",
  "model": "Carry On",
- "variant": null,
+ "variant": "Carry On — Moss, ejectable-battery version; no CaseSafe add-on",
  "line": "july-carryon",
  "type": "hardside spinner",
  "soft": 0,
@@ -10,12 +10,55 @@
  "role": "overhead",
  "fits_personal_item": null,
  "external_cm": null,
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   50.8,
+   36.83,
+   21.59
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://july.com/us/luggage/carry-on/",
+  "at": "2026-08-31",
+  "quote": "Internal dimensions excluding wheels:",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source."
+ },
+ "claimed_cm": {
+  "v": [
+   54.61,
+   38.1,
+   21.59
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://july.com/us/luggage/carry-on/",
+  "at": "2026-08-31",
+  "quote": "External dimensions including wheels:",
+  "note": "Product-page external dimensions explicitly include wheels; handles not explicit. Comparison page publishes another triple. Pending clarification, not verified overall. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": null,
- "capacity_l": null,
+ "capacity_l": {
+  "v": 42,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://july.com/us/luggage/carry-on/",
+  "at": "2026-08-31",
+  "quote": "Capacity:"
+ },
  "reviews": [
   {
    "src": "packhacker-international",
@@ -40,9 +83,98 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_in",
+   "values": [
+    {
+     "v": [
+      21.5,
+      15,
+      8.5
+     ],
+     "unit": "in",
+     "src": "manufacturer product SPECS",
+     "ref": "https://july.com/us/luggage/carry-on/",
+     "at": "2026-08-31"
+    },
+    {
+     "v": [
+      21.65,
+      15.16,
+      8.46
+     ],
+     "unit": "in",
+     "src": "manufacturer comparison table",
+     "ref": "https://july.com/us/compare-carry-on-luggage/",
+     "at": "2026-08-31"
+    }
+   ],
+   "note": "Official pages disagree; no reconciliation."
+  },
+  {
+   "field": "weight_lb",
+   "values": [
+    {
+     "v": 7.4,
+     "unit": "lbs",
+     "src": "manufacturer product SPECS",
+     "ref": "https://july.com/us/luggage/carry-on/",
+     "at": "2026-08-31"
+    },
+    {
+     "v": 7.5,
+     "unit": "lbs",
+     "src": "manufacturer comparison table",
+     "ref": "https://july.com/us/compare-carry-on-luggage/",
+     "at": "2026-08-31"
+    }
+   ],
+   "note": "Official pages disagree; no reconciliation."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "Product specifications read by opening SPECS in the browser. Wheels included, handles not explicitly confirmed; retained as claimed rather than verified overall. Product specs differ from manufacturer comparison table in dimensions and weight; both recorded in conflicts. Product-page dimension retained as a labelled claim, not reconciled. Sale $250.75 USD on 2026-08-31; list $295 stored for price bands. No expansion amount or numeric SKU found. Manufacturer also claims total linear dimensions 115cm; no conversion performed.",
+ "manufacturer_source": {
+  "url": "https://july.com/us/luggage/carry-on/",
+  "retrieved": "2026-08-31",
+  "title": "July Carry On — Moss",
+  "local": "resources/bags/2026-08-31-july-carryon.md"
+ },
+ "claimed_in": {
+  "v": [
+   21.5,
+   15,
+   8.5
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://july.com/us/luggage/carry-on/",
+  "at": "2026-08-31",
+  "quote": "External dimensions including wheels:",
+  "note": "Product-page external dimensions explicitly include wheels; handles not explicit. Comparison page publishes another triple. Pending clarification, not verified overall."
+ },
+ "claimed_packing_in": {
+  "v": [
+   20,
+   14.5,
+   8.5
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://july.com/us/luggage/carry-on/",
+  "at": "2026-08-31",
+  "quote": "Internal dimensions excluding wheels:"
+ },
+ "price_usd": {
+  "v": 295,
+  "src": "manufacturer",
+  "ref": "https://july.com/us/luggage/carry-on/",
+  "at": "2026-08-31",
+  "list": true,
+  "quote": "$295 US"
+ },
  "compliance_claimed": true,
  "observed": [],
  "compliance_unbacked": true

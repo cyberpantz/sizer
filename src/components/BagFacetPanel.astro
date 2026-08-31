@@ -18,16 +18,32 @@
  * (axisLive) — see bag-facets.mjs. Today that means Price and Under-seat are
  * absent, and they appear on their own when the intake lands.
  */
-import { COVERAGE_FACETS, PRICE_HINTS, ROLE_FACETS, axisLive } from '../lib/bag-facets.mjs';
+import {
+  PRICE_HINTS,
+  ROLE_FACETS,
+  SHELL_FACETS,
+  WEIGHT_FACETS,
+  axisLive,
+} from '../lib/bag-facets.mjs';
 import { BANDS } from '../lib/price-band.mjs';
 
-const { counts } = Astro.props;
+/* `optionCounts` is keyed by OPTION, not by stamped value — the coverage
+   options are cumulative, so "80% or more" counts the bags above it too. The
+   number beside a checkbox has to be the number of cards ticking it leaves on
+   screen, or the panel is lying in the most checkable way possible. */
+const { optionCounts, total } = Astro.props;
 
 const SECTIONS = [
   {
-    axis: 'cov',
-    legend: 'How many airlines it clears',
-    options: COVERAGE_FACETS.map((f) => ({ ...f, n: counts.cov?.[f.id] ?? 0 })),
+    axis: 'weight',
+    legend: 'Weight, empty',
+    note: 'Several Asian carriers cap cabin weight at 7 kg. The empty bag comes out of that.',
+    options: WEIGHT_FACETS.map((f) => ({ ...f, n: optionCounts.weight?.[f.id] ?? 0 })),
+  },
+  {
+    axis: 'shell',
+    legend: 'Shell',
+    options: SHELL_FACETS.map((f) => ({ ...f, n: optionCounts.shell?.[f.id] ?? 0 })),
   },
   {
     axis: 'price',
@@ -37,16 +53,20 @@ const SECTIONS = [
       id: b.id,
       label: b.label,
       hint: PRICE_HINTS[b.id],
-      n: counts.price?.[b.id] ?? 0,
+      n: optionCounts.price?.[b.id] ?? 0,
     })),
   },
   {
     axis: 'role',
     legend: 'Where it goes',
-    options: ROLE_FACETS.map((f) => ({ ...f, n: counts.role?.[f.id] ?? 0 })),
+    options: ROLE_FACETS.map((f) => ({ ...f, n: optionCounts.role?.[f.id] ?? 0 })),
   },
 ]
   .map((s) => ({ ...s, options: s.options.filter((o) => o.n > 0) }))
+  /* An option matching EVERY bag is not a filter either — it is a no-op the
+     reader has to click to discover. Drops "40% or more" once it covers the
+     whole catalogue. */
+  .map((s) => ({ ...s, options: s.options.filter((o) => o.n < total) }))
   .filter((s) => axisLive(Object.fromEntries(s.options.map((o) => [o.id, o.n]))));
 
 const live = SECTIONS.length > 0;
@@ -88,7 +108,12 @@ const live = SECTIONS.length > 0;
       id="facet-panel"
       data-facet-panel
       hidden
-      class="absolute left-0 z-30 mt-2 w-[min(22rem,calc(100vw-3rem))] rounded-card border border-rule
+      {/* Anchored to the button's RIGHT edge, because the button is right-
+          aligned in the filter row. Anchored left it opened rightward and ran
+          straight off the screen. `data-facet-panel` is then nudged by JS if
+          it still overflows either edge — the button moves when the shape
+          pills wrap, so no static anchor is correct at every width. */}
+      class="absolute right-0 z-30 mt-2 w-[min(22rem,calc(100vw-3rem))] rounded-card border border-rule
              bg-surface p-5 shadow-panel"
     >
       {SECTIONS.map((s) => (

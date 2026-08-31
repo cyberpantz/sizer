@@ -2,7 +2,7 @@
  "slug": "calpak-hue",
  "brand": "Calpak",
  "model": "Hue Front Pocket Carry-On",
- "variant": null,
+ "variant": "Hue Front Pocket Carry-On — Glazed Dark Cherry, 20-inch size label",
  "line": null,
  "type": "hardside spinner",
  "soft": 0,
@@ -10,23 +10,68 @@
  "role": "overhead",
  "fits_personal_item": null,
  "external_cm": null,
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   48.895,
+   34.925,
+   22.352
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Interior",
+  "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_cm": {
+  "v": [
+   53.34,
+   34.925,
+   24.765
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Exterior (Including wheel)",
+  "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "claimed_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.74,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "kg"
+  "v": 3.855515,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Weight",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
  },
  "capacity_l": {
-  "v": 45,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "L"
+  "v": 38,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Capacity"
  },
  "reviews": [
   {
@@ -50,6 +95,56 @@
  "conflicts": [],
  "mentions": 1,
  "needs_measurement": true,
+ "notes": "USD list $265, current sale $212 on 2026-08-31. Glazed Dark Cherry, Front Pocket model; other Hue sizes/models not substituted. Source size label 20-inch differs from 21-inch exterior height, retained as separate labels. No metric figures, expansion amount or numeric SKU found.",
+ "manufacturer_source": {
+  "url": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "retrieved": "2026-08-31",
+  "title": "Calpak Hue Front Pocket Carry-On",
+  "local": "resources/bags/2026-08-31-calpak-hue.md"
+ },
+ "claimed_in": {
+  "v": [
+   21,
+   13.75,
+   9.75
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Exterior (Including wheel)",
+  "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion."
+ },
+ "claimed_packing_in": {
+  "v": [
+   19.25,
+   13.75,
+   8.8
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Interior",
+  "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion."
+ },
+ "weight_lb": {
+  "v": 8.5,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Weight"
+ },
+ "price_usd": {
+  "v": 265,
+  "unit": "USD",
+  "src": "manufacturer",
+  "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+  "at": "2026-08-31",
+  "quote": "Original price",
+  "list": true
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

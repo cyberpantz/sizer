@@ -598,6 +598,1067 @@
     }
    ],
    "notes": "Original source units retained; metric conversion belongs to data/build-bags.mjs. Exterior includes handles and wheels. Capacity remains disputed (49 L versus 47.9 L); existing review capacity remains attributed to its review. No expansion amount or numeric SKU found. No distinct sale price shown; displayed and crossed-out prices are both $295. Smaller The Carry-On is a different product."
+  },
+  {
+   "slug": "away-carryon",
+   "brand": "Away",
+   "model": "The Carry-On",
+   "line": "away-carryon",
+   "variant": "Carry-On \u2014 Jet Black (Classic polycarbonate)",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://www.awaytravel.com/products/carry-on-jet-black",
+    "retrieved": "2026-08-31",
+    "title": "The Carry-On in Jet Black | Away",
+    "local": "resources/bags/2026-08-31-away-carryon.md"
+   },
+   "external_in": {
+    "v": [
+     21.7,
+     14.4,
+     9
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "in",
+    "quote": "Exterior measurements",
+    "note": "Measurements include handles and wheels. Manufacturer exterior specification, not measured by us. Axis order is not explicitly labelled; published triple order retained."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.1,
+     13.9,
+     7.5
+    ],
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+    "at": "2026-08-31",
+    "unit": "in",
+    "quote": "Interior measurements"
+   },
+   "price_usd": {
+    "v": 275,
+    "src": "manufacturer",
+    "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+    "at": "2026-08-31",
+    "list": true,
+    "quote": "$275"
+   },
+   "conflicts": [
+    {
+     "field": "weight_lb",
+     "values": [
+      {
+       "v": 7.5,
+       "unit": "lbs",
+       "src": "manufacturer specifications",
+       "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+       "at": "2026-08-31",
+       "quote": "Weight"
+      },
+      {
+       "v": 7.1,
+       "unit": "lbs",
+       "src": "manufacturer product summary",
+       "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+       "at": "2026-08-31"
+      }
+     ],
+     "note": "Two different values on the same official product page; unresolved."
+    },
+    {
+     "field": "capacity_l",
+     "values": [
+      {
+       "v": 41,
+       "unit": "L",
+       "src": "manufacturer specifications",
+       "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+       "at": "2026-08-31",
+       "quote": "Capacity"
+      },
+      {
+       "v": 39.8,
+       "unit": "L",
+       "src": "manufacturer product summary",
+       "ref": "https://www.awaytravel.com/products/carry-on-jet-black",
+       "at": "2026-08-31"
+      }
+     ],
+     "note": "Two different values on the same official product page; unresolved."
+    }
+   ],
+   "notes": "Original published units only; build handles conversions. Weight and capacity conflict between specification section and product summary; both claims retained in conflicts, neither promoted as the sole manufacturer figure. Existing review weight and capacity remain review-attributed. No numeric SKU, expansion amount, or metric equivalents found. These figures are for the smaller Classic Carry-On, not Bigger, Flex or Aluminum. No distinct sale price: current and comparison prices both $275."
+  },
+  {
+   "slug": "beis-carryon-roller",
+   "brand": "B\u00e9is",
+   "model": "The Carry-On Roller",
+   "line": "beis-roller",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Carry-On Roller \u2014 matte Black",
+   "manufacturer_source": {
+    "url": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "retrieved": "2026-08-31",
+    "title": "B\u00c9IS The Carry-On Roller in Black",
+    "local": "resources/bags/2026-08-31-beis-carryon-roller.md"
+   },
+   "claimed_in": {
+    "v": [
+     22.83,
+     15.7,
+     10
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "at": "2026-08-31",
+    "quote": "Dimensions",
+    "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L \u00d7 H \u00d7 D; stored H \u00d7 L \u00d7 D. Not verified overall dimensions."
+   },
+   "claimed_cm": {
+    "v": [
+     58,
+     40,
+     25.4
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "at": "2026-08-31",
+    "quote": "Dimensions",
+    "note": "Labelled exterior in FAQ, but inclusion of wheels and handles is not explicit. Source prints L \u00d7 H \u00d7 D; stored H \u00d7 L \u00d7 D. Not verified overall dimensions."
+   },
+   "weight_lb": {
+    "v": 7.81,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "weight_kg": {
+    "v": 3.55,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 49,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "at": "2026-08-31",
+    "quote": "Capacity"
+   },
+   "expands_in": {
+    "v": 2,
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "at": "2026-08-31",
+    "quote": "Expands an additional 2\""
+   },
+   "price_usd": {
+    "v": 268,
+    "src": "manufacturer",
+    "ref": "https://beistravel.com/products/the-carry-on-roller-in-black",
+    "at": "2026-08-31",
+    "list": true,
+    "quote": "$268"
+   },
+   "notes": "FAQ calls dimensions exterior, but the reviewed text does not explicitly confirm inclusion of wheels and handles. Kept as claimed dimensions, not promoted as verified overall. Source order L \u00d7 H \u00d7 D is reordered to H \u00d7 L \u00d7 D without changing values. Capacity expands to 61 L. Both published units retained; dimensions and weight equivalents differ slightly, without reconciliation. No interior dimensions or numeric SKU found; no sale shown. Small Carry-On, Medium Check-In and Large Check-In are other size selections.",
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        22.83,
+        15.7,
+        10
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        58,
+        40,
+        25.4
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published unit equivalents are not exactly equal; both retained without reconciliation."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer pounds",
+       "v": 7.81,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer kilograms",
+       "v": 3.55,
+       "unit": "kg"
+      }
+     ],
+     "note": "Published weight equivalents are not exactly equal; both retained."
+    }
+   ]
+  },
+  {
+   "slug": "july-carryon",
+   "brand": "July",
+   "model": "Carry On",
+   "line": "july-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Carry On \u2014 Moss, ejectable-battery version; no CaseSafe add-on",
+   "manufacturer_source": {
+    "url": "https://july.com/us/luggage/carry-on/",
+    "retrieved": "2026-08-31",
+    "title": "July Carry On \u2014 Moss",
+    "local": "resources/bags/2026-08-31-july-carryon.md"
+   },
+   "claimed_in": {
+    "v": [
+     21.5,
+     15,
+     8.5
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on/",
+    "at": "2026-08-31",
+    "quote": "External dimensions including wheels:",
+    "note": "Product-page external dimensions explicitly include wheels; handles not explicit. Comparison page publishes another triple. Pending clarification, not verified overall."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20,
+     14.5,
+     8.5
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on/",
+    "at": "2026-08-31",
+    "quote": "Internal dimensions excluding wheels:"
+   },
+   "capacity_l": {
+    "v": 42,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on/",
+    "at": "2026-08-31",
+    "quote": "Capacity:"
+   },
+   "price_usd": {
+    "v": 295,
+    "src": "manufacturer",
+    "ref": "https://july.com/us/luggage/carry-on/",
+    "at": "2026-08-31",
+    "list": true,
+    "quote": "$295 US"
+   },
+   "conflicts": [
+    {
+     "field": "claimed_in",
+     "values": [
+      {
+       "v": [
+        21.5,
+        15,
+        8.5
+       ],
+       "unit": "in",
+       "src": "manufacturer product SPECS",
+       "ref": "https://july.com/us/luggage/carry-on/",
+       "at": "2026-08-31"
+      },
+      {
+       "v": [
+        21.65,
+        15.16,
+        8.46
+       ],
+       "unit": "in",
+       "src": "manufacturer comparison table",
+       "ref": "https://july.com/us/compare-carry-on-luggage/",
+       "at": "2026-08-31"
+      }
+     ],
+     "note": "Official pages disagree; no reconciliation."
+    },
+    {
+     "field": "weight_lb",
+     "values": [
+      {
+       "v": 7.4,
+       "unit": "lbs",
+       "src": "manufacturer product SPECS",
+       "ref": "https://july.com/us/luggage/carry-on/",
+       "at": "2026-08-31"
+      },
+      {
+       "v": 7.5,
+       "unit": "lbs",
+       "src": "manufacturer comparison table",
+       "ref": "https://july.com/us/compare-carry-on-luggage/",
+       "at": "2026-08-31"
+      }
+     ],
+     "note": "Official pages disagree; no reconciliation."
+    }
+   ],
+   "notes": "Product specifications read by opening SPECS in the browser. Wheels included, handles not explicitly confirmed; retained as claimed rather than verified overall. Product specs differ from manufacturer comparison table in dimensions and weight; both recorded in conflicts. Product-page dimension retained as a labelled claim, not reconciled. Sale $250.75 USD on 2026-08-31; list $295 stored for price bands. No expansion amount or numeric SKU found. Manufacturer also claims total linear dimensions 115cm; no conversion performed."
+  },
+  {
+   "slug": "monos-carryon",
+   "brand": "Monos",
+   "model": "Carry-On",
+   "line": "monos-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Carry-On \u2014 Desert Taupe",
+   "manufacturer_source": {
+    "url": "https://monos.com/products/carry-on",
+    "retrieved": "2026-08-31",
+    "title": "Monos Carry-On",
+    "local": "resources/bags/2026-08-31-monos-carryon.md"
+   },
+   "external_in": {
+    "v": [
+     22,
+     14,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Exterior measurements",
+    "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published."
+   },
+   "external_cm": {
+    "v": [
+     55.88,
+     35.56,
+     22.86
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Exterior measurements",
+    "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published."
+   },
+   "weight_lb": {
+    "v": 6.6,
+    "unit": "lb",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "weight_kg": {
+    "v": 2.99,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 39.9,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://monos.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Volume"
+   },
+   "notes": "Published inch and cm dimensions both retained. Includes wheels and fixed handles. Weight equivalents differ slightly; no reconciliation. Selected Desert Taupe shown sold out. Current displayed price $275 USD but crossed-out original price is $0; list/sale classification ambiguous, so no price_usd supplied. No interior dimensions, quantified expansion or numeric SKU found. Other models include Plus, Pro and Pro Plus. Page title says 21-inch while current exterior specs state 22-inch height; specs stored and title discrepancy flagged.",
+   "conflicts": [
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer pounds",
+       "v": 6.6,
+       "unit": "lb"
+      },
+      {
+       "src": "manufacturer kilograms",
+       "v": 2.99,
+       "unit": "kg"
+      }
+     ],
+     "note": "Published weight equivalents differ; both retained."
+    }
+   ]
+  },
+  {
+   "slug": "peak-design-roller-pro",
+   "brand": "Peak Design",
+   "model": "Roller Pro",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Roller Pro Carry-On \u2014 Black, bag only",
+   "manufacturer_source": {
+    "url": "https://www.peakdesign.com/products/roller-pro",
+    "retrieved": "2026-08-31",
+    "title": "Peak Design Roller Pro Carry-On",
+    "local": "resources/bags/2026-08-31-peak-design-roller-pro.md"
+   },
+   "claimed_cm": {
+    "v": [
+     55.6,
+     35.6,
+     23
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "quote": "External Dimensions",
+    "note": "Labelled external, normal state. Wheels/handles inclusion not explicit in reviewed specification; not promoted as verified overall."
+   },
+   "claimed_in": {
+    "v": [
+     21.8,
+     14,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "quote": "External Dimensions",
+    "note": "Labelled external, normal state. Wheels/handles inclusion not explicit in reviewed specification; not promoted as verified overall."
+   },
+   "claimed_packing_cm": {
+    "v": [
+     51.5,
+     35,
+     22
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "quote": "Internal Dimensions"
+   },
+   "claimed_packing_in": {
+    "v": [
+     20.3,
+     13.8,
+     8.7
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "quote": "Internal Dimensions"
+   },
+   "weight_kg": {
+    "v": 3.9,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "weight_lb": {
+    "v": 8.6,
+    "unit": "lb",
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 34,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "quote": "Capacity"
+   },
+   "price_usd": {
+    "v": 599.95,
+    "src": "manufacturer",
+    "ref": "https://www.peakdesign.com/products/roller-pro",
+    "at": "2026-08-31",
+    "list": true,
+    "quote": "$599.95"
+   },
+   "notes": "Specs opened in browser; US USD locale confirmed. External dimensions do not explicitly state inclusion of wheels and handles, so stored as claimed. Expanded external: 55.6 x 35.6 x 28 cm (21.8 x 14 x 11 in); expanded internal: 51.5 x 35 x 27 cm (20.3 x 13.8 x 10.6 in); capacity 39 L expanded. No expansion difference calculated. No numeric SKU found; only one size in product selector, three colors and optional bundles. Bag-only price, no sale shown. All published unit pairs retained without reconciliation.",
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        55.6,
+        35.6,
+        23
+       ],
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer inches",
+       "v": [
+        21.8,
+        14,
+        9
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Published metric and imperial equivalents differ; both preserved."
+    },
+    {
+     "field": "claimed_packing_cm",
+     "values": [
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        51.5,
+        35,
+        22
+       ],
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer inches",
+       "v": [
+        20.3,
+        13.8,
+        8.7
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Published metric and imperial equivalents differ; both preserved."
+    }
+   ]
+  },
+  {
+   "slug": "rimowa-cabin",
+   "brand": "Rimowa",
+   "model": "Essential Cabin",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Essential Cabin \u2014 matte black, SKU 83253631",
+   "manufacturer_source": {
+    "url": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+    "retrieved": "2026-08-31",
+    "title": "RIMOWA Essential Cabin \u2014 matte black",
+    "local": "resources/bags/2026-08-31-rimowa-cabin.md"
+   },
+   "external_cm": {
+    "v": [
+     55,
+     39,
+     23
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+    "at": "2026-08-31",
+    "quote": "Measurement",
+    "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ."
+   },
+   "external_in": {
+    "v": [
+     21.7,
+     15.8,
+     9.1
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+    "at": "2026-08-31",
+    "quote": "Measurement",
+    "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ."
+   },
+   "weight_kg": {
+    "v": 3.2,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "weight_lb": {
+    "v": 7.1,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 36,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+    "at": "2026-08-31",
+    "quote": "Volume"
+   },
+   "price_usd": {
+    "v": 990,
+    "src": "manufacturer",
+    "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
+    "at": "2026-08-31",
+    "list": true,
+    "quote": "$990.00"
+   },
+   "notes": "Manufacturer-published metric and imperial values both retained. Includes wheels and handles. Unit equivalents disagree, particularly width; no reconciliation. Imperial volume also given as 9.8 gal without gallon-system specification; retained in source dossier. No interior dimensions or quantified expansion found. No sale shown. SKU 83253631; Cabin, not Cabin S, Check-In M/L or Trunk/Trunk Plus.",
+   "conflicts": [
+    {
+     "field": "external_cm",
+     "values": [
+      {
+       "src": "manufacturer metric",
+       "v": [
+        55,
+        39,
+        23
+       ],
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer imperial",
+       "v": [
+        21.7,
+        15.8,
+        9.1
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Both published values retained without reconciliation; gallon standard not specified for volume."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer metric",
+       "v": 3.2,
+       "unit": "kg"
+      },
+      {
+       "src": "manufacturer imperial",
+       "v": 7.1,
+       "unit": "lbs"
+      }
+     ],
+     "note": "Both published values retained without reconciliation; gallon standard not specified for volume."
+    },
+    {
+     "field": "capacity_l",
+     "values": [
+      {
+       "src": "manufacturer metric",
+       "v": 36,
+       "unit": "L"
+      },
+      {
+       "src": "manufacturer imperial",
+       "v": 9.8,
+       "unit": "gal"
+      }
+     ],
+     "note": "Both published values retained without reconciliation; gallon standard not specified for volume."
+    }
+   ]
+  },
+  {
+   "slug": "aer-carryon-max",
+   "brand": "Aer",
+   "model": "Carry-On Max",
+   "line": "aer-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Carry-On Max \u2014 Black",
+   "manufacturer_source": {
+    "url": "https://aersf.com/products/carry-on-max",
+    "retrieved": "2026-08-31",
+    "title": "Aer Carry-On Max",
+    "local": "resources/bags/2026-08-31-aer-carryon-max.md"
+   },
+   "notes": "Both printed unit systems retained without reconciliation; inch/cm and lb/kg equivalents differ. Current displayed price $319.00, but page also says Sale Sold Out with blank comparison price. List price not established; price_usd withheld. Black, Max size; smaller Carry-On separate. No packing dimensions, expansion amount or numeric SKU found.",
+   "claimed_in": {
+    "v": [
+     22.7,
+     15,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on-max",
+    "at": "2026-08-31",
+    "quote": "Dimensions",
+    "note": "Height/width/depth as printed. Inclusion of wheels and handles not explicit; retained as claimed dimensions, not verified overall."
+   },
+   "claimed_cm": {
+    "v": [
+     57,
+     38,
+     23
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on-max",
+    "at": "2026-08-31",
+    "quote": "Dimensions",
+    "note": "Height/width/depth as printed. Inclusion of wheels and handles not explicit; retained as claimed dimensions, not verified overall."
+   },
+   "weight_lb": {
+    "v": 8.4,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on-max",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "weight_kg": {
+    "v": 3.8,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on-max",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 48,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on-max",
+    "at": "2026-08-31",
+    "quote": "Volume"
+   },
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        22.7,
+        15,
+        9
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        57,
+        38,
+        23
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published equivalents differ; not reconciled."
+    }
+   ]
+  },
+  {
+   "slug": "aer-carryon-small",
+   "brand": "Aer",
+   "model": "Carry-On",
+   "line": "aer-carryon",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Carry-On \u2014 Black",
+   "manufacturer_source": {
+    "url": "https://aersf.com/products/carry-on",
+    "retrieved": "2026-08-31",
+    "title": "Aer Carry-On",
+    "local": "resources/bags/2026-08-31-aer-carryon-small.md"
+   },
+   "notes": "Smaller Carry-On, not Max. Both published unit systems retained; equivalents disagree without reconciliation. Displayed $299.00; Sale Sold Out text and blank comparison price make list-price classification unclear, so price_usd withheld. No packing dimensions, expansion amount or numeric SKU found.",
+   "claimed_in": {
+    "v": [
+     21.7,
+     14,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Dimensions",
+    "note": "Height/width/depth as printed. Wheels and handles inclusion not explicit; claimed dimensions only."
+   },
+   "claimed_cm": {
+    "v": [
+     55,
+     35,
+     23
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Dimensions",
+    "note": "Height/width/depth as printed. Wheels and handles inclusion not explicit; claimed dimensions only."
+   },
+   "weight_lb": {
+    "v": 8.2,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "weight_kg": {
+    "v": 3.7,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 41,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://aersf.com/products/carry-on",
+    "at": "2026-08-31",
+    "quote": "Volume"
+   },
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        21.7,
+        14,
+        9
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        55,
+        35,
+        23
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published equivalents differ; both retained."
+    }
+   ]
+  },
+  {
+   "slug": "calpak-hue",
+   "brand": "Calpak",
+   "model": "Hue Front Pocket Carry-On",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Hue Front Pocket Carry-On \u2014 Glazed Dark Cherry, 20-inch size label",
+   "manufacturer_source": {
+    "url": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+    "retrieved": "2026-08-31",
+    "title": "Calpak Hue Front Pocket Carry-On",
+    "local": "resources/bags/2026-08-31-calpak-hue.md"
+   },
+   "notes": "USD list $265, current sale $212 on 2026-08-31. Glazed Dark Cherry, Front Pocket model; other Hue sizes/models not substituted. Source size label 20-inch differs from 21-inch exterior height, retained as separate labels. No metric figures, expansion amount or numeric SKU found.",
+   "claimed_in": {
+    "v": [
+     21,
+     13.75,
+     9.75
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+    "at": "2026-08-31",
+    "quote": "Exterior (Including wheel)",
+    "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion."
+   },
+   "claimed_packing_in": {
+    "v": [
+     19.25,
+     13.75,
+     8.8
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+    "at": "2026-08-31",
+    "quote": "Interior",
+    "note": "Exterior explicitly includes wheel; handles not explicitly confirmed. Claimed exterior only. Published triple retained without conversion."
+   },
+   "weight_lb": {
+    "v": 8.5,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 38,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+    "at": "2026-08-31",
+    "quote": "Capacity"
+   },
+   "price_usd": {
+    "v": 265,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://www.calpaktravel.com/products/hue-carry-on-luggage-with-pocket",
+    "at": "2026-08-31",
+    "quote": "Original price",
+    "list": true
+   },
+   "conflicts": []
+  },
+  {
+   "slug": "carl-friedrik-carryon-x",
+   "brand": "Carl Friedrik",
+   "model": "Carry-on X",
+   "line": null,
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Hybrid Carry-on X \u2014 Grey / Cognac",
+   "manufacturer_source": {
+    "url": "https://www.carlfriedrik.com/products/the-carry-on-x",
+    "retrieved": "2026-08-31",
+    "title": "Carl Friedrik Carry-on X",
+    "local": "resources/bags/2026-08-31-carl-friedrik-carryon-x.md"
+   },
+   "notes": "Specifications panel opened in browser; US locale confirmed. Hybrid Carry-on X, not Core Carry-on X, which appears beside it in comparison. Grey/Cognac bag without add-ons; USD list $745, no sale shown. Both unit systems retained despite differences. No packing dimensions, expansion amount, numeric SKU or explicit empty-weight qualifier found.",
+   "claimed_in": {
+    "v": [
+     22,
+     15,
+     9.8
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+    "at": "2026-08-31",
+    "quote": "Height / Width / Depth",
+    "note": "Published Height, Width, Depth; does not explicitly say overall or include wheels/handles. Claimed only, not measured by us."
+   },
+   "claimed_cm": {
+    "v": [
+     56,
+     38,
+     25
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+    "at": "2026-08-31",
+    "quote": "Height / Width / Depth",
+    "note": "Published Height, Width, Depth; does not explicitly say overall or include wheels/handles. Claimed only, not measured by us."
+   },
+   "weight_lb": {
+    "v": 10.4,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "weight_kg": {
+    "v": 4.7,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+    "at": "2026-08-31",
+    "quote": "Weight"
+   },
+   "capacity_l": {
+    "v": 44,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+    "at": "2026-08-31",
+    "quote": "Volume"
+   },
+   "price_usd": {
+    "v": 745,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://www.carlfriedrik.com/products/the-carry-on-x",
+    "at": "2026-08-31",
+    "quote": "Price",
+    "list": true
+   },
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer inches",
+       "v": [
+        22,
+        15,
+        9.8
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer centimetres",
+       "v": [
+        56,
+        38,
+        25
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published equivalents differ; both retained without reconciliation."
+    }
+   ]
   }
  ]
 }
