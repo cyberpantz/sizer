@@ -1,0 +1,20 @@
+# pnpm 10.20 no longer reads the "pnpm" field in package.json — settings live
+# here now. Both of these are required for the build to work at all.
+
+# Astro's toolchain assumes a flat node_modules. @astrojs/cloudflare imports
+# @astrojs/internal-helpers without declaring it as a dependency; pnpm's strict
+# layout turns that into "Rolldown failed to resolve import" at build time.
+nodeLinker: hoisted
+
+# esbuild and workerd fetch platform-specific binaries in a postinstall script.
+# pnpm blocks build scripts by default, which left esbuild's host at 0.28.1
+# against a 0.28.2 binary and failed every build.
+onlyBuiltDependencies:
+  - esbuild
+  - workerd
+  - '@biomejs/biome'
+
+# Two esbuild majors were installed side by side. Under a hoisted layout only
+# one binary wins, and it must be the one the host library expects.
+overrides:
+  esbuild: 0.28.2
