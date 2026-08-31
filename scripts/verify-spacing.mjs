@@ -9,7 +9,14 @@
    exactly the kind of bug worth a cheap automated check.
 
    A following line that already starts its own content with a space is fine;
-   that is the deliberate fix, e.g. <span> · N more</span>. */
+   that is the deliberate fix, e.g. <span> · N more</span>.
+
+   ⚠️ KNOWN GAP: this only checks TEXT followed by an element or expression. The
+   mirror case — an element followed by text on the next line, e.g.
+   `</strong>\n size` — is not checked, because I could not confirm whether Astro
+   collapses that the same way without running the compiler, and a guard that
+   flags cases it has not verified trains people to ignore it. Confirm against
+   the compiler and widen it, or leave it narrow and honest. */
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -33,6 +40,12 @@ for (const file of walk('src')) {
     if (prev.endsWith('>')) continue; //           …or with a tag, which is fine
     if (!/^[<{]/.test(cur)) continue; //           next line opens an element/expression
     if (/^<\/|^\{\s*['"] ['"]\s*\}/.test(cur)) continue; // closing tag, or an explicit {' '}
+    /* An expression whose own output begins with a space is already correct:
+       {cond && ` · last updated ${x}`} renders its own separator. Flagging it
+       would push authors to add a redundant {' '} and, worse, teach them the
+       guard cries wolf — at which point they stop reading it. */
+    if (/^\{[^}]*?[`'"]\s/.test(cur)) continue;
+
     /* Already fixed if the expression's own content starts with a space. */
     if (/^<[^>]*>\s|^<>\s|^\{[^}]*&&\s*\(\s*$/.test(cur)) {
       const inner = lines[i + 1]?.trim() ?? '';

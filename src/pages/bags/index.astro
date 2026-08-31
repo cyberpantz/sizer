@@ -1,94 +1,95 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BagCard from '../../components/BagCard.astro';
-import { loadBags, loadCarriers } from '../../lib/data.mjs';
+import BagFilters, { GROUPS } from '../../components/BagFilters.astro';
+import { loadBags, loadCarriers, coverageStats } from '../../lib/data.mjs';
 import { shelve } from '../../lib/shelves.mjs';
 
 const bags = await loadBags();
 const carriers = await loadCarriers();
 const shelves = shelve(bags, carriers);
+const stats = await coverageStats();
 const answerable = carriers.filter((c) => !c.cabin_unknown).length;
 
-/* Filters are derived from what is actually in the catalogue, never hard-coded.
-   A filter with nothing behind it is a dead end the reader has to discover by
-   clicking it. */
-const types = [...new Set(bags.map((b) => b.record.type).filter(Boolean))]
-  .map((type) => ({ type, count: bags.filter((b) => b.record.type === type).length }))
-  .filter((t) => t.count > 0)
-  .sort((a, b) => b.count - a.count);
+/* Counts per filter group, so a pill with nothing behind it never renders — a
+   dead filter is a dead end the reader has to discover by clicking it. */
+const counts = Object.fromEntries(
+  GROUPS.map((g) => [g.id, bags.filter((b) => g.types.includes(b.record.type)).length])
+);
 
-/* Each note explains what the form factor actually costs you. The roller line
-   is Pack Hacker's tested finding, attributed — they rolled every bag over
-   cobblestones and grass and found the second pair of wheels stops helping the
-   moment the surface does. */
-const NOTE = {
-  'hardside spinner':
-    'What most people picture. Glides on smooth floors; the wheels stick out, so the shell is smaller than the bag.',
-  'softside spinner': 'Gives a little under a sizer, and the outer pockets are usable in a queue.',
-  '2-wheel roller':
-    'You drag these rather than push them — more work across a terminal, better on anything rougher than a polished floor. Pack Hacker rolled every bag over cobblestones and grass and found the second pair of wheels stops helping the moment the surface does.',
-  backpack: 'No wheels to count against the limit, and stairs and cobbles stop mattering.',
-  duffel: 'The most forgiving shape under a sizer, and the least convenient to move any distance.',
-  underseat: 'Sized for the space under the seat, not the overhead bin. A different question.',
-};
+/* "Last updated" has to mean something: the most recent day anyone read a
+   source, not the day the site was rebuilt. */
+const dates = bags
+  .map((b) => b.record.measured_at ?? b.record.external_cm?.at)
+  .filter(Boolean)
+  .sort();
+const lastUpdated = dates.length
+  ? new Date(dates.at(-1)).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  : null;
 ---
 <Base
   title="Carry-on bags that fit — Sizer"
-  description={`Every bag we track, grouped by how many of ${answerable} airlines it actually clears.`}
+  description={`Every bag we track, checked on its overall size against ${answerable} airlines.`}
 >
   <div class="mx-auto max-w-page px-6">
 
-    <section class="pt-12 pb-8">
-      <h1 class="text-4xl font-bold tracking-tight">Bags</h1>
-      <p class="mt-3 max-w-2xl text-lg text-ink-2">
-        {bags.length} carry-ons, grouped by how many of {answerable} airlines
-        each one actually clears. Sorted so the bags we can stand behind come
-        first.
+    <section class="pt-12 pb-6">
+      {/* The mockup read "Bags we've put a tape measure on". That is no longer
+          true — we are not measuring bags. The claim we can actually make is
+          narrower and still worth making. See docs/19. */}
+      <h1 class="max-w-2xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
+        Bags checked against the airline's own limit
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-ink-2">
+        Dimensions come from each manufacturer's own product page — never a
+        marketplace listing, where the same bag turns up with different numbers
+        from different sellers. Where a maker publishes both the packing size and
+        the <strong class="text-ink">overall</strong> size, we use the overall
+        one, because that is what an airline measures: wheels, handle and all.
+      </p>
+      <p class="mt-3 max-w-2xl text-ink-2">
+        Where they publish both, we show you both — the gap between them is
+        usually where the trouble starts.
+      </p>
+      <p class="mt-4 font-mono text-[0.875rem] text-muted">
+        {bags.length} bags · checked against {answerable} airlines{lastUpdated && ` · last updated ${lastUpdated}`}
       </p>
     </section>
 
-    <nav class="flex flex-wrap gap-2 border-y border-rule py-4" aria-label="Filter by type">
-      <a
-        href="#all"
-        class="rounded-chip border border-rule-strong px-3 py-1.5 text-sm no-underline text-ink hover:border-blue hover:text-blue"
-      >Everything <span class="text-muted">{bags.length}</span></a>
-      {types.map((t) => (
-        <a
-          href={`#${t.type.replace(/\s+/g, '-')}`}
-          class="rounded-chip border border-rule-strong px-3 py-1.5 text-sm no-underline text-ink hover:border-blue hover:text-blue"
-        >{t.type} <span class="text-muted">{t.count}</span></a>
-      ))}
-    </nav>
-
-    <div id="all"></div>
+    <BagFilters counts={counts} total={bags.length} />
 
     {shelves.map((shelf) => shelf.bags.length > 0 && (
-      <section class="border-b border-rule py-10">
+      <section data-shelf class="border-b border-rule py-10">
         <div class="flex flex-wrap items-baseline justify-between gap-2">
           <h2 class="text-2xl font-semibold tracking-tight">{shelf.title}</h2>
-          <span class="font-mono text-[0.8125rem] text-muted">{shelf.bags.length} bags</span>
+          <span data-shelf-count class="font-mono text-[0.8125rem] text-muted">
+            {shelf.bags.length} bags
+          </span>
         </div>
         <p class="mt-1 max-w-2xl text-ink-2">{shelf.blurb}</p>
 
         <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {shelf.bags.map(({ bag, coverage }) => (
-            <BagCard bag={bag} coverage={coverage} />
+            <div data-bag-type={bag.record.type}>
+              <BagCard bag={bag} coverage={coverage} />
+            </div>
           ))}
         </div>
       </section>
     ))}
 
-    <section class="py-10">
-      <h2 class="text-2xl font-semibold tracking-tight">What the shape costs you</h2>
-      <dl class="mt-6 grid gap-5 sm:grid-cols-2">
-        {types.map((t) => NOTE[t.type] && (
-          <div>
-            <dt class="font-semibold text-ink">{t.type} <span class="font-normal text-muted">· {t.count}</span></dt>
-            <dd class="mt-1 text-[0.9375rem] text-ink-2">{NOTE[t.type]}</dd>
-          </div>
-        ))}
-      </dl>
-    </section>
+    <p data-empty hidden class="py-10 text-ink-2">
+      Nothing in the catalogue matches that shape yet.
+    </p>
+
+    {stats.bags_promotable < stats.bags_sized && (
+      <p class="py-8 text-[0.875rem] text-muted">
+        {stats.bags_promotable} of these carry the manufacturer's own overall
+        dimensions. The rest use a review publication's measurement, named on the
+        card, which we are replacing at source.{' '}
+        <a href="/methodology/" class="text-blue">How we work it out →</a>
+      </p>
+    )}
 
   </div>
 </Base>

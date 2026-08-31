@@ -1,0 +1,126 @@
+---
+/* Filter pills.
+
+   Matching the approved mockup: a "Show" label, pill-shaped buttons, a solid
+   blue selected state with a ring, and a blue-wash panel underneath carrying a
+   note about the shape you just picked.
+
+   The note is the point. A pill labelled "2-wheel rollers" tells you nothing;
+   the note tells you what that shape costs you at an airport. It is editorial
+   that appears only when it is relevant, which beats a wall of prose at the
+   bottom of the page nobody scrolls to.
+
+   Groups, not raw types: a reader thinks "spinner", not "hardside spinner" and
+   "softside spinner" as separate ideas. The catalogue keeps the finer types;
+   this maps several onto one pill.
+
+   Progressive enhancement — every bag is already in the HTML. Without
+   JavaScript the pills don't filter and nothing is hidden. */
+const { counts, total } = Astro.props;
+
+export const GROUPS = [
+  { id: 'spinner', label: 'Spinners', types: ['hardside spinner', 'softside spinner'] },
+  { id: 'roller', label: '2-wheel rollers', types: ['2-wheel roller'] },
+  { id: 'backpack', label: 'Backpacks', types: ['backpack'] },
+  { id: 'duffel', label: 'Duffels', types: ['duffel'] },
+  { id: 'underseat', label: 'Under-seat', types: ['underseat'] },
+];
+
+const NOTES = {
+  spinner: {
+    lead: 'What most people want, and for good reason.',
+    body: 'You push a spinner alongside you instead of dragging it behind — the difference between a pleasant walk and a miserable one across a long terminal. The trade-off: the wheels sit below the shell, so a spinner tends to stand 1–2 cm taller than the same bag on two wheels. Worth knowing before you buy, not a reason to avoid them.',
+  },
+  roller: {
+    lead: 'Better on anything rougher than a polished floor.',
+    body: 'You drag these rather than push them, which is more work across a terminal. But Pack Hacker rolled every bag over cobblestones and grass and found the second pair of wheels stops helping the moment the surface does — their highest score on brick went to a two-wheeler. The wheels are also recessed into the corners, so a roller sometimes clears a limit the spinner version of the same bag fails.',
+  },
+  backpack: {
+    lead: 'Nothing sticking out to count against the limit.',
+    body: 'No wheels, no telescoping handle, so the bag measures what it measures. Stairs, cobbles and kerbs stop being a problem. You carry the weight, which is the whole trade.',
+  },
+  duffel: {
+    lead: 'The most forgiving shape under a sizer.',
+    body: 'A soft duffel compresses into a frame in a way a hard shell never will, which is why the one bag in our catalogue that clears every airline has no wheels at all. It is also the least convenient thing to move any real distance.',
+  },
+  underseat: {
+    lead: 'A different allowance, not a small carry-on.',
+    body: 'Sized for the space under the seat in front of you. On a budget-airline basic fare this is often the only bag included — no overhead bag at any size — which makes it the right answer to a question the carry-on shelves cannot help with.',
+  },
+};
+
+const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
+---
+<div data-filters class="border-y border-rule py-4">
+  <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by bag type">
+    <span class="mr-1 text-[0.9375rem] text-muted">Show</span>
+
+    <button
+      type="button"
+      data-filter="all"
+      aria-pressed="true"
+      class="cursor-pointer rounded-full border-2 px-5 py-2 text-[0.9375rem] font-medium
+             border-rule-strong bg-surface text-ink hover:border-blue
+             aria-pressed:border-blue aria-pressed:bg-blue aria-pressed:text-on-blue"
+    >Everything</button>
+
+    {groups.map((g) => (
+      <button
+        type="button"
+        data-filter={g.id}
+        aria-pressed="false"
+        class="cursor-pointer rounded-full border-2 px-5 py-2 text-[0.9375rem] font-medium
+               border-rule-strong bg-surface text-ink hover:border-blue
+               aria-pressed:border-blue aria-pressed:bg-blue aria-pressed:text-on-blue"
+      >{g.label}</button>
+    ))}
+  </div>
+
+  <div data-filter-note hidden class="mt-4 rounded-card bg-blue-wash p-5 text-[0.9375rem] leading-relaxed text-ink-2">
+    <strong class="font-semibold text-ink" data-note-lead></strong>{' '}
+    <span data-note-body></span>
+  </div>
+</div>
+
+<script define:vars={{ NOTES, GROUPS }}>
+  const root = document.querySelector('[data-filters]');
+  const panel = root.querySelector('[data-filter-note]');
+  const lead = root.querySelector('[data-note-lead]');
+  const body = root.querySelector('[data-note-body]');
+  const pills = [...root.querySelectorAll('[data-filter]')];
+
+  const typesFor = (id) => GROUPS.find((g) => g.id === id)?.types ?? [];
+
+  function apply(id) {
+    for (const p of pills) p.setAttribute('aria-pressed', String(p.dataset.filter === id));
+
+    const note = NOTES[id];
+    panel.hidden = !note;
+    if (note) {
+      lead.textContent = note.lead;
+      body.textContent = note.body;
+    }
+
+    const wanted = typesFor(id);
+    for (const card of document.querySelectorAll('[data-bag-type]')) {
+      card.hidden = id !== 'all' && !wanted.includes(card.dataset.bagType);
+    }
+
+    /* A shelf whose bags are all filtered out leaves an empty heading with a
+       count that contradicts the screen. Hide it and recount. */
+    for (const section of document.querySelectorAll('[data-shelf]')) {
+      const shown = [...section.querySelectorAll('[data-bag-type]')].filter((c) => !c.hidden).length;
+      section.hidden = shown === 0;
+      const count = section.querySelector('[data-shelf-count]');
+      if (count) count.textContent = `${shown} ${shown === 1 ? 'bag' : 'bags'}`;
+    }
+
+    /* Every shelf empty means the filter found nothing — say so rather than
+       leaving the reader looking at a blank page below the pills. */
+    const any = [...document.querySelectorAll('[data-shelf]')].some((s) => !s.hidden);
+    const empty = document.querySelector('[data-empty]');
+    if (empty) empty.hidden = any;
+  }
+
+  for (const p of pills) p.addEventListener('click', () => apply(p.dataset.filter));
+</script>
