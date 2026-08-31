@@ -1,0 +1,78 @@
+---
+/* Line-art luggage, from the approved mockup.
+
+   Why a drawing and not a photograph: we do not have the bags, and a stock
+   product shot would be the manufacturer's marketing image sitting on a page
+   whose whole argument is that the manufacturer's presentation is not what the
+   airline measures. A silhouette says "this shape" and claims nothing else.
+
+   Drawn on a shared 80 × 96 grid so cards line up down a column, and stroked in
+   `currentColor` so the caller sets the tint — on a card that is the coverage
+   colour, which makes a wall of cards scannable at arm's length before any
+   number is read.
+
+   `duffel` is new here. The mockup had four shapes and the catalogue has five
+   types; the missing one was the single bag that clears every airline we track,
+   so it was exactly the wrong one to fall back to a generic box. */
+import { shapeOf } from '../lib/bag-shape.mjs';
+
+const { type, class: klass } = Astro.props;
+
+const shape = shapeOf(type) ?? 'spinner';
+---
+<svg
+  viewBox="0 0 80 96"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2.2"
+  class={klass}
+  role="img"
+  aria-label={`${shape} illustration`}
+>
+  {shape === 'spinner' && (
+    <>
+      <path d="M32 12h16M40 12V4" stroke-linecap="round" />
+      <rect x="14" y="20" width="52" height="58" rx="7" />
+      <path d="M14 40h52M14 58h52" opacity=".45" />
+      <circle cx="24" cy="86" r="6" />
+      <circle cx="56" cy="86" r="6" />
+    </>
+  )}
+
+  {shape === 'roller' && (
+    <>
+      <path d="M32 12h16M40 12V4" stroke-linecap="round" />
+      <rect x="14" y="20" width="52" height="62" rx="7" />
+      <path d="M14 40h52M14 58h52" opacity=".45" />
+      <path d="M20 82v4M60 82v4" stroke-linecap="round" opacity=".7" />
+    </>
+  )}
+
+  {shape === 'backpack' && (
+    <>
+      <path d="M28 22c0-9 4-14 12-14s12 5 12 14" stroke-linecap="round" />
+      <rect x="12" y="22" width="56" height="64" rx="12" />
+      <path d="M12 52h56" opacity=".45" />
+      <rect x="26" y="60" width="28" height="18" rx="5" opacity=".45" />
+    </>
+  )}
+
+  {/* Soft, wheelless, and wider than it is tall — the shape that compresses,
+      which is the whole reason it outperforms its dimensions at a gate. */}
+  {shape === 'duffel' && (
+    <>
+      <path d="M26 40c0-7 6-11 14-11s14 4 14 11" stroke-linecap="round" opacity=".7" />
+      <rect x="8" y="40" width="64" height="36" rx="18" />
+      <path d="M22 40v36M58 40v36" opacity=".45" />
+      <path d="M30 32h20" stroke-linecap="round" />
+    </>
+  )}
+
+  {shape === 'underseat' && (
+    <>
+      <path d="M30 34h20" stroke-linecap="round" />
+      <rect x="12" y="34" width="56" height="42" rx="7" />
+      <path d="M12 52h56" opacity=".45" />
+    </>
+  )}
+</svg>

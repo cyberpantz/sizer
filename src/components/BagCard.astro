@@ -1,5 +1,7 @@
 ---
+import BagSilhouette from './BagSilhouette.astro';
 import VerdictBadge from './VerdictBadge.astro';
+import { DIM_SOURCE } from '../engine/normalize.mjs';
 
 const { bag, result, coverage } = Astro.props;
 
@@ -7,32 +9,101 @@ const { bag, result, coverage } = Astro.props;
    re-render them client-side without re-parsing text a reader may be looking
    at. See UnitToggle. */
 const dims = JSON.stringify(bag.external_cm);
+
+/* The silhouette and the bar are tinted by coverage, restoring the mockup's
+   best idea: a wall of cards is scannable at arm's length, before a single
+   number is read. Status colour only — never on the link itself, which would
+   break the one hard rule in docs/02 (blue is the only interactive colour). */
+const ratio = coverage ? coverage.pass / Math.max(1, coverage.of) : null;
+const tone = ratio === null ? 'muted' : ratio >= 0.8 ? 'green' : ratio >= 0.4 ? 'amber' : 'red';
+
+/* Written out in full, never interpolated. Tailwind finds classes by scanning
+   source text, so `text-${tone}` compiles to nothing at all and the card ships
+   grey — a failure that looks like a design choice rather than a bug. */
+const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red', muted: 'text-muted' };
+const FILL = { green: 'bg-green', amber: 'bg-amber', red: 'bg-red', muted: 'bg-rule-strong' };
+
+/* Where the operative figure came from, said in words rather than left to a
+   footnote. The old card read "Not yet measured by us", which framed our own
+   tape measure as the standard — and nobody is measuring bags (docs/19). What
+   matters is whether this is the maker's OVERALL figure. */
+const SOURCE_NOTE = {
+  [DIM_SOURCE.MEASURED]: 'Measured by us.',
+  [DIM_SOURCE.MAKER_OVERALL]: "The manufacturer's own overall size — wheels and handle included.",
+  [DIM_SOURCE.REVIEW]: 'Measured by a review publication, not the manufacturer.',
+  [DIM_SOURCE.MAKER_UNSPECIFIED]:
+    "One figure from the maker, which doesn't say whether wheels are in it.",
+  [DIM_SOURCE.MAKER_PACKING]:
+    'The packing size. An airline measures the outside, so this runs small.',
+  [DIM_SOURCE.RESELLER]: 'A retail listing. We never decide a verdict on one.',
+};
+const note = SOURCE_NOTE[bag.dim_source] ?? null;
+
+/* Where the maker publishes both, showing both IS the argument — the gap
+   between them is the thing this site exists to point at. */
+const packing = bag.record?.claimed_packing_cm?.v ?? null;
+const gap = packing && packing.join() !== bag.external_cm.join() ? packing : null;
 ---
-<article class="rounded-card border border-rule bg-surface p-5">
-  <div class="flex items-start justify-between gap-4">
-    <div>
-      <h3 class="font-semibold text-ink">{bag.brand} {bag.model}</h3>
-      <p class="mt-1 font-mono text-[0.8125rem] text-muted" data-dims={dims}>
-        {bag.external_cm.join(' × ')} cm
-      </p>
-    </div>
-    {result && <VerdictBadge result={result} />}
+<article class="group flex flex-col overflow-hidden rounded-card border border-rule bg-surface">
+
+  {/* Not a link, not a control — decoration with a status tint. */}
+  <div class={`grid min-h-[9rem] place-items-center bg-surface-2 p-6 ${INK[tone]}`} aria-hidden="true">
+    <BagSilhouette type={bag.type ?? bag.record?.type} class="h-24 w-auto" />
   </div>
 
-  {coverage && (
-    <p class="mt-3 text-[0.8125rem] text-ink-2">
-      Fits <strong class="font-semibold text-ink">{coverage.pass} of {coverage.of}</strong> airlines
-      {coverage.unknown > 0 && (
-        <span class="text-muted"> · {coverage.unknown} we can't answer for yet</span>
-      )}
-    </p>
-  )}
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <p class="text-[0.8125rem] text-muted">{bag.brand}</p>
+        <h3 class="font-semibold leading-tight text-ink">{bag.model}</h3>
+      </div>
+      {result && <VerdictBadge result={result} />}
+    </div>
 
-  {/* The claim the whole product rests on. Until someone puts a tape on this
-      bag, say so — every figure here is someone else's. */}
-  {!bag.measured && (
-    <p class="mt-3 border-t border-rule pt-3 text-[0.75rem] text-muted">
-      Not yet measured by us — dimensions are the publisher's.
-    </p>
-  )}
+    {coverage && (
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="h-2 flex-1 overflow-hidden rounded-full bg-surface-2">
+            <span
+              class={`block h-full rounded-full ${FILL[tone]}`}
+              style={`width:${Math.round(ratio * 100)}%`}
+            ></span>
+          </span>
+          <span class="font-mono text-[0.8125rem] text-ink-2">
+            {coverage.pass}/{coverage.of}
+          </span>
+        </div>
+        {coverage.unknown > 0 && (
+          <p class="mt-1 text-[0.75rem] text-muted">
+            {coverage.unknown} airlines we can't answer for yet
+          </p>
+        )}
+      </div>
+    )}
+
+    <dl class="border-t border-rule pt-3 text-[0.9375rem]">
+      <div class="flex justify-between gap-3">
+        <dt class="text-muted">Outside</dt>
+        <dd class="font-mono text-[0.875rem] text-ink" data-dims={dims}>
+          {bag.external_cm.join(' × ')} cm
+        </dd>
+      </div>
+      {gap && (
+        <div class="mt-1 flex justify-between gap-3">
+          <dt class="text-muted">Packing size</dt>
+          <dd class="font-mono text-[0.875rem] text-muted">{gap.join(' × ')} cm</dd>
+        </div>
+      )}
+      {bag.weight_kg && (
+        <div class="mt-1 flex justify-between gap-3">
+          <dt class="text-muted">Empty</dt>
+          <dd class="font-mono text-[0.875rem] text-ink">{bag.weight_kg} kg</dd>
+        </div>
+      )}
+    </dl>
+
+    {note && (
+      <p class="mt-auto border-t border-rule pt-3 text-[0.75rem] text-muted">{note}</p>
+    )}
+  </div>
 </article>
