@@ -15,9 +15,31 @@ export const BAND_COPY = {
    never "refused". Kept as a test, because this wording slipped once already. */
 export const BANNED = /\brefus|\bscam|\brip.?off|\bcheat|\bgreedy/i;
 
+/** Label from a band alone. `null` means the engine declined to answer, and
+ *  this function cannot tell WHY — use resultLabel() wherever the result
+ *  object is to hand.
+ *
+ *  This used to return "Not flying" for null. That was written when the only
+ *  way to get a null band was Spirit ceasing operations. It is now also
+ *  returned for a carrier we have not researched, and the bag pages were
+ *  telling readers that Ryanair, easyJet, Wizz Air, Vueling, Frontier and
+ *  Singapore Airlines were not flying. All six are operating. Saying an
+ *  airline has stopped flying is a claim about a real company, and we were
+ *  making it about six of them because of a gap in our own data. */
 export function bandLabel(band) {
-  if (band == null) return 'Not flying';
+  if (band == null) return 'No answer';
   return BAND_COPY[band]?.label ?? 'Unknown';
+}
+
+/** The honest label, from the whole result. Every null band has a reason and
+ *  the reasons are not interchangeable: one is a fact about the airline, the
+ *  others are facts about us. */
+export function resultLabel(result) {
+  if (!result) return 'No answer';
+  if (result.not_flying) return 'Ceased';
+  if (result.no_cabin_bag) return 'No cabin bag';
+  if (result.unknown) return 'Unknown';
+  return bandLabel(result.band);
 }
 
 /** The one-line explanation under the verdict. Takes engine output and a units

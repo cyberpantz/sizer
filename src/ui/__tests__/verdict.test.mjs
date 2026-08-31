@@ -4,7 +4,14 @@ import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 import { BANDS } from '../../engine/constants.mjs';
 import { CM, createUnits } from '../units.mjs';
-import { advisoryLine, BAND_COPY, BANNED, bandLabel, verdictLine } from '../verdict.mjs';
+import {
+  advisoryLine,
+  BAND_COPY,
+  BANNED,
+  bandLabel,
+  resultLabel,
+  verdictLine,
+} from '../verdict.mjs';
 
 const U = createUnits({ storage: { getItem: () => CM, setItem() {} } });
 
@@ -22,8 +29,35 @@ describe('band copy', () => {
     }
   });
 
-  test('a null band renders as not flying, not as unknown', () => {
-    assert.equal(bandLabel(null), 'Not flying');
+  test('a null band does NOT claim the airline stopped flying', () => {
+    /* This test used to assert the opposite — "a null band renders as not
+       flying, not as unknown" — and it was wrong. It was written when a
+       ceased carrier was the only way to get a null band. It stopped being
+       true when unanswerable carriers started returning null too, and the
+       test then held the bug in place: the bag pages told readers that
+       Ryanair, easyJet, Wizz Air, Vueling, Frontier and Singapore Airlines
+       were not flying. All six operate.
+
+       Saying an airline has stopped flying is a claim about a real company.
+       We were making it about six of them because of a gap in our own data. */
+    assert.equal(bandLabel(null), 'No answer');
+    assert.notEqual(bandLabel(null), 'Not flying');
+  });
+
+  test('the reason for a non-answer is never guessed', () => {
+    /* Three different facts, and only one of them is about the airline. */
+    assert.equal(resultLabel({ band: null, not_flying: true }), 'Ceased');
+    assert.equal(resultLabel({ band: null, unknown: true }), 'Unknown');
+    assert.equal(resultLabel({ band: 'wont', no_cabin_bag: true }), 'No cabin bag');
+    assert.equal(resultLabel({ band: 'clears' }), 'It fits');
+  });
+
+  test('an unresearched carrier is never described as ceased', () => {
+    /* The specific confusion, pinned: these two must not share a label. */
+    assert.notEqual(
+      resultLabel({ band: null, unknown: true }),
+      resultLabel({ band: null, not_flying: true })
+    );
   });
 });
 

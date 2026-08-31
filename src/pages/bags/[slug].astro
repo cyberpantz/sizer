@@ -2,11 +2,11 @@
 import BagSilhouette from '../../components/BagSilhouette.astro';
 import Base from '../../layouts/Base.astro';
 import { coverage, evaluate } from '../../engine/fit.mjs';
-import { DIM_SOURCE, isPromotable } from '../../engine/normalize.mjs';
+import { DIM_SOURCE, isPromotable, toCarrier } from '../../engine/normalize.mjs';
 import { loadBags, loadCarriers } from '../../lib/data.mjs';
 import { loadCarrierSources } from '../../lib/sources.mjs';
 import { fareLabel } from '../../ui/fare.mjs';
-import { bandLabel } from '../../ui/verdict.mjs';
+import { resultLabel } from '../../ui/verdict.mjs';
 
 /* The bag page, from mockup/bag.html.
 
@@ -49,13 +49,40 @@ const REGIONS = [
   ['AS', 'Asia'],
   ['ME', 'Middle East'],
 ];
+/* THE CHEAPEST FARE THE AIRLINE ACTUALLY SELLS — not "economy".
+
+   loadCarriers() defaults to { class: 'economy' }, and Ryanair, easyJet, Wizz
+   Air, Vueling and Frontier publish no fare called that. Their cabin rows are
+   `basic` (plus paid add-ons). So the lookup resolved to nothing, the engine
+   correctly refused to answer, and this table labelled five researched, fully
+   operating airlines as unanswerable.
+
+   Add-on rows are excluded deliberately: Ryanair Priority is something you
+   buy, and defaulting to it would answer a more generous question than the
+   reader asked. Same rule as resolveFare — an add-on is opt-in. */
+const ADDONS = new Set(['priority', 'carry_on', 'two_pieces']);
+const defaultFare = (record) => {
+  const cabin = (record.allowances ?? []).filter(
+    (a) => a.type === 'cabin' && a.fare_class && !ADDONS.has(a.fare_class)
+  );
+  return (
+    cabin.find((a) => a.fare_class === 'basic')?.fare_class ??
+    cabin.find((a) => a.fare_class === 'economy')?.fare_class ??
+    cabin[0]?.fare_class ??
+    'economy'
+  );
+};
+
 const rows = carriers
-  .map((carrier) => ({ carrier, result: evaluate(bag, carrier) }))
+  .map((c) => {
+    const carrier = toCarrier(c.record, defaultFare(c.record));
+    return { carrier, record: c.record, result: evaluate(bag, carrier) };
+  })
   .sort((a, b) => a.carrier.name.localeCompare(b.carrier.name));
 const byRegion = REGIONS.map(([code, label]) => ({
   code,
   label,
-  rows: rows.filter((r) => r.carrier.record?.region === code),
+  rows: rows.filter((r) => r.record?.region === code),
 })).filter((g) => g.rows.length);
 
 /* Other sizes of the same product line — the comparison docs/05 asks for:
@@ -234,7 +261,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           <h3 class="text-lg font-semibold">{group.label}</h3>
           <div class="mt-2 overflow-hidden rounded-card border border-rule">
             {group.rows.map(({ carrier, result }) => (
-              <div class="grid grid-cols-[1fr_9rem_7rem] items-center gap-3 border-b border-rule px-4 py-3 text-[0.9375rem] last:border-b-0">
+              <div class="grid grid-cols-[minmax(0,1fr)_9rem_8.5rem] items-center gap-3 border-b border-rule px-4 py-3 text-[0.9375rem] last:border-b-0">
                 <span>
                   <span class="font-semibold">{carrier.name}</span>
                   <span class="block text-[0.8125rem] text-muted">
@@ -258,9 +285,12 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                         ? `${result.delta_cm} cm too ${result.dimension}`
                         : `${Math.abs(result.delta_cm)} cm to spare`}
                 </span>
-                <span class={`rounded-full px-2.5 py-1 text-center text-[0.875rem] font-semibold ${
+                {/* whitespace-nowrap so a label can never wrap inside its
+                    pill, whatever wording we settle on. The column is sized
+                    for the longest one rather than the shortest. */}
+                <span class={`rounded-full px-2.5 py-1 text-center text-[0.875rem] font-semibold whitespace-nowrap ${
                   result.band ? TAG[result.band] : 'bg-surface-2 text-muted'
-                }`}>{bandLabel(result.band)}</span>
+                }`}>{resultLabel(result)}</span>
               </div>
             ))}
           </div>

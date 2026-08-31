@@ -143,7 +143,7 @@ const RISK = [
   import { toBag, toCarrier } from '../engine/normalize.mjs';
   import { fareLabel } from '../ui/fare.mjs';
   import { createUnits } from '../ui/units.mjs';
-  import { advisoryLine, bandLabel } from '../ui/verdict.mjs';
+  import { advisoryLine, bandLabel, resultLabel } from '../ui/verdict.mjs';
 
   const root = document.querySelector('[data-check]');
   const U = createUnits();
@@ -335,7 +335,7 @@ const RISK = [
                 b
                   ? `<span class="mt-6 shrink-0 rounded-full px-2.5 py-1 text-[0.875rem] font-semibold ${
                       band ? TAG[band] : UNKNOWN_TAG
-                    }">${esc(bandLabel(band))}</span>`
+                    }">${esc(worst ? resultLabel(worst.result) : bandLabel(band))}</span>`
                   : ''
               }
               ${
@@ -534,7 +534,7 @@ const RISK = [
       }</span>
       <span class="rounded-full px-2.5 py-1 text-center text-[0.875rem] font-semibold whitespace-nowrap ${
         band ? TAG[band] : UNKNOWN_TAG
-      }">${esc(bandLabel(band))}</span>
+      }">${esc(resultLabel(x.result))}</span>
     </div>`;
   }
 
@@ -827,7 +827,7 @@ const RISK = [
         <p class="text-[0.875rem] text-muted">${esc(b.brand)} ${esc(b.model)} · ${esc(U.dims(b.external_cm))} · ${rows.length} flight${rows.length > 1 ? 's' : ''}</p>
         <p class="mt-1 text-[clamp(2rem,5vw,3rem)] font-bold leading-none tracking-tight ${
           band ? WORD[band] : 'text-muted'
-        }">${esc(bandLabel(band))}</p>
+        }">${esc(resultLabel(worst.result))}</p>
         <p class="mt-3 max-w-[56ch] text-lg text-ink-2">${explain(worst, rows)}</p>
         <p class="mt-2 max-w-[56ch] text-[0.9375rem] text-muted">
           Answered on <b class="font-semibold text-ink">${esc(RISK_LABEL[state.risk])}</b>.
