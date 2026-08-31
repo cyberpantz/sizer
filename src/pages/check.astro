@@ -4,32 +4,66 @@ import { loadCarriers } from '../lib/data.mjs';
 
 const carriers = await loadCarriers();
 const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+
+/* Ported from mockup/check.html, which this page had drifted a long way from.
+   The mockup's shape is the product: a two-column layout with the inputs on
+   the left and ONE answer card on the right, carrying a verdict word in
+   display type, a per-leg table with the binding leg highlighted, and — the
+   part nothing else on the site does — the biggest bag that survives the whole
+   itinerary.
+
+   What is deliberately NOT ported:
+
+   - Airport codes on each leg. The mockup shows "ITH → JFK"; we have no
+     airport dataset, and typing plausible codes into the design would be
+     inventing data on the page whose entire pitch is that it doesn't.
+   - "Email me this answer". That needs Resend, which is blocked on the domain.
+     A button that does nothing is worse than no button.
+   - The remove control's red hover. The mockup tints it red; docs/02 says blue
+     is the only interactive colour, and verify-build.mjs enforces it on the
+     built HTML. The rule wins over the mockup.
+   - Fee figures in the plan panel. Not in the schema, and you already cut the
+     invented ones out of the mockup. */
+
+const RISK = [
+  {
+    id: 'strict',
+    label: 'Strict',
+    why: 'We ignore how relaxed an airline usually is and go by the published limit alone. Fewer nasty surprises, more bags ruled out.',
+  },
+  {
+    id: 'balanced',
+    label: 'Balanced',
+    why: 'We weigh the published limit against how often that airline actually checks. This is what most people want.',
+  },
+  {
+    id: 'chance',
+    label: "I'll chance it",
+    why: "We still show you what's over the limit, but flag the cases where the airline rarely looks. Your call, made with the facts.",
+  },
+];
 ---
 <Base
-  title="Check a bag — Sizer"
-  description="Pick the bag you own and the flights you're taking. We check every leg, and tell you which one decides the trip."
+  title="Check your whole trip — Sizer"
+  description={`One leg being fine doesn't mean the trip is. Add every flight and we'll tell you which one decides, checked against ${answerable} airlines.`}
 >
   <div class="mx-auto max-w-page px-6">
 
-    <section class="pt-12 pb-6">
-      <h1 class="text-4xl font-bold tracking-tight">Check a bag</h1>
-      <p class="mt-3 max-w-2xl text-lg text-ink-2">
-        Pick a bag and add your flights. We check every leg against the fare you
-        booked and tell you which one decides the trip.
-      </p>
-      {/* The cold-start fix from docs/01: don't ask for dimensions. Almost
-          nobody knows their bag's external size, and asking for it is why the
-          competition's tools go unused. Ask which bag they own — we already
-          have the number. */}
-      <p class="mt-2 max-w-2xl text-[0.9375rem] text-muted">
-        You don't need to measure anything. If your bag isn't listed, you can
-        enter its size instead.
+    <section class="pt-10 pb-7">
+      <h1 class="max-w-[20ch] text-4xl font-semibold leading-[1.12] tracking-tight sm:text-[2.6rem]">
+        Check your whole trip
+      </h1>
+      <p class="mt-2.5 max-w-[62ch] text-lg text-ink-2">
+        One leg being fine doesn't mean the trip is. Add every flight and we'll
+        tell you which one decides, and the biggest bag that survives all of
+        them.
       </p>
     </section>
 
     <div id="check" data-check class="pb-20">
-      {/* Server-rendered fallback. The tool needs JavaScript, so say what it
-          does rather than showing an empty box. */}
+
+      {/* The tool needs JavaScript. Say what it does rather than showing an
+          empty box — and offer the static route out. */}
       <noscript>
         <p class="rounded-card border border-rule bg-surface p-5 text-ink-2">
           This tool runs in your browser and needs JavaScript. You can still{' '}
@@ -41,33 +75,57 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
         Loading {answerable} airlines…
       </div>
 
-      <div data-ui hidden>
-        <div class="grid gap-6 lg:grid-cols-[minmax(0,22rem)_1fr]">
+      <div data-ui hidden class="grid items-start gap-7 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
 
-          <div class="space-y-5">
-            <div>
-              <label for="bag" class="block text-sm font-semibold text-ink">Your bag</label>
-              <select
-                id="bag"
-                data-bag
-                class="mt-1.5 w-full rounded-chip border border-rule-strong bg-surface px-3 py-2.5 text-ink"
-              ></select>
-              <p data-bagdims class="mt-1.5 font-mono text-[0.8125rem] text-muted"></p>
+        <div>
+          <section class="overflow-hidden rounded-card border border-rule bg-surface shadow-panel">
+            <div class="border-b border-rule px-5 py-4">
+              <h2 class="text-lg font-semibold">Your bags</h2>
+              <p class="mt-0.5 text-[0.9375rem] text-muted">Add the ones you're choosing between.</p>
             </div>
+            <div class="px-5 pt-4 pb-[1.125rem]" data-bagbox></div>
+          </section>
 
-            <fieldset>
-              <legend class="text-sm font-semibold text-ink">Your flights</legend>
-              <div data-legs class="mt-1.5 space-y-2"></div>
-              <button
-                type="button"
-                data-add
-                class="mt-2 rounded-chip border border-rule-strong px-3 py-2 text-sm font-semibold text-ink hover:border-blue hover:text-blue"
-              >Add a flight</button>
-            </fieldset>
-          </div>
+          <section class="mt-4 overflow-hidden rounded-card border border-rule bg-surface shadow-panel">
+            <div class="border-b border-rule px-5 py-4">
+              <h2 class="text-lg font-semibold">Your flights</h2>
+              <p class="mt-0.5 text-[0.9375rem] text-muted">Every leg, in order. The strictest one wins.</p>
+            </div>
+            <div class="px-5 pt-4 pb-[1.125rem]" data-legbox></div>
+          </section>
 
-          <div data-result aria-live="polite" class="space-y-4"></div>
+          <section class="mt-4 overflow-hidden rounded-card border border-rule bg-surface shadow-panel">
+            <div class="border-b border-rule px-5 py-4">
+              <h2 class="text-lg font-semibold">How much risk will you take?</h2>
+            </div>
+            <div class="px-5 pt-4 pb-[1.125rem]">
+              {/* Server-rendered, so the control exists before the catalogue
+                  arrives. The three modes are three engine configurations —
+                  same ladder, different gamble ceiling. */}
+              <div
+                data-risk
+                role="group"
+                aria-label="Risk tolerance"
+                class="flex w-max overflow-hidden rounded-full border border-rule-strong"
+              >
+                {RISK.map((r, i) => (
+                  <button
+                    type="button"
+                    data-r={r.id}
+                    aria-pressed={r.id === 'balanced' ? 'true' : 'false'}
+                    data-why={r.why}
+                    class={`cursor-pointer px-[1.125rem] py-2.5 text-[0.96875rem] aria-pressed:bg-blue aria-pressed:text-on-blue${
+                      i < RISK.length - 1 ? ' border-r border-rule-strong' : ''
+                    }`}
+                  >{r.label}</button>
+                ))}
+              </div>
+              <p data-riskwhy class="mt-3 max-w-[46ch] text-[0.9375rem] text-muted"></p>
+            </div>
+          </section>
         </div>
+
+        <div data-answer aria-live="polite"></div>
       </div>
     </div>
 
@@ -79,157 +137,419 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
      That is the whole payoff of keeping it pure: no DOM, no I/O, no units, so
      a verdict computed in this browser is byte-identical to one computed at
      build time. */
-  import { createEngine } from '../engine/fit.mjs';
+  import { createEngine, desc, engine as DEFAULT } from '../engine/fit.mjs';
   import { toBag, toCarrier } from '../engine/normalize.mjs';
   import { createUnits } from '../ui/units.mjs';
-  import { BAND_COPY, bandLabel, verdictLine, advisoryLine } from '../ui/verdict.mjs';
+  import { advisoryLine, bandLabel } from '../ui/verdict.mjs';
 
   const root = document.querySelector('[data-check]');
   const U = createUnits();
-  const ENGINE = createEngine();
+
+  /* Three engines, not three code paths. Risk changes ONE number — how far over
+     a published limit is still worth showing as a risk rather than a refusal —
+     and every other rule stays identical, which is why the modes can never
+     disagree about anything except that band. */
+  const ENGINES = {
+    strict: createEngine({ gambleCeiling: () => 0 }),
+    balanced: createEngine(),
+    chance: createEngine({ gambleCeiling: (s) => DEFAULT.config.gambleCeiling(s) * 1.5 }),
+  };
+
+  /* The copy lives on the buttons, rendered from RISK in the frontmatter. A
+     second copy in this script is how two explanations of the same control end
+     up disagreeing — the exact drift ui/verdict.mjs exists to prevent. */
+  const riskWhy = (id) => root.querySelector(`[data-r="${id}"]`)?.dataset.why ?? '';
+
+  const TAG = {
+    clears: 'bg-green-wash text-green',
+    line: 'bg-amber-wash text-amber',
+    gamble: 'bg-orange-wash text-orange',
+    wont: 'bg-red-wash text-red',
+  };
+  const EDGE = {
+    clears: 'border-l-green',
+    line: 'border-l-amber',
+    gamble: 'border-l-orange',
+    wont: 'border-l-red',
+  };
+  const WORD = {
+    clears: 'text-green',
+    line: 'text-amber',
+    gamble: 'text-orange',
+    wont: 'text-red',
+  };
+  const UNKNOWN_TAG = 'bg-surface-2 text-muted';
 
   const el = (sel) => root.querySelector(sel);
-  const state = { bag: null, legs: [] };
+  const esc = (s) =>
+    String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+  const state = { bags: [], legs: [], risk: 'balanced' };
   let DATA = null;
 
-  const TONE = {
-    good: 'border-green/20 bg-green-wash text-green',
-    caution: 'border-amber/20 bg-amber-wash text-amber',
-    warn: 'border-orange/20 bg-orange-wash text-orange',
-    bad: 'border-red/20 bg-red-wash text-red',
-  };
-  const UNKNOWN = 'border-rule bg-surface-2 text-muted';
-
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  /* ---------- boot ---------- */
 
   async function boot() {
     const res = await fetch('/catalogue.json');
     if (!res.ok) throw new Error(`catalogue unavailable (${res.status})`);
     DATA = await res.json();
 
-    const bagSel = el('[data-bag]');
-    bagSel.innerHTML = DATA.bags
-      .map((b) => `<option value="${esc(b.slug)}">${esc(b.brand)} ${esc(b.model)}</option>`)
-      .join('');
-    state.bag = DATA.bags[0];
-    addLeg();
-
+    restore();
     el('[data-loading]').hidden = true;
     el('[data-ui]').hidden = false;
 
-    bagSel.addEventListener('change', (e) => {
-      state.bag = DATA.bags.find((b) => b.slug === e.target.value);
-      render();
-    });
-    el('[data-add]').addEventListener('click', () => { addLeg(); render(); });
-    U.onChange(render);
-    render();
-  }
-
-  function addLeg() {
-    state.legs.push({ iata: DATA.carriers[0].iata, fare: DATA.carriers[0].fares[0] });
-  }
-
-  function legRow(leg, i) {
-    const carrier = DATA.carriers.find((c) => c.iata === leg.iata) ?? DATA.carriers[0];
-    return `
-      <div class="flex gap-2" data-leg="${i}">
-        <select data-leg-carrier="${i}" class="min-w-0 flex-1 rounded-chip border border-rule-strong bg-surface px-3 py-2 text-ink">
-          ${DATA.carriers.map((c) => `<option value="${esc(c.iata)}"${c.iata === leg.iata ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}
-        </select>
-        <select data-leg-fare="${i}" class="w-32 rounded-chip border border-rule-strong bg-surface px-3 py-2 text-ink">
-          ${carrier.fares.map((f) => `<option value="${esc(f)}"${f === leg.fare ? ' selected' : ''}>${esc(f)}</option>`).join('')}
-        </select>
-        ${state.legs.length > 1 ? `<button type="button" data-remove="${i}" aria-label="Remove flight" class="rounded-chip border border-rule-strong px-3 text-muted hover:border-blue hover:text-blue">×</button>` : ''}
-      </div>`;
-  }
-
-  function render() {
-    if (!state.bag) return;
-
-    el('[data-bagdims]').textContent = `${U.dims(state.bag.external_cm)}${
-      state.bag.weight_kg ? ` · ${U.mass(state.bag.weight_kg)} ${U.massLabel()} empty` : ''
-    }`;
-
-    el('[data-legs]').innerHTML = state.legs.map(legRow).join('');
-    for (const s of el('[data-legs]').querySelectorAll('[data-leg-carrier]')) {
-      s.addEventListener('change', (e) => {
-        const i = +e.target.dataset.legCarrier;
-        const c = DATA.carriers.find((x) => x.iata === e.target.value);
-        state.legs[i] = { iata: c.iata, fare: c.fares[0] };
-        render();
+    for (const b of el('[data-risk]').querySelectorAll('[data-r]')) {
+      b.addEventListener('click', () => {
+        state.risk = b.dataset.r;
+        draw();
       });
     }
-    for (const s of el('[data-legs]').querySelectorAll('[data-leg-fare]')) {
+    U.onChange(draw);
+    draw();
+  }
+
+  /* The trip lives in the URL, so "copy link" is a real feature rather than a
+     button that lies. Also means a reload keeps your itinerary. */
+  function restore() {
+    const p = new URLSearchParams(location.search);
+    const bags = (p.get('bags') ?? '').split(',').filter((s) => DATA.bags.some((b) => b.slug === s));
+    const legs = (p.get('legs') ?? '')
+      .split(',')
+      .filter(Boolean)
+      .map((t) => {
+        const [iata, fare] = t.split('.');
+        const c = DATA.carriers.find((x) => x.iata === iata);
+        return c ? { iata, fare: c.fares.includes(fare) ? fare : c.fares[0] } : null;
+      })
+      .filter(Boolean);
+
+    state.bags = bags.length ? bags : [DATA.bags[0].slug];
+    state.legs = legs.length ? legs : [{ iata: DATA.carriers[0].iata, fare: DATA.carriers[0].fares[0] }];
+    if (['strict', 'balanced', 'chance'].includes(p.get('risk'))) state.risk = p.get('risk');
+  }
+
+  const permalink = () =>
+    `${location.origin}${location.pathname}?bags=${state.bags.join(',')}` +
+    `&legs=${state.legs.map((l) => `${l.iata}.${l.fare}`).join(',')}&risk=${state.risk}`;
+
+  /* ---------- model ---------- */
+
+  const bagOf = (slug) => DATA.bags.find((b) => b.slug === slug);
+  const carrierOf = (iata) => DATA.carriers.find((c) => c.iata === iata);
+
+  const toEngineBag = (b) => toBag({ ...b, external_cm: { v: b.external_cm } });
+
+  function score(bagSlug) {
+    const E = ENGINES[state.risk] ?? ENGINES.balanced;
+    const bag = toEngineBag(bagOf(bagSlug));
+    const rows = state.legs.map((leg, i) => {
+      const rec = carrierOf(leg.iata).record;
+      const carrier = toCarrier(rec, leg.fare);
+      return { i, leg, carrier, record: rec, result: E.evaluate(bag, carrier) };
+    });
+    /* Which leg binds is the ENGINE's call, not this page's.
+
+       A hand-rolled `reduce` on delta_cm lived here and got it wrong: a leg we
+       cannot answer for came back with `band: null`, ranked below every scored
+       leg, and lost — so a trip through an airline nobody has researched
+       reported a confident verdict from the other legs. bindingLeg() already
+       returns early on an unknown or a no-cabin-bag leg, for exactly this
+       reason. Same carrier objects go in, so identity finds the row again. */
+    const bound = E.bindingLeg(bag, rows.map((r) => r.carrier));
+    const worst = rows.find((r) => r.carrier === bound?.carrier) ?? rows[0];
+
+    return { bag, rows, worst };
+  }
+
+  /* ---------- inputs ---------- */
+
+  function renderInputs() {
+    /* Every bag in the list carries its own verdict, because "the ones you're
+       choosing between" is only a useful panel if it says which one wins. */
+    el('[data-bagbox]').innerHTML =
+      state.bags
+        .map((slug) => {
+          const b = bagOf(slug);
+          const { worst } = score(slug);
+          const band = worst?.result.band;
+          return `<div class="flex items-center gap-3 border-b border-rule py-3 last:border-b-0">
+            <span class="min-w-0 flex-1">
+              <span class="block text-[1.03125rem] font-semibold leading-tight">${esc(b.brand)} ${esc(b.model)}</span>
+              <span class="mt-0.5 block font-mono text-[0.84375rem] text-muted">${esc(U.dims(b.external_cm))}${
+                b.weight_kg ? ` · ${esc(U.mass(b.weight_kg))} ${esc(U.massLabel())} empty` : ''
+              }</span>
+            </span>
+            <span class="shrink-0 rounded-full px-2.5 py-1 text-[0.875rem] font-semibold ${
+              band ? TAG[band] : UNKNOWN_TAG
+            }">${esc(bandLabel(band))}</span>
+            ${
+              state.bags.length > 1
+                ? `<button type="button" data-rmbag="${esc(slug)}" aria-label="Remove ${esc(b.model)}"
+                     class="shrink-0 cursor-pointer rounded-chip px-2.5 py-2 text-xl leading-none text-muted hover:bg-blue-wash hover:text-blue">×</button>`
+                : ''
+            }
+          </div>`;
+        })
+        .join('') +
+      `<button type="button" data-addbag
+         class="mt-3 min-h-12 w-full cursor-pointer rounded-chip border border-dashed border-rule-strong p-3 font-semibold text-blue hover:border-blue hover:bg-blue-wash">
+         + Add another bag to compare</button>`;
+
+    el('[data-legbox]').innerHTML =
+      state.legs
+        .map((leg, i) => {
+          const c = carrierOf(leg.iata);
+          const regional = c.record.operates_regional_jets === true;
+          return `<div class="grid grid-cols-[1.625rem_1fr_auto] items-start gap-3 border-b border-rule py-3 last:border-b-0">
+            <span class="mt-0.5 grid h-[1.625rem] w-[1.625rem] place-items-center rounded-full bg-surface-2 font-mono text-[0.875rem] text-muted">${i + 1}</span>
+            <span class="min-w-0">
+              <select data-leg-carrier="${i}" aria-label="Airline for flight ${i + 1}"
+                class="w-full cursor-pointer rounded-chip border border-rule-strong bg-surface px-2.5 py-1.5 text-[1.03125rem] font-semibold text-ink">
+                ${DATA.carriers
+                  .map(
+                    (x) =>
+                      `<option value="${esc(x.iata)}"${x.iata === leg.iata ? ' selected' : ''}>${esc(x.name)}</option>`
+                  )
+                  .join('')}
+              </select>
+              <select data-leg-fare="${i}" aria-label="Fare for flight ${i + 1}"
+                class="mt-1.5 w-full cursor-pointer rounded-chip border border-rule-strong bg-surface px-2.5 py-1.5 text-[0.90625rem] text-muted">
+                ${c.fares
+                  .map(
+                    (f) =>
+                      `<option value="${esc(f)}"${f === leg.fare ? ' selected' : ''}>${esc(f)} ticket</option>`
+                  )
+                  .join('')}
+              </select>
+              ${
+                regional
+                  ? `<span class="mt-1.5 block text-[0.90625rem] leading-snug text-amber">⚠ Often a regional jet. The overhead bins are smaller than the airline's own limit, so a full-size bag is frequently taken at the door.</span>`
+                  : ''
+              }
+            </span>
+            ${
+              state.legs.length > 1
+                ? `<button type="button" data-rmleg="${i}" aria-label="Remove flight ${i + 1}"
+                     class="cursor-pointer rounded-chip px-2.5 py-2 text-xl leading-none text-muted hover:bg-blue-wash hover:text-blue">×</button>`
+                : ''
+            }
+          </div>`;
+        })
+        .join('') +
+      `<button type="button" data-addleg
+         class="mt-3 min-h-12 w-full cursor-pointer rounded-chip border border-dashed border-rule-strong p-3 font-semibold text-blue hover:border-blue hover:bg-blue-wash">
+         + Add another flight</button>`;
+
+    el('[data-riskwhy]').textContent = riskWhy(state.risk);
+    for (const b of el('[data-risk]').querySelectorAll('[data-r]')) {
+      b.setAttribute('aria-pressed', String(b.dataset.r === state.risk));
+    }
+    wireInputs();
+  }
+
+  function wireInputs() {
+    for (const b of root.querySelectorAll('[data-rmbag]')) {
+      b.addEventListener('click', () => {
+        state.bags = state.bags.filter((s) => s !== b.dataset.rmbag);
+        draw();
+      });
+    }
+    for (const b of root.querySelectorAll('[data-rmleg]')) {
+      b.addEventListener('click', () => {
+        state.legs.splice(+b.dataset.rmleg, 1);
+        draw();
+      });
+    }
+    root.querySelector('[data-addbag]').addEventListener('click', () => {
+      const next = DATA.bags.find((b) => !state.bags.includes(b.slug));
+      if (next) state.bags.push(next.slug);
+      draw();
+    });
+    root.querySelector('[data-addleg]').addEventListener('click', () => {
+      const c = DATA.carriers[0];
+      state.legs.push({ iata: c.iata, fare: c.fares[0] });
+      draw();
+    });
+    for (const s of root.querySelectorAll('[data-leg-carrier]')) {
+      s.addEventListener('change', (e) => {
+        const c = carrierOf(e.target.value);
+        /* Fares do not survive a carrier change — "Priority" means nothing on
+           the next airline, and silently keeping it would answer a question
+           about a fare that does not exist. */
+        state.legs[+e.target.dataset.legCarrier] = { iata: c.iata, fare: c.fares[0] };
+        draw();
+      });
+    }
+    for (const s of root.querySelectorAll('[data-leg-fare]')) {
       s.addEventListener('change', (e) => {
         state.legs[+e.target.dataset.legFare].fare = e.target.value;
-        render();
+        draw();
       });
     }
-    for (const b of el('[data-legs]').querySelectorAll('[data-remove]')) {
-      b.addEventListener('click', (e) => {
-        state.legs.splice(+e.currentTarget.dataset.remove, 1);
-        render();
-      });
-    }
+  }
 
-    const bag = toBag({ ...state.bag, external_cm: { v: state.bag.external_cm } });
-    const rows = state.legs.map((leg) => {
-      const rec = DATA.carriers.find((c) => c.iata === leg.iata).record;
-      const carrier = toCarrier(rec, leg.fare);
-      return { carrier, result: ENGINE.evaluate(bag, carrier), fare: leg.fare };
+  /* ---------- the answer ---------- */
+
+  function explain(worst, rows) {
+    const band = worst.result.band;
+    const wont = rows.filter((x) => x.result.band === 'wont').length;
+    const name = esc(worst.carrier.name);
+    if (band === null || worst.result.unknown) {
+      return `We cannot answer for <b class="font-semibold text-ink">${name}</b> yet — nobody has read their baggage page. Until someone does, this trip has no honest answer.`;
+    }
+    if (worst.result.no_cabin_bag) {
+      return `<b class="font-semibold text-ink">${name}</b> on leg ${worst.i + 1} includes no cabin bag at all on this fare, whatever its size.`;
+    }
+    const over = `${esc(U.len(Math.abs(worst.result.delta_cm)))} ${esc(U.lenLabel())}`;
+    if (band === 'wont') {
+      return `<b class="font-semibold text-ink">${name} on leg ${worst.i + 1}</b> is the one that stops you — ${over} too ${esc(worst.result.dimension)}. ${
+        wont > 1
+          ? `${wont} of your ${rows.length} flights would turn this bag away.`
+          : 'The rest of the trip would be fine.'
+      }`;
+    }
+    if (band === 'gamble') {
+      return `Over the limit on <b class="font-semibold text-ink">${name}</b>, but that is an airline that rarely measures. Everything else on this trip is clear.`;
+    }
+    if (band === 'line') {
+      return `It clears every flight, but only just — <b class="font-semibold text-ink">${over} to spare</b> on ${name}. Pack it thin.`;
+    }
+    return `Clear on all ${rows.length} flight${rows.length > 1 ? 's' : ''}, with room on every one.`;
+  }
+
+  function legRow(x, worst) {
+    const band = x.result.band;
+    const bind = x === worst && (band === 'wont' || band === null);
+    const delta = x.result.delta_cm;
+    const detail =
+      band === null || x.result.unknown
+        ? 'not researched yet'
+        : x.result.no_cabin_bag
+          ? 'no cabin bag on this fare'
+          : delta > 0
+            ? `${esc(U.len(delta))} ${esc(U.lenLabel())} too ${esc(x.result.dimension)}`
+            : `${esc(U.len(Math.abs(delta)))} ${esc(U.lenLabel())} to spare`;
+    const weight = x.result.advisories.find((a) => a.id === 'weight');
+    return `<div class="grid grid-cols-[1.75rem_1fr_8.75rem_6.75rem] items-center gap-3 border-b border-rule px-4 py-3 last:border-b-0${
+      bind ? ' bg-red-wash' : ''
+    }">
+      <span class="grid h-6 w-6 place-items-center rounded-full bg-surface-2 font-mono text-[0.8125rem] text-muted">${x.i + 1}</span>
+      <span class="font-semibold">${esc(x.carrier.name)}<span class="block text-[0.875rem] font-normal text-muted">${esc(x.leg.fare)} ticket</span></span>
+      <span class="text-[0.9375rem] text-ink-2">${detail}${
+        weight ? ` · ${weight.level === 'over' ? 'over on weight' : 'tight on weight'}` : ''
+      }</span>
+      <span class="rounded-full px-2.5 py-1 text-center text-[0.875rem] font-semibold whitespace-nowrap ${
+        band ? TAG[band] : UNKNOWN_TAG
+      }">${esc(bandLabel(band))}</span>
+    </div>`;
+  }
+
+  function renderAnswer() {
+    const primary = state.bags[0];
+    const { rows, worst } = score(primary);
+    const b = bagOf(primary);
+    const band = worst.result.band;
+
+    /* The envelope is what this page has that a per-airline lookup never will:
+       one box that survives the entire itinerary. Legs we cannot answer for are
+       excluded from it rather than treated as unlimited — an envelope built on
+       a guess is worse than no envelope. */
+    const scorable = rows.filter((x) => !x.result.unknown && x.carrier.allowance);
+    const env = DEFAULT.envelope(scorable.map((x) => x.carrier));
+    const setters = env
+      ? [
+          ...new Set(
+            scorable
+              .filter((x) => desc(x.carrier.allowance.max_cm).some((v, i) => v === env[i]))
+              .map((x) => x.carrier.name)
+          ),
+        ]
+      : [];
+    const fits = env
+      ? DATA.bags.filter((x) => desc(x.external_cm).every((v, i) => v <= env[i]))
+      : [];
+
+    const advisories = worst.result.advisories
+      .map((a) => advisoryLine(a, U))
+      .filter(Boolean);
+
+    el('[data-answer]').innerHTML = `
+      <div class="rounded-card border border-rule border-l-[6px] bg-surface p-[1.625rem] shadow-panel ${
+        band ? EDGE[band] : 'border-l-rule-strong'
+      }">
+        <p class="text-[0.875rem] text-muted">${esc(b.brand)} ${esc(b.model)} · ${esc(U.dims(b.external_cm))} · ${rows.length} flight${rows.length > 1 ? 's' : ''}</p>
+        <p class="mt-1 text-[clamp(2rem,5vw,3rem)] font-bold leading-none tracking-tight ${
+          band ? WORD[band] : 'text-muted'
+        }">${esc(bandLabel(band))}</p>
+        <p class="mt-3 max-w-[56ch] text-lg text-ink-2">${explain(worst, rows)}</p>
+
+        <div class="mt-6 overflow-hidden rounded-card border border-rule">
+          ${rows.map((x) => legRow(x, worst)).join('')}
+        </div>
+
+        ${
+          advisories.length
+            ? `<ul class="mt-4 space-y-2">${advisories
+                .map(
+                  (line) =>
+                    `<li class="rounded-chip bg-surface-2 px-4 py-3 text-[0.9375rem] text-ink-2">${esc(line)}</li>`
+                )
+                .join('')}</ul>`
+            : ''
+        }
+
+        <div class="mt-6 rounded-card bg-blue-wash px-6 py-[1.375rem]">
+          <p class="text-[0.875rem] font-semibold text-blue">The biggest bag that works on this whole trip</p>
+          ${
+            env
+              ? `<p class="mt-1.5 text-[clamp(1.9rem,4.6vw,2.7rem)] font-bold leading-none tracking-tight tabular-nums">${env
+                  .map((v) => esc(U.len(v)))
+                  .join('<span class="px-1.5 text-[0.66em] text-muted">×</span>')}<span class="ml-1.5 text-[0.42em] font-normal text-muted">${esc(U.lenLabel())}</span></p>
+                 <p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-ink-2">Set by <b class="font-semibold text-ink">${esc(setters.join(' and '))}</b> — the tightest limit on your itinerary. This is a size comparison only: fare entitlement, packed weight and the aircraft's own bins still need checking.</p>
+                 ${
+                   fits.length
+                     ? `<div class="mt-5 grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(13rem,1fr))]">${fits
+                         .map(
+                           (x) => `<div class="flex flex-col gap-1.5 rounded-card border border-rule bg-surface p-4">
+                             <span class="text-base font-semibold leading-tight">${esc(x.brand)} ${esc(x.model)}</span>
+                             <span class="font-mono text-[0.84375rem] text-muted">${esc(U.dims(x.external_cm))}</span>
+                           </div>`
+                         )
+                         .join('')}</div>`
+                     : `<p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-red">No bag in our catalogue fits this envelope on its published dimensions. On a trip this tight you are looking at an under-seat bag, or checking one.</p>`
+                 }`
+              : `<p class="mt-1.5 max-w-[58ch] text-[1.03125rem] text-ink-2">We cannot draw one yet — no leg on this trip has an allowance we have read.</p>`
+          }
+        </div>
+
+        <div class="mt-[1.375rem] flex flex-wrap items-center gap-3">
+          <button type="button" data-copy
+            class="min-h-[2.875rem] cursor-pointer rounded-full border border-rule-strong px-[1.125rem] py-2.5 font-semibold hover:border-blue hover:text-blue">Copy link to this trip</button>
+          <span class="font-mono text-[0.84375rem] break-all text-muted" data-permalink></span>
+        </div>
+      </div>`;
+
+    el('[data-permalink]').textContent = permalink().replace(/^https?:\/\//, '');
+    el('[data-copy]').addEventListener('click', async (e) => {
+      try {
+        await navigator.clipboard.writeText(permalink());
+        e.target.textContent = 'Copied';
+        setTimeout(() => {
+          e.target.textContent = 'Copy link to this trip';
+        }, 1600);
+      } catch {
+        /* Clipboard is permission-gated and silently unavailable in plenty of
+           contexts. The URL is already on screen next to the button, so say so
+           rather than failing invisibly. */
+        e.target.textContent = 'Copy it from the address beside this button';
+      }
     });
+  }
 
-    /* The binding leg is the answer. A trip is only as good as its worst
-       flight, and naming that flight is the thing a list of rows doesn't do. */
-    const worst = rows.reduce((a, b) => {
-      const rank = (r) => (r.result.band === null ? 2 : ['clears', 'line', 'gamble', 'wont'].indexOf(r.result.band));
-      return rank(b) > rank(a) ? b : a;
-    }, rows[0]);
-
-    const copy = worst.result.band ? BAND_COPY[worst.result.band] : null;
-
-    el('[data-result]').innerHTML = `
-      <div class="rounded-card border p-5 ${copy ? TONE[copy.tone] : UNKNOWN}">
-        <p class="text-2xl font-bold">${esc(bandLabel(worst.result.band))}</p>
-        <p class="mt-1 text-ink-2">
-          ${rows.length > 1 ? `${esc(worst.carrier.name)} decides this trip. ` : ''}${esc(verdictLine(worst.result, U))}
-        </p>
-      </div>
-
-      ${rows.length > 1 ? `
-        <div class="overflow-x-auto rounded-card border border-rule">
-          <table class="w-full text-left text-[0.9375rem]">
-            <thead class="border-b border-rule text-[0.8125rem] text-muted">
-              <tr><th class="p-3 font-medium">Flight</th><th class="p-3 font-medium">Fare</th><th class="p-3 font-medium">Allowance</th><th class="p-3 font-medium">Verdict</th></tr>
-            </thead>
-            <tbody>
-              ${rows.map((r) => `
-                <tr class="border-b border-rule last:border-0${r === worst ? ' bg-surface-2' : ''}">
-                  <td class="p-3">${esc(r.carrier.name)}</td>
-                  <td class="p-3 text-muted">${esc(r.fare)}</td>
-                  <td class="p-3 font-mono text-[0.8125rem]">${r.carrier.allowance ? esc(U.dims(r.carrier.allowance.max_cm)) : '—'}</td>
-                  <td class="p-3 font-semibold">${esc(bandLabel(r.result.band))}</td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>` : ''}
-
-      ${worst.result.advisories.length ? `
-        <ul class="space-y-2">
-          ${worst.result.advisories.map((a) => {
-            const line = advisoryLine(a, U);
-            return line ? `<li class="rounded-card border border-rule bg-surface p-4 text-[0.9375rem] text-ink-2">${esc(line)}</li>` : '';
-          }).join('')}
-        </ul>` : ''}
-
-      ${!state.bag.measured && state.bag.dim_source !== 'maker_overall' ? `
-        <p class="text-[0.8125rem] text-muted">
-          This bag's dimensions come from a review publication, not the
-          manufacturer's own overall figure. We attribute it and are replacing
-          it at source.
-        </p>` : ''}
-    `;
+  function draw() {
+    renderInputs();
+    renderAnswer();
+    history.replaceState(null, '', permalink());
   }
 
   boot().catch((err) => {
