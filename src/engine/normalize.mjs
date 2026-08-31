@@ -76,6 +76,16 @@ export const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'f
 
 /* BASIC IS A TIER OF ECONOMY, NOT A CLASS BESIDE IT.
  *
+ * MEMBERSHIP ONLY — the order of this list carries no meaning.
+ * It ranked the rungs once, against a global ordering, and that was a fiction:
+ * airlines use the same word at different heights. "Standard" is easyJet's
+ * bottom tier and LOT's middle one; `plus` is an ordinary rung at some
+ * carriers and a PAID UPGRADE at others. Ranking by name promised easyJet
+ * Basic passengers a 56x45x25 bag they would be charged for at the gate.
+ * Which tier is cheapest is now read out of the airline's own entitlements —
+ * see resolveFare. This list only answers "is this an economy fare at all",
+ * which is the one question a name genuinely can answer.
+ *
  * This one modelling error produced two opposite bugs at once.
  *
  * `cabin_class` is null on 97 of the 99 cabin rows in the dataset — carriers
@@ -95,10 +105,8 @@ export const CABIN_CLASS = new Set(['economy', 'premium_economy', 'business', 'f
  * one exists, and its cheapest economy tier where the airline sells nothing
  * else.
  *
- * Ordered cheapest-first, because a fallback is a guess and the cautious guess
- * is the most restrictive fare the airline actually sells. Membership is an
- * explicit list: an unrecognised brand is NOT assumed to be economy, or a
- * business row could be handed to someone who booked coach. */
+ * An unrecognised brand is NOT assumed to be economy, or a business row could
+ * be handed to someone who booked coach. */
 export const ECONOMY_TIERS = [
   'basic',
   'light',
@@ -119,7 +127,7 @@ export const ECONOMY_TIERS = [
   'fly_pro',
   'max',
 ];
-const ECONOMY_RANK = new Map(ECONOMY_TIERS.map((id, i) => [id, i]));
+const ECONOMY_SET = new Set(ECONOMY_TIERS);
 
 /** Cabins ABOVE economy. Listed so they can be recognised and refused, rather
  *  than falling through and being served to someone who booked coach. */
@@ -130,7 +138,7 @@ export const PREMIUM_TIERS = new Set(['premium_economy', 'business', 'first', 's
 export const ADDON_FARES = new Set(['priority', 'carry_on', 'two_pieces']);
 
 /** Is this fare brand a tier of the given cabin class? */
-export const isTierOf = (fare, cabinClass) => cabinClass === 'economy' && ECONOMY_RANK.has(fare);
+export const isTierOf = (fare, cabinClass) => cabinClass === 'economy' && ECONOMY_SET.has(fare);
 
 /* EVERY FARE BRAND MUST BE CLASSIFIED, AND AN UNKNOWN ONE MUST BE LOUD.
  *
@@ -150,7 +158,7 @@ export function classifyFare(fare) {
   if (fare == null) return 'unnamed';
   if (ADDON_FARES.has(fare)) return 'addon';
   if (PREMIUM_TIERS.has(fare)) return 'premium';
-  if (ECONOMY_RANK.has(fare)) return 'economy';
+  if (ECONOMY_SET.has(fare)) return 'economy';
   return null;
 }
 
@@ -445,18 +453,62 @@ export function resolveFare(record, booking) {
    * generous fare would promise an allowance the reader has not bought.
    * `matched: 'class'` still, since we resolved a class and not a named fare;
    * the page can say it answered on the cheapest fare sold. */
-  const tiers = reachable
-    .filter((a) => !a.addon && isTierOf(a.fare_class, b.class))
-    .sort((x, y) => ECONOMY_RANK.get(x.fare_class) - ECONOMY_RANK.get(y.fare_class));
-  if (tiers.length) return { row: tiers[0], matched: 'class', tier: tiers[0].fare_class };
+  /* WHICH TIER IS THE BASE ONE — decided by ENTITLEMENT, never by name.
+   *
+   * This used to rank the fare brands against a global ordered list, and that
+   * list was a fiction: airlines use the same word at different rungs.
+   * "Standard" is easyJet's bottom tier and LOT's middle one. Worse, `plus` is
+   * an ordinary economy rung at some carriers and a PAID UPGRADE at others.
+   *
+   * That is not hypothetical — it shipped. easyJet's structure is Ryanair's:
+   * Basic gets a personal item, and the 56x45x25 cabin bag needs the
+   * `large_cabin_bag` add-on or a buy-up to Plus. But `plus` and
+   * `inclusive_plus` are non-addon rows, they were in the tier list, and the
+   * name rank cheerfully picked one — so we promised easyJet Basic passengers
+   * a bag they would be charged for at the gate.
+   *
+   * The airline's own data already says which tier is cheapest, in the only
+   * currency that matters here: how little it entitles you to. So rank by
+   * entitlement. A tier with no reachable cabin bag is below one with a small
+   * bag, which is below one with a large bag. No marketing vocabulary needed,
+   * and it cannot be wrong about an airline nobody has taught us about. */
+  const economyRows = all.filter((a) => !a.addon && isTierOf(a.fare_class, b.class));
+  if (economyRows.length) {
+    /* Every economy tier this carrier publishes, from ANY row type — a tier
+       that appears only as a personal-item row still exists, and is precisely
+       the cheap one we must not skip past. */
+    const tierNames = new Set(
+      (record.allowances ?? [])
+        .filter((a) => !a.addon && isTierOf(a.fare_class, b.class))
+        .map((a) => a.fare_class)
+    );
+    const entitlement = (tier) => {
+      const row = economyRows.find((a) => a.type === 'cabin' && a.fare_class === tier);
+      if (!row) return -1; // no cabin bag at all — the base product
+      if (row.max_cm) return row.max_cm.reduce((s, v) => s + v, 0);
+      return row.linear_max_cm ?? 0;
+    };
+    const cheapest = [...tierNames].sort((x, y) => entitlement(x) - entitlement(y))[0];
+    const row = economyRows.find((a) => a.type === 'cabin' && a.fare_class === cheapest);
+    if (row) return { row, matched: 'class', tier: cheapest };
+    /* The cheapest tier has no cabin row of its own — easyJet Basic and
+       Ryanair Basic both look like this. Fall through to the paywall and
+       absence checks below, which decide whether that is a researched ban or
+       an unresearched gap. Nothing to carry forward: those checks re-derive
+       the tier from the same rows. */
+  }
 
   /* The same fallback for a class whose only rows are an explicit absence —
      "this fare includes no cabin bag" is an ANSWER, and a far more useful one
      than "we have not researched this airline". */
+  /* No sort. It used to order these by the global name rank, which no longer
+     exists — a dead reference that would have thrown the first time any
+     carrier reached this branch, and nothing does today. Every row here is an
+     explicit "this fare includes no cabin bag", so they all say the same
+     thing; picking the first is not a judgement about which is cheapest. */
   const absent = (record.allowances ?? [])
     .filter((a) => a.type === 'cabin' && !a.addon && a.cabin_absence)
-    .filter((a) => isTierOf(a.fare_class, b.class))
-    .sort((x, y) => ECONOMY_RANK.get(x.fare_class) - ECONOMY_RANK.get(y.fare_class));
+    .filter((a) => isTierOf(a.fare_class, b.class));
   if (absent.length && routeApplies(absent[0], b.route).applies === true) {
     return {
       row: null,

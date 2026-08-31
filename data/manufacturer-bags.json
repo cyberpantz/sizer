@@ -2135,6 +2135,525 @@
     "list": true
    },
    "conflicts": []
+  },
+  {
+   "slug": "briggs-riley-sympatico-global-spinner",
+   "brand": "Briggs & Riley",
+   "model": "Sympatico Global 21\" Carry-On Expandable Spinner",
+   "line": "briggs-riley-sympatico",
+   "variant": "Global 21-inch, Black; SU321CXSPW-4",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "retrieved": "2026-08-31",
+    "title": "Briggs & Riley Sympatico Global 21\" Carry-On Expandable Spinner",
+    "local": "resources/bags/2026-08-31-briggs-riley-sympatico-global-spinner.md"
+   },
+   "external_in": {
+    "v": [
+     21,
+     15,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "at": "2026-08-31",
+    "quote": "EXTERIOR DIMENSIONS",
+    "note": "Explicitly includes wheels and handles; unexpanded. Manufacturer specification, not measured by us. Printed units retained despite differing equivalents."
+   },
+   "external_cm": {
+    "v": [
+     53.3,
+     38.1,
+     22.9
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "at": "2026-08-31",
+    "quote": "EXTERIOR DIMENSIONS",
+    "note": "Explicitly includes wheels and handles; unexpanded. Manufacturer specification, not measured by us. Printed units retained despite differing equivalents."
+   },
+   "claimed_packing_in": {
+    "v": [
+     18.75,
+     15,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "at": "2026-08-31",
+    "quote": "CASE DIMENSIONS",
+    "note": "Manufacturer case dimensions excluding wheels and handles; not explicitly a usable interior measurement."
+   },
+   "claimed_packing_cm": {
+    "v": [
+     47.6,
+     38.1,
+     22.9
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "at": "2026-08-31",
+    "quote": "CASE DIMENSIONS",
+    "note": "Manufacturer case dimensions excluding wheels and handles; not explicitly a usable interior measurement."
+   },
+   "weight_lb": {
+    "v": 8.6,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "at": "2026-08-31",
+    "quote": "WEIGHT"
+   },
+   "weight_kg": {
+    "v": 3.9,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "at": "2026-08-31",
+    "quote": "WEIGHT"
+   },
+   "price_usd": {
+    "v": 695,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/global-carry-on-expandable-spinner",
+    "at": "2026-08-31",
+    "quote": "$695.00",
+    "list": true
+   },
+   "conflicts": [
+    {
+     "field": "external_cm",
+     "values": [
+      {
+       "src": "manufacturer imperial",
+       "v": [
+        21,
+        15,
+        9
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer metric",
+       "v": [
+        53.3,
+        38.1,
+        22.9
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published unit equivalents differ; neither converted nor reconciled."
+    },
+    {
+     "field": "claimed_packing_cm",
+     "values": [
+      {
+       "src": "manufacturer imperial",
+       "v": [
+        18.75,
+        15,
+        9
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer metric",
+       "v": [
+        47.6,
+        38.1,
+        22.9
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published unit equivalents differ; neither converted nor reconciled."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer imperial",
+       "v": 8.6,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer metric",
+       "v": 3.9,
+       "unit": "kg"
+      }
+     ],
+     "note": "Published unit equivalents differ; neither converted nor reconciled."
+    },
+    {
+     "field": "capacity_l",
+     "values": [
+      {
+       "src": "manufacturer displayed specs, standard to expanded",
+       "v": [
+        41,
+        52
+       ],
+       "unit": "L"
+      },
+      {
+       "src": "manufacturer embedded product text, standard to expanded",
+       "v": [
+        41.3,
+        50.5
+       ],
+       "unit": "L"
+      }
+     ],
+     "note": "Displayed and embedded capacity ranges disagree. No active capacity selected."
+    }
+   ],
+   "notes": "Black SKU SU321CXSPW-4. Expanded exterior: 21 \u00d7 15 \u00d7 11.25 in / 53.3 \u00d7 38.1 \u00d7 28.6 cm. Capacity label prints 41\u201352 L (2531\u20133164 cu in); embedded product text instead prints 41.3\u201350.5 L. Capacity withheld pending clarification. Page claims up to 25% more space. Regular USD price, no sale shown; personalization excluded. No separately labelled usable interior triple or explicit empty-weight qualifier found."
+  },
+  {
+   "slug": "briggs-riley-baseline-essential-spinner",
+   "brand": "Briggs & Riley",
+   "model": "Baseline Essential 22\" Carry-On Expandable Spinner",
+   "line": "briggs-riley-baseline",
+   "variant": "Essential 22-inch, Black; BLU122CXSP-4",
+   "type": "softside spinner",
+   "soft": 1,
+   "wheels": 4,
+   "role": "overhead",
+   "manufacturer_source": {
+    "url": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "retrieved": "2026-08-31",
+    "title": "Briggs & Riley Baseline Essential 22\" Carry-On Expandable Spinner",
+    "local": "resources/bags/2026-08-31-briggs-riley-baseline-essential-spinner.md"
+   },
+   "external_in": {
+    "v": [
+     22,
+     14,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "at": "2026-08-31",
+    "quote": "EXTERIOR DIMENSIONS",
+    "note": "Explicitly includes wheels and handles; unexpanded. Manufacturer specification, not measured by us. Printed units retained despite differing equivalents."
+   },
+   "external_cm": {
+    "v": [
+     55.9,
+     35.6,
+     22.9
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "at": "2026-08-31",
+    "quote": "EXTERIOR DIMENSIONS",
+    "note": "Explicitly includes wheels and handles; unexpanded. Manufacturer specification, not measured by us. Printed units retained despite differing equivalents."
+   },
+   "claimed_packing_in": {
+    "v": [
+     20,
+     14,
+     7.875
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "at": "2026-08-31",
+    "quote": "CASE DIMENSIONS",
+    "note": "Manufacturer case dimensions excluding wheels and handles; not explicitly a usable interior measurement."
+   },
+   "claimed_packing_cm": {
+    "v": [
+     50.8,
+     35.5,
+     20
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "at": "2026-08-31",
+    "quote": "CASE DIMENSIONS",
+    "note": "Manufacturer case dimensions excluding wheels and handles; not explicitly a usable interior measurement."
+   },
+   "weight_lb": {
+    "v": 10,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "at": "2026-08-31",
+    "quote": "WEIGHT"
+   },
+   "weight_kg": {
+    "v": 4.6,
+    "unit": "kg",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "at": "2026-08-31",
+    "quote": "WEIGHT"
+   },
+   "price_usd": {
+    "v": 729,
+    "unit": "USD",
+    "src": "manufacturer",
+    "ref": "https://www.briggs-riley.com/products/essential-carry-on-spinner?variant=39999346638890",
+    "at": "2026-08-31",
+    "quote": "$729.00",
+    "list": true
+   },
+   "conflicts": [
+    {
+     "field": "external_cm",
+     "values": [
+      {
+       "src": "manufacturer imperial",
+       "v": [
+        22,
+        14,
+        9
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer metric",
+       "v": [
+        55.9,
+        35.6,
+        22.9
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published unit equivalents differ; neither converted nor reconciled."
+    },
+    {
+     "field": "claimed_packing_cm",
+     "values": [
+      {
+       "src": "manufacturer imperial",
+       "v": [
+        20,
+        14,
+        7.875
+       ],
+       "unit": "in"
+      },
+      {
+       "src": "manufacturer metric",
+       "v": [
+        50.8,
+        35.5,
+        20
+       ],
+       "unit": "cm"
+      }
+     ],
+     "note": "Published unit equivalents differ; neither converted nor reconciled."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer imperial",
+       "v": 10,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer metric",
+       "v": 4.6,
+       "unit": "kg"
+      }
+     ],
+     "note": "Published unit equivalents differ; neither converted nor reconciled."
+    },
+    {
+     "field": "capacity_l",
+     "values": [
+      {
+       "src": "manufacturer displayed specs, standard to expanded",
+       "v": [
+        37,
+        48
+       ],
+       "unit": "L"
+      },
+      {
+       "src": "manufacturer embedded product text, standard to expanded",
+       "v": [
+        35.4,
+        46.4
+       ],
+       "unit": "L"
+      }
+     ],
+     "note": "Displayed and embedded capacity ranges disagree. No active capacity selected."
+    }
+   ],
+   "notes": "Black SKU BLU122CXSP-4. Expanded exterior: 22 \u00d7 14 \u00d7 11.5 in / 55.9 \u00d7 35.6 \u00d7 29.2 cm. Capacity label prints 37\u201348 L (2240\u20132940 cu in); embedded product text instead prints 35.4\u201346.4 L. Capacity withheld pending clarification. CX compression-expansion; no subtraction used to invent an expansion increment. Regular USD price, no sale shown; personalization excluded. No separately labelled usable interior triple or explicit empty-weight qualifier found."
+  },
+  {
+   "slug": "solgaard-closet-med",
+   "brand": "Solgaard",
+   "model": "Carry-On Closet Original",
+   "line": "solgaard-closet",
+   "type": "hardside spinner",
+   "soft": 0,
+   "wheels": 4,
+   "role": "overhead",
+   "variant": "Carry-On Closet Original Medium; color mapping unresolved",
+   "manufacturer_source": {
+    "url": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+    "retrieved": "2026-08-31",
+    "title": "Solgaard Carry-On Closet Original",
+    "local": "resources/bags/2026-08-31-solgaard-closet-med.md"
+   },
+   "notes": "Medium only. Weight 7.5 lbs EXCLUDES closet insert; manufacturer prints insert weight .75lbs and .4kg, which are not equivalent. No combined weight inferred. Dimensions and weight FAQ opened in browser and matched user-supplied excerpt. Medium comparison states 35 L. Medium selector previously showed USD325, but direct variant now shows USD345 and Coming Soon with inconsistent color presentation; price withheld pending exact variant confirmation. No expansion amount, bag weight in kg, or SKU confirmed. Large specifications are retained only in dossier, not applied to Medium.",
+   "claimed_cm": {
+    "v": [
+     53,
+     34,
+     23
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+    "at": "2026-08-31",
+    "quote": "External",
+    "note": "External dimensions explicitly include wheels; handles are not explicitly included, so exterior remains claimed. Internal dimensions are separately labelled by the manufacturer. Both printed units retained without reconciliation."
+   },
+   "claimed_in": {
+    "v": [
+     20.8,
+     13.4,
+     9
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+    "at": "2026-08-31",
+    "quote": "External",
+    "note": "External dimensions explicitly include wheels; handles are not explicitly included, so exterior remains claimed. Internal dimensions are separately labelled by the manufacturer. Both printed units retained without reconciliation."
+   },
+   "claimed_packing_cm": {
+    "v": [
+     48,
+     33,
+     22
+    ],
+    "unit": "cm",
+    "src": "manufacturer",
+    "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+    "at": "2026-08-31",
+    "quote": "Internal",
+    "note": "Explicitly labelled Internal. Separate from exterior; printed units retained unchanged."
+   },
+   "claimed_packing_in": {
+    "v": [
+     19,
+     13,
+     8.7
+    ],
+    "unit": "in",
+    "src": "manufacturer",
+    "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+    "at": "2026-08-31",
+    "quote": "Internal",
+    "note": "Explicitly labelled Internal. Separate from exterior; printed units retained unchanged."
+   },
+   "weight_lb": {
+    "v": 7.5,
+    "unit": "lbs",
+    "src": "manufacturer",
+    "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+    "at": "2026-08-31",
+    "quote": "Weight",
+    "note": "Excludes the closet insert. Insert is separately printed as .75lbs,.4kg; no combined weight inferred."
+   },
+   "capacity_l": {
+    "v": 35,
+    "unit": "L",
+    "src": "manufacturer",
+    "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+    "at": "2026-08-31",
+    "quote": "Volume"
+   },
+   "conflicts": [
+    {
+     "field": "claimed_cm",
+     "values": [
+      {
+       "src": "manufacturer centimeters",
+       "v": [
+        53,
+        34,
+        23
+       ],
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer inches",
+       "v": [
+        20.8,
+        13.4,
+        9
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Printed unit equivalents differ; preserved unchanged."
+    },
+    {
+     "field": "claimed_packing_cm",
+     "values": [
+      {
+       "src": "manufacturer centimeters",
+       "v": [
+        48,
+        33,
+        22
+       ],
+       "unit": "cm"
+      },
+      {
+       "src": "manufacturer inches",
+       "v": [
+        19,
+        13,
+        8.7
+       ],
+       "unit": "in"
+      }
+     ],
+     "note": "Printed unit equivalents differ; preserved unchanged."
+    },
+    {
+     "field": "weight_kg",
+     "values": [
+      {
+       "src": "manufacturer closet insert only",
+       "v": 0.75,
+       "unit": "lbs"
+      },
+      {
+       "src": "manufacturer closet insert only",
+       "v": 0.4,
+       "unit": "kg"
+      }
+     ],
+     "note": "Insert-only weights disagree; neither is total bag weight. Not added to the bag weight."
+    }
+   ]
   }
  ]
 }

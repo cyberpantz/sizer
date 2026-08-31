@@ -2,7 +2,7 @@
  "slug": "solgaard-closet-med",
  "brand": "Solgaard",
  "model": "Carry-On Closet Original",
- "variant": "Medium",
+ "variant": "Carry-On Closet Original Medium; color mapping unresolved",
  "line": "solgaard-closet",
  "type": "hardside spinner",
  "soft": 0,
@@ -10,23 +10,56 @@
  "role": "overhead",
  "fits_personal_item": null,
  "external_cm": null,
- "claimed_packing_cm": null,
- "claimed_cm": null,
+ "claimed_packing_cm": {
+  "v": [
+   48,
+   33,
+   22
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "at": "2026-08-31",
+  "quote": "Internal",
+  "note": "Explicitly labelled Internal. Separate from exterior; printed units retained unchanged."
+ },
+ "claimed_cm": {
+  "v": [
+   53,
+   34,
+   23
+  ],
+  "unit": "cm",
+  "src": "manufacturer",
+  "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "at": "2026-08-31",
+  "quote": "External",
+  "note": "External dimensions explicitly include wheels; handles are not explicitly included, so exterior remains claimed. Internal dimensions are separately labelled by the manufacturer. Both printed units retained without reconciliation."
+ },
  "measured_cm": null,
  "measured_at": null,
  "weight_kg": {
-  "v": 3.74,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "kg"
+  "v": 3.401925,
+  "unit": "kg",
+  "src": "manufacturer",
+  "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "at": "2026-08-31",
+  "quote": "Weight",
+  "note": "Excludes the closet insert. Insert is separately printed as .75lbs,.4kg; no combined weight inferred. Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
  },
  "capacity_l": {
-  "v": 39,
-  "src": "review",
-  "ref": "strategist-carryon",
-  "at": "2026-06-22",
-  "unit": "L"
+  "v": 35,
+  "unit": "L",
+  "src": "manufacturer",
+  "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "at": "2026-08-31",
+  "quote": "Volume"
  },
  "reviews": [
   {
@@ -47,9 +80,116 @@
    "rejected_on_fit": false
   }
  ],
- "conflicts": [],
+ "conflicts": [
+  {
+   "field": "claimed_cm",
+   "values": [
+    {
+     "src": "manufacturer centimeters",
+     "v": [
+      53,
+      34,
+      23
+     ],
+     "unit": "cm"
+    },
+    {
+     "src": "manufacturer inches",
+     "v": [
+      20.8,
+      13.4,
+      9
+     ],
+     "unit": "in"
+    }
+   ],
+   "note": "Printed unit equivalents differ; preserved unchanged."
+  },
+  {
+   "field": "claimed_packing_cm",
+   "values": [
+    {
+     "src": "manufacturer centimeters",
+     "v": [
+      48,
+      33,
+      22
+     ],
+     "unit": "cm"
+    },
+    {
+     "src": "manufacturer inches",
+     "v": [
+      19,
+      13,
+      8.7
+     ],
+     "unit": "in"
+    }
+   ],
+   "note": "Printed unit equivalents differ; preserved unchanged."
+  },
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "manufacturer closet insert only",
+     "v": 0.75,
+     "unit": "lbs"
+    },
+    {
+     "src": "manufacturer closet insert only",
+     "v": 0.4,
+     "unit": "kg"
+    }
+   ],
+   "note": "Insert-only weights disagree; neither is total bag weight. Not added to the bag weight."
+  }
+ ],
  "mentions": 1,
  "needs_measurement": true,
+ "manufacturer_source": {
+  "url": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "retrieved": "2026-08-31",
+  "title": "Solgaard Carry-On Closet Original",
+  "local": "resources/bags/2026-08-31-solgaard-closet-med.md"
+ },
+ "notes": "Medium only. Weight 7.5 lbs EXCLUDES closet insert; manufacturer prints insert weight .75lbs and .4kg, which are not equivalent. No combined weight inferred. Dimensions and weight FAQ opened in browser and matched user-supplied excerpt. Medium comparison states 35 L. Medium selector previously showed USD325, but direct variant now shows USD345 and Coming Soon with inconsistent color presentation; price withheld pending exact variant confirmation. No expansion amount, bag weight in kg, or SKU confirmed. Large specifications are retained only in dossier, not applied to Medium.",
+ "claimed_in": {
+  "v": [
+   20.8,
+   13.4,
+   9
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "at": "2026-08-31",
+  "quote": "External",
+  "note": "External dimensions explicitly include wheels; handles are not explicitly included, so exterior remains claimed. Internal dimensions are separately labelled by the manufacturer. Both printed units retained without reconciliation."
+ },
+ "claimed_packing_in": {
+  "v": [
+   19,
+   13,
+   8.7
+  ],
+  "unit": "in",
+  "src": "manufacturer",
+  "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "at": "2026-08-31",
+  "quote": "Internal",
+  "note": "Explicitly labelled Internal. Separate from exterior; printed units retained unchanged."
+ },
+ "weight_lb": {
+  "v": 7.5,
+  "unit": "lbs",
+  "src": "manufacturer",
+  "ref": "https://solgaard.co/products/carry-on-closet?variant=44111651831981",
+  "at": "2026-08-31",
+  "quote": "Weight",
+  "note": "Excludes the closet insert. Insert is separately printed as .75lbs,.4kg; no combined weight inferred."
+ },
  "compliance_claimed": false,
  "observed": [],
  "compliance_unbacked": false

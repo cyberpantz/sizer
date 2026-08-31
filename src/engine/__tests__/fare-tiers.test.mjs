@@ -54,6 +54,48 @@ describe('the economy ladder', () => {
     assert.equal(r.tier, 'basic');
   });
 
+  test('the cheapest tier is decided by ENTITLEMENT, not by its name', () => {
+    /* THE BUG THIS REPLACES, which shipped. The rungs used to be ranked
+       against a global ordered list of brand names, and that list was a
+       fiction — airlines use the same word at different heights. "Standard" is
+       easyJet's bottom tier and LOT's middle one. Worse, `plus` is an ordinary
+       economy rung at some carriers and a PAID UPGRADE at others.
+       easyJet's structure is Ryanair's: Basic gets a personal item, and the
+       56x45x25 cabin bag needs the `large_cabin_bag` add-on or a buy-up. But
+       `plus` was a non-addon row and sat in the tier list, so the name rank
+       picked it and we promised Basic passengers a bag they would be charged
+       for at the gate.
+       Here `deluxe` outranks `basic` alphabetically and in any list we might
+       write, and entitlement puts it where it belongs. */
+    const r = resolveFare(
+      rec(
+        [cabin('deluxe', [56, 45, 25]), cabin('basic', [40, 30, 20])].map((row) => ({
+          ...row,
+          fare_class: row.fare_class === 'deluxe' ? 'plus' : row.fare_class,
+        }))
+      ),
+      { class: 'economy' }
+    );
+    assert.deepEqual(r.row.max_cm, [40, 30, 20], 'the more generous tier was served');
+  });
+
+  test('a tier with NO cabin bag outranks every tier that has one', () => {
+    /* The easyJet/Ryanair shape. The base tier appears only as a personal-item
+       row; the cabin rows all belong to fares you buy up to. Ranking those
+       cabin rows against each other can only ever pick a paid product. */
+    const r = resolveFare(
+      rec([
+        personal('basic', [45, 36, 20]),
+        cabin('plus', [56, 45, 25]),
+        cabin('inclusive_plus', [56, 45, 25]),
+        cabin('basic', [56, 45, 25], { addon: 'large_cabin_bag' }),
+      ]),
+      { class: 'economy' }
+    );
+    assert.equal(r.row, null, 'a buy-up tier was served to a Basic booking');
+    assert.equal(r.absence, CABIN_ABSENCE.NOT_PERMITTED);
+  });
+
   test('the fallback takes the CHEAPEST tier, never the most generous', () => {
     /* Each rung up buys something back — bags, legroom, free changes. Picking
        a higher rung would promise an allowance the reader has not bought. */

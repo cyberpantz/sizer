@@ -18,7 +18,13 @@
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, test } from 'node:test';
-import { ADDON_FARES, classifyFare, ECONOMY_TIERS, PREMIUM_TIERS } from '../normalize.mjs';
+import {
+  ADDON_FARES,
+  classifyFare,
+  ECONOMY_TIERS,
+  PREMIUM_TIERS,
+  toCarrier,
+} from '../normalize.mjs';
 
 const carriers = readdirSync('data/carriers')
   .filter((f) => f.endsWith('.json') && !f.startsWith('_'))
@@ -70,6 +76,70 @@ describe('fare brands', () => {
     assert.equal(classifyFare('priority'), 'addon');
     assert.equal(classifyFare(null), 'unnamed');
     assert.equal(classifyFare('wanna_get_away'), null, 'an unknown brand must return null, loudly');
+  });
+
+  test('we never answer with more than the airline gives on its cheapest fare', () => {
+    /* THE STANDING RULE, and the one worth stating plainly: do not
+     * misrepresent what an airline publishes.
+     *
+     * An unqualified "does my bag fit" must never be answered with an
+     * allowance that has to be bought. The failure is invisible from the
+     * inside — a paid tier's row looks exactly like a free one — so it is
+     * checked against the whole dataset rather than reasoned about.
+     *
+     * For every carrier, the allowance we serve must be no larger than the
+     * SMALLEST cabin allowance published for any non-add-on economy tier. If a
+     * cheaper tier gets a smaller bag, or none, that is the answer. */
+    const offenders = [];
+    for (const c of carriers) {
+      if (c.status === 'ceased') continue;
+      const served = toCarrier(c, { class: 'economy' });
+      if (!served.allowance?.max_cm) continue;
+
+      const eco = (c.allowances ?? []).filter(
+        (a) => !a.addon && classifyFare(a.fare_class) === 'economy'
+      );
+      /* SCOPED TO CARRIERS WITH NO FARE ACTUALLY NAMED "ECONOMY".
+       *
+       * Where an airline publishes a row called economy, that row is its
+       * standard product and we answer on it — even though a cheaper Basic
+       * exists with no bag. Whether that is the right default is an open
+       * product question, not a bug: Lufthansa and easyJet have the same
+       * structure (cheapest tier no bag, next tier up has one) and get
+       * opposite answers purely because Lufthansa calls the second rung
+       * "Economy" and easyJet calls it "Plus". Recorded in docs/24.
+       *
+       * What is unambiguously wrong, and what this guards, is reaching PAST
+       * the cheapest tier when the airline never named one economy — that is
+       * how easyJet Basic passengers were promised a 56x45x25 bag that costs
+       * extra at the gate. */
+      if (eco.some((a) => a.fare_class === 'economy')) continue;
+
+      const withFreeCabin = new Set(
+        eco.filter((a) => a.type === 'cabin' && a.max_cm).map((a) => a.fare_class)
+      );
+      const barer = [...new Set(eco.map((a) => a.fare_class))].find((t) => !withFreeCabin.has(t));
+      if (barer) {
+        offenders.push(
+          `${c.iata} ${c.name}: served ${served.allowance.max_cm.join('x')} but "${barer}" ` +
+            'publishes no free cabin bag — that bag has to be bought'
+        );
+        continue;
+      }
+      const smallest = Math.min(
+        ...eco
+          .filter((a) => a.type === 'cabin' && a.max_cm)
+          .map((a) => a.max_cm.reduce((s, v) => s + v, 0))
+      );
+      const servedSum = served.allowance.max_cm.reduce((s, v) => s + v, 0);
+      if (servedSum > smallest + 0.01) {
+        offenders.push(
+          `${c.iata} ${c.name}: served a ${servedSum.toFixed(0)} cm total when a cheaper ` +
+            `economy tier publishes ${smallest.toFixed(0)} cm`
+        );
+      }
+    }
+    assert.deepEqual(offenders, [], `over-promised allowances:\n  ${offenders.join('\n  ')}`);
   });
 
   test('no brand is in two categories at once', () => {
