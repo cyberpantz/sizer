@@ -32,7 +32,7 @@ Strategy narrative lives in [`../cabin-index-spec.html`](../cabin-index-spec.htm
 
 ## The one-paragraph version
 
-Manufacturers publish *packing* dimensions; airlines measure *external* ones, wheels and handles included. Every tool in this category runs precise math on numbers that are wrong. We measure bags ourselves, model the fare class the traveler actually booked, and answer in probability bands rather than a boolean — then recommend bags that clear the itinerary. Affiliate revenue, direct-to-consumer first.
+Airlines measure the *external* size — wheels and handle included. That figure is reported inconsistently: some manufacturers publish both it and the packing size and explain the difference (Travelpro, Rick Steves); others publish one number; retail listings are worse again, and often disagree with each other about the same bag. Every tool in this category runs precise math on whichever number it happened to get. We measure bags ourselves, model the fare class the traveler actually booked, and answer in probability bands rather than a boolean — then recommend bags that clear the itinerary. Affiliate revenue, direct-to-consumer first.
 
 ## Canonical decisions
 

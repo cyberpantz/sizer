@@ -87,8 +87,8 @@ That is the single most important gap in the project, and it is a *measurement* 
 |---|---|---|---|
 | 1 | We measured it, with a photo | `measured` | The asset |
 | 2 | A publication measured it | `review` | Usable, must be re-measured |
-| 3 | Manufacturer spec sheet | `manufacturer` | Packing dimensions — wrong by design |
-| 4 | Retail listing | `manufacturer` | Same, plus transcription errors |
+| 3 | Manufacturer spec sheet | `manufacturer` | **Varies.** Travelpro and Rick Steves publish packing *and* overall; others publish one figure, sometimes the packing one |
+| 4 | Retail or marketplace listing | `manufacturer` | Weakest. The same bag carries different dimensions across sellers, usually with no note of which figure it is |
 
 **Everything we hold today is tier 2, and all of it from one publication.** 29 sized bags: 11 from T+L's general guide, 18 from their international list. The Strategist and Pack Hacker publish no dimensions at all, so they contribute reviews and nothing else.
 

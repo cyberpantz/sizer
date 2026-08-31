@@ -17,19 +17,25 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
 ---
 <Base
   title="Sizer — which carry-on actually fits your flight"
-  description={`Measured carry-on dimensions checked against ${answerable} airlines. Airlines measure the outside of your bag, wheels and handle included. Manufacturers publish the inside.`}
+  description={`Airlines measure the outside of your bag — wheels and handle included. Listings often don't say which figure they're quoting. We measure once and check against ${answerable} airlines.`}
 >
   <div class="mx-auto max-w-page px-6">
 
     <section class="pt-16 pb-12">
+      {/* Names the behaviour, not an actor — see docs/16. An earlier version
+          read "Manufacturers publish the inside", which is false of Travelpro
+          and Rick Steves: both publish packing AND overall, and Travelpro says
+          outright which one to compare against an airline limit. The real
+          problem is that the figure is reported inconsistently across the
+          places people shop. */}
       <h1 class="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-        Airlines measure the outside of your bag.
-        <span class="text-muted">Manufacturers publish the inside.</span>
+        The same bag, three different
+        <span class="text-muted">sets of dimensions.</span>
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-ink-2">
-        That gap is why a bag sold as a carry-on gets stopped at the gate. We
-        check external dimensions — wheels and handle included — against
-        {answerable} airlines.
+        Airlines measure the outside — wheels and handle included. Listings
+        often don't say which figure they're quoting. We measure once, then
+        check it against {answerable} airlines.
       </p>
 
       <div class="mt-8 flex flex-wrap gap-3">

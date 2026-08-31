@@ -83,3 +83,33 @@ describe('advisory copy', () => {
     assert.equal(advisoryLine({ id: 'not_a_thing' }, U), '');
   });
 });
+
+describe('editorial policy — name the behaviour, not the actor', () => {
+  /* The landing page shipped claiming "Manufacturers publish the inside".
+     Travelpro publishes both figures and says which to use; Rick Steves too.
+     We had read both and quoted them in our own dossiers, then accused them of
+     the opposite on the front page.
+
+     A class-level accusation about actors we have partly read is the failure
+     mode. This guards the copy that ships. */
+  const CLASS_ACCUSATION =
+    /\b(manufacturers|brands|airlines|retailers|sellers)\b[^.]{0,60}\b(hide|conceal|lie|mislead|won't tell|refuse to)\b/i;
+
+  test('no shipped copy accuses a whole class of actors', async () => {
+    const { readFileSync, readdirSync } = await import('node:fs');
+    const { join } = await import('node:path');
+    const walk = (d) =>
+      readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory() ? walk(join(d, e.name)) : /\.(astro|mjs)$/.test(e.name) ? [join(d, e.name)] : []
+      );
+    for (const f of walk('src')) {
+      const src = readFileSync(f, 'utf8');
+      const hit = CLASS_ACCUSATION.exec(src);
+      assert.equal(hit, null, `${f} accuses a class of actors: "${hit?.[0]}"`);
+    }
+  });
+
+  test('verdict copy still avoids the banned words', () => {
+    for (const c of Object.values(BAND_COPY)) assert.ok(!BANNED.test(c.label));
+  });
+});

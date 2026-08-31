@@ -68,3 +68,31 @@ Expected, and it's an opportunity rather than a crisis.
 4. **Never remove a measurement under pressure** without re-measuring first. The archive and changelog exist so that quiet edits are impossible.
 
 Offer any brand a re-measure on request, and publish the result whichever way it falls. That standing offer, stated on `/methodology`, is cheap and it is most of the defence.
+
+---
+
+## Don't accuse manufacturers of what retail listings do
+
+The landing page shipped with *"Airlines measure the outside of your bag. Manufacturers publish the inside."* Frank caught it: **Travelpro publishes both figures and says which one to use**, and our own dossier quotes them doing it:
+
+> "We publish both numbers… When airlines publish size limits they mean the overall size, so compare the overall number to your airline's limit."
+
+Rick Steves publishes both too. Two of the manufacturers we have actually read do the right thing, and the headline accused them of the opposite.
+
+### What is actually true
+
+| Source | Behaviour |
+|---|---|
+| **Some manufacturers** | Publish packing **and** overall, and explain the difference — Travelpro, Rick Steves |
+| **Other manufacturers** | Publish one figure. A Samsonite spokesperson confirmed they don't measure handles or wheels; Consumer Reports measured an advertised 22 × 14 × 9 Briggs & Riley at 22.5 × 14.5 × 9.25 |
+| **Retail and marketplace listings** | Where it degrades most — the same bag carries different dimensions across sellers, and the figure is often transcribed with no idea which one it was |
+| **Review publications** | Two of four publish no dimensions at all |
+| **Airlines themselves** | United publishes inches and centimetres that contradict each other on the same page |
+
+So the honest statement is **not** "manufacturers hide it." It is: *the number that matters is the external one, it is reported inconsistently across the places people actually shop, and nobody checks it against the specific airline you are flying.*
+
+### The rule
+
+**Name the behaviour, not the actor** — unless we have read that specific actor's page and can quote it. We can say a listing is inconsistent because we compared listings. We cannot say "manufacturers" as a class do anything, because we have read five of them and two are exemplary.
+
+Where a manufacturer does it properly, **say so by name.** It costs nothing, it is true, and a site that only ever criticises is less believable than one that credits the good actors.
