@@ -1,0 +1,117 @@
+{
+  "iata": "GQ",
+  "name": "SKY express",
+  "region": "EU",
+  "type": "hybrid",
+  "status": "operating",
+  "source_url": "https://www.skyexpress.gr/en/sky-experience/before-fly/fare-types",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "SKY joy",
+      "type": "cabin",
+      "source_url": "https://www.skyexpress.gr/en/sky-experience/before-fly/fare-types",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "The fare page states 8 kg and identifies 55 × 40 × 23 cm as the cabin-bag limit in its musical-instrument substitution rule.",
+      "cabin_class": "economy"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "SKY joy",
+      "type": "personal",
+      "source_url": "https://www.skyexpress.gr/en/sky-experience/before-fly/fare-types",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "SKY joy",
+      "type": "checked",
+      "source_url": "https://www.skyexpress.gr/en/sky-experience/before-fly/fare-types",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 156,
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "note": "No checked bag included; paid 15 kg and 23 kg pieces are offered."
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "SKY joy+",
+      "type": "checked",
+      "source_url": "https://www.skyexpress.gr/en/sky-experience/before-fly/fare-types",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 156,
+      "max_kg": 15,
+      "free_pieces": 1,
+      "system": "piece"
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "SKY joy+",
+      "type": "cabin",
+      "source_url": "https://www.skyexpress.gr/en/sky-experience/before-fly/fare-types",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "SKY joy+",
+      "type": "personal",
+      "source_url": "https://www.skyexpress.gr/en/sky-experience/before-fly/fare-types",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1
+    }
+  ],
+  "audit_note": "Official fare and baggage page researched. SKY joy is modeled; route/fare variants and business fares remain for later expansion.",
+  "research_dossier": "resources/carriers/GQ-sky-express.md"
+}

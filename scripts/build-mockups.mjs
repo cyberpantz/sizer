@@ -1,16 +1,37 @@
 /* Inlines the shared engine into the mockups.
-
-   The mockups are opened straight off disk, and browsers refuse ES module
-   imports over file://. So the engine is concatenated into each page between
-   markers rather than imported. That keeps ONE source of truth: edit
-   src/engine/, run this, and every page moves together.
-
-   `--check` verifies the inlined copy still matches the module. CI runs it, so
-   a page can never quietly drift back onto its own ladder — which is exactly
-   what check.html did before any of this existed.
-
-   Astro will import the module properly and this script retires. Until then
-   the marker block is GENERATED: never hand-edit between the markers. */
+ *
+ * ┌───────────────────────────────────────────────────────────────────────┐
+ * │ THE MOCKUPS ARE FROZEN ON PURPOSE. DO NOT RUN THIS TO "CATCH THEM UP".│
+ * └───────────────────────────────────────────────────────────────────────┘
+ *
+ * The site moved to Astro (src/pages/). These four pages are no longer a
+ * surface anybody uses; what they still are is the FIXTURE that proves the
+ * original port was faithful. mockup/*.html holds the dataset as it stood when
+ * scripts/verdicts.golden was taken — 58 carriers, 39 bags, 3,861 verdicts —
+ * and verify-port.mjs replays every one of them through the current
+ * src/engine/. That is a real regression test of the thing which decides
+ * whether someone's bag gets on a plane, and it is only meaningful because
+ * both sides are held still.
+ *
+ * Regenerate, and the data blocks refresh to whatever data/ holds today. The
+ * verdict count moves (6,897 at the time of writing) and the golden can no
+ * longer validate any of them. You would not have caught a regression; you
+ * would have deleted the only thing that could catch one.
+ *
+ * So `verify:inlined` is NOT in `npm run check`. It reports drift between the
+ * inlined engine and src/engine/, and that drift is now the expected state —
+ * it is what "frozen" means. `verify:engine` and verify-port.mjs stay in the
+ * chain, because those are the checks that still assert something true.
+ *
+ * If the fixture ever needs to grow, the honest move is a NEW baseline taken
+ * deliberately and committed on its own, not a rebuild that quietly replaces
+ * the old one. See docs/28-frozen-mockups.md.
+ *
+ * ── how it works, for the day someone does need to touch it ──
+ * The mockups are opened straight off disk, and browsers refuse ES module
+ * imports over file://. So the engine is concatenated into each page between
+ * markers rather than imported. The marker block is GENERATED: never hand-edit
+ * between the markers. */
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { coverage } from '../src/engine/fit.mjs';
 import { shapeOf } from '../src/lib/bag-shape.mjs';

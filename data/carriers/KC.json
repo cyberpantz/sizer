@@ -1,0 +1,74 @@
+{
+  "iata": "KC",
+  "name": "Air Astana",
+  "region": "AS",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://airastana.com/kaz-en/information/carry-on-baggage",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "cabin",
+      "source_url": "https://airastana.com/kaz-en/information/carry-on-baggage",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "personal",
+      "source_url": "https://airastana.com/kaz-en/information/carry-on-baggage",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "linear_max_cm": 80,
+      "max_kg": 3,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Air Astana lists a handbag, briefcase, or backpack up to 3 kg and 80 cm in total dimensions."
+    },
+    {
+      "fare_class": "business",
+      "fare_name": "Business",
+      "type": "cabin",
+      "source_url": "https://airastana.com/kaz-en/information/carry-on-baggage",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        56,
+        45,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 2
+    }
+  ],
+  "audit_note": "Official cabin and personal-item allowances researched. Checked baggage was not added because no checked-baggage page was verified in this pass.",
+  "research_dossier": "resources/carriers/KC-air-astana.md"
+}

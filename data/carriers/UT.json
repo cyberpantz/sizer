@@ -1,0 +1,89 @@
+{
+  "iata": "UT",
+  "name": "UTair",
+  "region": "EU",
+  "type": "hybrid",
+  "status": "operating",
+  "source_url": "https://www.utair.ru/support/1/tarify_i_usloviya",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Minimum (Минимум)",
+      "type": "cabin",
+      "source_url": "https://www.utair.ru/support/1/tarify_i_usloviya",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 5,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Minimum (Минимум)",
+      "type": "personal",
+      "source_url": "https://www.utair.ru/support/1/tarify_i_usloviya",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 5,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "The fare conditions separately permit a backpack of this size and weight, or a handbag or briefcase, beyond the cabin allowance."
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Minimum (Минимум)",
+      "type": "checked",
+      "source_url": "https://www.utair.ru/support/1/tarify_i_usloviya",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 203,
+      "max_kg": 20,
+      "free_pieces": 0,
+      "system": "piece",
+      "note": "Checked baggage is paid on the Minimum fare; 20 kg is the standard purchasable piece shown in the fare table."
+    },
+    {
+      "fare_class": "premium_economy",
+      "fare_name": "Premium (Премиум)",
+      "type": "cabin",
+      "source_url": "https://www.utair.ru/support/1/tarify_i_usloviya",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1
+    }
+  ],
+  "audit_note": "Official fare-conditions table researched. The site treats its included 40 × 30 × 20 cm item and an additional backpack/handbag rule separately; both are retained.",
+  "research_dossier": "resources/carriers/UT-utair.md"
+}

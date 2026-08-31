@@ -1,0 +1,87 @@
+{
+  "iata": "HY",
+  "name": "Uzbekistan Airways",
+  "region": "AS",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.uzairways.com/en/press-center/news/uzbekistan-airways-hand-baggage-regulations",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "cabin",
+      "source_url": "https://www.uzairways.com/en/press-center/news/uzbekistan-airways-hand-baggage-regulations",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        35,
+        25
+      ],
+      "linear_max_cm": 115,
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "personal",
+      "source_url": "https://www.uzairways.com/en/press-center/news/uzbekistan-airways-hand-baggage-regulations",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "linear_max_cm": 92,
+      "max_kg": 5,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "checked",
+      "source_url": "https://www.uzairways.com/en/press-center/news/transition-baggage-rules-according-piece-concept-principle",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "note": "General piece-concept rule; the airline publishes route exceptions."
+    },
+    {
+      "fare_class": "business",
+      "fare_name": "Business",
+      "type": "cabin",
+      "source_url": "https://www.uzairways.com/en/press-center/news/uzbekistan-airways-hand-baggage-regulations",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        35,
+        25
+      ],
+      "linear_max_cm": 115,
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1
+    }
+  ],
+  "audit_note": "Official May 2026 cabin rules researched. Checked row records the airline’s general piece-concept rule and flags route exceptions in its note.",
+  "research_dossier": "resources/carriers/HY-uzbekistan-airways.md"
+}

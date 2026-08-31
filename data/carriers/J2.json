@@ -1,0 +1,92 @@
+{
+  "iata": "J2",
+  "name": "Azerbaijan Airlines",
+  "region": "AS",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.azal.az/en/information/baggage/hand",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "cabin",
+      "source_url": "https://www.azal.az/en/information/baggage/hand",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "linear_max_cm": 118,
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "personal",
+      "source_url": "https://www.azal.az/en/information/baggage/hand",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "absence": "not_published",
+      "note": "Handbag, briefcase, and portable computer are permitted additionally; no numerical size or weight is published on the reviewed page."
+    },
+    {
+      "fare_class": "premium_economy",
+      "fare_name": "Premium Economy",
+      "type": "cabin",
+      "source_url": "https://www.azal.az/en/information/baggage/hand",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "linear_max_cm": 118,
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 2
+    },
+    {
+      "fare_class": "business",
+      "fare_name": "Business",
+      "type": "cabin",
+      "source_url": "https://www.azal.az/en/information/baggage/hand",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "linear_max_cm": 118,
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 2
+    }
+  ],
+  "audit_note": "Official carry-on page researched. Checked baggage was not added because the linked checked allowance detail was not fully retrieved in this pass.",
+  "research_dossier": "resources/carriers/J2-azerbaijan-airlines.md"
+}

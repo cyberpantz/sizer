@@ -1,0 +1,111 @@
+{
+  "iata": "NT",
+  "name": "Binter Canarias",
+  "region": "EU",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.bintercanarias.com/en/information/hand-luggage",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "cabin",
+      "source_url": "https://www.bintercanarias.com/en/information/hand-luggage",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        45,
+        35,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Conservative ATR fleet limit. Embraer allowance is 52 × 40 × 25 cm; mixed connections accept the Embraer allowance but may gate-check it for ATR sectors.",
+      "cabin_class": "economy"
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "personal",
+      "source_url": "https://www.bintercanarias.com/en/information/hand-luggage",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "absence": "not_published",
+      "note": "The airline permits personal belongings in addition but does not publish dimensions on the reviewed page."
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "checked",
+      "source_url": "https://www.bintercanarias.com/en/national-international-fares",
+      "verified_at": "2026-08-31",
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "note": "Basic includes no checked bag; Plus includes one 23 kg piece."
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "Plus",
+      "type": "checked",
+      "source_url": "https://www.bintercanarias.com/en/national-international-fares",
+      "verified_at": "2026-08-31",
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece"
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "Plus",
+      "type": "cabin",
+      "source_url": "https://www.bintercanarias.com/en/information/hand-luggage",
+      "verified_at": "2026-08-31",
+      "cabin_class": "economy",
+      "max_cm": [
+        45,
+        35,
+        25
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "plus",
+      "fare_name": "Plus",
+      "type": "personal",
+      "source_url": "https://www.bintercanarias.com/en/information/hand-luggage",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "absence": "not_published",
+      "note": "The airline permits personal belongings but does not publish dimensions on the reviewed page."
+    }
+  ],
+  "audit_note": "Official carry-on and fare pages researched. The conservative ATR cabin box is used for bag matching; aircraft-specific variation remains in the row note.",
+  "research_dossier": "resources/carriers/NT-binter-canarias.md"
+}

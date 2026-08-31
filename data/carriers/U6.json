@@ -1,0 +1,78 @@
+{
+  "iata": "U6",
+  "name": "Ural Airlines",
+  "region": "EU",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.uralairlines.ru/en/baggage_detail/hand-luggage/",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "cabin",
+      "source_url": "https://www.uralairlines.ru/en/baggage_detail/hand-luggage/",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Applies to departures from 1 February 2026; the airline says the sizer includes wheels, pockets, locks, and fittings."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy",
+      "type": "personal",
+      "source_url": "https://www.uralairlines.ru/en/baggage_detail/hand-luggage/",
+      "verified_at": "2026-08-31",
+      "max_cm": null,
+      "linear_max_cm": 80,
+      "max_kg": 5,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "One backpack up to 5 kg and 80 cm in the sum of three dimensions, or a handbag or briefcase."
+    },
+    {
+      "fare_class": "business",
+      "fare_name": "Business",
+      "type": "cabin",
+      "source_url": "https://www.uralairlines.ru/en/baggage_detail/hand-luggage/",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 2,
+      "allowance_group": "business_cabin_total",
+      "group_max_kg": 15,
+      "note": "Two pieces with a combined maximum weight of 15 kg."
+    }
+  ],
+  "audit_note": "Official hand-luggage page researched. Checked baggage was not added because its fare table was not fully verified in this pass.",
+  "research_dossier": "resources/carriers/U6-ural-airlines.md"
+}

@@ -1,9 +1,9 @@
 {
  "generated": "2026-08-31",
- "count": 58,
+ "count": 68,
  "target": 100,
- "verified": 58,
- "note": "All 58 carrier records now have official allowance research; no mockup size placeholders remain. Research covers the documented scope, not every fare or checked-bag rule. Singapore Airlines publishes a linear-only cabin limit that the current rectangular engine cannot evaluate. Enforcement, sizers, shared-weight and other publication limitations remain in audit notes and dossiers.",
+ "verified": 68,
+ "note": "All 68 carrier records have official allowance research; no mockup size placeholders remain. Research covers the documented scope, not every fare or checked-bag rule. Enforcement, sizers, shared-weight and other publication limitations remain in audit notes and dossiers.",
  "carriers": [
   "A3",
   "AA",
@@ -14,6 +14,7 @@
   "B6",
   "BA",
   "BR",
+  "BT",
   "CA",
   "CI",
   "CX",
@@ -27,11 +28,15 @@
   "F9",
   "FI",
   "FR",
+  "GQ",
   "HV",
+  "HY",
   "IB",
+  "J2",
   "JL",
   "JU",
   "JX",
+  "KC",
   "KE",
   "KL",
   "LH",
@@ -39,7 +44,9 @@
   "LS",
   "LX",
   "MU",
+  "N4",
   "NH",
+  "NT",
   "OS",
   "OZ",
   "PC",
@@ -53,13 +60,16 @@
   "TP",
   "TR",
   "U2",
+  "U6",
   "UA",
+  "UT",
   "UX",
   "V7",
   "VN",
   "VS",
   "VY",
   "W6",
+  "WF",
   "WN",
   "XQ",
   "ZG"
@@ -73,7 +83,7 @@
    "note": "Record deleted rather than flagged — nobody should be shown a carrier that no longer flies. Research retained at resources/carriers/NK-spirit.md."
   }
  ],
- "researched": 58,
+ "researched": 68,
  "placeholders": 0,
- "pending_publication_review": 58
+ "pending_publication_review": 68
 }

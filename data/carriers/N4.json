@@ -1,0 +1,89 @@
+{
+  "iata": "N4",
+  "name": "Nordwind Airlines",
+  "region": "EU",
+  "type": "hybrid",
+  "status": "operating",
+  "source_url": "https://nordwindairlines.ru/en/baggage/baggage",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "lite",
+      "fare_name": "Lite Economy",
+      "type": "cabin",
+      "source_url": "https://nordwindairlines.ru/en/baggage/baggage",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1
+    },
+    {
+      "fare_class": "lite",
+      "fare_name": "Lite Economy",
+      "type": "personal",
+      "source_url": "https://nordwindairlines.ru/en/baggage/baggage",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 5,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "The separate hand-luggage rules permit one backpack at this size/weight, or a handbag or briefcase."
+    },
+    {
+      "fare_class": "lite",
+      "fare_name": "Lite Economy",
+      "type": "checked",
+      "source_url": "https://nordwindairlines.ru/en/baggage/baggage",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 203,
+      "max_kg": 20,
+      "free_pieces": 0,
+      "system": "piece",
+      "note": "Checked baggage is chargeable on Lite; 20 kg is the standard piece shown for Optimum and Premium."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Premium Economy",
+      "type": "cabin",
+      "source_url": "https://nordwindairlines.ru/en/baggage/baggage",
+      "verified_at": "2026-08-31",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1
+    }
+  ],
+  "audit_note": "Official baggage table researched. Scheduled-flight Lite and Premium Economy rules are modeled; charter and comfort/business variations remain for later expansion.",
+  "research_dossier": "resources/carriers/N4-nordwind-airlines.md"
+}
