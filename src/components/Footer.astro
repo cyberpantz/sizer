@@ -1,0 +1,27 @@
+---
+/* The affiliate disclosure is required by the Amazon Associates operating
+   agreement and by the FTC, and must be present on every page carrying an
+   outbound link — not only on the ones that happen to have one today.
+   See docs/07-affiliate-setup.md. */
+---
+<footer>
+  <div class="wrap">
+    <p class="disclosure">
+      As an Amazon Associate we earn from qualifying purchases. We may earn a
+      commission on other links too. It does not change what we recommend —
+      we publish the measurements either way.
+    </p>
+    <nav>
+      <a href="/methodology/">How we measure</a>
+      <a href="/sources/">Sources</a>
+      <a href="/about/">About</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  footer { border-top: 1px solid var(--rule); margin-top: 5rem; padding: 2rem 0 4rem; }
+  .disclosure { color: var(--muted); font-size: 0.8125rem; max-width: 44rem; line-height: 1.6; }
+  nav { display: flex; gap: 1.5rem; margin-top: 1rem; }
+  nav a { color: var(--ink-2); font-size: 0.8125rem; }
+</style>

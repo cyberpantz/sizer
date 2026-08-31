@@ -19,8 +19,16 @@
     "audit": "node data/fixture-audit.mjs",
     "verdicts": "node data/verdicts.mjs",
     "drift": "node docs/check-drift.mjs",
-    "check": "npm run test && npm run verify:inlined && npm run verify:pages && npm run verify:engine && npm run build:bags && npm run validate && npm run validate:carriers && npm run drift",
+    "check": "npm run test && npm run verify:inlined && npm run verify:pages && npm run verify:engine && npm run build:bags && npm run validate && npm run validate:carriers && npm run drift && npm run build && npm run verify:build",
     "validate:carriers": "node data/validate-carriers.mjs",
-    "publish:check": "node data/validate-carriers.mjs --publish"
+    "publish:check": "node data/validate-carriers.mjs --publish",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "verify:build": "node scripts/verify-build.mjs"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.2.5",
+    "astro": "^7.2.9"
   }
 }

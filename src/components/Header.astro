@@ -1,0 +1,31 @@
+---
+/* Three nav items. No Airlines index at launch — see docs/15-sitemap.md. */
+import UnitToggle from './UnitToggle.astro';
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/bags/',  label: 'Bags' },
+  { href: '/guide/', label: 'Guide' },
+  { href: '/check/', label: 'Check a bag' },
+];
+---
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/">Sizer</a>
+    <nav>
+      {nav.map((n) => (
+        <a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>
+      ))}
+    </nav>
+    <UnitToggle />
+  </div>
+</header>
+
+<style>
+  header { border-bottom: 1px solid var(--rule); background: var(--surface); }
+  .bar { display: flex; align-items: center; gap: 2rem; height: 4rem; }
+  .brand { font-weight: 700; font-size: 1.125rem; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+  nav { display: flex; gap: 1.5rem; margin-right: auto; }
+  nav a { color: var(--ink-2); text-decoration: none; font-size: 0.9375rem; }
+  nav a:hover { color: var(--blue); }
+  nav a[aria-current='page'] { color: var(--ink); font-weight: 600; }
+</style>

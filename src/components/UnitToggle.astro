@@ -1,0 +1,64 @@
+---
+/* The units toggle. Always visible, on every page.
+
+   SSR renders the metric default and marks itself unresolved; the inline script
+   corrects on load. That ordering matters — Node's built-in navigator reports
+   en-US, so asking the server would open every page in inches for every reader
+   on earth (see src/ui/units.mjs).
+
+   Inline and blocking on purpose: a flash from cm to in on every page load is
+   worse than a few bytes of blocking script. */
+---
+<div class="units" data-units-toggle data-resolved="false">
+  <button type="button" data-unit="cm" aria-pressed="true">cm</button>
+  <button type="button" data-unit="in" aria-pressed="false">in</button>
+</div>
+
+<script>
+  import { createUnits } from '../ui/units.mjs';
+
+  const U = createUnits();
+  const root = document.querySelector('[data-units-toggle]');
+
+  function paint() {
+    for (const b of root.querySelectorAll('button')) {
+      b.setAttribute('aria-pressed', String(b.dataset.unit === U.unit));
+    }
+    root.dataset.resolved = 'true';
+    document.documentElement.dataset.units = U.unit;
+  }
+
+  root.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-unit]');
+    if (b) U.set(b.dataset.unit);
+  });
+
+  U.onChange(paint);
+  paint();
+
+  /* Every figure on the page re-renders from cm. Elements opt in by carrying
+     their value in data-cm / data-kg, so nothing has to be parsed back out of
+     text that a user may already be reading. */
+  U.onChange(() => {
+    for (const el of document.querySelectorAll('[data-cm]')) {
+      el.textContent = `${U.len(+el.dataset.cm)} ${U.lenLabel()}`;
+    }
+    for (const el of document.querySelectorAll('[data-kg]')) {
+      el.textContent = `${U.mass(+el.dataset.kg)} ${U.massLabel()}`;
+    }
+    for (const el of document.querySelectorAll('[data-dims]')) {
+      el.textContent = U.dims(JSON.parse(el.dataset.dims));
+    }
+  });
+</script>
+
+<style>
+  .units { display: inline-flex; border: 1px solid var(--rule-strong); border-radius: var(--r-sm); overflow: hidden; }
+  .units button {
+    font: 500 0.8125rem/1 var(--mono); padding: 0.45rem 0.7rem;
+    background: var(--surface); color: var(--muted); border: 0; cursor: pointer;
+  }
+  .units button[aria-pressed='true'] { background: var(--blue); color: var(--on-blue); }
+  /* Until the client resolves the reader's locale, don't imply a choice was made. */
+  .units[data-resolved='false'] button[aria-pressed='true'] { background: var(--surface-2); color: var(--ink-2); }
+</style>
