@@ -1,0 +1,358 @@
+---
+import BagSilhouette from '../../components/BagSilhouette.astro';
+import Base from '../../layouts/Base.astro';
+import { coverage, evaluate } from '../../engine/fit.mjs';
+import { DIM_SOURCE, isPromotable } from '../../engine/normalize.mjs';
+import { loadBags, loadCarriers } from '../../lib/data.mjs';
+import { loadCarrierSources } from '../../lib/sources.mjs';
+import { fareLabel } from '../../ui/fare.mjs';
+import { bandLabel } from '../../ui/verdict.mjs';
+
+/* The bag page, from mockup/bag.html.
+
+   Until now BagCard linked NOWHERE — every card on the landing page and /bags
+   was a dead end, which also meant the site had no page for the query people
+   actually type: "does the <bag> fit <airline>".
+
+   Three blocks of the mockup are gone, because each assumed something that is
+   no longer true:
+
+   - THE MEASUREMENT PHOTOGRAPH. "Taken 24 August 2026 by Frank. This is the
+     evidence for the number above." We do not measure bags (docs/19). The
+     provenance block says where the figure actually came from instead, which
+     is a weaker claim honestly made rather than a strong one invented.
+   - THE PRICE AND THE BUY BOX. "$185 at Osprey", with an affiliate link. We
+     hold no prices and have no affiliate programme. A price is the easiest
+     thing on a page to get wrong and the fastest way to lose a reader.
+   - "Every row links to the source on the airline's site." Only true for the
+     carriers whose page someone has read; the rest now say so per row. */
+
+export async function getStaticPaths() {
+  const bags = await loadBags();
+  return bags.map((bag) => ({ params: { slug: bag.slug }, props: { bag } }));
+}
+
+const { bag } = Astro.props;
+const record = bag.record;
+
+const carriers = await loadCarriers();
+const carrierSources = await loadCarrierSources();
+const sourceOf = new Map(carrierSources.map((c) => [c.iata, c]));
+
+const cov = coverage(bag, carriers);
+
+/* Every airline, grouped the way a traveller thinks about a trip rather than
+   the way the dataset is keyed. */
+const REGIONS = [
+  ['NA', 'North America'],
+  ['EU', 'Europe'],
+  ['AS', 'Asia'],
+  ['ME', 'Middle East'],
+];
+const rows = carriers
+  .map((carrier) => ({ carrier, result: evaluate(bag, carrier) }))
+  .sort((a, b) => a.carrier.name.localeCompare(b.carrier.name));
+const byRegion = REGIONS.map(([code, label]) => ({
+  code,
+  label,
+  rows: rows.filter((r) => r.carrier.record?.region === code),
+})).filter((g) => g.rows.length);
+
+/* Other sizes of the same product line — the comparison docs/05 asks for:
+   same bags, same carrier table, one clears and one doesn't. */
+const siblings = record.line
+  ? (await loadBags())
+      .filter((b) => b.record.line === record.line && b.slug !== bag.slug)
+      .map((b) => ({ bag: b, cov: coverage(b, carriers) }))
+  : [];
+
+/* Bags that clear more airlines than this one. Only PROMOTABLE bags may be put
+   forward as an answer — docs/19's release gate. */
+const better = (await loadBags())
+  /* isPromotable(), not `b.promotable` — toBag() does not carry that field, so
+     the property read was always undefined and this list was silently empty.
+     A recommendation section that renders nothing looks like "no better bag
+     exists", which is a different and much worse claim. */
+  .filter((b) => b.slug !== bag.slug && isPromotable(b))
+  .map((b) => ({ bag: b, cov: coverage(b, carriers) }))
+  .filter((x) => x.cov.pass > cov.pass)
+  .sort((a, b) => b.cov.pass - a.cov.pass)
+  .slice(0, 3);
+
+const SOURCE_LINE = {
+  [DIM_SOURCE.MEASURED]: 'We measured this one ourselves.',
+  [DIM_SOURCE.MAKER_OVERALL]:
+    "This is the manufacturer's own overall figure — the outside of the bag, wheels and handle included, which is what an airline measures.",
+  [DIM_SOURCE.REVIEW]:
+    'This figure comes from a review publication, not the manufacturer. We attribute it and are replacing it at source; until then this bag is shown rather than recommended.',
+  [DIM_SOURCE.MAKER_UNSPECIFIED]:
+    'The manufacturer publishes one figure without saying whether it includes wheels and handle. It is probably the packing body, which runs small — so this bag is shown rather than recommended.',
+  [DIM_SOURCE.MAKER_PACKING]:
+    'This is explicitly the packing size, which is never what an airline measures.',
+  [DIM_SOURCE.RESELLER]: 'A retail listing. We never decide a verdict on one.',
+};
+
+/* Where to send a reader to check the number themselves.
+
+   A maker-sourced record carries the product URL in `ref`. A review-sourced
+   one carries the source ID, and the URL sits on the matching review — so
+   without this, 32 of 39 pages had no link at all and the provenance block
+   asserted a source it would not show. */
+const refRaw = record.external_cm?.ref ?? null;
+const ref = refRaw?.startsWith('http')
+  ? refRaw
+  : ((record.reviews ?? []).find((r) => r.src === refRaw)?.url ?? null);
+const at = record.external_cm?.at ?? null;
+const gap = record.wheel_handle_delta_cm ?? null;
+const dims = (cm) => cm.map((v) => v.toFixed(1).replace(/\.0$/, '')).join(' × ');
+const pct = cov.of ? Math.round((cov.pass / cov.of) * 100) : 0;
+const tone = pct >= 80 ? 'green' : pct >= 40 ? 'amber' : 'red';
+const TAG = {
+  clears: 'bg-green-wash text-green',
+  line: 'bg-amber-wash text-amber',
+  gamble: 'bg-orange-wash text-orange',
+  wont: 'bg-red-wash text-red',
+};
+const BAR = { green: 'bg-green', amber: 'bg-amber', red: 'bg-red' };
+const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
+---
+<Base
+  title={`${bag.brand} ${bag.model} — does it fit? — Sizer`}
+  description={`${bag.brand} ${bag.model} measures ${dims(bag.external_cm)} cm on the outside and clears ${cov.pass} of ${cov.of} airlines we can answer for.`}
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <p class="pt-8 text-[0.9375rem] text-muted">
+      <a href="/bags/" class="text-blue">Bags</a> › {bag.brand}
+    </p>
+
+    <div class="grid items-start gap-8 pt-4 pb-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div>
+        <p class="text-[0.9375rem] text-muted">{record.type}</p>
+        <h1 class="mt-1 text-4xl font-bold tracking-tight sm:text-[2.6rem]">
+          {bag.brand} {bag.model}
+        </h1>
+
+        <dl class="mt-6 overflow-hidden rounded-card border border-rule bg-surface">
+          <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
+            <dt class="text-[0.9375rem] text-muted">Outside, as an airline measures it</dt>
+            <dd class="font-mono text-xl font-semibold">{dims(bag.external_cm)} cm</dd>
+          </div>
+          {record.claimed_packing_cm && (
+            <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
+              <dt class="text-[0.9375rem] text-muted">Packing space inside</dt>
+              <dd class="font-mono text-lg text-muted">{dims(record.claimed_packing_cm.v)} cm</dd>
+            </div>
+          )}
+          {bag.weight_kg && (
+            <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
+              <dt class="text-[0.9375rem] text-muted">Weight, empty</dt>
+              <dd class="font-mono text-lg">{bag.weight_kg} kg</dd>
+            </div>
+          )}
+          {bag.expands_cm > 0 && (
+            <div class="flex items-baseline justify-between gap-4 px-5 py-4">
+              <dt class="text-[0.9375rem] text-muted">Expander adds</dt>
+              <dd class="font-mono text-lg text-amber">+{bag.expands_cm} cm</dd>
+            </div>
+          )}
+        </dl>
+
+        {/* The mockup put a photograph of a tape measure here. We do not
+            measure bags, so this says where the number came from instead. */}
+        <div class="mt-4 rounded-card border border-rule bg-surface-2 p-5">
+          <p class="text-[0.9375rem] font-semibold text-ink">Where this number comes from</p>
+          <p class="mt-1.5 max-w-[62ch] text-[0.9375rem] text-ink-2">
+            {SOURCE_LINE[bag.dim_source] ?? 'Source not recorded.'}
+          </p>
+          {ref && (
+            <p class="mt-2 text-[0.9375rem]">
+              <a href={ref} rel="nofollow noopener" target="_blank" class="text-blue">
+                The page we read ↗
+              </a>
+              {at && <span class="text-muted"> · read {at}</span>}
+            </p>
+          )}
+          {gap && (
+            <p class="mt-2 max-w-[62ch] text-[0.875rem] text-muted">
+              Wheels, handle and feet add{' '}
+              <strong class="text-ink">{gap.filter((v) => v > 0).map((v) => `${v} cm`).join(', ')}</strong>{' '}
+              over the packing figure. That difference is the whole reason a bag
+              sold as carry-on size gets stopped.
+            </p>
+          )}
+          {(record.conflicts ?? []).length > 0 && (
+            <ul class="mt-3 space-y-2 border-t border-rule pt-3">
+              {record.conflicts.map((c) => (
+                <li class="text-[0.875rem] text-muted">{c.detail}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+
+      <aside class="rounded-card border border-rule bg-surface p-5 shadow-panel">
+        <div class={`grid place-items-center rounded-chip bg-surface-2 py-6 ${INK[tone]}`} aria-hidden="true">
+          <BagSilhouette type={record.type} class="h-28 w-auto" />
+        </div>
+        <p class="mt-4 text-[2.25rem] font-bold leading-none tracking-tight tabular-nums">
+          {cov.pass}<span class="text-muted">/{cov.of}</span>
+        </p>
+        <p class="mt-1 text-[0.9375rem] text-ink-2">airlines it gets past</p>
+        <span class="mt-3 block h-2 overflow-hidden rounded-full bg-surface-2">
+          <span class={`block h-full rounded-full ${BAR[tone]}`} style={`width:${pct}%`}></span>
+        </span>
+        {cov.unknown > 0 && (
+          <p class="mt-2 text-[0.8125rem] text-muted">
+            {cov.unknown} more we cannot answer for yet, and they are left out of
+            that fraction rather than counted as passes.
+          </p>
+        )}
+        {!bag.promotable && (
+          <p class="mt-3 rounded-chip bg-amber-wash p-3 text-[0.8125rem] text-amber">
+            Shown, not recommended — the dimension above is not the maker's own
+            overall figure.
+          </p>
+        )}
+        <a
+          href="/check/"
+          class="mt-4 block rounded-chip bg-blue px-4 py-3 text-center font-semibold text-on-blue no-underline hover:bg-blue-hover"
+        >Check it against your trip</a>
+      </aside>
+    </div>
+
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">Every airline we track</h2>
+      <p class="mt-2 max-w-[64ch] text-ink-2">
+        On the cheapest economy fare each airline publishes. A different fare
+        often changes the answer, which is what{' '}
+        <a href="/check/" class="text-blue">the trip checker</a> is for.
+      </p>
+
+      {byRegion.map((group) => (
+        <div class="mt-7">
+          <h3 class="text-lg font-semibold">{group.label}</h3>
+          <div class="mt-2 overflow-hidden rounded-card border border-rule">
+            {group.rows.map(({ carrier, result }) => (
+              <div class="grid grid-cols-[1fr_9rem_7rem] items-center gap-3 border-b border-rule px-4 py-3 text-[0.9375rem] last:border-b-0">
+                <span>
+                  <span class="font-semibold">{carrier.name}</span>
+                  <span class="block text-[0.8125rem] text-muted">
+                    {fareLabel(carrier.fare_class)}
+                    {sourceOf.has(carrier.iata) ? (
+                      <>
+                        {' · '}
+                        <a href={sourceOf.get(carrier.iata).url} rel="nofollow noopener" target="_blank" class="text-blue">their page ↗</a>
+                      </>
+                    ) : (
+                      <span> · no source recorded yet</span>
+                    )}
+                  </span>
+                </span>
+                <span class="font-mono text-[0.8125rem] text-ink-2">
+                  {result.band === null
+                    ? 'not researched'
+                    : result.no_cabin_bag
+                      ? 'no cabin bag'
+                      : result.delta_cm > 0
+                        ? `${result.delta_cm} cm too ${result.dimension}`
+                        : `${Math.abs(result.delta_cm)} cm to spare`}
+                </span>
+                <span class={`rounded-full px-2.5 py-1 text-center text-[0.875rem] font-semibold ${
+                  result.band ? TAG[result.band] : 'bg-surface-2 text-muted'
+                }`}>{bandLabel(result.band)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    {siblings.length > 0 && (
+      <section class="border-t border-rule py-10">
+        <h2 class="text-2xl font-semibold tracking-tight">The other sizes in this line</h2>
+        <p class="mt-2 max-w-[64ch] text-ink-2">
+          Same bag, same maker, different dimensions — and often a different
+          answer. This is the comparison a product page never shows you.
+        </p>
+        <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {siblings.map(({ bag: sib, cov: c }) => (
+            <a href={`/bags/${sib.slug}/`} class="block rounded-card border border-rule bg-surface p-4 no-underline hover:border-blue">
+              <span class="block font-semibold text-ink">{sib.model}</span>
+              <span class="mt-1 block font-mono text-[0.84375rem] text-muted">{dims(sib.external_cm)} cm</span>
+              <span class="mt-2 block text-[0.9375rem] text-ink-2">Clears {c.pass} of {c.of}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {/* Straight from the mockup, and the most honest section on the site. */}
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">What we don't tell you</h2>
+      <p class="mt-2 max-w-[64ch] text-ink-2">
+        We check whether a bag fits. We don't review — and those are genuinely
+        different jobs.
+      </p>
+      <p class="mt-4 max-w-[64ch] text-ink-2">
+        Whether a bag survives five years, whether the wheels cope with
+        cobblestones, whether the warranty gets honoured, whether the handle
+        rattles — none of that shows up in a dimension. We have nothing useful
+        to say about any of it.
+      </p>
+      {(record.reviews ?? []).length > 0 && (
+        <div class="mt-5 rounded-card border border-rule bg-surface p-5">
+          <p class="text-[0.8125rem] font-semibold text-muted">Rated elsewhere</p>
+          <ul class="mt-2 space-y-3">
+            {record.reviews.map((r) => (
+              <li class="text-ink-2">
+                <a href={r.url} rel="nofollow noopener" target="_blank" class="font-semibold text-blue">{r.publication}</a>
+                {r.award && <span> — {r.award}</span>}
+                {r.caveat && <span class="block text-[0.9375rem] text-muted">“{r.caveat}”</span>}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-4 max-w-[62ch] text-[0.9375rem] text-ink-2">
+            <strong class="text-ink">Both of those are true.</strong> They are
+            answering whether this is a good bag. We are answering whether it
+            gets on the plane. Be wary of anyone claiming to settle both at once.
+          </p>
+        </div>
+      )}
+    </section>
+
+    {better.length > 0 && (
+      <section class="border-t border-rule py-10">
+        <h2 class="text-2xl font-semibold tracking-tight">Bags that get past more airlines</h2>
+        <p class="mt-2 max-w-[64ch] text-ink-2">
+          Only bags carrying the manufacturer's own overall figure appear here —
+          we will not put a bag forward as an answer on someone else's tape
+          measure.
+        </p>
+        <div class="mt-5 grid gap-4 sm:grid-cols-3">
+          {better.map(({ bag: alt, cov: c }) => (
+            <a href={`/bags/${alt.slug}/`} class="block rounded-card border border-rule bg-surface p-4 no-underline hover:border-blue">
+              <span class="block text-[0.8125rem] text-muted">{alt.brand}</span>
+              <span class="block font-semibold text-ink">{alt.model}</span>
+              <span class="mt-1 block font-mono text-[0.84375rem] text-muted">{dims(alt.external_cm)} cm</span>
+              <span class="mt-2 block text-[0.9375rem] text-ink-2">Clears {c.pass} of {c.of}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <div class="mb-16 flex flex-wrap items-center justify-between gap-5 rounded-card bg-blue-wash p-6">
+      <p class="max-w-[46ch] text-lg text-ink-2">
+        <strong class="font-semibold text-ink">Flying somewhere specific?</strong>{' '}
+        Check this bag against your actual airlines and the fare you booked — the
+        answer changes a lot by fare.
+      </p>
+      <a
+        href="/check/"
+        class="rounded-chip bg-blue px-5 py-3 font-semibold text-on-blue no-underline hover:bg-blue-hover"
+      >Check my trip →</a>
+    </div>
+
+  </div>
+</Base>

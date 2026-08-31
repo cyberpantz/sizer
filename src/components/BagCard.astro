@@ -44,7 +44,7 @@ const note = SOURCE_NOTE[bag.dim_source] ?? null;
 const packing = bag.record?.claimed_packing_cm?.v ?? null;
 const gap = packing && packing.join() !== bag.external_cm.join() ? packing : null;
 ---
-<article class="group flex flex-col overflow-hidden rounded-card border border-rule bg-surface">
+<article class="group relative flex flex-col overflow-hidden rounded-card border border-rule bg-surface hover:border-rule-strong">
 
   {/* Not a link, not a control — decoration with a status tint. */}
   <div class={`grid min-h-[9rem] place-items-center bg-surface-2 p-6 ${INK[tone]}`} aria-hidden="true">
@@ -55,7 +55,15 @@ const gap = packing && packing.join() !== bag.external_cm.join() ? packing : nul
     <div class="flex items-start justify-between gap-3">
       <div>
         <p class="text-[0.8125rem] text-muted">{bag.brand}</p>
-        <h3 class="font-semibold leading-tight text-ink">{bag.model}</h3>
+        <h3 class="font-semibold leading-tight text-ink">
+          {/* The whole card is the target, but the LINK is the model name, so
+              a screen reader announces something meaningful rather than
+              "link, blank". The overlay below just widens the hit area. */}
+          <a href={`/bags/${bag.slug}/`} class="text-ink no-underline group-hover:underline">
+            <span class="absolute inset-0" aria-hidden="true"></span>
+            {bag.model}
+          </a>
+        </h3>
       </div>
       {result && <VerdictBadge result={result} />}
     </div>
