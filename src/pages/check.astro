@@ -182,6 +182,7 @@ const RISK = [
     wont: 'text-red',
   };
   const UNKNOWN_TAG = 'bg-surface-2 text-muted';
+  const RISK_LABEL = { strict: 'Strict', balanced: 'Balanced', chance: "I'll chance it" };
   /* The same four bands as CSS custom properties, for SVG attributes — which
      take colours, not utility classes. */
   const INK = {
@@ -563,6 +564,45 @@ const RISK = [
     return `<span class="text-muted">no source recorded — this airline's page has not been read yet</span>`;
   }
 
+  /* ---------- what the risk setting is actually doing ---------- */
+
+  /* You asked whether Balanced and "I'll chance it" differ at all, because the
+     answer never seemed to move. Measured across the catalogue: they give a
+     different verdict in 2.7% of cases, and NEVER on a carrier scored 8 or
+     above — because gambleCeiling returns 0 there and 0 x 1.5 is still 0.
+
+     Those are Ryanair, Wizz, easyJet, Frontier and Vueling: precisely the
+     airlines a traveller would want to chance. The arithmetic is defensible —
+     they gauge every bag, and inventing slack there is the over-generous
+     failure this project exists to avoid — but a control that silently does
+     nothing on the cases you most want it for is a control that lies.
+
+     So the answer now says what the setting did, including when it did
+     nothing and why. */
+  function riskEffect(bag, carrier, band) {
+    if (!carrier?.allowance || band === null) return '';
+    const others = Object.entries(ENGINES)
+      .filter(([id]) => id !== state.risk)
+      .map(([id, E]) => [id, E.evaluate(bag, carrier).band]);
+
+    const differing = others.filter(([, b]) => b !== band);
+    const label = { strict: 'Strict', balanced: 'Balanced', chance: "I'll chance it" };
+
+    if (differing.length) {
+      return `On ${differing
+        .map(([id, b]) => `<b class="font-semibold text-ink">${esc(label[id])}</b> this reads &ldquo;${esc(bandLabel(b))}&rdquo;`)
+        .join(', and on ')}.`;
+    }
+
+    /* No difference. Say WHY, because "nothing changed" from a control the
+       reader just moved reads as broken. */
+    const ceiling = DEFAULT.config.gambleCeiling(carrier.strictness);
+    if (ceiling === 0) {
+      return `All three settings agree here. <b class="font-semibold text-ink">${esc(carrier.name)} measures bags as routine</b>, so there is no margin for any of them to give you — the risk setting cannot change an answer at an airline like this.`;
+    }
+    return 'All three settings agree here, so this answer does not depend on how much risk you are willing to take.';
+  }
+
   /* ---------- the comparator ---------- */
 
   /* Your bag drawn against the box that decides the trip.
@@ -715,8 +755,8 @@ const RISK = [
             text-anchor="middle" transform="rotate(-90 14 ${(OY + TOP) / 2})">longest side (${esc(U.lenLabel())})</text>
           <text x="${(OX + RIGHT) / 2}" y="${H - 8}" text-anchor="middle" font-size="11" font-family="Figtree" fill="var(--color-muted)">second side</text>
           <text x="${(DX + D_RIGHT) / 2}" y="${H - 8}" text-anchor="middle" font-size="11" font-family="Figtree" fill="var(--color-muted)">depth</text>
-          <text x="${OX}" y="${TOP - 8}" font-size="10.5" font-family="Figtree" fill="var(--color-rule-strong)">front</text>
-          <text x="${DX}" y="${TOP - 8}" font-size="10.5" font-family="Figtree" fill="var(--color-rule-strong)">side</text>
+          <text x="${OX}" y="${TOP - 9}" font-size="11.5" font-weight="600" font-family="Figtree" fill="var(--color-ink-2)">front</text>
+          <text x="${DX}" y="${TOP - 9}" font-size="11.5" font-weight="600" font-family="Figtree" fill="var(--color-ink-2)">side</text>
         </svg>
         <div class="min-w-[19rem] flex-1">
           ${[0, 1, 2].map(bar).join('')}
@@ -789,6 +829,10 @@ const RISK = [
           band ? WORD[band] : 'text-muted'
         }">${esc(bandLabel(band))}</p>
         <p class="mt-3 max-w-[56ch] text-lg text-ink-2">${explain(worst, rows)}</p>
+        <p class="mt-2 max-w-[56ch] text-[0.9375rem] text-muted">
+          Answered on <b class="font-semibold text-ink">${esc(RISK_LABEL[state.risk])}</b>.
+          ${riskEffect(bagOfEngine, worst.carrier, band)}
+        </p>
 
         ${comparator(b, bagOfEngine, worst.carrier, band)}
 
