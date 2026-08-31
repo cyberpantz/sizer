@@ -1,3 +1,4 @@
+import preact from '@astrojs/preact';
 import { defineConfig } from 'astro/config';
 import tailwind from '@tailwindcss/vite';
 
@@ -19,6 +20,21 @@ import tailwind from '@tailwindcss/vite';
    route, not before. A static build deploys to Cloudflare Pages perfectly well
    without an adapter. */
 export default defineConfig({
+  /* Preact, for exactly one component: the airline picker.
+
+     Downshift is React-only and there is no vanilla build, so the choice was
+     a framework or another hand-rolled combobox. preact/compat runs Downshift
+     unmodified at ~4 kB against React's ~45.
+
+     `compat` is what lets a package that imports 'react' resolve to Preact.
+
+     NOTE: the picker is NOT used as an Astro island with a client:* directive.
+     /check builds its leg rows in the browser from a variable-length array,
+     and an island has to exist in the server-rendered template. The page
+     mounts the component imperatively with Preact's own render() instead —
+     see check.astro. The integration is still needed, because it is what
+     configures Vite's JSX transform for .jsx files. */
+  integrations: [preact({ compat: true })],
   output: 'static',
   site: 'https://example.invalid', // real domain pending the naming decision
   build: { format: 'directory' },
