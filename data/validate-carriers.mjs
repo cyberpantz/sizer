@@ -187,6 +187,37 @@ for (const { file, rec } of records) {
     }
   }
 
+  /* THE INTAKE GATE. Dropping `placeholder: true` is a claim: it says someone
+     opened this airline's baggage page and read it. That claim now has to come
+     with the page and the date.
+
+     This ran only under --publish before, which left the hole that mattered: a
+     record could shed its placeholder flag, gain plausible allowances from
+     nowhere, and pass every check on the way in. The /check page names the
+     airline as the reason for its answer, so an uncited allowance becomes a
+     claim about a real company that the reader cannot verify.
+
+     Placeholders stay legal — they are honest about being unread, and the UI
+     says so. It is the promotion out of placeholder that needs evidence. */
+  if (!rec.placeholder) {
+    const url = (rec.allowances ?? []).find((a) => a.source_url)?.source_url || rec.source_url;
+    const at = (rec.allowances ?? []).find((a) => a.verified_at)?.verified_at || rec.verified_at;
+    if (!url) {
+      bad(
+        `${id}: not a placeholder but cites no source — say where these allowances were read, or set placeholder: true`
+      );
+    }
+    if (!at) {
+      bad(
+        `${id}: not a placeholder but carries no verified_at — an undated reading cannot go stale`
+      );
+    }
+    if (at && Number.isNaN(Date.parse(at))) bad(`${id}: verified_at "${at}" is not a date`);
+    if (at && Date.parse(at) > Date.now() + 864e5) {
+      bad(`${id}: verified_at "${at}" is in the future — nobody read it yet`);
+    }
+  }
+
   if (PUBLISHING) {
     if (rec.placeholder) bad(`${id}: placeholder data cannot be published`);
     if (rec.publication_ready === false)
