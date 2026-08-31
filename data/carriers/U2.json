@@ -1,0 +1,63 @@
+{
+ "iata": "U2",
+ "name": "easyJet",
+ "region": "EU",
+ "type": "lcc",
+ "strictness": {
+  "score": 8,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Staff check bag sizes at the gate regularly, especially when the flight is full and the lockers are filling up.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "basic",
+   "type": "cabin",
+   "max_cm": [
+    45,
+    36,
+    20
+   ],
+   "max_kg": 15,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "A small bag under the seat only. Bigger than most budget under-seat limits, but still not an overhead bag.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "plus",
+   "type": "cabin",
+   "max_cm": [
+    56,
+    45,
+    25
+   ],
+   "max_kg": 15,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Adds a large overhead cabin bag.",
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

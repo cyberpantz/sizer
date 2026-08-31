@@ -1,0 +1,26 @@
+{
+  "name": "luggage-finder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"src/**/__tests__/*.test.mjs\"",
+    "test:watch": "node --test --watch \"src/**/__tests__/*.test.mjs\"",
+    "build:mockups": "node scripts/build-mockups.mjs",
+    "build:bags": "node data/build-bags.mjs",
+    "validate": "node data/validate.mjs",
+    "verify:pages": "node scripts/verify-pages.mjs",
+    "verify:engine": "node scripts/verify-mockup-engine.mjs",
+    "verify:inlined": "node scripts/build-mockups.mjs --check",
+    "coverage": "node data/coverage.mjs",
+    "audit": "node data/fixture-audit.mjs",
+    "verdicts": "node data/verdicts.mjs",
+    "drift": "node docs/check-drift.mjs",
+    "check": "npm run test && npm run verify:inlined && npm run verify:pages && npm run verify:engine && npm run build:bags && npm run validate && npm run validate:carriers && npm run drift",
+    "validate:carriers": "node data/validate-carriers.mjs",
+    "publish:check": "node data/validate-carriers.mjs --publish"
+  }
+}

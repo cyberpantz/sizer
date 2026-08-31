@@ -1,0 +1,97 @@
+{
+ "slug": "patagonia-black-hole-40",
+ "brand": "Patagonia",
+ "model": "Black Hole Duffel 40L",
+ "variant": null,
+ "line": null,
+ "type": "duffel",
+ "soft": 1,
+ "wheels": 0,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   50,
+   31.8,
+   21.6
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 1.22,
+  "src": "review",
+  "ref": "strategist-carryon",
+  "at": "2026-06-22",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 40,
+  "src": "review",
+  "ref": "strategist-carryon",
+  "at": "2026-06-22",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "strategist-carryon",
+   "publication": "New York Magazine / The Strategist",
+   "url": "https://nymag.com/strategist/article/best-carry-on-luggage.html",
+   "at": "2026-06-22",
+   "award": "Best duffel",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": null,
+   "caveat": null,
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  },
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": "Best duffel",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "40 L in a compact, 2.1 lb package; converts to a backpack.",
+   "caveat": "Rugged look won't suit everyone.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "strategist-carryon",
+     "v": 1.22
+    },
+    {
+     "src": "tl-international",
+     "v": 0.95
+    }
+   ]
+  }
+ ],
+ "mentions": 2,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

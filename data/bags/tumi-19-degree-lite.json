@@ -1,0 +1,66 @@
+{
+ "slug": "tumi-19-degree-lite",
+ "brand": "Tumi",
+ "model": "19 Degree Lite Carry-On",
+ "variant": null,
+ "line": null,
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.4,
+   35.6,
+   22.9
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 2.86,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 34,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": "Most stylish",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Tegris shell survived a table drop with only bumper scuffing.",
+   "caveat": "Minimal organization — just one zip pocket.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

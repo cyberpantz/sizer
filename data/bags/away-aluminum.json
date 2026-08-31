@@ -1,0 +1,110 @@
+{
+ "slug": "away-aluminum",
+ "brand": "Away",
+ "model": "The Carry-On",
+ "variant": "Aluminum Edition",
+ "line": "away-carryon",
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   54.6,
+   34.3,
+   22.9
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 4.58,
+  "src": "review",
+  "ref": "strategist-carryon",
+  "at": "2026-06-22",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 35,
+  "src": "review",
+  "ref": "strategist-carryon",
+  "at": "2026-06-22",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "strategist-carryon",
+   "publication": "New York Magazine / The Strategist",
+   "url": "https://nymag.com/strategist/article/best-carry-on-luggage.html",
+   "at": "2026-06-22",
+   "award": "Best aluminum",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": null,
+   "caveat": null,
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  },
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": "Best aluminum",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Latch closure means it can't be overstuffed — a plus for tight bins.",
+   "caveat": "Heaviest pick at 10.5 lb; aluminum dents and scratches easily.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [
+  {
+   "field": "weight_kg",
+   "values": [
+    {
+     "src": "strategist-carryon",
+     "v": 4.58
+    },
+    {
+     "src": "tl-international",
+     "v": 4.76
+    }
+   ]
+  },
+  {
+   "field": "capacity_l",
+   "values": [
+    {
+     "src": "strategist-carryon",
+     "v": 35
+    },
+    {
+     "src": "tl-international",
+     "v": 32
+    }
+   ]
+  }
+ ],
+ "mentions": 2,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

@@ -1,0 +1,74 @@
+{
+ "iata": "LH",
+ "name": "Lufthansa",
+ "region": "EU",
+ "type": "full_service",
+ "strictness": {
+  "score": 7,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Checks are common, and the cheapest fare has no overhead bin at all.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "basic",
+   "type": "cabin",
+   "max_cm": [
+    40,
+    30,
+    15
+   ],
+   "max_kg": 8,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "From May 2026 this fare has no wheeled cabin bag at any size — only a small personal item, and the 15 cm depth limit rules out most backpacks too.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    55,
+    40,
+    23
+   ],
+   "max_kg": 8,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Full cabin bag plus one checked bag.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "checked",
+   "linear_max_cm": null,
+   "max_kg": null,
+   "free_pieces": 1,
+   "system": "piece",
+   "weight_total_kg": null,
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

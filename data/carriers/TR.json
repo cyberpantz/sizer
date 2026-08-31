@@ -1,0 +1,48 @@
+{
+ "iata": "TR",
+ "name": "Scoot",
+ "region": "AS",
+ "type": "lcc",
+ "strictness": {
+  "score": 8,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Budget carrier — weighs and measures, and charges a lot at the gate.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    54,
+    38,
+    23
+   ],
+   "max_kg": 10,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Cabin bag only. Checked bags are an add-on, cheapest when bought at booking.",
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

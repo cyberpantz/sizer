@@ -1,0 +1,49 @@
+{
+ "slug": "carl-friedrik-carryon-x",
+ "brand": "Carl Friedrik",
+ "model": "Carry-on X",
+ "variant": null,
+ "line": null,
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": null,
+ "external_cm": null,
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": null,
+ "capacity_l": null,
+ "reviews": [
+  {
+   "src": "packhacker-international",
+   "publication": "Pack Hacker",
+   "url": "https://www.packhacker.com/blog/general/best-luggage-for-international-travel/",
+   "at": "2026-07-27",
+   "award": null,
+   "rank": 7,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": null,
+   "caveat": null,
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "Carry On Luggage is carry on-sized, so they should work with most airlines.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   },
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": true,
+ "observed": [],
+ "compliance_unbacked": true
+}

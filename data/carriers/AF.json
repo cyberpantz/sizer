@@ -1,0 +1,74 @@
+{
+ "iata": "AF",
+ "name": "Air France",
+ "region": "EU",
+ "type": "full_service",
+ "strictness": {
+  "score": 7,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "If your bag looks big, staff will ask you to drop it into the metal frame at the gate to check it fits.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "basic",
+   "type": "cabin",
+   "max_cm": [
+    55,
+    35,
+    25
+   ],
+   "max_kg": 12,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Includes a full cabin bag — unusual for a basic fare. No checked bag.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    55,
+    35,
+    25
+   ],
+   "max_kg": 12,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Cabin bag plus one checked bag.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "checked",
+   "linear_max_cm": null,
+   "max_kg": null,
+   "free_pieces": 1,
+   "system": "piece",
+   "weight_total_kg": null,
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

@@ -1,0 +1,66 @@
+{
+ "slug": "bellroy-lite",
+ "brand": "Bellroy",
+ "model": "Lite Carry-On",
+ "variant": null,
+ "line": "bellroy-carryon",
+ "type": "2-wheel roller",
+ "soft": 0,
+ "wheels": 2,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   51.1,
+   34.5,
+   23.1
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 2.1,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 38,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": "Best with two wheels",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Under 5 lb thanks to two wheels; two wheels performed almost like four.",
+   "caveat": "No backpack straps.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

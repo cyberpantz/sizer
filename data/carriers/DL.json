@@ -1,0 +1,63 @@
+{
+ "iata": "DL",
+ "name": "Delta",
+ "region": "NA",
+ "type": "full_service",
+ "strictness": {
+  "score": 5,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Relaxed in practice. There are measuring frames at the check-in desks, but they are rarely used.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": true,
+ "allowances": [
+  {
+   "fare_class": "basic",
+   "type": "cabin",
+   "max_cm": [
+    56,
+    35,
+    23
+   ],
+   "max_kg": null,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Delta's Basic Economy does include a full carry-on — unlike United's.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    56,
+    35,
+    23
+   ],
+   "max_kg": null,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Carry-on plus a personal item.",
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

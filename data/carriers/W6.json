@@ -1,0 +1,63 @@
+{
+ "iata": "W6",
+ "name": "Wizz Air",
+ "region": "EU",
+ "type": "ulcc",
+ "strictness": {
+  "score": 9,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "One of the strictest airlines in Europe. Bags are checked at the gate as a matter of routine, not just when they look oversized.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "basic",
+   "type": "cabin",
+   "max_cm": [
+    40,
+    30,
+    20
+   ],
+   "max_kg": 10,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Under-seat bag only. No overhead locker unless you buy WIZZ Priority.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "priority",
+   "type": "cabin",
+   "max_cm": [
+    55,
+    40,
+    23
+   ],
+   "max_kg": 10,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "WIZZ Priority adds an overhead cabin bag alongside the under-seat item, and gets you on the plane earlier so there is still bin space left.",
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

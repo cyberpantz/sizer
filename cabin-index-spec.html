@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Cabin Index Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --ground: #F4F6F8;
+  --surface: #FFFFFF;
+  --surface-sunk: #EBEEF2;
+  --ink: #131820;
+  --ink-soft: #3D4854;
+  --muted: #6A7684;
+  --rule: #D8DEE5;
+  --rule-strong: #B9C2CD;
+  --accent: #0E5F6B;
+  --accent-soft: #E0EFF1;
+  --clears: #1C6E47;
+  --clears-bg: #E4F0EA;
+  --tight: #8A5A05;
+  --tight-bg: #F7EEDC;
+  --gamble: #9A4A16;
+  --gamble-bg: #F8EAE0;
+  --wont: #9E2F26;
+  --wont-bg: #F8E6E4;
+  --shadow: 0 1px 2px rgba(19,24,32,.05), 0 8px 24px -12px rgba(19,24,32,.14);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0E1216;
+    --surface: #161C23;
+    --surface-sunk: #1E252E;
+    --ink: #E8EDF2;
+    --ink-soft: #BAC4CF;
+    --muted: #8A96A3;
+    --rule: #2A333D;
+    --rule-strong: #3C4854;
+    --accent: #4FC3D1;
+    --accent-soft: #123840;
+    --clears: #6BC494;
+    --clears-bg: #14301F;
+    --tight: #D9A441;
+    --tight-bg: #332715;
+    --gamble: #E0864F;
+    --gamble-bg: #341F13;
+    --wont: #E8756A;
+    --wont-bg: #351917;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0E1216;
+  --surface: #161C23;
+  --surface-sunk: #1E252E;
+  --ink: #E8EDF2;
+  --ink-soft: #BAC4CF;
+  --muted: #8A96A3;
+  --rule: #2A333D;
+  --rule-strong: #3C4854;
+  --accent: #4FC3D1;
+  --accent-soft: #123840;
+  --clears: #6BC494;
+  --clears-bg: #14301F;
+  --tight: #D9A441;
+  --tight-bg: #332715;
+  --gamble: #E0864F;
+  --gamble-bg: #341F13;
+  --wont: #E8756A;
+  --wont-bg: #351917;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.62;
+  margin: 0;
+  padding: 0 24px 120px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; }
+.col { max-width: 660px; }
+
+/* ---------- masthead ---------- */
+.masthead {
+  padding: 72px 0 40px;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 8px;
+}
+.kicker {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 20px;
+  font-weight: 500;
+}
+h1 {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 6.5vw, 4.1rem);
+  line-height: .98;
+  letter-spacing: -.033em;
+  margin: 0 0 22px;
+  text-wrap: balance;
+}
+.standfirst {
+  font-size: 1.24rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 620px;
+  margin: 0 0 32px;
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.meta b { color: var(--ink-soft); font-weight: 500; }
+
+/* ---------- sections ---------- */
+section { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+section:last-of-type { border-bottom: 0; }
+
+.sec-head { display: flex; gap: 20px; align-items: baseline; margin-bottom: 8px; }
+.sec-num {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .04em;
+  padding-top: .55em;
+  flex: none;
+  width: 34px;
+}
+h2 {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.55rem, 3.2vw, 2.05rem);
+  letter-spacing: -.022em;
+  line-height: 1.12;
+  margin: 0;
+  text-wrap: balance;
+}
+.sec-body { padding-left: 54px; }
+@media (max-width: 640px) {
+  .sec-body { padding-left: 0; }
+  .sec-head { gap: 12px; }
+  .sec-num { width: auto; }
+}
+
+h3 {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: -.005em;
+  margin: 38px 0 12px;
+  color: var(--ink);
+}
+h3:first-child { margin-top: 0; }
+
+p { margin: 0 0 18px; max-width: 66ch; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px;
+}
+
+ul { margin: 0 0 18px; padding-left: 0; list-style: none; max-width: 66ch; }
+ul li { position: relative; padding-left: 22px; margin-bottom: 10px; }
+ul li::before {
+  content: ""; position: absolute; left: 4px; top: .68em;
+  width: 5px; height: 5px; background: var(--rule-strong);
+}
+
+.lede { font-size: 1.1rem; color: var(--ink-soft); margin-bottom: 26px; max-width: 64ch; }
+
+/* ---------- verdict bands ---------- */
+.bands { display: grid; gap: 12px; margin: 26px 0 8px; }
+.band {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 24px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--bc);
+}
+.band-name {
+  font-family: "Archivo", system-ui, sans-serif;
+  font-weight: 600; font-size: .95rem;
+  color: var(--bc);
+  letter-spacing: -.01em;
+}
+.band-rule {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11.5px; line-height: 1.55; color: var(--muted);
+  margin-top: 5px; letter-spacing: -.005em;
+}
+.band-copy { font-size: .96rem; color: var(--ink-soft); }
+.band-copy .say {
+  display: block; color: var(--ink); font-style: italic; margin-top: 7px;
+}
+.b1 { --bc: var(--clears); } .b1 .band { background: var(--clears-bg); }
+.b2 { --bc: var(--tight); } .b3 { --bc: var(--gamble); } .b4 { --bc: var(--wont); }
+@media (max-width: 620px) {
+  .band { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* ---------- doors ---------- */
+.doors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 26px 0 30px; }
+@media (max-width: 780px) { .doors { grid-template-columns: 1fr; } }
+.door {
+  background: var(--surface); border: 1px solid var(--rule);
+  padding: 20px; box-shadow: var(--shadow);
+}
+.door-tag {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+.door h4 {
+  font-family: "Archivo", system-ui, sans-serif; font-weight: 600;
+  font-size: 1.06rem; margin: 0 0 8px; letter-spacing: -.015em; line-height: 1.25;
+}
+.door p { font-size: .93rem; color: var(--ink-soft); margin: 0 0 12px; }
+.door .out {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px; color: var(--muted); border-top: 1px solid var(--rule);
+  padding-top: 10px; line-height: 1.5;
+}
+
+.converge {
+  background: var(--accent-soft); border: 1px solid var(--accent);
+  padding: 20px 22px; margin: 0 0 8px;
+}
+.converge p { margin: 0; font-size: 1rem; color: var(--ink); }
+
+/* ---------- tables ---------- */
+.tw { overflow-x: auto; margin: 22px 0; border: 1px solid var(--rule); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .89rem; min-width: 560px; }
+th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+thead th {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500; background: var(--surface-sunk);
+  border-bottom: 1px solid var(--rule-strong);
+}
+tbody tr:last-child td { border-bottom: 0; }
+td.n, th.n { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; font-size: .85rem; }
+td.pend { color: var(--muted); font-style: italic; }
+td.pend::before {
+  content: "◇ "; font-style: normal; color: var(--tight);
+}
+td b { font-weight: 600; }
+
+/* ---------- code ---------- */
+pre {
+  background: var(--surface); border: 1px solid var(--rule);
+  padding: 18px 20px; overflow-x: auto; margin: 20px 0;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 12.5px; line-height: 1.68; color: var(--ink-soft);
+}
+pre b { color: var(--accent); font-weight: 500; }
+pre i { color: var(--muted); font-style: normal; }
+code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .87em; background: var(--surface-sunk);
+  padding: 1px 5px; color: var(--ink);
+}
+
+/* ---------- callout ---------- */
+.note {
+  border-left: 3px solid var(--rule-strong); padding: 2px 0 2px 20px;
+  margin: 24px 0; color: var(--ink-soft); font-size: .97rem;
+}
+.note b { color: var(--ink); }
+.flag { border-left-color: var(--wont); }
+.flag b { color: var(--wont); }
+
+/* ---------- week plan ---------- */
+.weeks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+@media (max-width: 760px) { .weeks { grid-template-columns: 1fr; } }
+.week { background: var(--surface); border: 1px solid var(--rule); padding: 20px; }
+.week h4 {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 4px; font-weight: 600;
+}
+.week .wt {
+  font-family: "Archivo", system-ui, sans-serif; font-weight: 600;
+  font-size: 1.02rem; margin: 0 0 14px; letter-spacing: -.012em;
+}
+.week ol { margin: 0; padding-left: 0; list-style: none; counter-reset: t; }
+.week ol li {
+  counter-increment: t; position: relative; padding-left: 26px;
+  margin-bottom: 11px; font-size: .93rem; color: var(--ink-soft);
+}
+.week ol li::before {
+  content: counter(t); position: absolute; left: 0; top: .12em;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10.5px; color: var(--muted); font-weight: 500;
+  border: 1px solid var(--rule-strong); width: 17px; height: 17px;
+  display: grid; place-items: center;
+}
+
+/* ---------- out of scope ---------- */
+.cut { display: grid; gap: 0; margin: 22px 0; border-top: 1px solid var(--rule); }
+.cut div {
+  display: grid; grid-template-columns: 210px 1fr; gap: 20px;
+  padding: 13px 0; border-bottom: 1px solid var(--rule); font-size: .93rem;
+}
+.cut div span:first-child {
+  font-family: "Archivo", system-ui, sans-serif; font-weight: 600;
+  color: var(--ink); font-size: .95rem;
+}
+.cut div span:last-child { color: var(--muted); }
+@media (max-width: 620px) { .cut div { grid-template-columns: 1fr; gap: 3px; } }
+
+footer {
+  padding: 44px 0 0; margin-top: 8px; border-top: 2px solid var(--ink);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">Product specification &middot; v0.1 &middot; pre-build</p>
+  <h1>The Cabin Index</h1>
+  <p class="standfirst">A luggage tool that answers the question Amazon structurally cannot: will <em>this</em> bag survive <em>your</em> itinerary — and if not, what should you buy instead?</p>
+  <div class="meta">
+    <span>Target ship <b>2 weeks</b></span>
+    <span>Revenue <b>Affiliate + display</b></span>
+    <span>Drafted <b>30 Aug 2026</b></span>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head"><div class="sec-num">01</div><h2>The bet</h2></div>
+  <div class="sec-body">
+    <p class="lede">There are two kinds of site in this category, and neither one is a business.</p>
+
+    <p>The tools with good airline data — <a href="https://carryon.fit/">CarryFit</a> (172 airlines), <a href="https://luggagevalidator.com/">Luggage Validator</a> (190, fare-class aware, with a published strictness methodology) — are excellent and completely unmonetized. Single developers, Buy Me a Coffee, no product layer at all. They will not outspend you.</p>
+
+    <p>The sites with audience trust — Wirecutter, Pack Hacker, OutdoorGearLab — review bags beautifully and treat airline compliance as a footnote. Pack Hacker does ~4.5M monthly uniques and still can't tell you whether its top pick clears a Wizz Air gauge.</p>
+
+    <p>Two attempts have straddled the gap. Both fumbled: one hides the tool behind an email wall, the other has fit scores and no affiliate links at all.</p>
+
+    <h3>The unclaimed asset</h3>
+
+    <p>Every genuine complaint in this category is the same complaint: <strong>manufacturers publish packing dimensions and airlines measure external ones.</strong> Consumer Reports measured a Briggs &amp; Riley advertised at 22&times;14&times;9 in at 22.5&times;14.5&times;9.25 — over the American, Delta and United limits. A Samsonite spokesperson has confirmed the company does not measure handles or wheels. Airlines, without exception, do.</p>
+
+    <p>So every tool in the category is running a precise calculation on numbers that are wrong. <strong>Nobody measures the bags themselves.</strong> That is the moat, and it is cheap: a tape measure, a shelf, and a photo.</p>
+
+    <div class="note">
+      <b>The error is not a uniform offset, which is why you can't fudge it.</b> The same Consumer Reports testing found the Eagle Creek Tarmac 22 — marketed 22&times;14&times;9 — measuring 22.25&times;<b>15</b>&times;<b>8.5</b>: over on width, under on depth. So the tempting shortcut of adding a centimetre to every manufacturer figure doesn't just fail, it fails in a specific and dangerous way — <em>the binding dimension moves</em>. A bag that clears on the dimension you corrected gets caught on the one you didn't. Measurement is the only thing that works, and this is the argument for why.
+    </div>
+
+    <div class="note">
+      <b>Positioning, one sentence.</b> The only luggage tool whose dimensions are measured rather than claimed, and whose verdict accounts for the fare you actually booked.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">02</div><h2>Three doors, one engine</h2></div>
+  <div class="sec-body">
+    <p class="lede">The three pathways are not three products. They are three ways of arriving at the same object — an <strong>envelope</strong>, the largest box that clears every constraint in play.</p>
+
+    <div class="doors">
+      <div class="door">
+        <div class="door-tag">Door A &middot; Itinerary-first</div>
+        <h4>I'm flying these airlines</h4>
+        <p>Add each leg — carrier, fare class, route. The engine intersects the allowances and returns the strictest common box.</p>
+        <div class="out">→ envelope + ranked bags</div>
+      </div>
+      <div class="door">
+        <div class="door-tag">Door B &middot; Bag-first</div>
+        <h4>Can I use what I own?</h4>
+        <p>Enter dimensions or pick a known bag, then add the itinerary. Returns a per-leg verdict, not a single yes/no.</p>
+        <div class="out">→ verdict per leg + upgrade path if it fails</div>
+      </div>
+      <div class="door">
+        <div class="door-tag">Door C &middot; Region-first</div>
+        <h4>Something that works everywhere</h4>
+        <p>Pick EU, Asia, North America, or all of it. Returns the envelope that clears a chosen percentage of carriers in that set.</p>
+        <div class="out">→ envelope at 100 / 95 / 90% coverage</div>
+      </div>
+    </div>
+
+    <div class="converge">
+      <p><strong>All three converge on one screen.</strong> Envelope at the top, bags below it, filters down the side. Build the results view once and the three doors become routing, not features — which is the only reason a two-week build is possible.</p>
+    </div>
+
+    <h3>Door C deserves more weight than it looks like it does</h3>
+    <p>It is the only door that works with zero user input, which makes it the landing page, the SEO surface, and the thing a first-time visitor can use before trusting you. It is also where the highest-intent commercial queries live: someone asking for a bag that works everywhere is someone about to buy a bag.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">03</div><h2>The verdict model</h2></div>
+  <div class="sec-body">
+    <p class="lede">Your instinct about wiggle room is the most valuable idea in the brief. It's also the one most likely to get the site sued or distrusted if handled carelessly. The resolution: <strong>publish odds, never permission.</strong></p>
+
+    <p>A boolean answer is a lie in both directions. "Compliant" tells a Wizz Air passenger nothing about the &euro;70 they're about to be charged for a bag that measures 1&nbsp;cm over on a warning line inside the gauge. "Non-compliant" tells a Southwest passenger to buy a bag they don't need. Four bands, each with a stated rule:</p>
+
+    <div class="bands">
+      <div class="b1"><div class="band">
+        <div><div class="band-name">Clears</div><div class="band-rule">within limit on every leg<br>&ge;2cm margin on binding dim</div></div>
+        <div class="band-copy">Nothing to think about. Applies regardless of how strict the carrier is.
+          <span class="say">"Fits everywhere on this trip, with room."</span></div>
+      </div></div>
+      <div class="b2"><div class="band">
+        <div><div class="band-name">At the line</div><div class="band-rule">within limit<br>&lt;2cm margin &amp; strictness &ge;7</div></div>
+        <div class="band-copy">Legal, but on a carrier that measures. Soft bags get flagged here rather than below, because they compress.
+          <span class="say">"Legal — but Ryanair uses a gauge. Pack it thin."</span></div>
+      </div></div>
+      <div class="b3"><div class="band">
+        <div><div class="band-name">Gamble</div><div class="band-rule">0–3cm over published<br>strictness &le;5</div></div>
+        <div class="band-copy">Over the stated limit on a carrier that routinely doesn't check. Stated as observed behavior, never as advice.
+          <span class="say">"Over the limit. Southwest passes bags like this constantly — we can't promise it."</span></div>
+      </div></div>
+      <div class="b4"><div class="band">
+        <div><div class="band-name">Won't</div><div class="band-rule">&gt;3cm over, or any amount<br>over on strictness &ge;8</div></div>
+        <div class="band-copy">Name the carrier, the dimension, and the fee. Specificity is what makes the verdict credible.
+          <span class="say">"No. Wizz Air, 5cm too wide — &euro;70 at the gate."</span></div>
+      </div></div>
+    </div>
+
+    <h3>Where the strictness score comes from</h3>
+    <p>It has to be defensible and it has to be public, or it's just a number you made up. Four inputs, each independently sourceable:</p>
+    <ul>
+      <li><strong>Gate-agent incentives.</strong> Frontier paid $10 per gate-caught oversize bag, Spirit $5 — together $26M in bonuses across 2022–23. Ryanair raised its spotting bonus from &euro;1.50 to &euro;2.50 and removed the monthly cap. This is a matter of public record and it predicts enforcement better than anything else.</li>
+      <li><strong>Sizer presence.</strong> American removed gate sizers entirely in October 2025, keeping them only at check-in. Ryanair trains staff on gauges. This single variable splits the field.</li>
+      <li><strong>Gauge vs. published gap.</strong> Ryanair's small-bag gauge is physically 42&times;20&times;30 against a stated 40&times;20&times;25 — but bags fail on an internal warning line that wheels cross. Store the gauge dimension separately from the published one.</li>
+      <li><strong>User reports</strong>, once there's traffic to generate them. Not at launch.</li>
+    </ul>
+
+    <div class="note flag">
+      <b>Language discipline.</b> The tool never says "you'll be fine." It says what the rule is, what the observed behavior is, and what it costs if you're wrong. Every gamble-band verdict carries the fee. This is both the honest framing and the legally safe one — and it's more useful than a green tick.
+    </div>
+
+    <h3>Fare class is not optional</h3>
+    <p>It is the single largest source of false green lights in every existing tool. Ryanair Basic is a personal item only. Lufthansa Economy Basic, from 19 May 2026, allows a 40&times;30&times;15 personal item and <em>no</em> wheeled cabin bag. US Basic Economy varies by carrier. A tool that shows the airline's best-case allowance will confidently get people charged — which is the fastest way to lose the trust the whole business runs on.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">04</div><h2>Data model</h2></div>
+  <div class="sec-body">
+    <p class="lede">Three entities and one pure function. Everything else is presentation.</p>
+
+<pre><b>Allowance</b> <i>— one row per airline × fare class × bag type</i>
+  airline_iata     "FR"
+  fare_class       "basic" | "standard" | "flex" | "business"
+  type             "personal" | "cabin" | "checked"
+  max_cm           [40, 30, 20]        <i>h, w, d</i>
+  gauge_cm         [42, 30, 20]        <i>physical sizer, if it differs</i>
+  includes_wheels  true
+  max_kg           10 | null
+  source_url       "https://ryanair.com/…"
+  verified_at      "2026-08-28"        <i>surfaced in the UI, always</i>
+
+<b>Carrier</b>
+  iata, name, region, alliance
+  strictness       { score: 9, basis: [...], updated: "2026-08" }
+  sizer_at_gate    true | false | "check-in only"
+
+<b>Bag</b>
+  brand, model, slug
+  claimed_cm       [55, 40, 20]        <i>what the manufacturer says</i>
+  measured_cm      [56, 40, 23]        <i>what we measured — wheels, handle, pockets</i>
+  provenance       "measured" | "manufacturer" | "user_reported"
+  measured_at, measured_by
+  soft             true                <i>unlocks compression allowance</i>
+  expands_cm       3
+  offers           [{ merchant, url, price, network, updated_at }]
+
+<b>fit(bag, allowance, carrier) → { band, binding_dim, delta_cm, copy, fee }</b>
+<b>envelope(legs[]) → { max_cm, bound_by: [{leg, dim}] }</b></pre>
+
+    <div class="note">
+      <b>The provenance field is the product.</b> Show it on every dimension, everywhere, as a visible badge — <em>measured by us</em> / <em>manufacturer claim</em> / <em>reader report</em>. It's the one thing no competitor can copy without doing the physical work, it's the honest disclosure, and it's the reason a reader believes your number over Amazon's.
+    </div>
+
+    <h3>Sourcing reality</h3>
+    <p>There is no airline baggage API. Every good tool in this space is hand-curated, and CarryFit is <a href="https://github.com/AxelUser/carry-fit">open source</a>, which makes it a legitimate cross-check on your own research. Forty carriers, hand-entered from official pages with a dated source URL each, is roughly two days of work and covers the overwhelming majority of searches.</p>
+
+    <p>Product catalogs are the opposite problem — feeds are plentiful and dimension fields are nearly worthless. Awin's own spec rates its <code>dimensions</code> column as populated in a third to two-thirds of feeds, and it's free text: <code>'12 x 30 cm'</code>, <code>'15 inches'</code>. Use feeds for the catalog spine — name, image, price, URL, stock, GTIN — and treat dimensions as a separate, manually built layer. That's not a workaround. That's the moat, and it's supposed to be manual.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">05</div><h2>Why they don't just go to Amazon</h2></div>
+  <div class="sec-body">
+    <p class="lede">Your sharpest question. The answer isn't engagement tricks — it's that the verdict is a thing Amazon cannot produce, and it's worth more than the product listing.</p>
+
+    <ul>
+      <li><strong>The verdict is the product; the purchase is a side effect.</strong> No retailer can tell you "clears Ryanair Basic and American Basic Economy, 1cm to spare on depth." That sentence only exists here. A visitor who leaves to buy has still been served — and if the affiliate link is right there at the moment of the verdict, most won't bother leaving.</li>
+      <li><strong>Your Kit.</strong> Save the bags you own. The tool then answers instantly on every future trip. This is the return-visit engine and it needs no account at launch — <code>localStorage</code> is enough for v1.</li>
+      <li><strong>Rule-change alerts.</strong> The strongest retention hook available, and nobody offers it. Ryanair changed its free underseat allowance on 4 Sept 2025 and half the tools online still show the old number. <em>"Ryanair changed its personal item limit. Your Osprey Farpoint no longer fits."</em> That is a genuinely valuable email, it builds the list, and it's a recurring reason to return.</li>
+      <li><strong>Be the citable source.</strong> Server-render <code>/airline/ryanair-basic</code>, <code>/size/55x40x20</code>, <code>/bag/monos-carry-on-pro</code>. Two of the competing tools render nothing without JavaScript, which makes them invisible to crawlers and to LLM answers. In 2026 that's not an SEO detail — it's the distribution channel.</li>
+    </ul>
+
+    <div class="note">
+      <b>On the premium look.</b> The reason affiliate sites look cheap is that they're built to move people off the page. This one is built to answer a question, so it can afford restraint — one accent, real typography, generous space, and product cards that look like a field guide rather than a coupon. The design <em>is</em> the trust signal, and trust is what converts here.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">06</div><h2>The source register</h2></div>
+  <div class="sec-body">
+    <p class="lede">A page of outbound links is a leak. The same page, annotated, is the strongest trust asset on the site — and it costs almost nothing to build.</p>
+
+    <p>The format is three lines per entry: <strong>what it is, what it's good for, and where it stops.</strong> The annotation is the value; the link is the proof you aren't hiding anything. A reader who learns that a given guide publishes manufacturer dimensions and ignores fare class has been saved the trip, and most won't take it.</p>
+
+    <p>Link the competing tools without hedging. CarryFit and Luggage Validator are genuinely good and completely unmonetized — they are not a commercial threat, and citing them confidently reads as the opposite of insecurity. It's the same instinct that makes Wirecutter's disclosed editorial firewall work.</p>
+
+    <h3>Two halves, one page</h3>
+    <ul>
+      <li><strong>How we know this.</strong> The methodology half, already required by &sect;03 and &sect;04 — per-airline source URLs with their <code>verified_at</code> dates, the written basis behind every strictness score, and how a bag gets measured. Photograph the tape measure. This is the half that makes the second half credible.</li>
+      <li><strong>What else to read.</strong> The register below. It also quietly answers the question every new visitor has: <em>did these people actually do the work?</em></li>
+    </ul>
+
+    <div class="tw"><table>
+      <thead><tr><th>Source</th><th>Category</th><th>Good for</th><th>Where it stops</th></tr></thead>
+      <tbody>
+        <tr><td><b>Wirecutter</b><br>carry-on sizing advice</td><td>Editorial</td><td class="pend">Pending review — flagged by Frank as a reality check</td><td class="pend">Not yet read; blocklisted from automated fetch</td></tr>
+        <tr><td><b>Travel + Leisure</b><br>carry-on size guide</td><td>Editorial</td><td class="pend">Pending review — flagged by Frank as a reality check</td><td class="pend">Not yet read; blocklisted from automated fetch</td></tr>
+        <tr><td><b>CarryFit</b><br>carryon.fit</td><td>Competing tool</td><td>172 airlines; rotates dimensions automatically; soft-bag flex allowance; open source, so it doubles as a cross-check on our own data</td><td>No product layer, no fare class, unmonetized</td></tr>
+        <tr><td><b>Luggage Validator</b></td><td>Competing tool</td><td>190 airlines; multi-segment itineraries; fare-class aware; publishes its strictness methodology</td><td>No bag database at all</td></tr>
+        <tr><td><b>willmybag.fit</b></td><td>Competing tool</td><td>Bag-first browsing, scored by share of flights cleared</td><td>Manufacturer dimensions — the core error we exist to fix</td></tr>
+        <tr><td><b>Consumer Reports</b><br>luggage measurement</td><td>Evidence</td><td>Measured an advertised 22&times;14&times;9 Briggs &amp; Riley at 22.5&times;14.5&times;9.25 — the single best citation for why claimed dimensions fail</td><td>One-off finding, not an ongoing dataset</td></tr>
+        <tr><td><b>Gate-agent bonus reporting</b></td><td>Evidence</td><td>Frontier $10 and Spirit $5 per caught bag, $26M paid 2022–23; Ryanair &euro;1.50&nbsp;&rarr;&nbsp;&euro;2.50 with the cap removed. The public basis for our strictness scores</td><td>Discloses incentives, not outcomes</td></tr>
+        <tr><td><b>Airline baggage pages</b></td><td>Primary</td><td>The authority for every allowance we publish</td><td>Belongs on each airline page beside its <code>verified_at</code>, not in this register</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="note flag">
+      <b>Keep Amazon out of this page.</b> The operating agreement forbids using Amazon Program Content to promote products offered elsewhere. Amazon-sourced data and everything else need separate render paths across the whole site, and a page that sits beside DTC recommendations is exactly where that rule gets broken by accident.
+    </div>
+
+    <div class="note">
+      <b>Two things this page must not become.</b> Not a bare list of links — that's thin content and it exits traffic for free. And not a straw-man page: if a source is better than us at something, the annotation says so. The register is only worth anything if a reader can tell we'd have written the same line about ourselves.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">07</div><h2>Monetization</h2></div>
+  <div class="sec-body">
+    <p class="lede">Route to direct-to-consumer brands aggressively. It is the largest lever in the model and it's entirely under your control.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Merchant</th><th class="n">Rate</th><th class="n">Cookie</th><th>Network</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td><b>Nomatic</b></td><td class="n">20%</td><td class="n">10 d</td><td>Awin</td><td>AOV $250+; short cookie</td></tr>
+        <tr><td><b>B&eacute;is</b></td><td class="n">15%</td><td class="n">30 d</td><td>Awin</td><td>Auto-approve</td></tr>
+        <tr><td><b>Tortuga</b></td><td class="n">10%</td><td class="n">30 d</td><td>AvantLink</td><td>Requires 50k monthly visits</td></tr>
+        <tr><td><b>Travelpro</b></td><td class="n">8–10%</td><td class="n">45 d</td><td>CJ</td><td>AOV $165; best dimension schema</td></tr>
+        <tr><td><b>Osprey</b></td><td class="n">8%</td><td class="n">30 d</td><td>Impact</td><td>Recently moved off AvantLink</td></tr>
+        <tr><td>Amazon</td><td class="n">4%</td><td class="n">24 h</td><td>Associates</td><td>Fallback only — see below</td></tr>
+      </tbody>
+    </table></div>
+
+    <p>Every sale routed to B&eacute;is or Nomatic instead of Amazon is a <strong>four to five times multiplier on the same click</strong>. Join Awin first: it carries B&eacute;is, Monos, Nomatic and Db, absorbed ShareASale entirely in October 2025, and has the most workable bulk CSV feeds.</p>
+
+    <div class="note flag">
+      <b>Amazon is a trap, and it changed recently.</b> PA-API 5.0 is deprecated. Its replacement, the Creators API, requires <b>10 qualifying sales in a trailing 30 days</b> — and under the Operating Agreement you may only display Amazon prices if you obtained them through that API. Manually typed or scraped prices are a violation. Two consequences for the build: <b>launch with Amazon as link-only, no prices</b>; and the agreement separately forbids price-tracking features, so the alerting product must be about <em>rule</em> changes, not price drops. Which is the better product anyway.
+    </div>
+
+    <h3>Display advertising</h3>
+    <p>Entry requirements were rewritten across late 2025. Journey by Mediavine now starts at <strong>1,000 premium sessions</strong> per 30 days, Raptive at <strong>25,000 pageviews</strong> — both far below what the old guidance said. Ezoic went the other way and now demands 250k monthly users; ignore it. The honest read on the economics: at ~50k visits, display and affiliate land in the same order of magnitude, which argues for running both rather than choosing. Start with Journey, which has no exclusivity requirement.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">07</div><h2>The two-week cut</h2></div>
+  <div class="sec-body">
+    <p class="lede">Static site generation, no backend, no accounts. Data lives in version-controlled JSON, which makes the dated-source discipline free and every correction a reviewable diff.</p>
+
+    <div class="weeks">
+      <div class="week">
+        <h4>Week one</h4>
+        <div class="wt">Get the truth in a file</div>
+        <ol>
+          <li><strong>40 carriers</strong>, hand-entered with source URL and date. Fare-class rows for the twelve that matter: Ryanair, Wizz, easyJet, Vueling, Spirit, Frontier, Lufthansa, AA, UA, DL, BA, Air France.</li>
+          <li><strong>Strictness scores</strong> with written basis for each. Publish the methodology page in the same pass — it's a trust asset, not documentation.</li>
+          <li><strong>60–80 bags.</strong> Measure everything you can physically reach; mark the rest <code>manufacturer</code> and be visibly honest about it.</li>
+          <li><strong>The engine.</strong> <code>fit()</code> and <code>envelope()</code> as pure functions with a real unit test suite — this is the one part where a bug costs someone money.</li>
+        </ol>
+      </div>
+      <div class="week">
+        <h4>Week two</h4>
+        <div class="wt">Build the one screen</div>
+        <ol>
+          <li><strong>Results view</strong> — envelope, verdict bands, bag grid, filters on price, rating, band, and region coverage.</li>
+          <li><strong>Three doors</strong> routing into it. Door C is the homepage.</li>
+          <li><strong>Static pages</strong> per airline, per size, per bag. This is the entire acquisition strategy.</li>
+          <li><strong>Affiliate wiring</strong> — Awin first, own click-tracking from day one. Amazon's reporting is degrading and you cannot rely on it to know your own conversion rate.</li>
+          <li><strong>Email capture</strong> on rule-change alerts. One field, after the verdict, never before it.</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3>Deliberately out of scope</h3>
+    <div class="cut">
+      <div><span>User accounts</span><span><code>localStorage</code> carries Your Kit until there's a reason to need more</span></div>
+      <div><span>Crowdsourced reports</span><span>Needs traffic first; the UI should leave a slot for it</span></div>
+      <div><span>AR measurement</span><span>Accuracy unproven, and it's a week of work on its own</span></div>
+      <div><span>Price tracking</span><span>Prohibited by the Amazon operating agreement outright</span></div>
+      <div><span>Checked-bag optimization</span><span>Different problem, weaker commercial intent</span></div>
+      <div><span>Amazon price display</span><span>Blocked until 10 sales/30 days unlocks the Creators API</span></div>
+      <div><span>Multi-currency</span><span>USD and EUR only</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><div class="sec-num">08</div><h2>What could go wrong</h2></div>
+  <div class="sec-body">
+    <ul>
+      <li><strong>Data goes stale and the trust evaporates.</strong> This is the only existential risk. The mitigation is structural: a <code>verified_at</code> on every allowance, displayed in the interface, plus a public changelog. Stale data that admits it is stale costs far less than confident data that's wrong.</li>
+      <li><strong>A gamble-band verdict costs someone &euro;70 and they're furious.</strong> Mitigated by language, not by hedging: state the rule, state the observed behavior, state the fee. Never say "you'll be fine."</li>
+      <li><strong>Measuring bags doesn't scale.</strong> It doesn't have to. Eighty measured bags is already more than anyone else has, and the manual layer <em>is</em> the defensibility. Reader-submitted measurements with photo evidence extend it later.</li>
+      <li><strong>Traffic never arrives.</strong> The realistic revenue spread at 50k monthly visits runs from roughly $1k to $12k a month, and the width of that range is honest — two of the three multipliers in the standard model have no primary benchmark data behind them at all. Treat the static per-airline and per-size pages as the whole growth plan, and judge it at ninety days.</li>
+    </ul>
+
+    <div class="note">
+      <b>The first thing to test.</b> Not the design, not the catalog — the strictness scores. If those feel right to people who fly a lot, the product works. If they don't, nothing downstream matters.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>The Cabin Index &middot; specification v0.1 &middot; supersedes the exploratory prototype</p>
+</footer>
+
+</div>
+</body>
+</html>

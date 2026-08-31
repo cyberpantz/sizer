@@ -1,0 +1,120 @@
+{
+ "slug": "ricksteves-spinner-carryon",
+ "brand": "Rick Steves",
+ "model": "Spinner Carry-On",
+ "variant": null,
+ "line": "ricksteves-carryon",
+ "type": "softside spinner",
+ "soft": 1,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.2,
+   35.6,
+   25.4
+  ],
+  "src": "review",
+  "ref": "ricksteves-store",
+  "at": "2026-08-30",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": {
+  "v": [
+   49.5,
+   35.6,
+   22.9
+  ],
+  "src": "manufacturer",
+  "ref": "ricksteves-store",
+  "at": "2026-08-30"
+ },
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 3.04,
+  "src": "review",
+  "ref": "ricksteves-store",
+  "at": "2026-08-30",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 41,
+  "src": "review",
+  "ref": "ricksteves-store",
+  "at": "2026-08-30",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "ricksteves-store",
+   "publication": "Rick Steves' Europe (manufacturer store)",
+   "url": "https://store.ricksteves.com/collections/carry-on-luggage",
+   "at": "2026-08-30",
+   "award": null,
+   "rank": null,
+   "ranked": false,
+   "rolling_score": null,
+   "praise": "Dual 360-degree recessed wheels; internal frame keeps it upright.",
+   "caveat": "Expands up to two inches across three-quarters of the bag.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "stated_external_dimension",
+    "quote": "Our Spinner Carry-On luggage offers maximum mobility"
+   },
+   "observed": [
+    {
+     "outcome": "forced_to_check",
+     "carriers": [
+      "Turkish",
+      "Swiss"
+     ],
+     "where": "customer review on the product page",
+     "quote": "Even with closed extensor zipper, it is too wide for some airlines (Turkish air, Swiss air) and does not fit width wise in the sample for allowable space for overhead compartment - I've had to check bag a few times."
+    },
+    {
+     "outcome": "cleared",
+     "carriers": [
+      "unspecified"
+     ],
+     "where": "customer review on the product page",
+     "quote": "meets size regulations for every domestic and international airline I have checked"
+    }
+   ],
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": true,
+ "wheel_handle_delta_cm": [
+  5.7,
+  0,
+  2.5
+ ],
+ "observed": [
+  {
+   "outcome": "forced_to_check",
+   "carriers": [
+    "Turkish",
+    "Swiss"
+   ],
+   "where": "customer review on the product page",
+   "quote": "Even with closed extensor zipper, it is too wide for some airlines (Turkish air, Swiss air) and does not fit width wise in the sample for allowable space for overhead compartment - I've had to check bag a few times."
+  },
+  {
+   "outcome": "cleared",
+   "carriers": [
+    "unspecified"
+   ],
+   "where": "customer review on the product page",
+   "quote": "meets size regulations for every domestic and international airline I have checked"
+  }
+ ],
+ "compliance_unbacked": false
+}

@@ -1,0 +1,72 @@
+/* Identity only: brand, model, variant, line, construction, role. Every fact here
+   is stated in one of the reviews. Nothing about SIZE lives in this file — that
+   comes from sources, or it stays null.
+
+   `role` is INTENT, not size: which allowance the bag is built to use.
+     overhead  — sized to use the full carry-on allowance. The subject of this site.
+     underseat — sized to the personal-item allowance. Its own category, its own
+                 shelf, its own question. An under-seat bag clears a strict carrier
+                 by not being a carry-on, so it must never pad the carry-on shelf.
+     checked   — not cabin luggage at all. Excluded from every carry-on surface.
+                 Present because roundups mix checked bags into "carry-on" lists
+                 without saying so, and we have to be able to tell them apart.
+   Orthogonal to `type`, which is form factor. A duffel or a travel backpack is an
+   overhead carry-on; a small tote is not. */
+export const IDENTITY = {
+ "away-carryon": { brand: "Away", model: "The Carry-On", variant: null, line: "away-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "away-bigger": { brand: "Away", model: "The Bigger Carry-On", variant: null, line: "away-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "away-aluminum": { brand: "Away", model: "The Carry-On", variant: "Aluminum Edition", line: "away-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "away-carryon-flex": { brand: "Away", model: "The Carry-On Flex", variant: null, line: "away-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "quince-small": { brand: "Quince", model: "Small Carry-On Suitcase", variant: null, line: "quince-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "amazon-21": { brand: "Amazon Basics", model: "21\" Hardside Carry-On", variant: null, line: "amazonbasics-21", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "amazon-21-expandable": { brand: "Amazon Basics", model: "Expandable Hardside 21\" Spinner", variant: null, line: "amazonbasics-21", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "rimowa-cabin": { brand: "Rimowa", model: "Essential Cabin", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "solgaard-closet-med": { brand: "Solgaard", model: "Carry-On Closet Original", variant: "Medium", line: "solgaard-closet", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "eagle-creek-gear-warrior-xe": { brand: "Eagle Creek", model: "Gear Warrior XE 2-Wheel Convertible", variant: null, line: null, type: "2-wheel roller", soft: 1, wheels: 2 , role: "overhead" },
+ "travelpro-versapack": { brand: "Travelpro", model: "VersaPack+ Carry-On Spinner", variant: null, line: "travelpro-versapack", type: "softside spinner", soft: 1, wheels: 4 , role: "overhead" },
+ "travelpro-maxlite5-compact": { brand: "Travelpro", model: "Maxlite 5 Compact Carry-On Spinner", variant: "Compact", line: "travelpro-maxlite5", type: "softside spinner", soft: 1, wheels: 4, role: "overhead" },
+ "travelpro-maxlite5-international": { brand: "Travelpro", model: "Maxlite 5 International Expandable Carry-On Spinner", variant: "International", line: "travelpro-maxlite5", type: "softside spinner", soft: 1, wheels: 4, role: "overhead" },
+ "travelpro-maxlite5-21": { brand: "Travelpro", model: "Maxlite 5 21\" Expandable Spinner", variant: "21\"", line: "travelpro-maxlite5", type: "softside spinner", soft: 1, wheels: 4 , role: "overhead" },
+ "calpak-hue": { brand: "Calpak", model: "Hue Front Pocket Carry-On", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "calpak-luka": { brand: "Calpak", model: "Luka Carry-On", variant: null, line: "calpak-luka", type: "softside spinner", soft: 1, wheels: 4, role: "overhead" },
+ "calpak-luka-mini": { brand: "Calpak", model: "Luka Soft-Sided Mini Carry-On", variant: "Mini", line: "calpak-luka", type: "underseat", soft: 1, wheels: 4, role: "underseat" },
+ "eagle-creek-cargo-hauler-xt": { brand: "Eagle Creek", model: "Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel", variant: null, line: null, type: "2-wheel roller", soft: 1, wheels: 2, role: "overhead" },
+ "beis-carryon-roller": { brand: "B\u00e9is", model: "The Carry-On Roller", variant: null, line: "beis-roller", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "beis-hybrid-roller": { brand: "B\u00e9is", model: "The Hybrid Carry-On Roller", variant: null, line: "beis-roller", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "beis-small-carryon-roller": { brand: "B\u00e9is", model: "The Small Carry-On Roller", variant: "Small", line: "beis-roller", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "aer-carryon-max": { brand: "Aer", model: "Carry-On Max", variant: "Max", line: "aer-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "aer-carryon-small": { brand: "Aer", model: "Carry-On", variant: "Small", line: "aer-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "patagonia-black-hole-40": { brand: "Patagonia", model: "Black Hole Duffel 40L", variant: null, line: null, type: "duffel", soft: 1, wheels: 0 , role: "overhead" },
+ "cotopaxi-allpa-35": { brand: "Cotopaxi", model: "Allpa 35L Travel Pack", variant: null, line: null, type: "backpack", soft: 1, wheels: 0 , role: "overhead" },
+ "tortuga-40": { brand: "Tortuga", model: "Travel Backpack 40L", variant: null, line: null, type: "backpack", soft: 1, wheels: 0 , role: "overhead" },
+ "roverlund-ready-to-roll": { brand: "Roverlund", model: "Ready-to-Roll Carry-On", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "samsonite-freeform": { brand: "Samsonite", model: "Freeform Carry-on Spinner", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "samsonite-proxis": { brand: "Samsonite", model: "Proxis Global Carry-On Spinner", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "samsonite-uplift": { brand: "Samsonite", model: "Uplift Hardside Carry-On", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "tumi-alpha-dual-access": { brand: "Tumi", model: "Alpha International Dual Access Carry-on", variant: null, line: null, type: "softside spinner", soft: 1, wheels: 4 , role: "overhead" },
+ "tumi-19-degree-lite": { brand: "Tumi", model: "19 Degree Lite Carry-On", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "delsey-chatelet-air-2": { brand: "Delsey", model: "Chatelet Air 2.0 21-inch Spinner", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "monos-hybrid": { brand: "Monos", model: "Hybrid Carry-On", variant: null, line: "monos-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "monos-carryon": { brand: "Monos", model: "Carry-On", variant: null, line: "monos-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "july-carryon-max": { brand: "July", model: "Carry-on Max", variant: "Max", line: "july-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "july-carryon": { brand: "July", model: "Carry On", variant: null, line: "july-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "brics-xbag-rolling-duffel": { brand: "Bric's", model: "X-Bag 21\" Rolling Carry-On Duffle", variant: null, line: null, type: "2-wheel roller", soft: 1, wheels: 2 , role: "overhead" },
+ "hartmann-reserve": { brand: "Hartmann", model: "Reserve Carry-On", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "kenneth-cole-underseater": { brand: "Kenneth Cole Reaction", model: "Underseater Spinner", variant: null, line: null, type: "underseat", soft: 1, wheels: 4 , role: "underseat" },
+ "thule-aion": { brand: "Thule", model: "Aion Carry-On Spinner", variant: null, line: null, type: "softside spinner", soft: 1, wheels: 4 , role: "overhead" },
+ "travelers-choice-maxporter-ii": { brand: "Traveler's Choice", model: "Maxporter II Carry-On Spinner", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "herschel-heritage": { brand: "Herschel", model: "Heritage Hardshell Carry-On", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "pacsafe-venturesafe-exp45": { brand: "Pacsafe", model: "Venturesafe EXP45 ECONYL", variant: null, line: null, type: "backpack", soft: 1, wheels: 0 , role: "overhead" },
+ "bagsmart-roamer": { brand: "Bagsmart", model: "Roamer Expandable Carry-On", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "bellroy-lite": { brand: "Bellroy", model: "Lite Carry-On", variant: null, line: "bellroy-carryon", type: "2-wheel roller", soft: 0, wheels: 2 , role: "overhead" },
+ "bellroy-transit": { brand: "Bellroy", model: "Transit Carry-On", variant: null, line: "bellroy-carryon", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "dagne-dover-smaller-seattle": { brand: "Dagne Dover", model: "Smaller Seattle Carry-on", variant: "Smaller", line: "dagne-seattle", type: "softside spinner", soft: 1, wheels: 4 , role: "overhead" },
+ "lojel-cubo-small-lite": { brand: "Lojel", model: "Cubo Small Lite", variant: "Small", line: "lojel-cubo", type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "vera-bradley-adair-duffel": { brand: "Vera Bradley", model: "Adair Rolling Duffel", variant: null, line: null, type: "2-wheel roller", soft: 1, wheels: 2 , role: "overhead" },
+ "briggs-riley-torq-xl": { brand: "Briggs & Riley", model: "Torq Extra Large Trunk Spinner", variant: "Extra Large", line: "briggs-torq", type: "hardside spinner", soft: 0, wheels: 4, role: "checked" },
+ "carl-friedrik-carryon-x": { brand: "Carl Friedrik", model: "Carry-on X", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+ "osprey-transporter-wheeled-38": { brand: "Osprey", model: "Transporter Wheeled Carry-On 38", variant: null, line: null, type: "2-wheel roller", soft: 1, wheels: 2 , role: "overhead" },
+ "ricksteves-rolling-carryon": { brand: "Rick Steves", model: "Rolling Carry-On", variant: null, line: "ricksteves-carryon", type: "2-wheel roller", soft: 1, wheels: 2, role: "overhead" },
+ "ricksteves-spinner-carryon": { brand: "Rick Steves", model: "Spinner Carry-On", variant: null, line: "ricksteves-carryon", type: "softside spinner", soft: 1, wheels: 4, role: "overhead" },
+ "peak-design-roller-pro": { brand: "Peak Design", model: "Roller Pro", variant: null, line: null, type: "hardside spinner", soft: 0, wheels: 4 , role: "overhead" },
+};

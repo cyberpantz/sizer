@@ -1,0 +1,59 @@
+{
+ "iata": "EK",
+ "name": "Emirates",
+ "region": "ME",
+ "type": "full_service",
+ "strictness": {
+  "score": 7,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Weighs cabin bags — 7 kg in economy.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    55,
+    38,
+    20
+   ],
+   "max_kg": 7,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "7 kg in the cabin. A hard-shell suitcase uses half of that empty.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "checked",
+   "linear_max_cm": null,
+   "max_kg": null,
+   "free_pieces": 1,
+   "system": "piece",
+   "weight_total_kg": null,
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

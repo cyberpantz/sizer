@@ -1,0 +1,88 @@
+{
+ "slug": "bellroy-transit",
+ "brand": "Bellroy",
+ "model": "Transit Carry-On",
+ "variant": null,
+ "line": "bellroy-carryon",
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.6,
+   35.1,
+   22.6
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 3.1,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 34,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": "Best with packing cubes",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Fit every overhead bin across 4 US flights (Delta, Southwest, United); scuffs wipe clean.",
+   "caveat": "Telescopic handle sticks between its three heights.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  },
+  {
+   "src": "packhacker-international",
+   "publication": "Pack Hacker",
+   "url": "https://www.packhacker.com/blog/general/best-luggage-for-international-travel/",
+   "at": "2026-07-27",
+   "award": "Best lightweight",
+   "rank": 9,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": null,
+   "caveat": "if you regularly fly strict airlines where every kilo matters",
+   "compliance_claim": {
+    "kind": "weight_advantage",
+    "basis": "assertion_only",
+    "quote": "The lightweight construction and relatively compact size also help if you regularly fly strict airlines where every kilo matters.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   },
+   "observed": null,
+   "category": "carryon",
+   "verbatim": true,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 2,
+ "needs_measurement": true,
+ "compliance_claimed": true,
+ "observed": [],
+ "compliance_unbacked": false
+}

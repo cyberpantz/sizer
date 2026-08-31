@@ -1,0 +1,59 @@
+{
+ "iata": "CX",
+ "name": "Cathay Pacific",
+ "region": "AS",
+ "type": "full_service",
+ "strictness": {
+  "score": 6,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Weighs cabin bags at check-in — 7 kg.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    56,
+    36,
+    23
+   ],
+   "max_kg": 7,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Generous on size, strict on weight.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "checked",
+   "linear_max_cm": null,
+   "max_kg": null,
+   "free_pieces": 1,
+   "system": "piece",
+   "weight_total_kg": null,
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

@@ -1,0 +1,60 @@
+{
+ "slug": "vera-bradley-adair-duffel",
+ "brand": "Vera Bradley",
+ "model": "Adair Rolling Duffel",
+ "variant": null,
+ "line": null,
+ "type": "2-wheel roller",
+ "soft": 1,
+ "wheels": 2,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   53.3,
+   33,
+   25.4
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 2.19,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "kg"
+ },
+ "capacity_l": null,
+ "reviews": [
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": null,
+   "rank": null,
+   "ranked": false,
+   "rolling_score": null,
+   "praise": "Separate compartment for dirty shoes.",
+   "caveat": "Materials feel less durable; width runs large.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": true
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

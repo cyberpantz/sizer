@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<!-- saved from url=(0253)https://cdc223c3-5504-4397-94ba-b8502cf50587.frame.claudeusercontent.com/_f/1787686746-6acd/?__frame_t=-9tf6TZ-_F0L3Lp8Oftv4DKz.e9d3b432-c882-4f4d-ba48-15494091ba5a.f69c3377-2eec-45ae-88a0-d91094e5bdc0.1788120865&__frame_v=manifest.155e997702a4b8fc.json -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!-- frame-runtime --><!--<base href="/_f/1787686746-6acd/">--><base href="."><script>window.__FRAME_PREAMBLE={"v":1,"capabilities":{"artifact":"artifact.D_F1mx8d.js","assets":"assets.8Gk803W0.js","comments":"comments.GLuHR3zP.js","db":"db.h-3sndFg.js","downloads":"downloads.C3GSvEDP.js","embed":"embed.CxGAyc-v.js","mcp":"mcp.Bvma3qD7.js","network":"network.B5UA9Su4.js","notifications":"notifications.ssU4jy7G.js","permissions":"permissions.BNySkLV5.js","room":"room.BMMoe2BY.js","sample":"sample.BW2Uysoh.js","self":"artifact.D_F1mx8d.js","user":"user.BpKav-Rf.js"},"transforms":"_transforms.DSB5x63f.js","comments":"_comments.BoakUwmM.js","translate":"_translate.5HCW4BJh.js"}</script><script>(function(){"use strict";var te=["light","dark","system"],re=/^[A-Za-z0-9_-]{1,64}$/,$=/^[a-zA-Z_:][a-zA-Z0-9_:.-]{0,127}$/,ne=new Set(["class","hidden","value","checked","style","title","alt","placeholder","lang","dir","role","tabindex","disabled","readonly","contenteditable","open","colspan","rowspan"]);function oe(e){const t=e.toLowerCase();return t.startsWith("data-")||t.startsWith("aria-")||ne.has(t)}var Be="http://www.w3.org/1999/xhtml",se="http://www.w3.org/2000/svg",ae=new Set(["script","style","iframe","noscript","noframes","noembed","xmp","plaintext","template","title","textarea","object","embed"]),ie=new Set(["script","style"]);function ce(e){const t=e.localName.toLowerCase();return e.namespaceURI==="http://www.w3.org/1999/xhtml"?!ae.has(t):e.namespaceURI===se?!ie.has(t):!1}function M(e,t){return e===t||(e===160||e===32)&&(t===160||t===32)}function le(e,t){const r=e.length,n=t.length;let s=0;for(;s<r&&s<n&&M(e.charCodeAt(s),t.charCodeAt(s));)s++;let o=0;for(;o<r-s&&o<n-s&&M(e.charCodeAt(r-1-o),t.charCodeAt(n-1-o));)o++;return{p:s,s:o}}function ue(e,t){const r=e.firstChild;if(e.childNodes.length!==1||r===null||r.nodeType!==Node.TEXT_NODE){e.textContent=t;return}const n=r.data,s=n.length,o=t.length,{p:i,s:c}=le(n,t);i===s&&c===0&&s===o||r.replaceData(i,s-i-c,t.slice(i,o-c));const h=r.data,p=e.ownerDocument.getSelection?.()??null,w=p!==null&&p.rangeCount>0&&(p.anchorNode===r||p.focusNode===r)?{anchor:p.anchorNode,anchorOffset:p.anchorOffset,focus:p.focusNode,focusOffset:p.focusOffset}:null;let m=-1,g=-1;for(let f=0;f<h.length&&f<t.length;f++){const v=h.charCodeAt(f),b=t.charCodeAt(f);v!==b&&M(v,b)&&(m<0&&(m=f),g=f)}const a=m>=0;if(a&&r.replaceData(m,g-m+1,t.slice(m,g+1)),a&&w!==null&&w.anchor!==null&&w.focus!==null)try{p.setBaseAndExtent(w.anchor,w.anchorOffset,w.focus,w.focusOffset)}catch{}}var fe=new Set(["html","head","body","frameset"]);function de(e){return e.namespaceURI==="http://www.w3.org/1999/xhtml"&&fe.has(e.localName)}function pe(e){if(e===null||typeof e!="object")return!1;const t=e;if(typeof t.target!="string"||!re.test(t.target)||t.text!==void 0&&typeof t.text!="string")return!1;if(t.attrsSet!==void 0){if(t.attrsSet===null||typeof t.attrsSet!="object")return!1;for(const[r,n]of Object.entries(t.attrsSet))if(!$.test(r)||typeof n!="string")return!1}if(t.attrsRemoved!==void 0){if(!Array.isArray(t.attrsRemoved))return!1;for(const r of t.attrsRemoved)if(typeof r!="string"||!$.test(r))return!1}return!0}function me(e,t){if(e===null||typeof e!="object")return!1;const{seq:r,elements:n}=e;if(typeof r!="number"||!Number.isSafeInteger(r)||!Array.isArray(n)||n.length===0||n.length>64)return!1;for(let s=0;s<n.length;s++)if(!t(n[s]))return!1;return!0}function he(e){return e===null||typeof e!="object"?!1:me(e.__frame_patch,pe)}function _e(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_init;return t!==null&&typeof t=="object"}function ve(e){return e!==null&&typeof e=="object"&&e.__frame_size_poke===!0}function ye(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_theme;if(t===null||typeof t!="object")return!1;const r=t.theme;return typeof r=="string"&&te.includes(r)}var A=/^[\w.-]+\.js$/;function we(e,t,r){return r?"inert":typeof t=="string"&&A.test(t)?e?[t]:"inert":e?"inert":"framed"}function ge(){return{post(e,t){parent.postMessage(e,t)},on(e){const t=r=>{r.source===parent&&e(r.data,r.origin,r.isTrusted)};return addEventListener("message",t),()=>removeEventListener("message",t)}}}function be(){return{post:()=>{},on:()=>()=>{}}}var j="__frame_scroll",Ee=150,Ae=310,Se=160,Te=3e4;function ke(){let e=0,t=!1,r=!1,n=!1,s=0,o=null;const i=l=>{try{sessionStorage.setItem(j,JSON.stringify({y:l}))}catch{}},c=()=>{if(clearTimeout(e),o===null)return;const l=o;o=null,i(l)},h=()=>{if(t){t=!1;return}r=!0,o=scrollY,clearTimeout(e),e=setTimeout(c,Ee)};try{addEventListener("scroll",h,{passive:!0}),addEventListener("pagehide",c)}catch{}const p=()=>{let l;try{l=sessionStorage.getItem(j)}catch{return null}if(l===null)return null;let _;try{_=JSON.parse(l)}catch{_=null}const d=_?.y;if(!(typeof d=="number"&&Number.isFinite(d)&&d>=0)){try{sessionStorage.removeItem(j)}catch{}return null}return d};let w=!1;const m=l=>{try{const _=scrollY;scrollTo({top:l,left:0,behavior:"instant"}),s=l,n=!0,clearTimeout(e),o=null,i(l);const d=scrollY;d!==_&&(t=!0),d!==l&&!w&&(w=!0,addEventListener("load",()=>{try{if(scrollY===d){const T=p();m(T!==null?T:s)}}catch{}},{once:!0}))}catch{}},g=()=>{try{return!!location.hash}catch{return!0}};let a=!1;const f=()=>{try{if(a||innerWidth>Ae||innerHeight>Se)return;a=!0;const l=Date.now(),_=()=>{try{removeEventListener("resize",_)}catch{}if(Date.now()-l>Te||r||g())return;const d=p();m(d!==null?d:s)};addEventListener("resize",_)}catch{}};let v=!1,b=!1;return{restore(){if(v||(v=!0,g()))return;const l=p();l!==null&&(m(l),f())},promoted(){if(b||(b=!0,g()))return;const l=p();l!==null?(m(l),f()):n&&m(s)}}}function Re(e,t,r,n){let s=null;try{s=window.trustedTypes?.createPolicy("frame-runtime",{createScriptURL:h=>h})??null}catch{}const o=window.Worker,i=o?.prototype,c=Object.freeze({Worker:o,workerOn:i?.addEventListener,workerPost:i?.postMessage,workerTerminate:i?.terminate,fetch:window.fetch.bind(window),preventDefault:Event.prototype.preventDefault,policy:s,origins:t});r(e).then(h=>h?.bootTopLevel?h.bootTopLevel(c,n):n.settle()).catch(()=>n.settle())}var De="modulepreload",Ie=function(e){return"/"+e},Ue={},Le=function(t,r,n){let s=Promise.resolve();function o(i){const c=new Event("vite:preloadError",{cancelable:!0});if(c.payload=i,window.dispatchEvent(c),!c.defaultPrevented)throw i}return s.then(i=>{for(const c of i||[])c.status==="rejected"&&o(c.reason);return t().catch(o)})},Oe=window===top,q=Object.getOwnPropertyDescriptor(window,"claude"),k=we(Oe,window.__FRAME_PREAMBLE?.topLevel,q?.writable===!1),N=typeof k=="object"&&k[0],y=N?be():ge();(function(){const e=Object.defineProperty,t=globalThis,r=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let n=0;for(let s=0;s<r.length;s++){const o=r[s];try{e(t,o,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[o]}catch{}try{e(t,o,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[o]=="function"&&n++}if(n&&k==="framed")try{y.post({__frame_rtc_lockdown_failed:n},"*")}catch{}})();var Pe=1e4,Y=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function X(e){for(const t of Y)if(t.endsWith(":*"))try{const r=new URL(e);if(`${r.protocol}//${r.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}var R=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities}),B=window.__FRAME_PREAMBLE?.transforms,D=window.__FRAME_PREAMBLE?.comments,I=window.__FRAME_PREAMBLE?.translate;function S(e){return Le(()=>import("/_runtime/"+e),void 0)}function G(e,t){return{contract:e.contract,changes:new Set(e.changes??[]),flags:new Set(e.flags??[]),capabilities:e.capabilities??{},capBudgets:e.capBudgets??{},transforms:new Map,shellOrigin:t,mount:x,hooks:O,pipe:()=>({wrap:(r,n)=>(...s)=>{try{return n(...s)}catch(o){return Promise.reject(o)}}})}}var L=null,E=null;function V(e,t,r){try{Object.defineProperty(e,t,{value:r,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:r,writable:!1,configurable:!0,enumerable:!0})}catch{}}}var U=!1,O={editBefore:null,edit:null};function Ce(e,t,r=!1){const n=[];let s;if(r)try{O.editBefore?.(e)}catch{}for(const o of e.elements){const i=document.querySelector(`[data-id="${o.target}"]`);if(!i){s=o.target;break}if([...Object.keys(o.attrsSet??{}),...o.attrsRemoved??[]].some(c=>!oe(c))){s=o.target;break}if(o.text!==void 0&&(!ce(i)||de(i))){s=o.target;break}for(const[c,h]of Object.entries(o.attrsSet??{}))if(!J(i,c)){try{i.setAttribute(c,h)}catch{}Z(i,c,h)}for(const c of o.attrsRemoved??[])J(i,c)||(i.removeAttribute(c),Z(i,c,null));typeof o.text=="string"&&ue(i,o.text),n.push(o.target)}if(r)try{O.edit?.(e.seq,n,s)}catch{}if(s!==void 0){y.post({__frame_patch_miss:{seq:e.seq}},t);return}try{document.dispatchEvent(new CustomEvent("claude:edit",{detail:{seq:e.seq,targets:n}}))}catch{}}function Z(e,t,r){if(!(e instanceof HTMLInputElement))return;const n=t.toLowerCase();n==="checked"?e.checked=r!==null:n==="value"&&e.type!=="file"&&(e.value=r??"")}function J(e,t){const r=t.toLowerCase(),n=e;return r==="data-id"||(r==="value"||r==="checked")&&(n.__artifactSecret===!0||/^(password|hidden|file)$/.test(n.type??"")||/(^|\s)(cc-|one-time-code|current-password|new-password)/i.test(`${e.getAttribute("autocomplete")??""} ${n.autocomplete??""}`))}function Q(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,U=!0):U&&(delete t.dataset.theme,t.style.colorScheme="",U=!1)}var P=new Map;function Me(){let e;const t={u:new Promise(r=>{e=r}),r:r=>{t.done=!0,e(r)},done:!1,nulled:!1};return t}function F(){for(const e of P.values())e.done||(e.nulled=!0,e.r(null))}var je=Object.freeze(Object.assign(Object.create(null),{call:Function.prototype.call,apply:Function.prototype.apply,bind:Function.prototype.bind})),x=(e,t)=>{const r=P.get(e);if(!r||r.done){r?.nulled&&E&&y.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:e}},E);return}const n=typeof t=="function"?Object.setPrototypeOf(t,je):Object.assign(Object.create(null),t);typeof n.then=="function"&&delete n.then,r.r(Object.freeze(n))};function ee(){const e=q?.value??{};V(window,"claude",e);for(const t of Object.keys(R)){if(e[t]!==void 0){V(e,t,e[t]);continue}P.set(t,Me())}if(e.use===void 0){const t=r=>{if(typeof r!="string"||!Object.hasOwn(R,r))return Promise.resolve(null);const n=P.get(r);return n?n.u:Promise.resolve(e[r]??null)};try{Object.defineProperty(e,"use",{value:t,writable:!0,configurable:!0,enumerable:!1})}catch{}}}if(k==="framed"){const e=B&&A.test(B)?S(B).catch(()=>{}):Promise.resolve(void 0),t=a=>{if(a.type==="auxclick"&&a.button!==1)return;const f=a.target,v=f&&f.closest?f.closest("a[href],area[href]"):null;if(!v)return;const b=v.getAttribute("href");if(!b)return;let l;try{l=new URL(b,document.baseURI)}catch{return}if((l.protocol==="http:"||l.protocol==="https:")&&l.origin!==location.origin){a.preventDefault();const _=(v.getAttribute("target")??"").toLowerCase(),d=a.type==="auxclick"||a.metaKey||a.ctrlKey||a.shiftKey||a.altKey||!["","_self","_top","_parent"].includes(_);y.post({__frame_nav:!0,url:l.href,newTab:d},"*")}};addEventListener("click",t,!0),addEventListener("auxclick",t,!0);const r={},n=a=>{a.isTrusted&&(r.pointer=!0)},s=a=>{a.isTrusted&&(r.click=!0)};addEventListener("pointermove",n,{capture:!0,passive:!0}),addEventListener("click",s,{capture:!0,passive:!0}),e.then(a=>{a?.wireNav&&(a.wireNav(),removeEventListener("click",t,!0),removeEventListener("auxclick",t,!0),removeEventListener("pointermove",n,!0),removeEventListener("click",s,!0),a.wireEngagement?.(r))});let o=null;try{o=ke()}catch{}ee();let i=null,c=null,h=0;const p=y.on((a,f)=>{X(f)&&_e(a)&&(i=a.__frame_init,E=f,p(),clearTimeout(h),c?.())});y.post({__frame_connect:!0},"*");const w=new Promise(a=>{c=a,h=setTimeout(()=>{p(),a()},Pe)}),m=document.readyState==="loading"?new Promise(a=>document.addEventListener("DOMContentLoaded",()=>a(),{once:!0})):Promise.resolve();m.then(()=>{try{o?.restore()}catch{}});const g={cb:null};y.on((a,f)=>{if(X(f)&&ve(a)){try{o?.promoted()}catch{}g.cb?.()}}),w.then(async()=>{if(!i||!E){F();return}Q(i.theme);const a=E;let f=!1,v=!1;y.on((u,z,C)=>{if(z!==a)return;ye(u)&&Q(u.__frame_theme.theme),he(u)&&Ce(u.__frame_patch,a,C);const H=u?.__fc_mode;H&&typeof H=="object"&&!f&&D&&A.test(D)&&(f=!0,S(D).then(K=>K.install?.(a,H.on===!0)).catch(()=>{}));const W=u?.__ft_cmd;W&&typeof W=="object"&&!v&&I&&A.test(I)&&(v=!0,S(I).then(K=>K.install?.(a,W)).catch(()=>{}))});const b=Object.keys(i.capabilities??{}).filter(u=>Object.hasOwn(R,u)).map(u=>[u,R[u]]).filter(u=>typeof u[1]=="string"&&A.test(u[1])),l=await Promise.allSettled(b.map(([,u])=>S(u))),_=await e,d=E;if(_?.buildBoot||y.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:"_transforms"}},d),_?.buildBoot)try{L=_.buildBoot(i,_.TRANSFORMS??{},{shellOrigin:d,mount:x,hooks:O},u=>y.post({__frame_cap_telemetry:u},d))}catch{y.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:"_transforms"}},d),L=G(i,d)}else L=G(i,d);const T=u=>y.post({__frame_cap_telemetry:{kind:"cap-load-error",cap:u}},d),Ne=L;l.forEach((u,z)=>{const C=b[z][0];if(u.status!=="fulfilled"){T(C);return}try{u.value?.install?.(Ne)}catch{T(C)}}),F(),await m,y.post({__frame_ready:!0},E),e.then(u=>u?.installSizeReporter?.(d,g))})}else N&&(ee(),Re(N,Y,S,{settle:F,mount:x}))})();</script><!-- /frame-runtime --><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style><link rel="stylesheet" type="text/css" href="chrome-extension://gdnpkbipbholkoaggmlblpbmgemddbgb/css/awebChromeHelperInjected.min.css"></head><body>
+<title>The Cabin Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./css2" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf7f1; --paper2:#f3efe6; --ink:#191713; --ink2:#4c463c; --faint:#8a8272;
+    --hair:#ddd6c8; --accent:#8c2f1b; --accent2:#b5502f; --ok:#2f5d3a; --okbg:#e9efe6; --fail:#a33c25; --failbg:#f6e7e1;
+    --serif:'Fraunces',Georgia,serif; --text:'Newsreader',Georgia,serif; --sans:'Archivo',Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--text);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(18px,4vw,48px)}
+  .eyebrow{font-family:var(--sans);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:600}
+  .rule{border:0;border-top:1px solid var(--hair);margin:0}
+  header{padding:clamp(34px,6vw,64px) 0 clamp(22px,3vw,36px);text-align:center}
+  header h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,7vw,80px);line-height:1.02;letter-spacing:-.015em;margin:.22em 0 .3em}
+  header .dek{font-size:clamp(17px,2vw,21px);color:var(--ink2);max-width:600px;margin:0 auto;font-style:italic}
+  header .stamp{margin-top:18px;font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .sec{padding:clamp(30px,5vw,56px) 0}
+  .sechead{display:flex;align-items:baseline;gap:18px;margin-bottom:8px}
+  .sechead .no{font-family:var(--serif);font-size:15px;color:var(--accent);font-weight:500}
+  .sechead h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.01em}
+  .seclede{color:var(--ink2);max-width:640px;margin-bottom:24px}
+  /* Sticky band */
+  .band{position:sticky;top:0;z-index:50;background:var(--ink);color:var(--paper);padding:12px 0}
+  .bandwrap{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 28px}
+  .bandwrap .lab{font-family:var(--sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.55}
+  .bandwrap .val{font-family:var(--serif);font-size:clamp(18px,2.4vw,24px);font-weight:500}
+  .bandwrap .count{margin-left:auto;font-family:var(--sans);font-size:11.5px;opacity:.75;display:flex;align-items:center;gap:12px}
+  .utoggle{display:inline-flex;border:1px solid rgba(250,247,241,.35);border-radius:999px;overflow:hidden;vertical-align:middle}
+  .ubtn{font-family:var(--sans);font-size:10.5px;letter-spacing:.08em;padding:4px 11px;background:transparent;border:0;color:var(--paper);opacity:.55;cursor:pointer;text-transform:uppercase;font-weight:600}
+  .ubtn.on{background:var(--paper);color:var(--ink);opacity:1}
+  /* Will it fly widget */
+  .wif{display:grid;grid-template-columns:minmax(250px,320px) 1fr;gap:clamp(20px,3.5vw,44px);align-items:start}
+  @media(max-width:820px){.wif{grid-template-columns:1fr}}
+  .dimpanel{background:var(--paper2);border:1px solid var(--hair);border-radius:2px;padding:22px}
+  .dimpanel .plabel{font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+  .dimrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--hair)}
+  .dimrow:last-of-type{border-bottom:0}
+  .dimrow .dname{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+  .dimrow .dsub{display:block;font-weight:400;font-size:10px;color:var(--faint);letter-spacing:.03em;text-transform:none}
+  .stepper{display:flex;align-items:center;border:1px solid var(--hair);border-radius:2px;background:var(--paper)}
+  .stepper button{width:34px;height:40px;border:0;background:transparent;font-family:var(--sans);font-size:17px;color:var(--ink2);cursor:pointer}
+  .stepper button:hover{color:var(--accent)}
+  .stepper input{width:64px;height:40px;border:0;background:transparent;text-align:center;font-family:var(--serif);font-size:20px;font-weight:500;color:var(--ink)}
+  .stepper input:focus{outline:1.5px solid var(--accent)}
+  .bagpick{width:100%;margin-top:16px;font-family:var(--sans);font-size:12.5px;padding:10px;border:1px solid var(--hair);background:var(--paper);color:var(--ink);border-radius:2px}
+  .presetdims{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .pd{font-family:var(--sans);font-size:10.5px;padding:5px 10px;border:1px solid var(--hair);border-radius:999px;background:transparent;color:var(--ink2);cursor:pointer}
+  .pd:hover{border-color:var(--ink)}
+  /* Verdict + board */
+  .verdict{font-family:var(--serif);font-size:clamp(21px,2.8vw,30px);font-weight:400;line-height:1.25;margin-bottom:6px}
+  .verdict b{font-weight:600}
+  .verdict .vok{color:var(--ok)} .verdict .vbad{color:var(--fail)}
+  .rejectline{font-size:15px;color:var(--ink2);font-style:italic;margin-bottom:18px;min-height:22px}
+  .board{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:6px}
+  .bgroup{grid-column:1/-1;font-family:var(--serif);font-style:italic;font-size:13px;color:var(--faint);margin:8px 0 0}
+  .tile{border:1px solid var(--hair);border-radius:2px;padding:8px 10px;font-family:var(--sans);cursor:default}
+  .tile .tn{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.25}
+  .tile .tl{font-size:10px;color:var(--faint);margin-top:2px}
+  .tile .ts{font-size:10px;font-weight:600;margin-top:3px;letter-spacing:.04em}
+  .tile.ok{background:var(--okbg);border-color:#c6d4c0}.tile.ok .ts{color:var(--ok)}
+  .tile.no{background:var(--failbg);border-color:#e4c3b6}.tile.no .ts{color:var(--fail)}
+  .tile .cavdot{color:var(--accent2);cursor:help}
+  /* Filters + cards */
+  .filters{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;margin-bottom:26px;padding:14px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+  .fgroup{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .flabel{font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+  .fbtn{font-family:var(--sans);font-size:11.5px;font-weight:500;padding:6px 11px;border:1px solid var(--hair);border-radius:999px;background:transparent;color:var(--ink2);cursor:pointer}
+  .fbtn.on{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+  select{font-family:var(--sans);font-size:12px;padding:6px 8px;border:1px solid var(--hair);background:var(--paper);color:var(--ink);border-radius:2px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair)}
+  .card{background:var(--paper);padding:24px 22px;position:relative;cursor:pointer;transition:background .15s}
+  .card:hover{background:var(--paper2)}
+  .card.sel{outline:2px solid var(--accent);outline-offset:-2px}
+  .fitmeter{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .fitmeter .fnum{font-family:var(--sans);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+  .meter{flex:1;height:4px;background:var(--hair);border-radius:2px;overflow:hidden}
+  .meter i{display:block;height:100%;border-radius:2px}
+  .picktag{position:absolute;top:0;right:0;background:var(--accent);color:var(--paper);font-family:var(--sans);font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:5px 9px;font-weight:600}
+  .bagbrand{font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .bagname{font-family:var(--serif);font-size:21px;font-weight:500;line-height:1.15;margin:4px 0 10px}
+  .specs{font-family:var(--sans);font-size:12px;color:var(--ink2);line-height:1.8}
+  .specs b{font-weight:600;color:var(--ink)}
+  .bagnote{font-size:14.5px;font-style:italic;color:var(--ink2);margin-top:10px;line-height:1.45}
+  .flagline{margin-top:10px;font-family:var(--sans);font-size:10.5px;color:var(--accent2);line-height:1.6}
+  .price{font-family:var(--serif);font-size:19px;font-weight:500;margin-top:12px}
+  .price span{font-family:var(--sans);font-size:10.5px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;font-weight:400}
+  .exline{font-family:var(--sans);font-size:11px;color:var(--ink2);margin-top:6px}
+  .exline b{color:var(--fail);font-weight:600}
+  /* Advanced */
+  details.adv{border:1px solid var(--hair);border-radius:2px;background:var(--paper2)}
+  details.adv>summary{cursor:pointer;list-style:none;padding:18px 22px;font-family:var(--serif);font-size:19px;display:flex;align-items:baseline;gap:14px}
+  details.adv>summary::-webkit-details-marker{display:none}
+  details.adv>summary .hint{font-family:var(--sans);font-size:11px;color:var(--faint);letter-spacing:.06em}
+  details.adv>summary:before{content:'+';font-family:var(--sans);color:var(--accent);font-weight:600}
+  details.adv[open]>summary:before{content:'−'}
+  .advbody{padding:0 22px 26px}
+  .grp{margin:16px 0 4px}
+  .grp .glabel{font-family:var(--sans);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:9px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:var(--sans);font-size:12px;font-weight:500;padding:7px 13px;border:1px solid var(--hair);border-radius:999px;background:var(--paper);color:var(--ink2);cursor:pointer;transition:all .15s}
+  .chip:hover{border-color:var(--ink2)}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .presets{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 4px}
+  .preset{font-family:var(--sans);font-size:11px;letter-spacing:.06em;padding:7px 13px;border:1px solid var(--ink);border-radius:2px;background:transparent;cursor:pointer;text-transform:uppercase;font-weight:600;color:var(--ink)}
+  .preset:hover{background:var(--ink);color:var(--paper)}
+  .envline{font-family:var(--sans);font-size:12.5px;margin:16px 0;padding:12px 14px;background:var(--paper);border:1px solid var(--hair);border-radius:2px;color:var(--ink2)}
+  .envline b{font-family:var(--serif);font-size:16px;color:var(--ink)}
+  /* Drawing */
+  .drawing{background:var(--paper);border:1px solid var(--hair);padding:clamp(14px,2.5vw,28px);border-radius:2px;margin-top:16px}
+  .drawing .views{display:flex;flex-wrap:wrap;gap:clamp(16px,4vw,52px);justify-content:center}
+  .view{text-align:center}
+  .view .vlabel{font-family:var(--sans);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-top:10px}
+  .drawnote{text-align:center;margin-top:14px;font-size:14.5px;color:var(--ink2);font-style:italic}
+  /* Matrix */
+  .matrixbox{overflow-x:auto;border:1px solid var(--hair);border-radius:2px;background:var(--paper);margin-top:16px}
+  table.matrix{border-collapse:separate;border-spacing:0;width:100%;font-family:var(--sans);font-size:11.5px}
+  .matrix th{font-weight:600;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);padding:11px 9px;border-bottom:1px solid var(--ink);text-align:center;white-space:nowrap;background:var(--paper)}
+  .matrix th:first-child,.matrix td:first-child{text-align:left;position:sticky;left:0;background:var(--paper);z-index:2;border-right:1px solid var(--hair);max-width:210px}
+  .matrix td{padding:9px;border-bottom:1px solid var(--paper2);text-align:center;white-space:nowrap}
+  .matrix td.bagcell{font-weight:500;overflow:hidden;text-overflow:ellipsis}
+  .matrix td.bagcell .bsub{display:block;font-weight:400;font-size:10px;color:var(--faint)}
+  .matrix tr.mrow{cursor:pointer}
+  .matrix tr.mrow:hover td{background:var(--paper2)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%}
+  .dot.y{background:var(--ok)}
+  .over{font-size:10px;color:var(--fail);font-weight:600}
+  /* Fine print */
+  .fp{overflow-x:auto;border:1px solid var(--hair)}
+  table.fptab{border-collapse:collapse;width:100%;font-size:14px;background:var(--paper)}
+  .fptab th{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-align:left;padding:12px 14px;border-bottom:1px solid var(--hair);font-weight:600}
+  .fptab td{padding:11px 14px;border-bottom:1px solid var(--paper2);vertical-align:top}
+  .fptab td.n{font-family:var(--sans);font-size:12.5px;white-space:nowrap}
+  .fptab .anote{font-size:13px;color:var(--ink2);font-style:italic}
+  .fptab a{color:var(--accent);text-decoration:none}
+  .fptab a:hover{text-decoration:underline}
+  footer{padding:48px 0 64px;color:var(--faint);font-size:14px;font-style:italic;text-align:center}
+  footer .fin{font-family:var(--serif);font-size:22px;color:var(--ink2);margin-bottom:12px}
+</style>
+
+<header class="wrap">
+  <div class="eyebrow">A Field Guide to the Overhead Bin</div>
+  <h1>The Cabin Index</h1>
+  <p class="dek">Enter a suitcase. See exactly where in the world it flies — verified against thirty-nine airlines, wheels and all.</p>
+  <div class="stamp">Researched August 2026 · Dimensions include wheels &amp; handles unless flagged</div>
+</header>
+<hr class="rule">
+
+<!-- Sticky band -->
+<div class="band"><div class="wrap bandwrap" id="band"><span class="lab">Samsonite Cosmolite 3.0 Carry-On</span><span class="val">55 × 40 × 20 cm</span>
+     <span class="val" style="color:#e8b39d">flies on 28 of 39</span>
+     <span class="lab">all airlines</span>
+     <span class="count"><span class="utoggle"><button class="ubtn on" data-u="cm">cm·kg</button><button class="ubtn" data-u="in">in·lb</button></span></span></div></div>
+
+<!-- ===== 01 WILL IT FLY ===== -->
+<section class="sec wrap" id="wif">
+  <div class="sechead"><span class="no">No. 1</span><h2>Will it fly?</h2></div>
+  <p class="seclede">Set your bag's overall dimensions — including wheels and handles — or pick one of our vetted bags. The board answers instantly.</p>
+  <div class="wif">
+    <div class="dimpanel">
+      <div class="plabel">Your bag</div>
+      <div class="dimrow"><span class="dname">Height<span class="dsub" id="uh">centimeters</span></span><span class="stepper" data-ax="h"><button data-s="-1">−</button><input id="in_h" inputmode="decimal"><button data-s="1">+</button></span></div>
+      <div class="dimrow"><span class="dname">Width<span class="dsub" id="uw">centimeters</span></span><span class="stepper" data-ax="w"><button data-s="-1">−</button><input id="in_w" inputmode="decimal"><button data-s="1">+</button></span></div>
+      <div class="dimrow"><span class="dname">Depth<span class="dsub" id="ud">centimeters</span></span><span class="stepper" data-ax="d"><button data-s="-1">−</button><input id="in_d" inputmode="decimal"><button data-s="1">+</button></span></div>
+      <select class="bagpick" id="bagpick"><option value="">…or pick a vetted bag</option><option value="cosmo">Samsonite Cosmolite 3.0 Carry-On</option><option value="clite">Samsonite C-Lite Carry-On</option><option value="aircon">American Tourister Airconic Carry-On</option><option value="scure">Samsonite S’Cure Spinner 55/20</option><option value="max5">Travelpro Maxlite 5 Int’l Spinner</option><option value="pei">Travelpro Platinum Elite Int’l Spinner</option><option value="maxroll">Travelpro Maxlite 5 Int’l Rollaboard</option><option value="away">Away The Carry-On</option><option value="awaybig">Away The Bigger Carry-On</option><option value="monos">Monos Carry-On</option><option value="monospro">Monos Carry-On Pro</option><option value="july">July Carry On</option><option value="julylight">July Carry On Light (original)</option><option value="pe21">Travelpro Platinum Elite 21″</option><option value="brE">Briggs &amp; Riley Baseline Essential 22″</option><option value="brG">Briggs &amp; Riley Baseline Global 21″</option><option value="tumi">Tumi Alpha Expandable Carry-On</option><option value="vx">Victorinox Spectra 3.0 Frequent Flyer</option><option value="rimO">Rimowa Original Cabin</option><option value="rimE">Rimowa Essential Cabin</option><option value="chat">Delsey Chatelet Air 2.0 21″</option><option value="helium">Delsey Helium Aero 19″ Int’l</option><option value="freeform">Samsonite Freeform Carry-On</option><option value="outline">Samsonite Outline Pro Carry-On</option><option value="level8">Level8 Road Runner Pro 20″</option><option value="solgaard">Solgaard Carry-On Closet</option><option value="osprey">Osprey Ozone 2-Wheel 40L</option><option value="eagle">Eagle Creek Gear Warrior XE</option><option value="peak">Peak Design Roller Pro</option><option value="aer">Aer Carry-On</option><option value="maxund">Travelpro Maxlite 5 Underseat</option></select>
+      <div class="presetdims">
+        <button class="pd" data-dims="55,40,20">Euro 55/20</button>
+        <button class="pd" data-dims="55,40,23">Lufthansa box</button>
+        <button class="pd" data-dims="56,36,23">US 22×14×9</button>
+        <button class="pd" data-dims="56,45,25">BA max</button>
+      </div>
+    </div>
+    <div>
+      <div class="verdict" id="verdict">The <b>Samsonite Cosmolite 3.0 Carry-On</b> flies on <b class="vok">28 of 39</b> airlines.</div>
+      <div class="rejectline" id="rejectline">Rejected by Air France (5 cm too wide); KLM (5 cm too wide); Air Europa (5 cm too wide); Transavia (5 cm too wide) — and 7 more below.</div>
+      <div class="board" id="board"><div class="bgroup">Europe · Full-service</div><div class="tile ok" title="Included on every fare, even Basic">
+        <div class="tn">British Airways <span class="cavdot">§</span></div>
+        <div class="tl">56×45×25 cm</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile no" title="European “Basic” fare excludes it — paid add-on">
+        <div class="tn">Air France <span class="cavdot">§</span></div>
+        <div class="tl">55×35×25 cm · 12 kg</div>
+        <div class="ts">✗ 5 cm too wide</div></div><div class="tile no" title="“Basic” ticket: personal item only">
+        <div class="tn">KLM <span class="cavdot">§</span></div>
+        <div class="tl">55×35×25 cm · 12 kg</div>
+        <div class="ts">✗ 5 cm too wide</div></div><div class="tile ok" title="Included except Economy Basic (from May 2026)">
+        <div class="tn">Lufthansa <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included except Economy Basic (from May 2026)">
+        <div class="tn">SWISS <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included except Economy Basic">
+        <div class="tn">Austrian <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included on all fares, Basic too">
+        <div class="tn">Iberia <span class="cavdot">§</span></div>
+        <div class="tl">56×40×25 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included on all fares">
+        <div class="tn">ITA Airways <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included on all fares">
+        <div class="tn">TAP Air Portugal <span class="cavdot">§</span></div>
+        <div class="tl">55×40×25 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Economy Light (Europe): underseat bag only">
+        <div class="tn">SAS <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Superlight fare: underseat bag only">
+        <div class="tn">Finnair <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Saver (Europe): bag flies free but checked; cabin carriage from €9.99. Included transatlantic.">
+        <div class="tn">Aer Lingus <span class="cavdot">§</span></div>
+        <div class="tl">55×40×24 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included on all fares">
+        <div class="tn">LOT Polish <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included; active gate enforcement">
+        <div class="tn">Turkish Airlines <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included on all fares, GoLight too — but check the aircraft: Olympic Air props are stricter (next row)">
+        <div class="tn">Aegean <span class="cavdot">§</span></div>
+        <div class="tl">56×45×25 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Applies on Dash 8/ATR island hops — many Athens–Corfu, Santorini and Milos rotations">
+        <div class="tn">Olympic Air (Aegean props) <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Lufthansa Group rules — Economy Basic tiers exclude the cabin bag">
+        <div class="tn">Brussels Airlines <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Unified across every fare since May 2026; 10 kg Premium, 16 kg Business">
+        <div class="tn">Condor <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile no" title="Included; Business gets two bags, 14 kg total">
+        <div class="tn">Air Europa <span class="cavdot">§</span></div>
+        <div class="tl">55×35×25 cm · 10 kg</div>
+        <div class="ts">✗ 5 cm too wide</div></div><div class="tile ok" title="Included on all fares, Economy Light too">
+        <div class="tn">Icelandair <span class="cavdot">§</span></div>
+        <div class="tl">55×40×20 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="bgroup">Europe · Low-cost</div><div class="tile ok" title="Priority/bundles only — Basic gets the 40×30×20 underseat bag">
+        <div class="tn">Ryanair <span class="cavdot">§</span></div>
+        <div class="tl">55×40×20 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Paid add-on, Inclusive Plus, or easyJet Plus members">
+        <div class="tn">easyJet <span class="cavdot">§</span></div>
+        <div class="tl">56×45×25 cm · 15 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="WIZZ Priority only. Uniquely, wheels may add up to 5 cm beyond these dims.">
+        <div class="tn">Wizz Air <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Fly Light: underseat bag only; €60–140 gate penalties">
+        <div class="tn">Vueling <span class="cavdot">§</span></div>
+        <div class="tl">55×40×20 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="LowFare: underseat bag only; overhead bag from LowFare+">
+        <div class="tn">Norwegian <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="BASIC fare: underseat bag only; cabin bag from SMART">
+        <div class="tn">Eurowings <span class="cavdot">§</span></div>
+        <div class="tl">55×40×23 cm · 8 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile no" title="Cabin trolley requires the paid hand-baggage option on basic fares; small bag 40×30×20 always free">
+        <div class="tn">Transavia <span class="cavdot">§</span></div>
+        <div class="tl">55×35×25 cm · 10 kg</div>
+        <div class="ts">✗ 5 cm too wide</div></div><div class="tile ok" title="Priority boarding only — base fare gets the 40×30×20 underseat bag">
+        <div class="tn">Volotea <span class="cavdot">§</span></div>
+        <div class="tl">55×40×20 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="bgroup">Asia</div><div class="tile ok" title="Included, all cabins; under-seat stowage of personal item mandatory from Jul 2026">
+        <div class="tn">ANA <span class="cavdot">§</span></div>
+        <div class="tl">55×40×25 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Included, all cabins">
+        <div class="tn">Japan Airlines <span class="cavdot">§</span></div>
+        <div class="tl">55×40×25 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile ok" title="Two pieces in First/Business">
+        <div class="tn">Singapore Airlines <span class="cavdot">§</span></div>
+        <div class="tl">≤115 linear cm · 7 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile no" title="7 kg Economy · 10 kg Business · 15 kg First">
+        <div class="tn">Cathay Pacific <span class="cavdot">§</span></div>
+        <div class="tl">56×36×23 cm · 7 kg</div>
+        <div class="ts">✗ 4 cm too wide</div></div><div class="tile ok" title="Included; First/Prestige get two pieces, 18 kg">
+        <div class="tn">Korean Air <span class="cavdot">§</span></div>
+        <div class="tl">55×40×20 cm · 10 kg</div>
+        <div class="ts">✓ Accepted</div></div><div class="tile no" title="Included; two pieces in Laurel/Business">
+        <div class="tn">EVA Air <span class="cavdot">§</span></div>
+        <div class="tl">56×36×23 cm · 7 kg</div>
+        <div class="ts">✗ 4 cm too wide</div></div><div class="bgroup">Gulf</div><div class="tile no" title="No separate personal item in Economy — this is the whole allowance">
+        <div class="tn">Emirates <span class="cavdot">§</span></div>
+        <div class="tl">55×38×22 cm · 7 kg</div>
+        <div class="ts">✗ 2 cm too wide</div></div><div class="tile no" title="Included on all fares, Economy Lite too">
+        <div class="tn">Qatar Airways <span class="cavdot">§</span></div>
+        <div class="tl">50×37×25 cm · 7 kg</div>
+        <div class="ts">✗ 5 cm too tall, 3 cm too wide</div></div><div class="bgroup">United States</div><div class="tile no" title="Basic Economy: personal item only domestic; full carry-on included transatlantic/transpacific">
+        <div class="tn">United <span class="cavdot">§</span></div>
+        <div class="tl">56×35×23 cm</div>
+        <div class="ts">✗ 5 cm too wide</div></div><div class="tile no" title="Included on every fare, Basic too">
+        <div class="tn">Delta <span class="cavdot">§</span></div>
+        <div class="tl">56×35×23 cm</div>
+        <div class="ts">✗ 5 cm too wide</div></div><div class="tile no" title="Included on every fare, Basic too">
+        <div class="tn">American <span class="cavdot">§</span></div>
+        <div class="tl">56×36×23 cm</div>
+        <div class="ts">✗ 4 cm too wide</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 LUGGAGE ===== -->
+<section class="sec wrap" id="luggage">
+  <div class="sechead"><span class="no">No. 2</span><h2>The luggage</h2></div>
+  <p class="seclede">Only bags with a serious reputation make this list — verified dimensions, real warranties, durability records we could substantiate. Each is scored by how much of the world it flies. Tap any bag to test it on the board above.</p>
+  <div class="filters">
+    <div class="fgroup"><span class="flabel">Scope</span><span id="scopebtns"><button class="fbtn on">International-ready</button><button class="fbtn">Show everything</button></span></div>
+    <div class="fgroup"><span class="flabel">Tier</span><span id="tierbtns"><button class="fbtn on">All</button><button class="fbtn">Budget</button><button class="fbtn">Mid-range</button><button class="fbtn">Premium</button><button class="fbtn">Luxury</button></span></div>
+    <div class="fgroup"><span class="flabel">Shell</span><span id="shellbtns"><button class="fbtn on">All</button><button class="fbtn">Hardside</button><button class="fbtn">Softside</button></span></div>
+    <div class="fgroup"><span class="flabel">Wheels</span><span id="wheelbtns"><button class="fbtn on">All</button><button class="fbtn">Spinner</button><button class="fbtn">Two-wheel</button></span></div>
+    <div class="fgroup"><span class="flabel">Sort</span>
+      <select id="sortsel">
+        <option value="fly">Flies furthest</option>
+        <option value="kg">Lightest first</option>
+        <option value="L">Most capacity</option>
+        <option value="eff">Liters per kilo</option>
+        <option value="price">Price, low to high</option>
+      </select>
+    </div>
+  </div>
+  <div class="cards" id="cards"><div class="card"><div class="picktag">Editors’ pick</div>
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 33/39</span><span class="meter"><i style="width:85%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Osprey · Mid-range</div>
+      <div class="bagname">Ozone 2-Wheel 40L</div>
+      <div class="specs"><b>55 × 35 × 23 cm</b> (21.7 × 13.8 × 9.1″) incl. wheels &amp; handles<br>
+        <b>2.1 kg</b> / 4.6 lb · <b>40 L</b> · 19.0 L/kg<br>
+        Softside · Recycled nylon ripstop · aluminum chassis · 2-wheel<br>All Mighty lifetime — famously honored</div>
+      <div class="bagnote">Forty liters at 2.1 kg with the best warranty culture in outdoor gear. Soft walls, hard logic.</div>
+      <div class="flagline">⚠ Maker does not state whether dims include wheels — treat as approximate</div>
+      <div class="price">$260 <span>$300 list</span></div><div class="exline">Except <b>Icelandair, Ryanair, Vueling +3 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 33/39</span><span class="meter"><i style="width:85%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Victorinox · Premium</div>
+      <div class="bagname">Spectra 3.0 Frequent Flyer</div>
+      <div class="specs"><b>55 × 35 × 23 cm</b> (21.7 × 13.8 × 9.1″) incl. wheels &amp; handles<br>
+        <b>3.3 kg</b> / 7.3 lb · <b>37 L</b> · 11.2 L/kg<br>
+        Hardside · Recycled polycarbonate · front door · 4-wheel<br>Lifetime (defects)</div>
+      <div class="bagnote">Swiss sobriety with a clever front hatch. Smaller service network than the American majors.</div>
+      <div class="flagline">⚠ Maker does not state whether dims include wheels — treat as approximate</div>
+      <div class="price">$400 <span>sale · $575 list</span></div><div class="exline">Except <b>Icelandair, Ryanair, Vueling +3 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 33/39</span><span class="meter"><i style="width:85%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Aer · Mid-range</div>
+      <div class="bagname">Carry-On</div>
+      <div class="specs"><b>55 × 35 × 23 cm</b> (21.7 × 13.8 × 9.1″) incl. wheels &amp; handles<br>
+        <b>3.7 kg</b> / 8.2 lb · <b>41 L</b> · 11.1 L/kg<br>
+        Hardside · Makrolon PC · Hinomoto wheels · YKK · 4-wheel<br>Lifetime (defects)</div>
+      <div class="bagnote">Premium components at a mid price; a young line still earning its record.</div>
+      <div class="flagline">⚠ Maker does not state whether dims include wheels — treat as approximate</div>
+      <div class="price">$299 <span></span></div><div class="exline">Except <b>Icelandair, Ryanair, Vueling +3 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 33/39</span><span class="meter"><i style="width:85%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Solgaard · Mid-range</div>
+      <div class="bagname">Carry-On Closet</div>
+      <div class="specs"><b>53 × 34 × 23 cm</b> (20.9 × 13.4 × 9.1″) incl. wheels &amp; handles<br>
+        <b>3.74 kg</b> / 8.2 lb · <b>35 L</b> · 9.4 L/kg<br>
+        Hardside · Polycarbonate · shelf system · 4-wheel<br>Lifetime (components)</div>
+      <div class="bagnote">The shelf gimmick mostly works, and the footprint is honest — the most internationally compliant of the DTC set.</div>
+      
+      <div class="price">$195 <span></span></div><div class="exline">Except <b>Icelandair, Ryanair, Vueling +3 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 32/39</span><span class="meter"><i style="width:82%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">July · Mid-range</div>
+      <div class="bagname">Carry On Light (original)</div>
+      <div class="specs"><b>54 × 36 × 19 cm</b> (21.3 × 14.2 × 7.5″) incl. wheels &amp; handles<br>
+        <b>1.8 kg</b> / 4.0 lb · <b>32 L</b> · 17.8 L/kg<br>
+        Hardside · Polycarbonate · 4-wheel<br>Limited lifetime · mixed service reports</div>
+      <div class="bagnote">Feather-light and genuinely Europe-proof — if you can still find it.</div>
+      <div class="flagline">⚠ Being phased out; current “Light Expandable” is 24.5 cm deep and does not qualify</div>
+      <div class="price">$255 <span></span></div><div class="exline">Except <b>Air France, KLM, Air Europa +4 more</b></div></div><div class="card sel"><div class="picktag">Editors’ pick</div>
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 28/39</span><span class="meter"><i style="width:72%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Samsonite · Mid-range</div>
+      <div class="bagname">Cosmolite 3.0 Carry-On</div>
+      <div class="specs"><b>55 × 40 × 20 cm</b> (21.7 × 15.7 × 7.9″) incl. wheels &amp; handles<br>
+        <b>1.68 kg</b> / 3.7 lb · <b>36 L</b> · 21.4 L/kg<br>
+        Hardside · Curv woven polypropylene · 4-wheel<br>Limited lifetime · global repair network</div>
+      <div class="bagnote">Fifteen years of Curv in European service, and still the lightest serious suitcase made. Buy on sale, never at list.</div>
+      
+      <div class="price">$300 <span>sale · $500 list</span></div><div class="exline">Except <b>Air France, KLM, Air Europa +8 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 28/39</span><span class="meter"><i style="width:72%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">American Tourister · Budget</div>
+      <div class="bagname">Airconic Carry-On</div>
+      <div class="specs"><b>55 × 40 × 20 cm</b> (21.7 × 15.7 × 7.9″) incl. wheels &amp; handles<br>
+        <b>2 kg</b> / 4.4 lb · <b>33.5 L</b> · 16.8 L/kg<br>
+        Hardside · Polypropylene · 4-wheel<br>10-year global (Samsonite network)</div>
+      <div class="bagnote">The exact European mold at a fifth of the price. Budget hardware, serious footprint.</div>
+      
+      <div class="price">$100 <span>often ~$85</span></div><div class="exline">Except <b>Air France, KLM, Air Europa +8 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 28/39</span><span class="meter"><i style="width:72%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Samsonite · Premium</div>
+      <div class="bagname">C-Lite Carry-On</div>
+      <div class="specs"><b>55 × 40 × 20 cm</b> (21.7 × 15.7 × 7.9″) incl. wheels &amp; handles<br>
+        <b>2.04 kg</b> / 4.5 lb · <b>36 L</b> · 17.6 L/kg<br>
+        Hardside · Curv woven polypropylene · 4-wheel<br>10-year global</div>
+      <div class="bagnote">The Cosmolite’s better-appointed successor — same shell, dual-tube handle, US price that never quite justifies itself.</div>
+      <div class="flagline">⚠ Expandable — exceeds 20 cm depth if expanded</div>
+      <div class="price">$475 <span>rarely discounted in US</span></div><div class="exline">Except <b>Air France, KLM, Air Europa +8 more</b></div></div><div class="card"><div class="picktag">Editors’ pick</div>
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 28/39</span><span class="meter"><i style="width:72%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Travelpro · Mid-range</div>
+      <div class="bagname">Maxlite 5 Int’l Spinner</div>
+      <div class="specs"><b>55 × 40 × 20 cm</b> (21.7 × 15.7 × 7.9″) incl. wheels &amp; handles<br>
+        <b>2.4 kg</b> / 5.3 lb · <b>39 L</b> · 16.3 L/kg<br>
+        Softside · Polyester · DuraGuard · 4-wheel<br>Limited lifetime · US repair network</div>
+      <div class="bagnote">The most packing space of any true 55/20 in America. Keep the front pocket light and it stands its ground.</div>
+      <div class="flagline">⚠ Expandable — exceeds 20 cm depth if expanded</div>
+      <div class="price">$160 <span></span></div><div class="exline">Except <b>Air France, KLM, Air Europa +8 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#7a8a4a">Flies on 28/39</span><span class="meter"><i style="width:72%;background:#7a8a4a"></i></span></div>
+      <div class="bagbrand">Samsonite · Mid-range</div>
+      <div class="bagname">S’Cure Spinner 55/20</div>
+      <div class="specs"><b>55 × 40 × 20 cm</b> (21.7 × 15.7 × 7.9″) incl. wheels &amp; handles<br>
+        <b>2.9 kg</b> / 6.4 lb · <b>34 L</b> · 11.7 L/kg<br>
+        Hardside · Polypropylene · zipperless clamp · 4-wheel<br>Ambiguous when gray-imported</div>
+      <div class="bagnote">The European tank: no zipper to fail, a shell that shrugs. Heavy for weight-limited cabins.</div>
+      <div class="flagline">⚠ Not sold by Samsonite US — import only</div>
+      <div class="price">$150 <span>import channels</span></div><div class="exline">Except <b>Air France, KLM, Air Europa +8 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#b5822f">Flies on 26/39</span><span class="meter"><i style="width:67%;background:#b5822f"></i></span></div>
+      <div class="bagbrand">Travelpro · Budget</div>
+      <div class="bagname">Maxlite 5 Underseat</div>
+      <div class="specs"><b>44.5 × 36.8 × 21.6 cm</b> (17.5 × 14.5 × 8.5″) incl. wheels &amp; handles<br>
+        <b>2.5 kg</b> / 5.5 lb · <b>25 L</b> · 10.0 L/kg<br>
+        Softside · Polyester · DuraGuard · 2-wheel<br>Limited lifetime</div>
+      <div class="bagnote">Crew-brand build in the size that flies free on every low-cost fare in Europe.</div>
+      
+      <div class="price">$135 <span></span></div><div class="exline">Except <b>Air France, KLM, Air Europa +10 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#b5822f">Flies on 24/39</span><span class="meter"><i style="width:62%;background:#b5822f"></i></span></div>
+      <div class="bagbrand">July · Mid-range</div>
+      <div class="bagname">Carry On</div>
+      <div class="specs"><b>55 × 38.5 × 21.5 cm</b> (21.7 × 15.2 × 8.5″) incl. wheels &amp; handles<br>
+        <b>3.4 kg</b> / 7.5 lb · <b>42 L</b> · 12.4 L/kg<br>
+        Hardside · Polycarbonate · aluminum bumpers · 4-wheel<br>Limited lifetime · mixed service reports</div>
+      <div class="bagnote">Cult hardware — twenty-stop handle, silent wheels — in a width that flirts with US sizers.</div>
+      <div class="flagline">⚠ Maker does not state whether dims include wheels — treat as approximate</div>
+      <div class="price">$295 <span></span></div><div class="exline">Except <b>Air France, KLM, Air Europa +12 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#b5822f">Flies on 24/39</span><span class="meter"><i style="width:62%;background:#b5822f"></i></span></div>
+      <div class="bagbrand">Briggs &amp; Riley · Luxury</div>
+      <div class="bagname">Baseline Global 21″</div>
+      <div class="specs"><b>53.3 × 38.1 × 22.9 cm</b> (21.0 × 15.0 × 9.0″) incl. wheels &amp; handles<br>
+        <b>4.5 kg</b> / 9.9 lb · <b>37 L</b> · 8.2 L/kg<br>
+        Softside · Ballistic nylon · 4-wheel<br>Lifetime incl. airline damage</div>
+      <div class="bagnote">Shorter and wider — shaped for the 55×40×23 world, not the American sizer.</div>
+      
+      <div class="price">$729 <span></span></div><div class="exline">Except <b>Air France, KLM, Air Europa +12 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#b5822f">Flies on 20/39</span><span class="meter"><i style="width:51%;background:#b5822f"></i></span></div>
+      <div class="bagbrand">Rimowa · Luxury</div>
+      <div class="bagname">Essential Cabin</div>
+      <div class="specs"><b>55 × 39 × 23 cm</b> (21.7 × 15.4 × 9.1″) incl. wheels &amp; handles<br>
+        <b>3.2 kg</b> / 7.1 lb · <b>36 L</b> · 11.3 L/kg<br>
+        Hardside · Polycarbonate · 4-wheel<br>Lifetime · global repair</div>
+      <div class="bagnote">Rimowa’s wheels and warranty in polycarbonate — superb, at three times the price of superb.</div>
+      
+      <div class="price">$990 <span></span></div><div class="exline">Except <b>Air France, KLM, Air Europa +16 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:#b5822f">Flies on 20/39</span><span class="meter"><i style="width:51%;background:#b5822f"></i></span></div>
+      <div class="bagbrand">Rimowa · Luxury</div>
+      <div class="bagname">Original Cabin</div>
+      <div class="specs"><b>55 × 40 × 23 cm</b> (21.7 × 15.7 × 9.1″) incl. wheels &amp; handles<br>
+        <b>4.3 kg</b> / 9.5 lb · <b>35 L</b> · 8.1 L/kg<br>
+        Hardside · Anodized aluminum · 4-wheel<br>Lifetime (since 2022) · global repair</div>
+      <div class="bagnote">The benchmark aluminum case. The dents are the point.</div>
+      
+      <div class="price">$1550 <span></span></div><div class="exline">Except <b>Air France, KLM, Air Europa +16 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 9/39</span><span class="meter"><i style="width:23%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Monos · Mid-range</div>
+      <div class="bagname">Carry-On</div>
+      <div class="specs"><b>55.9 × 35.6 × 22.9 cm</b> (22.0 × 14.0 × 9.0″) incl. wheels &amp; handles<br>
+        <b>2.99 kg</b> / 6.6 lb · <b>39.9 L</b> · 13.3 L/kg<br>
+        Hardside · Polycarbonate · 4-wheel<br>Limited lifetime</div>
+      <div class="bagnote">The value pick of the premium DTC set — lighter than Away, tighter build for the money.</div>
+      
+      <div class="price">$275 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +27 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 9/39</span><span class="meter"><i style="width:23%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Monos · Mid-range</div>
+      <div class="bagname">Carry-On Pro</div>
+      <div class="specs"><b>55.9 × 35.6 × 22.9 cm</b> (22.0 × 14.0 × 9.0″) incl. wheels &amp; handles<br>
+        <b>3.54 kg</b> / 7.8 lb · <b>36 L</b> · 10.2 L/kg<br>
+        Hardside · Polycarbonate · front compartment · 4-wheel<br>Limited lifetime</div>
+      <div class="bagnote">The laptop door costs four liters. Business travelers seem happy to pay it.</div>
+      
+      <div class="price">$295 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +27 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 9/39</span><span class="meter"><i style="width:23%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Peak Design · Premium</div>
+      <div class="bagname">Roller Pro</div>
+      <div class="specs"><b>55.6 × 35.6 × 23 cm</b> (21.9 × 14.0 × 9.1″) incl. wheels &amp; handles<br>
+        <b>3.9 kg</b> / 8.6 lb · <b>34 L</b> · 8.7 L/kg<br>
+        Hardside · Hybrid nylon/EVA · carbon handle · 4-wheel<br>Lifetime</div>
+      <div class="bagnote">Design-forward, user-serviceable, expensive per liter. The enthusiast’s choice.</div>
+      <div class="flagline">⚠ Maker does not state whether dims include wheels — treat as approximate</div>
+      <div class="price">$600 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +27 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 9/39</span><span class="meter"><i style="width:23%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Briggs &amp; Riley · Luxury</div>
+      <div class="bagname">Baseline Essential 22″</div>
+      <div class="specs"><b>55.9 × 35.6 × 22.9 cm</b> (22.0 × 14.0 × 9.0″) incl. wheels &amp; handles<br>
+        <b>4.5 kg</b> / 9.9 lb · <b>35.4 L</b> · 7.9 L/kg<br>
+        Softside · Ballistic nylon · 4-wheel<br>Lifetime incl. airline damage — the industry’s best</div>
+      <div class="bagnote">Near-indestructible, repairable forever, and the only warranty that covers what baggage handlers do.</div>
+      
+      <div class="price">$729 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +27 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 9/39</span><span class="meter"><i style="width:23%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Tumi · Luxury</div>
+      <div class="bagname">Alpha Expandable Carry-On</div>
+      <div class="specs"><b>55.9 × 35.6 × 22.9 cm</b> (22.0 × 14.0 × 9.0″) incl. wheels &amp; handles<br>
+        <b>4.6 kg</b> / 10.1 lb · <b>35 L</b> · 7.6 L/kg<br>
+        Hardside · Polycarbonate + FXT ballistic · 4-wheel<br>5-year · excellent repair network</div>
+      <div class="bagnote">Beautifully made, heaviest bag in the index, and the least warranty per dollar here.</div>
+      <div class="flagline">⚠ Maker does not state whether dims include wheels — treat as approximate</div>
+      <div class="price">$1050 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +27 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 6/39</span><span class="meter"><i style="width:15%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Travelpro · Mid-range</div>
+      <div class="bagname">Maxlite 5 Int’l Rollaboard</div>
+      <div class="specs"><b>55.2 × 40 × 19.7 cm</b> (21.7 × 15.7 × 7.8″) incl. wheels &amp; handles<br>
+        <b>2.45 kg</b> / 5.4 lb · <b>40 L</b> · 16.3 L/kg<br>
+        Softside · Polyester · DuraGuard · 2-wheel<br>Limited lifetime · US repair network</div>
+      <div class="bagnote">Two big recessed wheels for cobblestone towns, zero tip-over geometry, a touch more room inside.</div>
+      
+      <div class="price">$150 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +30 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 6/39</span><span class="meter"><i style="width:15%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Away · Mid-range</div>
+      <div class="bagname">The Carry-On</div>
+      <div class="specs"><b>55.1 × 36.6 × 22.9 cm</b> (21.7 × 14.4 × 9.0″) incl. wheels &amp; handles<br>
+        <b>3.4 kg</b> / 7.5 lb · <b>41 L</b> · 12.1 L/kg<br>
+        Hardside · Polycarbonate · 4-wheel<br>Limited lifetime</div>
+      <div class="bagnote">The direct-to-consumer benchmark, post-2024 refresh. Solid, ubiquitous, unremarkable.</div>
+      
+      <div class="price">$275 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +30 more</b></div></div><div class="card">
+      <div class="fitmeter"><span class="fnum" style="color:var(--fail)">Flies on 6/39</span><span class="meter"><i style="width:15%;background:var(--fail)"></i></span></div>
+      <div class="bagbrand">Travelpro · Mid-range</div>
+      <div class="bagname">Platinum Elite Int’l Spinner</div>
+      <div class="specs"><b>55.2 × 40 × 19.7 cm</b> (21.7 × 15.7 × 7.8″) incl. wheels &amp; handles<br>
+        <b>3.5 kg</b> / 7.7 lb · <b>38 L</b> · 10.9 L/kg<br>
+        Softside · High-denier nylon · 4-wheel<br>Limited lifetime + airline damage (registered)</div>
+      <div class="bagnote">The ten-year softside — PowerScope handle, self-aligning wheels. Its 3.5 kg is the tax.</div>
+      
+      <div class="price">$310 <span></span></div><div class="exline">Except <b>Air France, KLM, Lufthansa +30 more</b></div></div></div>
+</section>
+
+<!-- ===== 03 ADVANCED ===== -->
+<section class="sec wrap" id="advanced">
+  <details class="adv" id="advdet">
+    <summary>For the meticulous <span class="hint">pick your exact airlines · envelope · scale drawing · full matrix</span></summary>
+    <div class="advbody">
+      <p class="seclede" style="margin-top:6px">Fly a known set of carriers? Select them and everything above rescores against <i>your</i> airlines only — plus the strictest-envelope math, the technical drawing, and the full compliance matrix.</p>
+      <div id="chipgroups"><div class="grp"><div class="glabel">Europe · Full-service</div><div class="chips"><button class="chip">British Airways</button><button class="chip">Air France</button><button class="chip">KLM</button><button class="chip">Lufthansa</button><button class="chip">SWISS</button><button class="chip">Austrian</button><button class="chip">Iberia</button><button class="chip">ITA Airways</button><button class="chip">TAP Air Portugal</button><button class="chip">SAS</button><button class="chip">Finnair</button><button class="chip">Aer Lingus</button><button class="chip">LOT Polish</button><button class="chip">Turkish Airlines</button><button class="chip">Aegean</button><button class="chip">Olympic Air (Aegean props)</button><button class="chip">Brussels Airlines</button><button class="chip">Condor</button><button class="chip">Air Europa</button><button class="chip">Icelandair</button></div></div><div class="grp"><div class="glabel">Europe · Low-cost</div><div class="chips"><button class="chip">Ryanair</button><button class="chip">easyJet</button><button class="chip">Wizz Air</button><button class="chip">Vueling</button><button class="chip">Norwegian</button><button class="chip">Eurowings</button><button class="chip">Transavia</button><button class="chip">Volotea</button></div></div><div class="grp"><div class="glabel">Asia</div><div class="chips"><button class="chip">ANA</button><button class="chip">Japan Airlines</button><button class="chip">Singapore Airlines</button><button class="chip">Cathay Pacific</button><button class="chip">Korean Air</button><button class="chip">EVA Air</button></div></div><div class="grp"><div class="glabel">Gulf</div><div class="chips"><button class="chip">Emirates</button><button class="chip">Qatar Airways</button></div></div><div class="grp"><div class="glabel">United States</div><div class="chips"><button class="chip">United</button><button class="chip">Delta</button><button class="chip">American</button></div></div></div>
+      <div class="presets">
+        <button class="preset" data-preset="all">All 39</button>
+        <button class="preset" data-preset="greece">Greek islands</button>
+        <button class="preset" data-preset="eulcc">European low-cost</button>
+        <button class="preset" data-preset="lhg">Lufthansa Group</button>
+        <button class="preset" data-preset="asia">Asia full-service</button>
+        <button class="preset" data-preset="none">Clear</button>
+      </div>
+      <div class="envline" id="envline">The everywhere-envelope (all 39): <b>50 × 35 × 20 cm</b> <span style="color:var(--faint)">(height · Qatar Airways, width · Air France, depth · Icelandair)</span> · <b>7 kg</b> <span style="color:var(--faint)">(Singapore Airlines)</span>. A bag inside this box flies on every airline in the index.</div>
+      <div class="drawing">
+        <div class="views">
+          <div class="view"><svg id="svgfront" viewBox="0 0 310 366" width="310" height="366"><line x1="22" y1="330" x2="302" y2="330" stroke="#8a8272" stroke-width="1"></line><rect x="40" y="80" width="175" height="250" fill="rgba(140,47,27,.10)" stroke="#8c2f1b" stroke-width="1.6"></rect><text x="44" y="74" font-family="Archivo" font-size="9.5" font-weight="600" fill="#8c2f1b" letter-spacing="1.5">35 × 50 CM</text><rect x="40" y="55" width="200" height="275" rx="9" fill="rgba(25,23,19,.15)" stroke="#191713" stroke-width="1.6"></rect><circle cx="49" cy="326" r="4.5" fill="#191713"></circle><circle cx="231" cy="326" r="4.5" fill="#191713"></circle><text x="140" y="192.5" font-family="Archivo" font-size="9.5" font-weight="600" fill="#191713" text-anchor="middle">40 × 55</text></svg><div class="vlabel">Front elevation · width × height</div></div>
+          <div class="view"><svg id="svgside" viewBox="0 0 220 366" width="220" height="366"><line x1="22" y1="330" x2="212" y2="330" stroke="#8a8272" stroke-width="1"></line><rect x="40" y="80" width="100" height="250" fill="rgba(140,47,27,.10)" stroke="#8c2f1b" stroke-width="1.6"></rect><text x="44" y="74" font-family="Archivo" font-size="9.5" font-weight="600" fill="#8c2f1b" letter-spacing="1.5">20 × 50 CM</text><rect x="40" y="55" width="100" height="275" rx="9" fill="rgba(25,23,19,.15)" stroke="#191713" stroke-width="1.6"></rect><circle cx="49" cy="326" r="4.5" fill="#191713"></circle><circle cx="131" cy="326" r="4.5" fill="#191713"></circle><text x="90" y="192.5" font-family="Archivo" font-size="9.5" font-weight="600" fill="#191713" text-anchor="middle">20 × 55</text></svg><div class="vlabel">Side elevation · depth × height</div></div>
+        </div>
+        <div class="drawnote" id="drawnote">Airline outlines appear when ten or fewer are selected. The shaded region is the strictest envelope; the dark silhouette is your bag.</div>
+      </div>
+      <div class="matrixbox" id="matrixbox"><div style="padding:20px;font-style:italic;color:var(--faint);font-family:var(--text)">Select airlines above and the full bag-by-airline matrix builds here — filled marks clear the limit; failing cells show the overage per axis.</div></div>
+    </div>
+  </details>
+</section>
+
+<!-- ===== 04 FINE PRINT ===== -->
+<section class="sec wrap" id="fineprint">
+  <div class="sechead"><span class="no">No. 3</span><h2>The fine print</h2></div>
+  <p class="seclede">The published limits, carrier by carrier, with the caveats that matter — because on half of Europe's airlines, the question isn't whether your bag fits but whether your fare includes it at all.</p>
+  <div class="fp" id="fptable"><table class="fptab"><tbody><tr><th>Airline</th><th>Cabin bag</th><th>Weight</th><th>Personal item</th><th>The catch</th></tr><tr><td class="n"><a href="https://www.britishairways.com/en-gb/information/baggage-essentials/hand-baggage-allowances" target="_blank" rel="noopener">British Airways</a></td>
+      <td class="n">56 × 45 × 25 cm</td>
+      <td class="n">None published</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included on every fare, even Basic — No numeric weight limit — you must lift it unassisted.</td></tr><tr><td class="n"><a href="https://wwws.airfrance.us/information/bagages/bagage-cabine-soute" target="_blank" rel="noopener">Air France</a></td>
+      <td class="n">55 × 35 × 25 cm</td>
+      <td class="n">12 kg incl. personal item</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">European “Basic” fare excludes it — paid add-on</td></tr><tr><td class="n"><a href="https://www.klm.us/information/baggage/hand-baggage-allowance" target="_blank" rel="noopener">KLM</a></td>
+      <td class="n">55 × 35 × 25 cm</td>
+      <td class="n">12 kg incl. personal item</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">“Basic” ticket: personal item only</td></tr><tr><td class="n"><a href="https://www.lufthansa.com/us/en/carry-on-baggage" target="_blank" rel="noopener">Lufthansa</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included except Economy Basic (from May 2026)</td></tr><tr><td class="n"><a href="https://www.swiss.com/us/en/prepare/baggage/hand-baggage" target="_blank" rel="noopener">SWISS</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included except Economy Basic (from May 2026)</td></tr><tr><td class="n"><a href="https://www.austrian.com/at/en/handgepaeck.solo_continue" target="_blank" rel="noopener">Austrian</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included except Economy Basic</td></tr><tr><td class="n"><a href="https://www.iberia.com/us/luggage/hand-luggage/" target="_blank" rel="noopener">Iberia</a></td>
+      <td class="n">56 × 40 × 25 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included on all fares, Basic too</td></tr><tr><td class="n"><a href="https://www.ita-airways.com/us/en/book-and-prepare/travel-information/baggage/carry-on-baggage" target="_blank" rel="noopener">ITA Airways</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included on all fares — Changed from 55×35×25 after Lufthansa acquisition — older sites still show the old size.</td></tr><tr><td class="n"><a href="https://www.flytap.com/en-us/information/baggage/hand-baggage" target="_blank" rel="noopener">TAP Air Portugal</a></td>
+      <td class="n">55 × 40 × 25 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×15 · max 2 kg</td>
+      <td class="anote">Included on all fares</td></tr><tr><td class="n"><a href="https://www.flysas.com/en/travel-info/baggage/carry-on" target="_blank" rel="noopener">SAS</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Economy Light (Europe): underseat bag only</td></tr><tr><td class="n"><a href="https://www.finnair.com/en/baggage-on-finnair-flights/carry-on-baggage" target="_blank" rel="noopener">Finnair</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg incl. personal item</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Superlight fare: underseat bag only</td></tr><tr><td class="n"><a href="https://www.aerlingus.com/prepare/bags/carry-on-baggage/" target="_blank" rel="noopener">Aer Lingus</a></td>
+      <td class="n">55 × 40 × 24 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×20</td>
+      <td class="anote">Saver (Europe): bag flies free but checked; cabin carriage from €9.99. Included transatlantic.</td></tr><tr><td class="n"><a href="https://www.lot.com/us/en/journey/baggage/short-haul-baggage" target="_blank" rel="noopener">LOT Polish</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×35×12 · max 2 kg</td>
+      <td class="anote">Included on all fares</td></tr><tr><td class="n"><a href="https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/" target="_blank" rel="noopener">Turkish Airlines</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15 · max 4 kg</td>
+      <td class="anote">Included; active gate enforcement</td></tr><tr><td class="n"><a href="https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/" target="_blank" rel="noopener">Aegean</a></td>
+      <td class="n">56 × 45 × 25 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included on all fares, GoLight too — but check the aircraft: Olympic Air props are stricter (next row) — Dims include handles, pockets and wheels.</td></tr><tr><td class="n"><a href="https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/" target="_blank" rel="noopener">Olympic Air (Aegean props)</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Applies on Dash 8/ATR island hops — many Athens–Corfu, Santorini and Milos rotations</td></tr><tr><td class="n"><a href="https://www.brusselsairlines.com/be/en/extra-services/baggage/hand-baggage" target="_blank" rel="noopener">Brussels Airlines</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Lufthansa Group rules — Economy Basic tiers exclude the cabin bag</td></tr><tr><td class="n"><a href="https://www.condor.com/us/flight-preparation/baggage-services/carry-on-baggage.jsp" target="_blank" rel="noopener">Condor</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Unified across every fare since May 2026; 10 kg Premium, 16 kg Business</td></tr><tr><td class="n"><a href="https://www.aireuropa.com/us/en/aea/travel-information/baggage/carry-on-luggage.html" target="_blank" rel="noopener">Air Europa</a></td>
+      <td class="n">55 × 35 × 25 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">Underseat bag</td>
+      <td class="anote">Included; Business gets two bags, 14 kg total</td></tr><tr><td class="n"><a href="https://www.icelandair.com/support/baggage/allowance/" target="_blank" rel="noopener">Icelandair</a></td>
+      <td class="n">55 × 40 × 20 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included on all fares, Economy Light too — Dims explicitly include wheels and handles.</td></tr><tr><td class="n"><a href="https://help.ryanair.com/hc/en-us/articles/12888036565521-Ryanair-s-Bag-Policy" target="_blank" rel="noopener">Ryanair</a></td>
+      <td class="n">55 × 40 × 20 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×20</td>
+      <td class="anote">Priority/bundles only — Basic gets the 40×30×20 underseat bag</td></tr><tr><td class="n"><a href="https://www.easyjet.com/en/help/baggage/cabin-bags" target="_blank" rel="noopener">easyJet</a></td>
+      <td class="n">56 × 45 × 25 cm</td>
+      <td class="n">15 kg</td>
+      <td class="n">45×36×20 · 15 kg</td>
+      <td class="anote">Paid add-on, Inclusive Plus, or easyJet Plus members</td></tr><tr><td class="n"><a href="https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance" target="_blank" rel="noopener">Wizz Air</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×20 · 10 kg</td>
+      <td class="anote">WIZZ Priority only. Uniquely, wheels may add up to 5 cm beyond these dims.</td></tr><tr><td class="n"><a href="https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance" target="_blank" rel="noopener">Vueling</a></td>
+      <td class="n">55 × 40 × 20 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×20</td>
+      <td class="anote">Fly Light: underseat bag only; €60–140 gate penalties</td></tr><tr><td class="n"><a href="https://www.norwegian.com/en/travel-info/baggage/hand-baggage/" target="_blank" rel="noopener">Norwegian</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">10 kg incl. personal item</td>
+      <td class="n">30×40×20</td>
+      <td class="anote">LowFare: underseat bag only; overhead bag from LowFare+</td></tr><tr><td class="n"><a href="https://www.eurowings.com/en/information/baggage/hand-luggage.html" target="_blank" rel="noopener">Eurowings</a></td>
+      <td class="n">55 × 40 × 23 cm</td>
+      <td class="n">8 kg</td>
+      <td class="n">40×30×25</td>
+      <td class="anote">BASIC fare: underseat bag only; cabin bag from SMART</td></tr><tr><td class="n"><a href="https://www.transavia.com/en-EU/service/hand-luggage/" target="_blank" rel="noopener">Transavia</a></td>
+      <td class="n">55 × 35 × 25 cm</td>
+      <td class="n">10 kg incl. personal item</td>
+      <td class="n">40×30×20</td>
+      <td class="anote">Cabin trolley requires the paid hand-baggage option on basic fares; small bag 40×30×20 always free</td></tr><tr><td class="n"><a href="https://www.volotea.com/en/luggage/" target="_blank" rel="noopener">Volotea</a></td>
+      <td class="n">55 × 40 × 20 cm</td>
+      <td class="n">10 kg</td>
+      <td class="n">40×30×20 · 10 kg</td>
+      <td class="anote">Priority boarding only — base fare gets the 40×30×20 underseat bag</td></tr><tr><td class="n"><a href="https://www.ana.co.jp/en/jp/guide/boarding-procedures/baggage/international/carry-rule/" target="_blank" rel="noopener">ANA</a></td>
+      <td class="n">55 × 40 × 25 cm and ≤115 linear cm</td>
+      <td class="n">10 kg incl. personal item</td>
+      <td class="n">40×30×20</td>
+      <td class="anote">Included, all cabins; under-seat stowage of personal item mandatory from Jul 2026</td></tr><tr><td class="n"><a href="https://www.jal.co.jp/jp/en/inter/baggage/inflight/" target="_blank" rel="noopener">Japan Airlines</a></td>
+      <td class="n">55 × 40 × 25 cm and ≤115 linear cm</td>
+      <td class="n">10 kg incl. personal item</td>
+      <td class="n">Under-seat bag</td>
+      <td class="anote">Included, all cabins</td></tr><tr><td class="n"><a href="https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/" target="_blank" rel="noopener">Singapore Airlines</a></td>
+      <td class="n">Sum of sides ≤ 115 cm</td>
+      <td class="n">7 kg</td>
+      <td class="n">40×30×10</td>
+      <td class="anote">Two pieces in First/Business — No per-side dims — total of three sides ≤ 115 cm.</td></tr><tr><td class="n"><a href="https://www.cathaypacific.com/cx/en_US/faqs/baggage/cabin-baggage-allowance/what-is-my-carry-on-baggage-allowance.html" target="_blank" rel="noopener">Cathay Pacific</a></td>
+      <td class="n">56 × 36 × 23 cm</td>
+      <td class="n">7 kg</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">7 kg Economy · 10 kg Business · 15 kg First</td></tr><tr><td class="n"><a href="https://www.koreanair.com/contents/plan-your-travel/baggage/carry-on-baggage" target="_blank" rel="noopener">Korean Air</a></td>
+      <td class="n">55 × 40 × 20 cm <i>or</i> ≤115 linear cm</td>
+      <td class="n">10 kg incl. personal item</td>
+      <td class="n">40×30×15</td>
+      <td class="anote">Included; First/Prestige get two pieces, 18 kg</td></tr><tr><td class="n"><a href="https://www.evaair.com/en-us/fly-prepare/baggage/free-baggage/carry-on-baggage/" target="_blank" rel="noopener">EVA Air</a></td>
+      <td class="n">56 × 36 × 23 cm</td>
+      <td class="n">7 kg</td>
+      <td class="n">40×30×10</td>
+      <td class="anote">Included; two pieces in Laurel/Business</td></tr><tr><td class="n"><a href="https://www.emirates.com/us/english/before-you-fly/baggage/cabin-baggage-rules/" target="_blank" rel="noopener">Emirates</a></td>
+      <td class="n">55 × 38 × 22 cm</td>
+      <td class="n">7 kg</td>
+      <td class="n">None (Economy)</td>
+      <td class="anote">No separate personal item in Economy — this is the whole allowance</td></tr><tr><td class="n"><a href="https://www.qatarairways.com/en/baggage/allowance.html" target="_blank" rel="noopener">Qatar Airways</a></td>
+      <td class="n">50 × 37 × 25 cm</td>
+      <td class="n">7 kg</td>
+      <td class="n">Small purse/briefcase</td>
+      <td class="anote">Included on all fares, Economy Lite too</td></tr><tr><td class="n"><a href="https://www.united.com/en/us/fly/baggage/carry-on-bags.html" target="_blank" rel="noopener">United</a></td>
+      <td class="n">56 × 35 × 23 cm</td>
+      <td class="n">None published</td>
+      <td class="n">43×25×22</td>
+      <td class="anote">Basic Economy: personal item only domestic; full carry-on included transatlantic/transpacific</td></tr><tr><td class="n"><a href="https://www.delta.com/us/en/baggage/carry-on-baggage" target="_blank" rel="noopener">Delta</a></td>
+      <td class="n">56 × 35 × 23 cm</td>
+      <td class="n">None published</td>
+      <td class="n">No published dims</td>
+      <td class="anote">Included on every fare, Basic too</td></tr><tr><td class="n"><a href="https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp" target="_blank" rel="noopener">American</a></td>
+      <td class="n">56 × 36 × 23 cm</td>
+      <td class="n">None published</td>
+      <td class="n">45×35×20</td>
+      <td class="anote">Included on every fare, Basic too</td></tr></tbody></table></div>
+</section>
+
+<footer class="wrap">
+  <div class="fin">Fin.</div>
+  Limits verified against official airline pages, August 2026. Airlines change these rules with little notice — confirm before you fly.<br>
+  Bag dimensions are manufacturer-published overall exteriors; expandable bags are listed unexpanded.<br>
+  Verdicts are computed from measurements before any retailer link is attached; no one pays for position here.
+</footer>
+
+<script>
+// ================= DATA =================
+const AIRLINES=[
+ {id:'ba',n:'British Airways',r:'Europe · Full-service',h:56,w:45,d:25,wt:null,cav:'Included on every fare, even Basic',pi:'40×30×15',src:'https://www.britishairways.com/en-gb/information/baggage-essentials/hand-baggage-allowances',note:'No numeric weight limit — you must lift it unassisted.'},
+ {id:'af',n:'Air France',r:'Europe · Full-service',h:55,w:35,d:25,wt:12,comb:1,cav:'European “Basic” fare excludes it — paid add-on',pi:'40×30×15',src:'https://wwws.airfrance.us/information/bagages/bagage-cabine-soute'},
+ {id:'klm',n:'KLM',r:'Europe · Full-service',h:55,w:35,d:25,wt:12,comb:1,cav:'“Basic” ticket: personal item only',pi:'40×30×15',src:'https://www.klm.us/information/baggage/hand-baggage-allowance'},
+ {id:'lh',n:'Lufthansa',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Included except Economy Basic (from May 2026)',pi:'40×30×15',src:'https://www.lufthansa.com/us/en/carry-on-baggage'},
+ {id:'lx',n:'SWISS',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Included except Economy Basic (from May 2026)',pi:'40×30×15',src:'https://www.swiss.com/us/en/prepare/baggage/hand-baggage'},
+ {id:'os',n:'Austrian',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Included except Economy Basic',pi:'40×30×15',src:'https://www.austrian.com/at/en/handgepaeck.solo_continue'},
+ {id:'ib',n:'Iberia',r:'Europe · Full-service',h:56,w:40,d:25,wt:10,cav:'Included on all fares, Basic too',pi:'40×30×15',src:'https://www.iberia.com/us/luggage/hand-luggage/'},
+ {id:'az',n:'ITA Airways',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Included on all fares',pi:'40×30×15',src:'https://www.ita-airways.com/us/en/book-and-prepare/travel-information/baggage/carry-on-baggage',note:'Changed from 55×35×25 after Lufthansa acquisition — older sites still show the old size.'},
+ {id:'tp',n:'TAP Air Portugal',r:'Europe · Full-service',h:55,w:40,d:25,wt:10,cav:'Included on all fares',pi:'40×30×15 · max 2 kg',src:'https://www.flytap.com/en-us/information/baggage/hand-baggage'},
+ {id:'sk',n:'SAS',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Economy Light (Europe): underseat bag only',pi:'40×30×15',src:'https://www.flysas.com/en/travel-info/baggage/carry-on'},
+ {id:'ay',n:'Finnair',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,comb:1,cav:'Superlight fare: underseat bag only',pi:'40×30×15',src:'https://www.finnair.com/en/baggage-on-finnair-flights/carry-on-baggage'},
+ {id:'ei',n:'Aer Lingus',r:'Europe · Full-service',h:55,w:40,d:24,wt:10,cav:'Saver (Europe): bag flies free but checked; cabin carriage from €9.99. Included transatlantic.',pi:'40×30×20',src:'https://www.aerlingus.com/prepare/bags/carry-on-baggage/'},
+ {id:'lo',n:'LOT Polish',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Included on all fares',pi:'40×35×12 · max 2 kg',src:'https://www.lot.com/us/en/journey/baggage/short-haul-baggage'},
+ {id:'tk',n:'Turkish Airlines',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Included; active gate enforcement',pi:'40×30×15 · max 4 kg',src:'https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/'},
+ {id:'a3',n:'Aegean',r:'Europe · Full-service',h:56,w:45,d:25,wt:8,cav:'Included on all fares, GoLight too — but check the aircraft: Olympic Air props are stricter (next row)',pi:'40×30×15',src:'https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/',note:'Dims include handles, pockets and wheels.'},
+ {id:'oa',n:'Olympic Air (Aegean props)',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Applies on Dash 8/ATR island hops — many Athens–Corfu, Santorini and Milos rotations',pi:'40×30×15',src:'https://en.aegeanair.com/travel-info/travelling-with-aegean/baggage/baggage-allowance/'},
+ {id:'sn',n:'Brussels Airlines',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Lufthansa Group rules — Economy Basic tiers exclude the cabin bag',pi:'40×30×15',src:'https://www.brusselsairlines.com/be/en/extra-services/baggage/hand-baggage'},
+ {id:'de',n:'Condor',r:'Europe · Full-service',h:55,w:40,d:23,wt:8,cav:'Unified across every fare since May 2026; 10 kg Premium, 16 kg Business',pi:'40×30×15',src:'https://www.condor.com/us/flight-preparation/baggage-services/carry-on-baggage.jsp'},
+ {id:'ux',n:'Air Europa',r:'Europe · Full-service',h:55,w:35,d:25,wt:10,cav:'Included; Business gets two bags, 14 kg total',pi:'Underseat bag',src:'https://www.aireuropa.com/us/en/aea/travel-information/baggage/carry-on-luggage.html'},
+ {id:'fi',n:'Icelandair',r:'Europe · Full-service',h:55,w:40,d:20,wt:10,cav:'Included on all fares, Economy Light too',pi:'40×30×15',src:'https://www.icelandair.com/support/baggage/allowance/',note:'Dims explicitly include wheels and handles.'},
+ {id:'fr',n:'Ryanair',r:'Europe · Low-cost',h:55,w:40,d:20,wt:10,cav:'Priority/bundles only — Basic gets the 40×30×20 underseat bag',pi:'40×30×20',src:'https://help.ryanair.com/hc/en-us/articles/12888036565521-Ryanair-s-Bag-Policy'},
+ {id:'u2',n:'easyJet',r:'Europe · Low-cost',h:56,w:45,d:25,wt:15,cav:'Paid add-on, Inclusive Plus, or easyJet Plus members',pi:'45×36×20 · 15 kg',src:'https://www.easyjet.com/en/help/baggage/cabin-bags'},
+ {id:'w6',n:'Wizz Air',r:'Europe · Low-cost',h:55,w:40,d:23,wt:10,cav:'WIZZ Priority only. Uniquely, wheels may add up to 5 cm beyond these dims.',pi:'40×30×20 · 10 kg',src:'https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance'},
+ {id:'vy',n:'Vueling',r:'Europe · Low-cost',h:55,w:40,d:20,wt:10,cav:'Fly Light: underseat bag only; €60–140 gate penalties',pi:'40×30×20',src:'https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance'},
+ {id:'dy',n:'Norwegian',r:'Europe · Low-cost',h:55,w:40,d:23,wt:10,comb:1,cav:'LowFare: underseat bag only; overhead bag from LowFare+',pi:'30×40×20',src:'https://www.norwegian.com/en/travel-info/baggage/hand-baggage/'},
+ {id:'ew',n:'Eurowings',r:'Europe · Low-cost',h:55,w:40,d:23,wt:8,cav:'BASIC fare: underseat bag only; cabin bag from SMART',pi:'40×30×25',src:'https://www.eurowings.com/en/information/baggage/hand-luggage.html'},
+ {id:'to',n:'Transavia',r:'Europe · Low-cost',h:55,w:35,d:25,wt:10,comb:1,cav:'Cabin trolley requires the paid hand-baggage option on basic fares; small bag 40×30×20 always free',pi:'40×30×20',src:'https://www.transavia.com/en-EU/service/hand-luggage/'},
+ {id:'v7',n:'Volotea',r:'Europe · Low-cost',h:55,w:40,d:20,wt:10,cav:'Priority boarding only — base fare gets the 40×30×20 underseat bag',pi:'40×30×20 · 10 kg',src:'https://www.volotea.com/en/luggage/'},
+ {id:'nh',n:'ANA',r:'Asia',h:55,w:40,d:25,sum:115,mode:'and',wt:10,comb:1,cav:'Included, all cabins; under-seat stowage of personal item mandatory from Jul 2026',pi:'40×30×20',src:'https://www.ana.co.jp/en/jp/guide/boarding-procedures/baggage/international/carry-rule/'},
+ {id:'jl',n:'Japan Airlines',r:'Asia',h:55,w:40,d:25,sum:115,mode:'and',wt:10,comb:1,cav:'Included, all cabins',pi:'Under-seat bag',src:'https://www.jal.co.jp/jp/en/inter/baggage/inflight/'},
+ {id:'sq',n:'Singapore Airlines',r:'Asia',sum:115,wt:7,cav:'Two pieces in First/Business',pi:'40×30×10',src:'https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/',note:'No per-side dims — total of three sides ≤ 115 cm.'},
+ {id:'cx',n:'Cathay Pacific',r:'Asia',h:56,w:36,d:23,wt:7,cav:'7 kg Economy · 10 kg Business · 15 kg First',pi:'40×30×15',src:'https://www.cathaypacific.com/cx/en_US/faqs/baggage/cabin-baggage-allowance/what-is-my-carry-on-baggage-allowance.html'},
+ {id:'ke',n:'Korean Air',r:'Asia',h:55,w:40,d:20,sum:115,mode:'or',wt:10,comb:1,cav:'Included; First/Prestige get two pieces, 18 kg',pi:'40×30×15',src:'https://www.koreanair.com/contents/plan-your-travel/baggage/carry-on-baggage'},
+ {id:'br',n:'EVA Air',r:'Asia',h:56,w:36,d:23,wt:7,cav:'Included; two pieces in Laurel/Business',pi:'40×30×10',src:'https://www.evaair.com/en-us/fly-prepare/baggage/free-baggage/carry-on-baggage/'},
+ {id:'ek',n:'Emirates',r:'Gulf',h:55,w:38,d:22,wt:7,cav:'No separate personal item in Economy — this is the whole allowance',pi:'None (Economy)',src:'https://www.emirates.com/us/english/before-you-fly/baggage/cabin-baggage-rules/'},
+ {id:'qr',n:'Qatar Airways',r:'Gulf',h:50,w:37,d:25,wt:7,cav:'Included on all fares, Economy Lite too',pi:'Small purse/briefcase',src:'https://www.qatarairways.com/en/baggage/allowance.html'},
+ {id:'ua',n:'United',r:'United States',h:56,w:35,d:23,wt:null,cav:'Basic Economy: personal item only domestic; full carry-on included transatlantic/transpacific',pi:'43×25×22',src:'https://www.united.com/en/us/fly/baggage/carry-on-bags.html'},
+ {id:'dl',n:'Delta',r:'United States',h:56,w:35,d:23,wt:null,cav:'Included on every fare, Basic too',pi:'No published dims',src:'https://www.delta.com/us/en/baggage/carry-on-baggage'},
+ {id:'aa',n:'American',r:'United States',h:56,w:36,d:23,wt:null,cav:'Included on every fare, Basic too',pi:'45×35×20',src:'https://www.aa.com/i18n/travel-info/baggage/carry-on-baggage.jsp'},
+];
+// Bags. rep:'low' = curated out of the UI entirely (kept in data for the record).
+const BAGS=[
+ {id:'cosmo',b:'Samsonite',m:'Cosmolite 3.0 Carry-On',h:55,w:40,d:20,kg:1.68,L:36,t:'hard',mat:'Curv woven polypropylene',wh:4,p:300,pn:'sale · $500 list',tier:'mid',war:'Limited lifetime · global repair network',note:'Fifteen years of Curv in European service, and still the lightest serious suitcase made. Buy on sale, never at list.',pick:'Editors’ pick',dv:2},
+ {id:'clite',b:'Samsonite',m:'C-Lite Carry-On',h:55,w:40,d:20,kg:2.04,L:36,t:'hard',mat:'Curv woven polypropylene',wh:4,p:475,pn:'rarely discounted in US',tier:'premium',war:'10-year global',note:'The Cosmolite’s better-appointed successor — same shell, dual-tube handle, US price that never quite justifies itself.',dv:2,flags:['Expandable — exceeds 20 cm depth if expanded']},
+ {id:'aircon',b:'American Tourister',m:'Airconic Carry-On',h:55,w:40,d:20,kg:2.0,L:33.5,t:'hard',mat:'Polypropylene',wh:4,p:100,pn:'often ~$85',tier:'budget',war:'10-year global (Samsonite network)',note:'The exact European mold at a fifth of the price. Budget hardware, serious footprint.',dv:2},
+ {id:'scure',b:'Samsonite',m:'S’Cure Spinner 55/20',h:55,w:40,d:20,kg:2.9,L:34,t:'hard',mat:'Polypropylene · zipperless clamp',wh:4,p:150,pn:'import channels',tier:'mid',war:'Ambiguous when gray-imported',note:'The European tank: no zipper to fail, a shell that shrugs. Heavy for weight-limited cabins.',dv:2,flags:['Not sold by Samsonite US — import only']},
+ {id:'max5',b:'Travelpro',m:'Maxlite 5 Int’l Spinner',h:55,w:40,d:20,kg:2.4,L:39,t:'soft',mat:'Polyester · DuraGuard',wh:4,p:160,tier:'mid',war:'Limited lifetime · US repair network',note:'The most packing space of any true 55/20 in America. Keep the front pocket light and it stands its ground.',pick:'Editors’ pick',dv:1,flags:['Expandable — exceeds 20 cm depth if expanded']},
+ {id:'pei',b:'Travelpro',m:'Platinum Elite Int’l Spinner',h:55.2,w:40,d:19.7,kg:3.5,L:38,t:'soft',mat:'High-denier nylon',wh:4,p:310,tier:'mid',war:'Limited lifetime + airline damage (registered)',note:'The ten-year softside — PowerScope handle, self-aligning wheels. Its 3.5 kg is the tax.',dv:1},
+ {id:'maxroll',b:'Travelpro',m:'Maxlite 5 Int’l Rollaboard',h:55.2,w:40,d:19.7,kg:2.45,L:40,t:'soft',mat:'Polyester · DuraGuard',wh:2,p:150,tier:'mid',war:'Limited lifetime · US repair network',note:'Two big recessed wheels for cobblestone towns, zero tip-over geometry, a touch more room inside.',dv:1},
+ {id:'away',b:'Away',m:'The Carry-On',h:55.1,w:36.6,d:22.9,kg:3.4,L:41,t:'hard',mat:'Polycarbonate',wh:4,p:275,tier:'mid',war:'Limited lifetime',note:'The direct-to-consumer benchmark, post-2024 refresh. Solid, ubiquitous, unremarkable.',dv:1},
+ {id:'awaybig',b:'Away',m:'The Bigger Carry-On',h:57.7,w:39.1,d:24.4,kg:3.6,L:49,t:'hard',mat:'Polycarbonate',wh:4,p:295,tier:'mid',war:'Limited lifetime',note:'Forty-nine liters that exceed most published limits on earth. America’s favorite gamble.',dv:1},
+ {id:'monos',b:'Monos',m:'Carry-On',h:55.9,w:35.6,d:22.9,kg:2.99,L:39.9,t:'hard',mat:'Polycarbonate',wh:4,p:275,tier:'mid',war:'Limited lifetime',note:'The value pick of the premium DTC set — lighter than Away, tighter build for the money.',dv:1},
+ {id:'monospro',b:'Monos',m:'Carry-On Pro',h:55.9,w:35.6,d:22.9,kg:3.54,L:36,t:'hard',mat:'Polycarbonate · front compartment',wh:4,p:295,tier:'mid',war:'Limited lifetime',note:'The laptop door costs four liters. Business travelers seem happy to pay it.',dv:1},
+ {id:'july',b:'July',m:'Carry On',h:55,w:38.5,d:21.5,kg:3.4,L:42,t:'hard',mat:'Polycarbonate · aluminum bumpers',wh:4,p:295,tier:'mid',war:'Limited lifetime · mixed service reports',note:'Cult hardware — twenty-stop handle, silent wheels — in a width that flirts with US sizers.',dv:0},
+ {id:'julylight',b:'July',m:'Carry On Light (original)',h:54,w:36,d:19,kg:1.8,L:32,t:'hard',mat:'Polycarbonate',wh:4,p:255,tier:'mid',war:'Limited lifetime · mixed service reports',note:'Feather-light and genuinely Europe-proof — if you can still find it.',dv:1,flags:['Being phased out; current “Light Expandable” is 24.5 cm deep and does not qualify']},
+ {id:'pe21',b:'Travelpro',m:'Platinum Elite 21″',h:59.7,w:36.8,d:22.9,kg:3.5,L:46,t:'soft',mat:'High-denier nylon',wh:4,p:390,tier:'premium',war:'Limited lifetime + airline damage',note:'The flight-crew workhorse in its domestic size — 23.5 inches tall overall, whatever the name says.',dv:1},
+ {id:'brE',b:'Briggs & Riley',m:'Baseline Essential 22″',h:55.9,w:35.6,d:22.9,kg:4.5,L:35.4,t:'soft',mat:'Ballistic nylon',wh:4,p:729,tier:'luxury',war:'Lifetime incl. airline damage — the industry’s best',note:'Near-indestructible, repairable forever, and the only warranty that covers what baggage handlers do.',dv:1},
+ {id:'brG',b:'Briggs & Riley',m:'Baseline Global 21″',h:53.3,w:38.1,d:22.9,kg:4.5,L:37,t:'soft',mat:'Ballistic nylon',wh:4,p:729,tier:'luxury',war:'Lifetime incl. airline damage',note:'Shorter and wider — shaped for the 55×40×23 world, not the American sizer.',dv:1},
+ {id:'tumi',b:'Tumi',m:'Alpha Expandable Carry-On',h:55.9,w:35.6,d:22.9,kg:4.6,L:35,t:'hard',mat:'Polycarbonate + FXT ballistic',wh:4,p:1050,tier:'luxury',war:'5-year · excellent repair network',note:'Beautifully made, heaviest bag in the index, and the least warranty per dollar here.',dv:0},
+ {id:'vx',b:'Victorinox',m:'Spectra 3.0 Frequent Flyer',h:55,w:35,d:23,kg:3.3,L:37,t:'hard',mat:'Recycled polycarbonate · front door',wh:4,p:400,pn:'sale · $575 list',tier:'premium',war:'Lifetime (defects)',note:'Swiss sobriety with a clever front hatch. Smaller service network than the American majors.',dv:0},
+ {id:'rimO',b:'Rimowa',m:'Original Cabin',h:55,w:40,d:23,kg:4.3,L:35,t:'hard',mat:'Anodized aluminum',wh:4,p:1550,tier:'luxury',war:'Lifetime (since 2022) · global repair',note:'The benchmark aluminum case. The dents are the point.',dv:1},
+ {id:'rimE',b:'Rimowa',m:'Essential Cabin',h:55,w:39,d:23,kg:3.2,L:36,t:'hard',mat:'Polycarbonate',wh:4,p:990,tier:'luxury',war:'Lifetime · global repair',note:'Rimowa’s wheels and warranty in polycarbonate — superb, at three times the price of superb.',dv:1},
+ {id:'chat',b:'Delsey',m:'Chatelet Air 2.0 21″',h:57.8,w:38.1,d:25.4,kg:3.51,L:44,t:'hard',mat:'Polycarbonate · vegan leather trim',wh:4,p:280,tier:'mid',war:'10-year limited',note:'The prettiest suitcase in the index, sized for Instagram rather than Europe.',dv:1},
+ {id:'helium',b:'Delsey',m:'Helium Aero 19″ Int’l',h:53.3,w:35.6,d:25.4,kg:3.7,L:40,t:'hard',mat:'Polycarbonate · laptop pocket',wh:4,p:185,tier:'mid',war:'10-year limited',note:'A long-running value pick whose “international” name survives a ten-inch depth.',dv:1},
+ {id:'freeform',b:'Samsonite',m:'Freeform Carry-On',h:58.4,w:38.1,d:25.4,kg:2.95,L:41,t:'hard',mat:'Polypropylene',wh:4,p:130,tier:'budget',war:'10-year global',note:'A cult weight-to-toughness ratio, in a body built for American bins only.',dv:2},
+ {id:'outline',b:'Samsonite',m:'Outline Pro Carry-On',h:58.4,w:38.1,d:25.4,kg:3.0,L:40,t:'hard',mat:'Polypropylene · USB',wh:4,p:176,tier:'mid',war:'10-year global',note:'The Freeform’s dressier sibling; newer line, shorter record.',dv:2},
+ {id:'level8',b:'Level8',m:'Road Runner Pro 20″',h:54.6,w:36.6,d:23.4,kg:4.19,L:38,t:'hard',mat:'Makrolon polycarbonate · YKK',wh:4,p:210,tier:'mid',war:'5-year',note:'Strong value hardside with a laptop door; carries its virtues in extra kilograms.',dv:1},
+ {id:'calpak',b:'Calpak',m:'Hue Carry-On',h:53.3,w:34.9,d:22.9,kg:3.45,L:39,t:'hard',mat:'Polycarbonate',wh:4,p:215,tier:'mid',war:'2-year — short for the class',note:'Colorway-first bestseller; the shell and zippers have their critics.',dv:1,rep:'low'},
+ {id:'beis',b:'Béis',m:'The Carry-On Roller',h:58,w:40,d:25.4,kg:3.55,L:49,t:'hard',mat:'Polycarbonate',wh:4,p:268,tier:'mid',war:'Limited lifetime',note:'Fails nearly every published limit in this index. A gate-check subscription with a cult following.',dv:1,rep:'low'},
+ {id:'solgaard',b:'Solgaard',m:'Carry-On Closet',h:53,w:34,d:23,kg:3.74,L:35,t:'hard',mat:'Polycarbonate · shelf system',wh:4,p:195,tier:'mid',war:'Lifetime (components)',note:'The shelf gimmick mostly works, and the footprint is honest — the most internationally compliant of the DTC set.',dv:1},
+ {id:'paravel',b:'Paravel',m:'Aviator Carry-On',h:55.1,w:34.8,d:22.9,kg:3.72,L:38,t:'hard',mat:'Recycled polycarbonate',wh:4,p:395,tier:'premium',war:'Effectively void — brand in relaunch',note:'Lovely, sustainable, and orphaned: Chapter 7 in 2025, awaiting its second act under Antler.',dv:0,rep:'low'},
+ {id:'osprey',b:'Osprey',m:'Ozone 2-Wheel 40L',h:55,w:35,d:23,kg:2.1,L:40,t:'soft',mat:'Recycled nylon ripstop · aluminum chassis',wh:2,p:260,pn:'$300 list',tier:'mid',war:'All Mighty lifetime — famously honored',note:'Forty liters at 2.1 kg with the best warranty culture in outdoor gear. Soft walls, hard logic.',pick:'Editors’ pick',dv:0},
+ {id:'eagle',b:'Eagle Creek',m:'Gear Warrior XE',h:55,w:35,d:26,kg:3.6,L:40,t:'soft',mat:'Recycled poly · Hypalon',wh:2,p:449,tier:'premium',war:'No Matter What — covers any damage',note:'An adventure tank that converts to a backpack; its ten-inch depth keeps it off European jets.',dv:1},
+ {id:'peak',b:'Peak Design',m:'Roller Pro',h:55.6,w:35.6,d:23,kg:3.9,L:34,t:'hard',mat:'Hybrid nylon/EVA · carbon handle',wh:4,p:600,tier:'premium',war:'Lifetime',note:'Design-forward, user-serviceable, expensive per liter. The enthusiast’s choice.',dv:0},
+ {id:'aer',b:'Aer',m:'Carry-On',h:55,w:35,d:23,kg:3.7,L:41,t:'hard',mat:'Makrolon PC · Hinomoto wheels · YKK',wh:4,p:299,tier:'mid',war:'Lifetime (defects)',note:'Premium components at a mid price; a young line still earning its record.',dv:0},
+ {id:'maxund',b:'Travelpro',m:'Maxlite 5 Underseat',h:44.5,w:36.8,d:21.6,kg:2.5,L:25,t:'soft',mat:'Polyester · DuraGuard',wh:2,p:135,tier:'budget',war:'Limited lifetime',note:'Crew-brand build in the size that flies free on every low-cost fare in Europe.',dv:1},
+ {id:'samund',b:'Samsonite',m:'Spinner Underseater USB',h:41.9,w:35.1,d:22.9,kg:2.5,L:25,t:'soft',mat:'Polyester',wh:4,p:110,tier:'budget',war:'3-year',note:'The ubiquitous value underseater. Fine for occasional use; built to its price.',dv:0,rep:'low'},
+];
+const CURATED=BAGS.filter(b=>b.rep!=='low');
+const TIERS={budget:'Budget',mid:'Mid-range',premium:'Premium',luxury:'Luxury'};
+// ================= STATE =================
+let dims={h:55,w:40,d:20};       // cm, overall
+let selBag='cosmo';               // linked vetted bag, or null when dims are custom
+let sel=new Set();                // advanced airline selection (empty = all airlines)
+let fScope='intl',fTier='all',fShell='all',fWheel='all',fSort='fly';
+let unit='cm';
+// ---- unit helpers ----
+const cv=v=>unit==='cm'?+(+v).toFixed(1):+((+v)/2.54).toFixed(1);
+const uL=()=>unit==='cm'?'cm':'in';
+const D3=(h,w,d,sep=' × ')=>`${cv(h)}${sep}${cv(w)}${sep}${cv(d)} ${uL()}`;
+const WT=kg=>unit==='cm'?`${+(+kg).toFixed(1)} kg`:`${+(kg*2.2046).toFixed(1)} lb`;
+const LIN=cm=>unit==='cm'?`${Math.round(cm)} linear cm`:`${(cm/2.54).toFixed(1)} linear in`;
+const dimStr=s=>unit==='cm'?s:s.replace(/(\d+(?:\.\d+)?)×(\d+(?:\.\d+)?)×(\d+(?:\.\d+)?)/g,(_,a,b,c)=>`${(a/2.54).toFixed(1)}×${(b/2.54).toFixed(1)}×${(c/2.54).toFixed(1)}`).replace(/(\d+(?:\.\d+)?) kg/g,(_,k)=>`${(k*2.2046).toFixed(1)} lb`);
+// ================= FIT LOGIC =================
+function scope(){return sel.size?AIRLINES.filter(a=>sel.has(a.id)):AIRLINES}
+function fitsAirlineDims(g,a){
+  const boxOK=a.h==null?null:(g.h<=a.h&&g.w<=a.w&&g.d<=a.d);
+  const sumOK=a.sum==null?null:(g.h+g.w+g.d)<=a.sum;
+  if(a.h!=null&&a.sum!=null)return a.mode==='or'?(boxOK||sumOK):(boxOK&&sumOK);
+  return a.h!=null?boxOK:sumOK;
+}
+const fitsAirline=(bag,a)=>fitsAirlineDims(bag,a);
+function failReason(g,a){
+  if(a.h==null)return `${LIN(g.h+g.w+g.d)} vs ${LIN(a.sum).replace('linear ','')} allowed`;
+  const p=[];
+  if(g.h>a.h)p.push(`${cv(g.h-a.h)} ${uL()} too tall`);
+  if(g.w>a.w)p.push(`${cv(g.w-a.w)} ${uL()} too wide`);
+  if(g.d>a.d)p.push(`${cv(g.d-a.d)} ${uL()} too deep`);
+  return p.join(', ');
+}
+function acceptance(g,list){const f=list.filter(a=>!fitsAirlineDims(g,a));return{ok:f.length===0,fails:f,n:list.length-f.length,of:list.length}}
+function envelope(list){
+  const env={h:Infinity,w:Infinity,d:Infinity,hBy:null,wBy:null,dBy:null,wt:Infinity,wtBy:null,wtComb:false};
+  for(const a of list){
+    if(a.h!=null&&a.mode!=='or'){
+      if(a.h<env.h){env.h=a.h;env.hBy=a.n}if(a.w<env.w){env.w=a.w;env.wBy=a.n}if(a.d<env.d){env.d=a.d;env.dBy=a.n}
+    }
+    if(a.wt!=null&&a.wt<env.wt){env.wt=a.wt;env.wtBy=a.n;env.wtComb=!!a.comb}
+  }
+  return env;
+}
+const intlReady=b=>b.h<=56&&b.w<=40&&b.d<=23; // clears the common 55(56)×40×23 international box
+// ================= BAND =================
+function renderBand(){
+  const list=scope();const acc=acceptance(dims,list);
+  const bag=selBag?BAGS.find(x=>x.id===selBag):null;
+  const toggle=`<span class="utoggle"><button class="ubtn${unit==='cm'?' on':''}" data-u="cm">cm·kg</button><button class="ubtn${unit==='in'?' on':''}" data-u="in">in·lb</button></span>`;
+  const who=bag?`${bag.b} ${bag.m}`:'Your bag';
+  document.getElementById('band').innerHTML=
+    `<span class="lab">${who}</span><span class="val">${D3(dims.h,dims.w,dims.d)}</span>
+     <span class="val" style="color:${acc.ok?'#bcd3b3':'#e8b39d'}">flies on ${acc.n} of ${acc.of}</span>
+     <span class="lab">${sel.size?'your airlines':'all airlines'}</span>
+     <span class="count">${toggle}</span>`;
+  document.querySelectorAll('.ubtn').forEach(b=>b.onclick=()=>{unit=b.dataset.u;renderAll();renderFP()});
+}
+// ================= WILL IT FLY =================
+function renderInputs(){
+  ['h','w','d'].forEach(ax=>{document.getElementById('in_'+ax).value=cv(dims[ax])});
+  document.getElementById('uh').textContent=unit==='cm'?'centimeters':'inches';
+  document.getElementById('uw').textContent=unit==='cm'?'centimeters':'inches';
+  document.getElementById('ud').textContent=unit==='cm'?'centimeters':'inches';
+  const pick=document.getElementById('bagpick');
+  if(pick.options.length<=1){
+    CURATED.forEach(b=>{const o=document.createElement('option');o.value=b.id;o.textContent=`${b.b} ${b.m}`;pick.appendChild(o)});
+  }
+  pick.value=selBag||'';
+}
+function renderBoard(){
+  const list=scope();const acc=acceptance(dims,list);
+  const bag=selBag?BAGS.find(x=>x.id===selBag):null;
+  const label=bag?`The <b>${bag.b} ${bag.m}</b>`:`A <b>${D3(dims.h,dims.w,dims.d)}</b> bag`;
+  const v=document.getElementById('verdict');
+  if(acc.ok)v.innerHTML=`${label} flies on <b class="vok">all ${acc.of}</b> ${sel.size?'of your airlines':'airlines in the index'}.`;
+  else v.innerHTML=`${label} flies on <b class="${acc.n/acc.of>0.6?'vok':'vbad'}">${acc.n} of ${acc.of}</b> ${sel.size?'of your airlines':'airlines'}.`;
+  const rl=document.getElementById('rejectline');
+  rl.textContent=acc.ok?'No exceptions. Pack with confidence.':`Rejected by ${acc.fails.slice(0,4).map(a=>`${a.n} (${failReason(dims,a)})`).join('; ')}${acc.fails.length>4?` — and ${acc.fails.length-4} more below`:''}.`;
+  // tiles grouped by region
+  const groups=[];list.forEach(a=>{const g=groups.find(x=>x.r===a.r);g?g.list.push(a):groups.push({r:a.r,list:[a]})});
+  let h='';
+  groups.forEach(g=>{
+    h+=`<div class="bgroup">${g.r}</div>`;
+    g.list.forEach(a=>{
+      const ok=fitsAirlineDims(dims,a);
+      const lim=a.h!=null?`${D3(a.h,a.w,a.d,'×')}${a.wt?` · ${WT(a.wt)}`:''}`:`≤${LIN(a.sum)} · ${WT(a.wt)}`;
+      h+=`<div class="tile ${ok?'ok':'no'}" title="${a.cav.replace(/"/g,'&quot;')}">
+        <div class="tn">${a.n} <span class="cavdot">§</span></div>
+        <div class="tl">${lim}</div>
+        <div class="ts">${ok?'✓ Accepted':'✗ '+failReason(dims,a)}</div></div>`;
+    });
+  });
+  document.getElementById('board').innerHTML=h;
+}
+function bindInputs(){
+  document.querySelectorAll('.stepper').forEach(sp=>{
+    const ax=sp.dataset.ax;const inp=sp.querySelector('input');
+    sp.querySelectorAll('button').forEach(btn=>btn.onclick=()=>{
+      const step=unit==='cm'?0.5:0.2;
+      dims[ax]=Math.max(1,dims[ax]+(unit==='cm'?step:step*2.54)*(+btn.dataset.s));
+      dims[ax]=+dims[ax].toFixed(2);selBag=null;renderAll();
+    });
+    inp.onchange=()=>{
+      let v=parseFloat(inp.value);if(isNaN(v)||v<=0){renderInputs();return}
+      dims[ax]=unit==='cm'?v:v*2.54;dims[ax]=+dims[ax].toFixed(2);selBag=null;renderAll();
+    };
+  });
+  document.getElementById('bagpick').onchange=e=>{
+    const b=BAGS.find(x=>x.id===e.target.value);
+    if(b){selBag=b.id;dims={h:b.h,w:b.w,d:b.d};renderAll()}
+  };
+  document.querySelectorAll('.pd').forEach(p=>p.onclick=()=>{
+    const[h,w,d]=p.dataset.dims.split(',').map(Number);dims={h,w,d};selBag=null;renderAll();
+  });
+}
+// ================= FILTERS + CARDS =================
+function fbtns(hostId,opts,cur,setter){
+  const host=document.getElementById(hostId);host.innerHTML='';
+  opts.forEach(([v,l])=>{const b=document.createElement('button');b.className='fbtn'+(cur===v?' on':'');b.textContent=l;
+    b.onclick=()=>{setter(v);renderAll()};host.appendChild(b)});
+}
+function renderFilters(){
+  fbtns('scopebtns',[['intl','International-ready'],['all','Show everything']],fScope,v=>fScope=v);
+  fbtns('tierbtns',[['all','All'],['budget','Budget'],['mid','Mid-range'],['premium','Premium'],['luxury','Luxury']],fTier,v=>fTier=v);
+  fbtns('shellbtns',[['all','All'],['hard','Hardside'],['soft','Softside']],fShell,v=>fShell=v);
+  fbtns('wheelbtns',[['all','All'],['4','Spinner'],['2','Two-wheel']],fWheel,v=>fWheel=v);
+}
+document.getElementById('sortsel').onchange=e=>{fSort=e.target.value;renderAll()};
+function filteredBags(){
+  return CURATED.filter(b=>(fScope==='all'||intlReady(b))&&(fTier==='all'||b.tier===fTier)&&(fShell==='all'||b.t===fShell)&&(fWheel==='all'||String(b.wh)===fWheel));
+}
+function renderCards(){
+  const host=document.getElementById('cards');host.innerHTML='';
+  const list=scope();
+  let arr=filteredBags().map(b=>({b,a:acceptance(b,list)}));
+  const cmp={fly:(x,y)=>(y.a.n-x.a.n)||(x.b.kg-y.b.kg),kg:(x,y)=>x.b.kg-y.b.kg,L:(x,y)=>y.b.L-x.b.L,
+    eff:(x,y)=>(y.b.L/y.b.kg)-(x.b.L/x.b.kg),price:(x,y)=>x.b.p-y.b.p};
+  arr.sort(cmp[fSort]);
+  arr.forEach(({b,a})=>{
+    const card=document.createElement('div');
+    card.className='card'+(b.id===selBag?' sel':'');
+    const pct=a.n/a.of;
+    const mcolor=pct===1?'var(--ok)':pct>=.7?'#7a8a4a':pct>=.4?'#b5822f':'var(--fail)';
+    const cmS=`${b.h} × ${b.w} × ${b.d} cm`,inS=`${(b.h/2.54).toFixed(1)} × ${(b.w/2.54).toFixed(1)} × ${(b.d/2.54).toFixed(1)}″`;
+    const dimHtml=unit==='cm'?`<b>${cmS}</b> (${inS})`:`<b>${inS}</b> (${cmS})`;
+    const wtHtml=unit==='cm'?`<b>${b.kg} kg</b> / ${(b.kg*2.2046).toFixed(1)} lb`:`<b>${(b.kg*2.2046).toFixed(1)} lb</b> / ${b.kg} kg`;
+    const dvNote=b.dv===0?'Maker does not state whether dims include wheels — treat as approximate':'';
+    const flags=[...(b.flags||[]),dvNote].filter(Boolean);
+    const exHtml=a.ok?`<div class="exline" style="color:var(--ok);font-weight:600">Flies everywhere${sel.size?' you fly':''}. No exceptions.</div>`
+      :`<div class="exline">Except <b>${a.fails.slice(0,3).map(x=>x.n).join(', ')}${a.fails.length>3?` +${a.fails.length-3} more`:''}</b></div>`;
+    card.innerHTML=`${b.pick?`<div class="picktag">${b.pick}</div>`:''}
+      <div class="fitmeter"><span class="fnum" style="color:${mcolor}">Flies on ${a.n}/${a.of}</span><span class="meter"><i style="width:${(pct*100).toFixed(0)}%;background:${mcolor}"></i></span></div>
+      <div class="bagbrand">${b.b} · ${TIERS[b.tier]}</div>
+      <div class="bagname">${b.m}</div>
+      <div class="specs">${dimHtml} incl. wheels &amp; handles<br>
+        ${wtHtml} · <b>${b.L} L</b> · ${(b.L/b.kg).toFixed(1)} L/kg<br>
+        ${b.t==='hard'?'Hardside':'Softside'} · ${b.mat} · ${b.wh}-wheel<br>${b.war}</div>
+      <div class="bagnote">${b.note}</div>
+      ${flags.length?`<div class="flagline">⚠ ${flags.join(' · ')}</div>`:''}
+      <div class="price">$${b.p} <span>${b.pn||''}</span></div>${exHtml}`;
+    card.onclick=()=>{selBag=b.id;dims={h:b.h,w:b.w,d:b.d};renderAll();document.getElementById('wif').scrollIntoView({behavior:'smooth'})};
+    host.appendChild(card);
+  });
+  if(!arr.length)host.innerHTML='<div class="card" style="grid-column:1/-1;text-align:center;font-style:italic;color:var(--faint)">Nothing satisfies every filter. Loosen something.</div>';
+}
+// ================= ADVANCED =================
+function renderChips(){
+  const groups={};AIRLINES.forEach(a=>{(groups[a.r]=groups[a.r]||[]).push(a)});
+  const host=document.getElementById('chipgroups');host.innerHTML='';
+  for(const[g,list]of Object.entries(groups)){
+    const div=document.createElement('div');div.className='grp';
+    div.innerHTML=`<div class="glabel">${g}</div>`;
+    const c=document.createElement('div');c.className='chips';
+    list.forEach(a=>{
+      const b=document.createElement('button');b.className='chip'+(sel.has(a.id)?' on':'');
+      b.textContent=a.n;
+      b.onclick=()=>{sel.has(a.id)?sel.delete(a.id):sel.add(a.id);renderAll()};
+      c.appendChild(b);
+    });
+    div.appendChild(c);host.appendChild(div);
+  }
+  document.querySelectorAll('.preset').forEach(p=>p.onclick=()=>{
+    const k=p.dataset.preset;
+    if(k==='all')sel=new Set(AIRLINES.map(a=>a.id));
+    else if(k==='none')sel=new Set();
+    else if(k==='eulcc')sel=new Set(['fr','u2','w6','vy','dy','ew','to','v7']);
+    else if(k==='lhg')sel=new Set(['lh','lx','os','az','sn','ew']);
+    else if(k==='greece')sel=new Set(['a3','oa','fr','u2','w6']);
+    else if(k==='asia')sel=new Set(['nh','jl','sq','cx','ke','br']);
+    renderAll();
+  });
+}
+function renderEnvline(){
+  const list=scope();const e=envelope(list);
+  const el=document.getElementById('envline');
+  let s=sel.size?`Your ${sel.size}-airline envelope: `:`The everywhere-envelope (all ${AIRLINES.length}): `;
+  if(isFinite(e.h))s+=`<b>${D3(e.h,e.w,e.d)}</b> <span style="color:var(--faint)">(height · ${e.hBy}, width · ${e.wBy}, depth · ${e.dBy})</span>`;
+  if(isFinite(e.wt))s+=` · <b>${WT(e.wt)}</b> <span style="color:var(--faint)">(${e.wtBy}${e.wtComb?', incl. personal item':''})</span>`;
+  el.innerHTML=s+`. A bag inside this box flies on every airline ${sel.size?'selected':'in the index'}.`;
+}
+// Drawing
+const SC=5.0;
+function drawView(svgId,axis){
+  const svg=document.getElementById(svgId);
+  const list=scope().filter(a=>a.h!=null&&a.mode!=='or');
+  const shown=list.length>10?[]:list; // outlines only when legible
+  const e=envelope(scope());
+  const maxX=axis[0]==='w'?48:30,maxY=62;
+  const W=maxX*SC+70,H=maxY*SC+56;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);
+  const ox=40,oy=H-36;let s='';
+  s+=`<line x1="${ox-18}" y1="${oy}" x2="${W-8}" y2="${oy}" stroke="#8a8272" stroke-width="1"/>`;
+  shown.forEach(a=>{
+    const x=a[axis[0]]*SC,y=a[axis[1]]*SC;
+    s+=`<rect x="${ox}" y="${oy-y}" width="${x}" height="${y}" fill="none" stroke="#8a8272" stroke-width="1" opacity="0.5"/>`;
+    s+=`<text x="${ox+x-3}" y="${oy-y+11}" font-family="Archivo" font-size="8.5" fill="#8a8272" text-anchor="end">${a.n.toUpperCase()}</text>`;
+  });
+  if(isFinite(e.h)){
+    const x=e[axis[0]]*SC,y=e.h*SC;
+    s+=`<rect x="${ox}" y="${oy-y}" width="${x}" height="${y}" fill="rgba(140,47,27,.10)" stroke="#8c2f1b" stroke-width="1.6"/>`;
+    s+=`<text x="${ox+4}" y="${oy-y-6}" font-family="Archivo" font-size="9.5" font-weight="600" fill="#8c2f1b" letter-spacing="1.5">${cv(e[axis[0]])} × ${cv(e.h)} ${uL().toUpperCase()}</text>`;
+  }
+  const x=dims[axis[0]]*SC,y=dims.h*SC;
+  s+=`<rect x="${ox}" y="${oy-y}" width="${x}" height="${y}" rx="9" fill="rgba(25,23,19,.15)" stroke="#191713" stroke-width="1.6"/>`;
+  s+=`<circle cx="${ox+9}" cy="${oy-4}" r="4.5" fill="#191713"/><circle cx="${ox+x-9}" cy="${oy-4}" r="4.5" fill="#191713"/>`;
+  s+=`<text x="${ox+x/2}" y="${oy-y/2}" font-family="Archivo" font-size="9.5" font-weight="600" fill="#191713" text-anchor="middle">${cv(dims[axis[0]])} × ${cv(dims.h)}</text>`;
+  svg.innerHTML=s;
+}
+function renderDrawing(){
+  drawView('svgfront',['w','h']);drawView('svgside',['d','h']);
+  const list=scope();const acc=acceptance(dims,list);
+  const note=document.getElementById('drawnote');
+  const many=scope().filter(a=>a.h!=null&&a.mode!=='or').length>10;
+  note.innerHTML=(many?'Airline outlines appear when ten or fewer are selected. ':'')+
+    `The shaded region is the strictest envelope; the dark silhouette is your bag${acc.ok?' — clear on every axis.':'.'}`;
+}
+// Matrix (advanced; vs selection, else strictest-relevant view prompt)
+function overCell(g,a){
+  if(a.h==null)return `<span class="over">+${cv((g.h+g.w+g.d)-a.sum)} ${uL()}</span>`;
+  const p=[];
+  if(g.h>a.h)p.push(`+${cv(g.h-a.h)}h`);
+  if(g.w>a.w)p.push(`+${cv(g.w-a.w)}w`);
+  if(g.d>a.d)p.push(`+${cv(g.d-a.d)}d`);
+  return `<span class="over">${p.join(' ')}</span>`;
+}
+function renderMatrix(){
+  const host=document.getElementById('matrixbox');
+  if(!sel.size){host.innerHTML='<div style="padding:20px;font-style:italic;color:var(--faint);font-family:var(--text)">Select airlines above and the full bag-by-airline matrix builds here — filled marks clear the limit; failing cells show the overage per axis.</div>';return}
+  const chosen=AIRLINES.filter(a=>sel.has(a.id));
+  const rows=filteredBags().map(b=>({b,a:acceptance(b,chosen)})).sort((x,y)=>(y.a.n-x.a.n)||(x.b.kg-y.b.kg));
+  let h='<table class="matrix"><tr><th>Suitcase</th>'+chosen.map(a=>`<th>${a.n}</th>`).join('')+'<th>Clears</th></tr>';
+  rows.forEach(({b,a})=>{
+    h+=`<tr class="mrow" data-bag="${b.id}"><td class="bagcell">${b.b} ${b.m}<span class="bsub">${D3(b.h,b.w,b.d,'×')} · ${WT(b.kg)} · ${b.L} L · $${b.p}</span></td>`
+      +chosen.map(x=>`<td>${fitsAirline(b,x)?'<span class="dot y"></span>':overCell(b,x)}</td>`).join('')
+      +`<td style="font-weight:600;color:${a.ok?'var(--ok)':'var(--ink2)'}">${a.n}/${chosen.length}</td></tr>`;
+  });
+  host.innerHTML=h+'</table>';
+  host.querySelectorAll('tr.mrow').forEach(tr=>tr.onclick=()=>{const b=BAGS.find(x=>x.id===tr.dataset.bag);selBag=b.id;dims={h:b.h,w:b.w,d:b.d};renderAll();document.getElementById('wif').scrollIntoView({behavior:'smooth'})});
+}
+// ================= FINE PRINT =================
+function renderFP(){
+  let h='<table class="fptab"><tr><th>Airline</th><th>Cabin bag</th><th>Weight</th><th>Personal item</th><th>The catch</th></tr>';
+  AIRLINES.forEach(a=>{
+    const dim=a.h!=null?`${D3(a.h,a.w,a.d)}${a.sum?(a.mode==='or'?` <i>or</i> ≤${LIN(a.sum)}`:` and ≤${LIN(a.sum)}`):''}`:`Sum of sides ≤ ${LIN(a.sum).replace('linear ','')}`;
+    h+=`<tr><td class="n"><a href="${a.src}" target="_blank" rel="noopener">${a.n}</a></td>
+      <td class="n">${dim}</td>
+      <td class="n">${a.wt?`${WT(a.wt)}${a.comb?' incl. personal item':''}`:'None published'}</td>
+      <td class="n">${dimStr(a.pi)}</td>
+      <td class="anote">${a.cav}${a.note?' — '+a.note:''}</td></tr>`;
+  });
+  document.getElementById('fptable').innerHTML=h+'</table>';
+}
+// ================= MAIN =================
+function renderAll(){renderBand();renderInputs();renderBoard();renderFilters();renderCards();renderChips();renderEnvline();renderDrawing();renderMatrix();}
+bindInputs();renderAll();renderFP();
+</script>
+
+<div id="awebChromeHelper" data-version="1.28.0"><template shadowrootmode="open"><link rel="stylesheet" type="text/css" href="chrome-extension://gdnpkbipbholkoaggmlblpbmgemddbgb/css/awebChromeHelper.min.css"><div id="awebShadowBody"><div role="dialog" aria-modal="true" id="awebFailurePopUp" tabindex="-1" style="display: none;"><div class="aweb-modal-body"><h2 class="h5">Failure</h2><p class="modal-failure-description"></p><h3 class="h6">Failure Code Snippet</h3><small class="failure-location-html d-block text-muted my-2"></small><pre><code class="failure-modal-html"></code></pre><div class="modal-failure-details"></div><button class="btn btn-primary me-2 close-failure-modal">Close</button><button class="btn btn-secondary me-2 inspect-button">Inspect</button></div><div class="failure-modal-backdrop"></div></div></div></template></div></body></html>

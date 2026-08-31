@@ -1,0 +1,48 @@
+{
+ "slug": "calpak-luka-mini",
+ "brand": "Calpak",
+ "model": "Luka Soft-Sided Mini Carry-On",
+ "variant": "Mini",
+ "line": "calpak-luka",
+ "type": "underseat",
+ "soft": 1,
+ "wheels": 4,
+ "role": "underseat",
+ "fits_personal_item": null,
+ "external_cm": null,
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": null,
+ "capacity_l": null,
+ "reviews": [
+  {
+   "src": "packhacker-international",
+   "publication": "Pack Hacker",
+   "url": "https://www.packhacker.com/blog/general/best-luggage-for-international-travel/",
+   "at": "2026-07-27",
+   "award": null,
+   "rank": null,
+   "ranked": false,
+   "rolling_score": null,
+   "praise": "Small, good-looking, useful secondary compartment.",
+   "caveat": "Likely too small for most travelers.",
+   "compliance_claim": {
+    "kind": "underseat",
+    "basis": "assertion_only",
+    "quote": "it slides under the seat in front of you on the plane"
+   },
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": true,
+ "observed": [],
+ "compliance_unbacked": true
+}

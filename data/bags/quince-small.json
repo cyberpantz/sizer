@@ -1,0 +1,56 @@
+{
+ "slug": "quince-small",
+ "brand": "Quince",
+ "model": "Small Carry-On Suitcase",
+ "variant": null,
+ "line": "quince-carryon",
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": null,
+ "external_cm": null,
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 2.81,
+  "src": "review",
+  "ref": "strategist-carryon",
+  "at": "2026-06-22",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 40,
+  "src": "review",
+  "ref": "strategist-carryon",
+  "at": "2026-06-22",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "strategist-carryon",
+   "publication": "New York Magazine / The Strategist",
+   "url": "https://nymag.com/strategist/article/best-carry-on-luggage.html",
+   "at": "2026-06-22",
+   "award": "Best less expensive",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": null,
+   "caveat": null,
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

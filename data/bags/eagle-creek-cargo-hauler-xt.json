@@ -1,0 +1,48 @@
+{
+ "slug": "eagle-creek-cargo-hauler-xt",
+ "brand": "Eagle Creek",
+ "model": "Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel",
+ "variant": null,
+ "line": null,
+ "type": "2-wheel roller",
+ "soft": 1,
+ "wheels": 2,
+ "role": "overhead",
+ "fits_personal_item": null,
+ "external_cm": null,
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": null,
+ "capacity_l": null,
+ "reviews": [
+  {
+   "src": "packhacker-international",
+   "publication": "Pack Hacker",
+   "url": "https://www.packhacker.com/blog/general/best-luggage-for-international-travel/",
+   "at": "2026-07-27",
+   "award": null,
+   "rank": null,
+   "ranked": false,
+   "rolling_score": null,
+   "praise": "Converts into a duffel in a jiffy.",
+   "caveat": "Takes a while to get used to carrying it that way.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "product_name",
+    "quote": "Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel"
+   },
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": true,
+ "observed": [],
+ "compliance_unbacked": true
+}

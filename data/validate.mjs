@@ -1,0 +1,35 @@
+/* CI gate. The failure mode this exists to prevent: a review's number quietly
+   becoming "ours" somewhere between here and the page. */
+import { readFileSync, readdirSync } from "node:fs";
+const dir = new URL("bags/", import.meta.url);
+const files = readdirSync(dir).filter(f => f.endsWith(".json") && f !== "_index.json");
+const bags = files.map(f => JSON.parse(readFileSync(new URL(f, dir))));
+const M = JSON.parse(readFileSync(new URL("reviews/mentions.json", import.meta.url)));
+let fail = 0;
+const bad = (s) => { console.log("  FAIL  " + s); fail++; };
+
+for (const b of bags) {
+  for (const f of ["external_cm", "weight_kg", "capacity_l"]) {
+    const v = b[f];
+    if (v == null) continue;
+    if (typeof v !== "object" || !("v" in v) || !v.src) bad(`${b.slug}.${f} is a bare value with no provenance`);
+    if (v.src === "measured" && !b.measured_at) bad(`${b.slug}.${f} claims "measured" with no date`);
+  }
+  if (b.external_cm && b.external_cm.src === "measured" && !b.measured_cm)
+    bad(`${b.slug} claims a measured dimension but measured_cm is null`);
+  if (b.measured_cm && b.needs_measurement) bad(`${b.slug} is measured but still queued`);
+  if (b.external_cm) {
+    const d = b.external_cm.v;
+    if (d.some((x, i) => i && x > d[i - 1])) bad(`${b.slug} dimensions not sorted descending`);
+    if (d.some(x => x <= 0 || x > 120)) bad(`${b.slug} implausible dimension ${d.join("x")}`);
+  }
+  if (b.weight_kg && (b.weight_kg.v <= 0 || b.weight_kg.v > 15)) bad(`${b.slug} implausible weight`);
+  if (!b.reviews.length) bad(`${b.slug} has no review provenance at all`);
+  for (const r of b.reviews) if (r.verbatim && !r.url) bad(`${b.slug} quotes verbatim with no link`);
+}
+const slugs = new Set(bags.map(b => b.slug));
+for (const m of M.mentions) if (!slugs.has(m.bag)) bad(`mention references unknown bag ${m.bag}`);
+
+console.log(`${bags.length} bags checked · ${bags.filter(b=>b.measured_cm).length} measured · ${bags.filter(b=>b.external_cm).length} sized`);
+console.log(fail ? `\n${fail} FAILURES` : "\nall provenance intact — no review number is masquerading as ours");
+process.exit(fail ? 1 : 0);

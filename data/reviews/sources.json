@@ -1,0 +1,166 @@
+{
+ "$comment": "Publications, not products. What each outlet actually publishes, so we can weight and cite them. Never merged into bag records.",
+ "sources": {
+  "strategist-carryon": {
+   "publication": "New York Magazine / The Strategist",
+   "title": "The Very Best Carry-on Luggage",
+   "url": "https://nymag.com/strategist/article/best-carry-on-luggage.html",
+   "author": "Katherine Gillespie",
+   "updated": "2026-06-22",
+   "retrieved": "2026-08-30",
+   "local": "resources/reviews/nymag-strategist-best-carry-on-luggage.md",
+   "tier": 2,
+   "publishes": {
+    "dimensions": false,
+    "weight": true,
+    "capacity": true,
+    "price": true,
+    "numeric_scores": false
+   },
+   "size_baseline_in": [
+    22,
+    14,
+    9
+   ],
+   "size_baseline_note": "US domestic standard. All picks assumed compliant, so the article compares capacity and weight instead of dimensions.",
+   "method": "Editorial + reader reporting. No stated physical test protocol.",
+   "affiliate": true
+  },
+  "tl-carryon": {
+   "publication": "Travel + Leisure",
+   "title": "The Best Carry-On Luggage of 2026",
+   "url": "https://www.travelandleisure.com/style/travel-bags/best-carry-on-luggage",
+   "author": "Jasmine Grant",
+   "updated": "2026-06-10",
+   "retrieved": "2026-08-30",
+   "local": "resources/reviews/travel-and-leisure-best-carry-on-luggage.md",
+   "tier": 2,
+   "publishes": {
+    "dimensions": true,
+    "weight": true,
+    "capacity": true,
+    "price": true,
+    "numeric_scores": false
+   },
+   "size_baseline_in": null,
+   "size_baseline_note": "No size filter. Several picks exceed the US standard (Samsonite Freeform 23x15x10).",
+   "method": "Pack test with a stated 4-day load; maneuverability over carpet/concrete; overhead-bin fit on a plane set; baseball bat and table drop; 6-month long-term.",
+   "self_inconsistent": [
+    "621 carry-ons tested in the intro vs 'over 650' in the methodology section"
+   ],
+   "affiliate": true
+  },
+  "tl-international": {
+   "publication": "Travel + Leisure",
+   "title": "The 14 Best International Carry-ons of 2026",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "author": "Asia London Palomba",
+   "updated": "2026-02-23",
+   "retrieved": "2026-08-30",
+   "local": "resources/reviews/travel-and-leisure-best-international-carry-on-luggage.md",
+   "tier": 2,
+   "publishes": {
+    "dimensions": true,
+    "weight": true,
+    "capacity": true,
+    "price": true,
+    "numeric_scores": false
+   },
+   "size_baseline_in": [
+    22,
+    14,
+    9
+   ],
+   "size_baseline_note": "Stated as 'the most common international-carrier limit'. It is the US domestic standard. The article's own FAQ contradicts this, noting international is often smaller, 'sometimes under 21.7 in tall including handle and wheels'.",
+   "method": "Same T+L protocol: pack, roll over gravel/carpet/stone, drop and bat, overhead-bin fit, 6-month long-term.",
+   "self_inconsistent": [
+    "600+ bags in the intro vs 270 carry-ons in the methodology",
+    "Tumi headed '19 Degree Lite', called '10 Degree Lite International' in the body",
+    "Bagsmart listed at $110, prose says 'coming in at $150'",
+    "Bagsmart is Best value here, a runner-up in tl-carryon"
+   ],
+   "affiliate": true
+  },
+  "packhacker-international": {
+   "publication": "Pack Hacker",
+   "title": "The Best Luggage for International Travel",
+   "url": "https://www.packhacker.com/blog/general/best-luggage-for-international-travel/",
+   "author": "Eric Hergenreder",
+   "updated": "2026-07-27",
+   "retrieved": "2026-08-30",
+   "local": "resources/reviews/pack-hacker-best-luggage-international.md",
+   "tier": 2,
+   "publishes": {
+    "dimensions": "roundup no / REVIEW PAGES YES",
+    "weight": "review pages yes",
+    "capacity": "review pages yes",
+    "price": false,
+    "numeric_scores": true
+   },
+   "size_baseline_in": null,
+   "size_baseline_note": "The ROUNDUP prints no dimensions. The per-product review pages print dimensions, weight, capacity, AND a carry-on compliance percentage against 146 airlines. The roundup is a summary; the review page is the primary source.",
+   "method": "Weighted rolling test over smooth surface, brick/cobblestone, and grass. Method stated, raw per-surface ratings not published.",
+   "handoff_quote": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying.",
+   "affiliate": true,
+   "beat": "Primarily travel backpacks and one-bag travel. Wheeled luggage is secondary coverage \u2014 judging them as a luggage-sizing outlet on one roller roundup was the wrong test.",
+   "carry_on_compliance_feature": {
+    "exists": true,
+    "airlines": 146,
+    "example": {
+     "bag": "Monos Carry-On",
+     "score_pct": 38,
+     "airlines_passing": 55
+    },
+    "their_disclaimer": "We take the measurements of the bag provided by the manufacturer and compare them to the allowance listed on airline websites. This should be used as a guideline rather than a rule. Bags can change size as you pack them out, and every airline's interpretation of compliance is different.",
+    "basis": "manufacturer",
+    "why_it_matters": "This is our product, at greater carrier coverage, built on the one input our entire thesis says is wrong."
+   }
+  },
+  "ricksteves-store": {
+   "publication": "Rick Steves' Europe (manufacturer store)",
+   "title": "Carry-on Luggage",
+   "url": "https://store.ricksteves.com/collections/carry-on-luggage",
+   "author": "Rick Steves' Europe, Inc.",
+   "updated": "2026-08-30",
+   "retrieved": "2026-08-30",
+   "tier": 3,
+   "kind": "manufacturer",
+   "publishes": {
+    "dimensions": "BOTH packing and with-wheels",
+    "weight": true,
+    "capacity": true,
+    "price": true,
+    "numeric_scores": false
+   },
+   "why_it_matters": "The only source in this project - reviewer or manufacturer - that publishes the packing dimension AND the with-wheels dimension as separate figures. That distinction is our entire thesis, printed by a manufacturer on its own product page.",
+   "beat": "Bags designed for European travel, sold direct. Barely covered by the US review circuit, which is why they appear in none of the four roundups.",
+   "caution": "Still a manufacturer and still self-reported. The with-wheels figure is a claim to verify, not a measurement to adopt. Its value is that publishing both numbers makes the claim falsifiable in a way a single spec number never is.",
+   "affiliate": false,
+   "self_inconsistent": [
+    "Collection page meta says the bags are 'designed to fit in standard US airline bins'; the Rolling Carry-On product page says 'Fits European overhead bins with room to spare'."
+   ]
+  },
+  "travelpro-store": {
+   "publication": "Travelpro (manufacturer store)",
+   "title": "Maxlite 5 carry-on range",
+   "url": "https://travelpro.com/products/maxlite%C2%AE-5-international-expandable-carry-on-spinner",
+   "author": "Travelpro",
+   "updated": "2026-08-30",
+   "retrieved": "2026-08-30",
+   "tier": 3,
+   "kind": "manufacturer",
+   "publishes": {
+    "dimensions": "BOTH case and overall",
+    "weight": true,
+    "capacity": true,
+    "price": true,
+    "numeric_scores": false
+   },
+   "why_it_matters": "The second manufacturer publishing both figures - and the only source anywhere that explains WHY it matters, in its own FAQ.",
+   "thesis_quote": "We publish both numbers. The case dimensions (the packing body only) are 19 x 15 x 7.75 in. The overall dimensions, which include wheels and carry handles, are 21.75 x 15.75 x 7.75 in. When airlines publish size limits they mean the overall size, so compare the overall number to your airline's limit.",
+   "also_publishes": "A per-airline carry-on size guide at /pages/airline-guides, and a regional-jet gate-check warning.",
+   "caution": "Tier 3 and self-reported. They also state the range is 'sizer-bin tested' on major US carriers, which is a testing claim we cannot verify.",
+   "affiliate": false
+  }
+ }
+}

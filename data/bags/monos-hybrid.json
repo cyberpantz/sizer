@@ -1,0 +1,66 @@
+{
+ "slug": "monos-hybrid",
+ "brand": "Monos",
+ "model": "Hybrid Carry-On",
+ "variant": null,
+ "line": "monos-carryon",
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.9,
+   35.6,
+   22.9
+  ],
+  "src": "review",
+  "ref": "tl-carryon",
+  "at": "2026-06-10",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 3.99,
+  "src": "review",
+  "ref": "tl-carryon",
+  "at": "2026-06-10",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 34.2,
+  "src": "review",
+  "ref": "tl-carryon",
+  "at": "2026-06-10",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "tl-carryon",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/style/travel-bags/best-carry-on-luggage",
+   "at": "2026-06-10",
+   "award": "Best for international travel",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Zipperless build makes it impossible to overpack past international limits.",
+   "caveat": "No expansion; ~8.8 lb empty.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

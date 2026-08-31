@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Osprey Farpoint 40 — real measured size — Sizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FBF9F6; --surface:#FFFFFF; --surface-2:#F5F2ED;
+  --rule:#E7E2DA; --rule-strong:#C8C1B5;
+  --ink:#1C1A17; --ink-2:#4C4741; --muted:#736C63;
+  --blue:#1D4E89; --blue-hover:#163D6C; --blue-wash:#EDF2F8;
+  --green:#14713D; --green-wash:#E9F3EC;
+  --amber:#8A5D00; --amber-wash:#FBF3E2;
+  --orange:#B4530F; --orange-wash:#FBEEE4;
+  --red:#B3261E; --red-wash:#FAECEA;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --body:"Figtree",system-ui,-apple-system,sans-serif;
+  --r:14px; --r-sm:9px;
+  --shadow:0 1px 2px rgba(28,26,23,.04), 0 6px 20px -8px rgba(28,26,23,.10);
+  --shadow-lift:0 2px 4px rgba(28,26,23,.05), 0 12px 32px -10px rgba(28,26,23,.16);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:72rem;margin:0 auto;padding:0 24px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+header{background:var(--surface);border-bottom:1px solid var(--rule)}
+.hd{display:flex;align-items:center;height:68px;gap:30px}
+.mark{font-weight:600;font-size:22px;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+.mark span{color:var(--blue)}
+nav{margin-left:auto;display:flex;align-items:center;gap:24px}
+nav a{color:var(--ink-2);text-decoration:none;font-size:16px;padding:8px 0}
+.cta{background:var(--blue);color:#fff;font-weight:600;font-size:16px;
+  padding:12px 22px;border-radius:999px;min-height:46px}
+.notice{background:var(--amber-wash);border:1px solid #E8D5A8;padding:14px 18px;
+  margin:22px 0 0;font-size:15px;color:var(--ink-2);border-radius:var(--r-sm)}
+.notice b{color:var(--ink)}
+
+.crumb{padding:22px 0 0;font-size:15px;color:var(--muted)}
+.crumb a{text-decoration:none}
+.crumb a:hover{text-decoration:underline}
+
+/* headline */
+.top{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;padding:26px 0 0;align-items:start}
+@media(max-width:900px){.top{grid-template-columns:1fr;gap:24px}}
+.kind{font-size:15px;color:var(--muted)}
+h1{font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.1;
+  letter-spacing:-.02em;margin:2px 0 18px;text-wrap:balance}
+
+.headline{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:24px 26px}
+.hrow{display:grid;grid-template-columns:170px 1fr;gap:16px;align-items:baseline;padding:9px 0}
+.hrow+.hrow{border-top:1px solid var(--rule)}
+.hrow .k{font-size:15.5px;color:var(--muted)}
+.big{font-family:var(--body);font-weight:700;letter-spacing:-.02em;
+  font-size:clamp(1.5rem,3.6vw,2rem);font-variant-numeric:tabular-nums;line-height:1}
+.big .x{color:var(--muted);font-size:.72em;padding:0 4px}
+.big .u{font-size:.5em;color:var(--muted);font-weight:400;margin-left:6px}
+.claim{color:var(--muted)}
+.verdictline{margin:18px 0 0;padding:14px 16px;background:var(--surface-2);
+  border-radius:var(--r-sm);font-size:16.5px;color:var(--ink-2)}
+.verdictline.ok{background:var(--green-wash);color:var(--green)}
+.verdictline b{font-weight:600;color:var(--ink)}
+.verdictline.ok b{color:var(--green)}
+
+/* proof */
+.proof{background:var(--surface-2);border:1px dashed var(--rule-strong);border-radius:var(--r);
+  padding:26px;text-align:center;color:var(--muted);font-size:15px}
+.proof b{display:block;color:var(--ink-2);font-size:16px;margin-bottom:4px}
+.side{display:flex;flex-direction:column;gap:16px}
+.buybox{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:20px 22px}
+.buybox .p{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.buybox .m{font-size:15px;color:var(--muted);margin:2px 0 14px}
+.buybox a.go{display:flex;align-items:center;justify-content:center;background:var(--blue);
+  color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:13px;min-height:50px}
+.buybox a.go:hover{background:var(--blue-hover)}
+.buybox .disc{font-size:13.5px;color:var(--muted);margin:12px 0 0}
+
+/* sections */
+section{padding:48px 0 0}
+h2{font-size:23px;font-weight:700;letter-spacing:-.018em;margin:0 0 6px}
+.sub{margin:0 0 20px;font-size:16.5px;color:var(--ink-2);max-width:64ch}
+
+/* carrier table */
+.region{margin-bottom:26px}
+.region h3{font-size:16px;font-weight:600;color:var(--muted);margin:0 0 8px}
+.tbl{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden}
+.tr{display:grid;grid-template-columns:1fr 128px 150px 96px;gap:14px;align-items:center;
+  padding:13px 18px;border-bottom:1px solid var(--rule);font-size:16px}
+.tr:last-child{border-bottom:0}
+.tr:hover{background:var(--surface-2)}
+.tr .lim{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.tr .why{font-size:15px;color:var(--ink-2)}
+.tag{font-size:14px;font-weight:600;padding:5px 11px;border-radius:999px;text-align:center;white-space:nowrap}
+.t-clears{background:var(--green-wash);color:var(--green)}
+.t-line{background:var(--amber-wash);color:var(--amber)}
+.t-gamble{background:var(--orange-wash);color:var(--orange)}
+.t-wont{background:var(--red-wash);color:var(--red)}
+@media(max-width:760px){
+  .tr{grid-template-columns:1fr auto;gap:6px 12px}
+  .tr .lim{grid-column:1}.tr .why{grid-column:1/-1}
+}
+
+/* alternatives */
+.alts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.alt{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:8px}
+.alt .n{font-weight:600;font-size:16.5px;line-height:1.3}
+.alt .d{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.alt .c{font-size:15px;color:var(--green);font-weight:600}
+.alt a{margin-top:auto;font-size:15.5px;font-weight:600;text-decoration:none}
+
+.scope{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  padding:22px 24px;box-shadow:var(--shadow)}
+.scope > p{font-size:17px;color:var(--ink-2);max-width:62ch;margin:0}
+.who{margin:18px 0 0;padding:18px 20px;background:var(--surface-2);border-radius:var(--r-sm)}
+.wl{display:block;font-size:14px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.who p{font-size:16.5px;color:var(--ink-2);max-width:60ch;margin:0 0 12px}
+.who p:last-child{margin-bottom:0}
+.who b{color:var(--ink);font-weight:600}
+.both{padding-top:12px;border-top:1px solid var(--rule)}
+.trycta{margin-top:26px;background:var(--blue-wash);border-radius:var(--r);padding:22px 24px;
+  display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.trycta p{margin:0;font-size:17px;max-width:52ch}
+.trycta a{background:var(--blue);color:#fff;text-decoration:none;font-weight:600;
+  border-radius:999px;padding:13px 24px;min-height:48px;display:inline-flex;align-items:center}
+
+.src{margin:22px 0 0;font-size:14.5px;color:var(--muted)}
+footer{background:var(--surface);border-top:1px solid var(--rule);
+  margin-top:56px;padding:32px 0 52px;font-size:15px;color:var(--muted)}
+footer p{max-width:72ch;margin:0}
+@media(max-width:820px){nav a{display:none}}
+
+/* unit toggle — metric default, remembered */
+.units{display:flex;border:1px solid var(--rule-strong);border-radius:999px;overflow:hidden;
+  margin-left:8px;flex:none}
+.units button{padding:8px 13px;font-size:14px;font-weight:600;min-height:40px;
+  color:var(--muted);border-right:1px solid var(--rule-strong);line-height:1}
+.units button:last-child{border-right:0}
+.units button[aria-pressed="true"]{background:var(--ink);color:#fff}
+@media(max-width:520px){.units button{padding:8px 11px;font-size:13.5px}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap hd">
+  <a class="mark" href="index.html">Sizer<span>.</span></a>
+  <nav><a href="bags.html">Bags</a><a href="guide.html">Guide</a>
+    <div class="units" role="group" aria-label="Units">
+      <button data-u="cm" aria-pressed="true">cm</button><button data-u="in" aria-pressed="false">in</button>
+    </div>
+    <a class="cta" href="check.html" style="text-decoration:none;display:inline-flex;align-items:center">Check a bag</a></nav>
+</div></header>
+
+<div class="wrap"><p class="notice">
+  <b>Rough cut.</b> Measurements, prices and airline limits are placeholders. The measurement photo is where the real proof would sit.
+</p></div>
+
+<div class="wrap">
+  <p class="crumb"><a href="bags.html">Bags</a> › <a href="#">Osprey</a> › Farpoint 40</p>
+
+  <div class="top">
+    <div>
+      <p class="kind" id="kind"></p>
+      <h1 id="title"></h1>
+
+      <div class="headline">
+        <div class="hrow"><span class="k">Osprey says</span><span class="big claim" id="claim"></span></div>
+        <div class="hrow"><span class="k">What we measured</span><span class="big" id="meas"></span></div>
+        <div class="hrow"><span class="k">Weight, empty</span><span class="big" id="wt" style="font-size:1.3rem"></span></div>
+        <p class="verdictline" id="vline"></p>
+      </div>
+
+      <div class="proof" style="margin-top:16px">
+        <b>Photograph of the tape measure against the bag</b>
+        Taken 24 August 2026 by Frank. This is the evidence for the number above —
+        every measured bag on this site has one.
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="buybox">
+        <div class="p">$185</div>
+        <div class="m">at Osprey</div>
+        <a class="go" href="#" rel="sponsored nofollow">Check current price →</a>
+        <p class="disc">We earn a commission if you buy through this link. It does not change what we measured or what we recommend.</p>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <h2 id="covh"></h2>
+    <p class="sub" id="covsub"></p>
+    <div id="table"></div>
+    <p class="src">Airline limits come from each carrier's own baggage page, checked 28 August 2026. Every row links to the source on the airline's site.</p>
+  </section>
+
+  <section>
+    <h2>What we don't tell you</h2>
+    <p class="sub">We measure. We don't review — and those are genuinely different jobs.</p>
+    <div class="scope">
+      <p>Whether a bag survives five years, whether the wheels cope with cobblestones, whether the
+      warranty gets honoured, whether the handle rattles — none of that shows up on a tape measure.
+      We have nothing useful to say about any of it.</p>
+      <div class="who">
+        <span class="wl">Rated elsewhere</span>
+        <p><b>The Strategist</b> named the Osprey Farpoint 40 among its picks in June 2026, judging build,
+        comfort and value. We measured it at <b>55 × 36 × 24 cm</b> and it clears 10 of the 24 airlines we track.</p>
+        <p class="both"><b>Both of those are true.</b> They're answering "is this a good bag." We're answering
+        "will it get on the plane." Read them for the first question and us for the second — and be wary of
+        anyone claiming to settle both at once.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="altsec">
+    <h2 id="alth"></h2>
+    <p class="sub" id="altsub"></p>
+    <div class="alts" id="alts"></div>
+  </section>
+
+  <div class="trycta">
+    <p><b>Flying somewhere specific?</b> Check this bag against your actual airline and ticket — the answer changes a lot by fare.</p>
+    <a href="index.html">Check my trip →</a>
+  </div>
+</div>
+
+<footer><div class="wrap">
+  <p>Some links here earn us a commission — it never changes what we recommend or what we measure. As an Amazon Associate I earn from qualifying purchases.</p>
+</div></footer>
+
+<script>
+const BAG={b:"Osprey",m:"Farpoint 40",t:"travel backpack",
+  c:[54,35,23],x:[55,36,24],kg:1.6,p:185,mer:"Osprey"};
+const ALTS=[
+ {n:"Monos Cabin",d:"54 × 35 × 22 cm",cov:19,p:255},
+ {n:"Tortuga Travel Backpack 40L",d:"55 × 35 × 23 cm",cov:18,p:350},
+ {n:'Travelpro Platinum Elite 20"',d:"54 × 36 × 21 cm",cov:15,p:260},
+ {n:"Cabin Max Metz under-seat",d:"40 × 20 × 25 cm",cov:24,p:45},
+];
+const AIR=[
+ {n:"Ryanair",r:"Europe",st:9,d:[40,30,20],fare:"cheapest ticket"},
+ {n:"Wizz Air",r:"Europe",st:9,d:[40,30,20],fare:"cheapest ticket"},
+ {n:"easyJet",r:"Europe",st:8,d:[45,36,20],fare:"standard"},
+ {n:"Vueling",r:"Europe",st:8,d:[40,30,20],fare:"cheapest ticket"},
+ {n:"Air France",r:"Europe",st:7,d:[55,35,25],fare:"economy"},
+ {n:"KLM",r:"Europe",st:7,d:[55,35,25],fare:"economy"},
+ {n:"Lufthansa",r:"Europe",st:7,d:[55,40,23],fare:"economy"},
+ {n:"Iberia",r:"Europe",st:7,d:[56,40,25],fare:"economy"},
+ {n:"British Airways",r:"Europe",st:7,d:[56,45,25],fare:"economy"},
+ {n:"American",r:"United States",st:5,d:[56,36,23],fare:"economy"},
+ {n:"United",r:"United States",st:6,d:[56,35,22],fare:"economy"},
+ {n:"Delta",r:"United States",st:5,d:[56,35,23],fare:"economy"},
+ {n:"Southwest",r:"United States",st:3,d:[61,41,25],fare:"economy"},
+ {n:"JetBlue",r:"United States",st:5,d:[56,36,23],fare:"economy"},
+ {n:"Spirit",r:"United States",st:9,d:[56,46,25],fare:"with carry-on"},
+ {n:"Frontier",r:"United States",st:9,d:[61,46,25],fare:"with carry-on"},
+ {n:"Singapore",r:"Asia",st:6,d:[55,40,20],fare:"economy"},
+ {n:"Cathay Pacific",r:"Asia",st:6,d:[56,36,23],fare:"economy"},
+ {n:"Japan Airlines",r:"Asia",st:5,d:[55,40,25],fare:"economy"},
+ {n:"ANA",r:"Asia",st:5,d:[55,40,25],fare:"economy"},
+ {n:"Scoot",r:"Asia",st:8,d:[54,38,23],fare:"economy"},
+ {n:"Emirates",r:"Middle East",st:7,d:[55,38,20],fare:"economy"},
+ {n:"Qatar",r:"Middle East",st:7,d:[50,37,25],fare:"economy"},
+ {n:"Turkish",r:"Middle East",st:7,d:[55,40,23],fare:"economy"},
+];
+
+/* ENGINE:START — generated by scripts/build-mockups.mjs, do not edit */
+// ---- src/engine/constants.mjs ----
+/* Every tunable number in the fit engine, in one place.
+   These were previously magic numbers duplicated across five files, which is how
+   check.html silently drifted onto a superseded band ladder. Nothing outside this
+   file may hard-code a threshold. */
+
+/** Our own measurement error: tape, their rounding, inch→cm conversion.
+ *  The ONLY quantity permitted to move a band. Deliberately small.
+ *  Sized by the Travelpro Maxlite 5 International, built to 55×40×20 but
+ *  published in inches: 21.75in → 55.245cm failed seven carriers, one of them
+ *  (Iberia) by 0.01cm. A tenth of a millimetre is not a verdict. */
+const EPS_CM = 0.3;
+
+/** How far past the published limit is still worth showing as a risk rather
+ *  than a refusal — the "fuzz factor", and a fact about the AIRLINE.
+ *  It never alters the published limit: delta is always computed against the
+ *  real number and always shown. This only decides GAMBLE vs WON'T. */
+function gambleCeiling(strictness) {
+  /* Unknown fails SAFE, meaning strict.
+
+     `null <= 3` is true in JavaScript, so an unresearched carrier used to get
+     the most permissive ceiling there is — we would have told someone their
+     oversize bag was worth a try at an airline we know nothing about. The two
+     ways to be wrong are not symmetric: an over-cautious verdict costs a reader
+     some convenience, an over-confident one costs them a gate fee and their
+     bag. When we do not know, say the strict thing. */
+  if (typeof strictness !== 'number' || !Number.isFinite(strictness)) return 0;
+  if (strictness <= 3) return 5.0;  // effectively never measured
+  if (strictness <= 5) return 3.0;  // occasional, usually only when bins are full
+  if (strictness <= 7) return 1.5;  // frames at the gate, staff use judgement
+  return 0;                         // measured as routine — over is over
+}
+
+/** What an unresearched carrier scores. Used when a record has no strictness
+ *  we can derive and no override — deliberately at the strict end, and paired
+ *  with a UI obligation to say the score is provisional rather than silently
+ *  presenting a guess as a finding. */
+const UNKNOWN_STRICTNESS = 8;
+
+/** How much the bag deforms entering a sizer frame. NEVER moves a band —
+ *  folding it in moved one bag nine carriers, silently, which is wiggle room
+ *  replacing a published limit. It raises an advisory instead. */
+const SQUISH_CM = {
+  aluminium: 0,    // dents, doesn't compress
+  hardside: 0.3,
+  softside: 1.5,
+  backpack: 2.5,
+  duffel: 3.0,
+};
+
+/** Depth a soft bag loses when packed thin. Applied to the smallest dimension
+ *  only, because that is the one a traveller can flatten. */
+const SOFT_COMPRESS_CM = 2;
+
+/** Empty-bag weight as a share of the cabin allowance, past which we tell the
+ *  traveller what's left to pack. Ratio, not absolute: 4kg is unremarkable on
+ *  Air France's 12kg and nearly disqualifying on Emirates' 7. */
+const WEIGHT_TIGHT_RATIO = 0.4;
+
+/** Reference personal-item envelope — the floor Ryanair, Wizz and Vueling share. */
+const PERSONAL_ITEM_CM = [40, 30, 20];
+
+const BANDS = ['clears', 'line', 'gamble', 'wont'];
+
+// ---- src/engine/advisories.mjs ----
+/* Advisories: everything true about a fit that the four bands deliberately
+   don't encode.
+
+   The architectural rule, from docs/05-schema.md and worth restating because it
+   is the one that keeps getting tested: an advisory NEVER changes the band.
+   Dimensions decide whether the bag goes through the frame. Weight is a
+   different gate, enforced by a different person. Squish is a property of the
+   bag. Aircraft is a property of the route. Collapsing any of them into the
+   verdict misreports both halves — and folding squish into the tolerance once
+   moved a bag nine carriers, silently, which is wiggle room replacing a
+   published limit.
+
+   They are a REGISTRY so the specced-but-unbuilt ones (gate-check tagging,
+   TSA scanner aperture, seasonal bin pressure) drop in without touching
+   evaluate(). Each returns structured data with cm/kg figures — never a
+   sentence. Copy is the caller's job, so the same advisory can render as a
+   headline, a table cell, or a tooltip. */
+
+/** @typedef {{ id: string, level: string, [k: string]: unknown }} Advisory */
+
+function squish({ bag, deltaCm, config }) {
+  if (deltaCm <= 0) return null;
+  const give = config.SQUISH_CM[bag.shell] ?? 0;
+  if (give >= 1 && deltaCm <= give) {
+    return { id: 'squish', level: 'may_squeeze', over_cm: deltaCm, give_cm: give, shell: bag.shell };
+  }
+  /* Rigid and over. "It'll probably squeeze in" is sound for a duffel and
+     completely wrong for a polycarbonate shell, which either goes in or doesn't.
+     Saying so is more useful than staying quiet. */
+  if (give < 1) {
+    return { id: 'squish', level: 'rigid', over_cm: deltaCm, give_cm: give, shell: bag.shell };
+  }
+  return null;
+}
+
+function weight({ bag, carrier, config }) {
+  const cap = carrier.allowance?.max_kg, kg = bag.weight_kg;
+  if (!cap || !kg) return null;
+  const left = +(cap - kg).toFixed(2);
+  if (left <= 0) return { id: 'weight', level: 'over', bag_kg: kg, cap_kg: cap, left_kg: left };
+  if (kg / cap >= config.WEIGHT_TIGHT_RATIO) {
+    return { id: 'weight', level: 'tight', bag_kg: kg, cap_kg: cap,
+             left_kg: left, share: +(kg / cap).toFixed(2) };
+  }
+  return null;
+}
+
+/** An expansion zip is a trap: the bag is compliant until someone uses it.
+ *  Rick Steves states this on their own product page; Away's Flex needed a
+ *  reviewer to say it for them. */
+function expansion({ bag, deltaCm }) {
+  if (!bag.expands_cm) return null;
+  const expanded = +(deltaCm + bag.expands_cm).toFixed(2);
+  if (deltaCm <= 0 && expanded > 0) {
+    return { id: 'expansion', level: 'compliant_until_expanded',
+             expands_cm: bag.expands_cm, over_when_expanded_cm: expanded };
+  }
+  return null;
+}
+
+/** A bag can be fully compliant and still be taken at the jetbridge, because a
+ *  CRJ-200 bin physically won't hold it. Not a policy failure and never scored
+ *  as one — an operational fact the traveller needs. */
+function regionalJet({ carrier }) {
+  if (!carrier.regional_jets) return null;
+  return { id: 'regional_jet', level: 'likely_gate_check' };
+}
+
+/** Per-catch commission — the case the bands cannot represent.
+
+    The engine models two outcomes: a bag fits, or it is over and may be caught.
+    Frontier and Spirit pay gate agents per oversize bag charged ($10 and $5
+    respectively on domestic flights), and a 2024 congressional report found the
+    two paid roughly $26M in such commissions over 2022-23, noting the incentives
+    "may inappropriately encourage abuse of discretion".
+
+    That describes a third outcome: a compliant bag charged anyway. Strictness
+    cannot express it, because strictness only scales the GAMBLE ceiling and a
+    bag that clears never reaches it. So this fires even on CLEARS — the only
+    advisory that does.
+
+    Per 16-editorial-policy this states the fee and cites the source. It does not
+    characterise anyone's conduct; the congressional report's words are quoted as
+    theirs, and the traveller draws their own conclusion. */
+function agentCommission({ carrier }) {
+  const c = carrier.agent_commission;
+  if (!c?.amount_usd) return null;
+  return {
+    id: 'agent_commission',
+    level: 'incentivised_enforcement',
+    amount_usd: c.amount_usd,
+    where: c.where ?? 'gate',
+    url: c.url ?? null,
+    /* True even when the verdict is CLEARS — that is the entire point. */
+    applies_when_compliant: true,
+  };
+}
+
+/** A fare with no cabin allowance at all. The loudest thing we can say. */
+function noCabinBag({ carrier }) {
+  if (!carrier.no_cabin_bag) return null;
+  return { id: 'no_cabin_bag', level: 'not_permitted', fare_class: carrier.fare_class };
+}
+
+/** Order is render order: most consequential first. */
+const DEFAULT_ADVISORIES = [noCabinBag, agentCommission, regionalJet, squish, weight, expansion];
+
+// ---- src/engine/fit.mjs ----
+/* The fit engine.
+
+   Pure: no DOM, no I/O, no unit formatting, no copy. Centimetres in, data out.
+   That is what lets one implementation serve the pages, the build scripts and
+   the tests — and it is why "5 cm too width" and a silently-drifted band ladder
+   were both possible before it existed.
+
+   Built through createEngine(config) rather than as bare exports, so thresholds
+   are injectable. Tests can pin a curve; a future per-region tuning can vary one
+   without a fork. The default export covers the common case.
+
+   Contract and rationale: docs/05-schema.md.
+   Three bugs have been found in these rules, every one by running real data
+   through them rather than reading them:
+     1. a fall-through gap at strictness 6-7 that silently returned CLEARS
+     2. no rounding tolerance — failed a bag by 0.01 cm
+     3. a flat 3 cm ceiling that ignored strictness entirely
+   All three are tests now. Add a case when a fourth turns up. */
+
+/* Plain named imports, no aliases and no namespace import. The mockup inliner
+   flattens these modules into a single scope, where `defaults.EPS_CM` and
+   `EPS_CM as DEFAULT_EPS_CM` both evaporate. scripts/build-mockups.mjs rejects
+   either form rather than emitting a page that throws in a browser — both were
+   caught that way, which is the entire reason that check exists. */
+
+
+
+/** Compared largest-to-smallest, never by axis name: a bag rotates, so
+ *  length/width/depth are the manufacturer's convention rather than a physical
+ *  constraint. Sorting is what makes the comparison honest. */
+const desc = (a) => [...a].sort((x, y) => y - x);
+
+const DIM_LABEL = ['long', 'wide', 'deep'];
+
+function createEngine(overrides = {}) {
+  const config = {
+    EPS_CM, gambleCeiling, SQUISH_CM,
+    SOFT_COMPRESS_CM, WEIGHT_TIGHT_RATIO, PERSONAL_ITEM_CM,
+    advisories: DEFAULT_ADVISORIES,
+    ...overrides,
+  };
+
+  /** External dimensions after compression the traveller actually controls.
+   *  Applied to the smallest dimension only — that is the one you can flatten. */
+  function effective(bag) {
+    const e = desc(bag.external_cm);
+    if (bag.soft) e[2] = Math.max(0, e[2] - config.SOFT_COMPRESS_CM);
+    return e;
+  }
+
+  /** Overage on the worst dimension. Negative means room to spare. Reports the
+   *  binding dimension, because that is the fact the traveller can act on. */
+  function delta(bag, allowanceCm) {
+    const e = effective(bag), m = desc(allowanceCm);
+    let worst = -Infinity, idx = 0;
+    for (let i = 0; i < 3; i++) {
+      const d = e[i] - m[i];
+      if (d > worst) { worst = d; idx = i; }
+    }
+    return { cm: +worst.toFixed(2), dimension: DIM_LABEL[idx], index: idx };
+  }
+
+  /** Exhaustive by construction: every finite delta lands in exactly one band
+   *  at every strictness, with no fall-through. */
+  function band(deltaCm, strictness) {
+    const ceiling = config.gambleCeiling(strictness);
+    if (deltaCm > ceiling && deltaCm > config.EPS_CM) return 'wont';
+    if (deltaCm > config.EPS_CM) return 'gamble';
+    if (deltaCm > 0) return 'line';                      // over, but inside our own error
+    if (deltaCm > -2 && strictness >= 6) return 'line';  // legal, no margin, they measure
+    return 'clears';
+  }
+
+  /** One bag against one carrier+fare. The single call every surface should use. */
+  function evaluate(bag, carrier) {
+    /* A carrier that no longer flies cannot produce a verdict. Returning
+       'clears' or 'wont' would both be wrong — the honest answer is that the
+       question no longer applies. Checked FIRST, before the allowance, because
+       a defunct airline's published limits are trivia. */
+    if (carrier.flying === false) {
+      return {
+        band: null, delta_cm: null, dimension: null, no_cabin_bag: false,
+        not_flying: true, status: carrier.status, ceased_at: carrier.ceased_at,
+        successor: carrier.successor ?? null,
+        advisories: [{ id: 'not_flying', level: carrier.status,
+                       ceased_at: carrier.ceased_at, successor: carrier.successor ?? null }],
+      };
+    }
+    if (carrier.no_cabin_bag) {
+      return {
+        band: 'wont', delta_cm: null, dimension: null, no_cabin_bag: true,
+        advisories: runAdvisories({ bag, carrier, deltaCm: null }),
+      };
+    }
+    const d = delta(bag, carrier.allowance.max_cm);
+    return {
+      band: band(d.cm, carrier.strictness),
+      delta_cm: d.cm,
+      dimension: d.dimension,
+      no_cabin_bag: false,
+      /* Surfaced so a caller can refuse to promote a bag we haven't measured.
+         The release gate depends on it. */
+      measured: bag.measured,
+      advisories: runAdvisories({ bag, carrier, deltaCm: d.cm }),
+    };
+  }
+
+  function runAdvisories(ctx) {
+    return config.advisories.map((fn) => fn({ ...ctx, config })).filter(Boolean);
+  }
+
+  /** Strictest common box across an itinerary: the biggest bag surviving every
+   *  leg. Minimum per SORTED dimension, so it is rotation-independent. */
+  function envelope(carriers) {
+    const boxes = carriers.filter((c) => c.allowance && c.flying !== false)
+      .map((c) => desc(c.allowance.max_cm));
+    if (!boxes.length) return null;
+    return [0, 1, 2].map((i) => Math.min(...boxes.map((b) => b[i])));
+  }
+
+  /** Which leg decides the trip — the one to name in the copy. A leg with no
+   *  cabin allowance always binds, whatever the dimensions say. */
+  function bindingLeg(bag, carriers) {
+    let worst = null;
+    for (const carrier of carriers) {
+      const result = evaluate(bag, carrier);
+      if (result.no_cabin_bag) return { carrier, result };
+      if (!worst || result.delta_cm > worst.result.delta_cm) worst = { carrier, result };
+    }
+    return worst;
+  }
+
+  /** Does an overhead carry-on also fit a personal-item envelope? Shown on a bag
+   *  page; never a reason to move it out of the carry-on shelf. */
+  function fitsPersonalItem(bag) {
+    const e = desc(bag.external_cm), p = desc(config.PERSONAL_ITEM_CM);
+    return e.every((v, i) => v <= p[i]);
+  }
+
+  /** Share of a carrier set the bag clears. `line` counts — it does fit. */
+  /** Share of a carrier set the bag clears. Carriers that no longer fly are
+   *  excluded from the denominator, not counted as failures — "clears 19 of 24"
+   *  must not quietly become "19 of 25" because a defunct airline is still in
+   *  the file. */
+  function coverage(bag, carriers) {
+    const live = carriers.filter((c) => c.flying !== false);
+    let clears = 0, line = 0;
+    for (const c of live) {
+      const b = evaluate(bag, c).band;
+      if (b === 'clears') clears++; else if (b === 'line') line++;
+    }
+    return { clears, line, pass: clears + line, of: live.length,
+             excluded: carriers.length - live.length,
+             ratio: live.length ? (clears + line) / live.length : 0 };
+  }
+
+  return { config, effective, delta, band, evaluate, envelope,
+           bindingLeg, fitsPersonalItem, coverage };
+}
+
+const engine = createEngine();
+
+// ---- src/engine/normalize.mjs ----
+/* The boundary between stored records and the engine.
+
+   Records in data/bags/ carry provenance objects — {v, src, at} — because we
+   refuse to state a number without saying where it came from. The engine works
+   in plain centimetres. Something has to unwrap, and if that "something" is
+   each caller, we are back to five hand-maintained copies.
+
+   So: one adapter, one place to change when the record shape changes, and it
+   VALIDATES rather than trusting. A bag with two dimensions or a NaN should
+   fail loudly here, not silently produce a verdict someone acts on. */
+
+class EngineInputError extends Error {
+  constructor(msg, subject) { super(msg); this.name = 'EngineInputError'; this.subject = subject; }
+}
+
+/** Accepts a bare value or a {v,...} provenance object. */
+const unwrap = (f) => (f && typeof f === 'object' && !Array.isArray(f) && 'v' in f) ? f.v : f;
+
+/** Provenance travels alongside the value, never inside it. The UI must be able
+ *  to render a manufacturer claim differently from something we measured. */
+const provenanceOf = (f) =>
+  (f && typeof f === 'object' && !Array.isArray(f) && 'src' in f)
+    ? { src: f.src, at: f.at ?? null, ref: f.ref ?? null }
+    : { src: 'unknown', at: null, ref: null };
+
+function assertDims(v, subject) {
+  if (!Array.isArray(v) || v.length !== 3) {
+    throw new EngineInputError(`expected 3 dimensions, got ${JSON.stringify(v)}`, subject);
+  }
+  for (const n of v) {
+    if (typeof n !== 'number' || !Number.isFinite(n) || n <= 0) {
+      throw new EngineInputError(`dimension is not a positive finite number: ${n}`, subject);
+    }
+  }
+  return v;
+}
+
+/* Carrier lifecycle. Airlines stop flying, merge, and get absorbed, and over a
+   five-to-seven year horizon this is routine rather than exceptional — Spirit
+   ceased operations on 2 May 2026, the first major US carrier to fail
+   financially in 25 years, and our dataset went on describing its baggage policy
+   as current.
+
+   This is a STEP CHANGE, not staleness. A 180-day freshness warning would have
+   flagged it in October, five months after the last Spirit flight. */
+const CARRIER_STATUS = new Set(['operating', 'ceased', 'merged', 'suspended']);
+
+const SHELLS = new Set(['aluminium', 'hardside', 'softside', 'backpack', 'duffel']);
+
+/** Infer construction when the record doesn't state it. The regex on model name
+ *  is a fallback, not the rule — rename a product and the physics shouldn't
+ *  change. Records SHOULD carry `shell`; this keeps older ones working. */
+function shellOf(bag) {
+  if (bag.shell && SHELLS.has(bag.shell)) return bag.shell;
+  if (/alumin/i.test(bag.model ?? '')) return 'aluminium';
+  if (bag.type === 'duffel') return 'duffel';
+  if (bag.type === 'backpack') return 'backpack';
+  return bag.soft ? 'softside' : 'hardside';
+}
+
+/** Stored bag record -> engine input. Throws on anything unusable. */
+function toBag(record) {
+  const subject = record?.slug ?? '(unnamed bag)';
+  if (!record) throw new EngineInputError('no bag record given', subject);
+
+  const external = unwrap(record.measured_cm) ?? unwrap(record.external_cm) ?? unwrap(record.claimed_cm);
+  if (!external) {
+    throw new EngineInputError(
+      'no dimensions on this bag — check `sized` before evaluating it', subject);
+  }
+  return {
+    slug: record.slug, brand: record.brand, model: record.model,
+    external_cm: assertDims(external, subject),
+    provenance: provenanceOf(record.measured_cm ?? record.external_cm ?? record.claimed_cm),
+    /* Whether the number is ours is a first-class fact, not a footnote: nothing
+       may ship as a promoted recommendation on someone else's tape measure. */
+    measured: Boolean(unwrap(record.measured_cm)),
+    weight_kg: unwrap(record.weight_kg) ?? null,
+    soft: Boolean(record.soft),
+    type: record.type ?? null,
+    shell: shellOf(record),
+    expands_cm: unwrap(record.expands_cm) ?? 0,
+  };
+}
+
+/** True when a record can be evaluated at all. Cheaper than try/catch in a loop. */
+const isSized = (record) =>
+  Boolean(unwrap(record?.measured_cm) ?? unwrap(record?.external_cm) ?? unwrap(record?.claimed_cm));
+
+/** Carrier record + fare class -> engine input. */
+function toCarrier(record, fareClass) {
+  const subject = record?.iata ?? record?.name ?? '(unnamed carrier)';
+  if (!record) throw new EngineInputError('no carrier record given', subject);
+
+  const rows = record.allowances ?? [];
+  const cabin = rows.find((a) => a.type === 'cabin' && a.fare_class === fareClass);
+  const strictness = unwrap(record.strictness?.score ?? record.strictness);
+  if (typeof strictness !== 'number' || strictness < 1 || strictness > 10) {
+    throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
+  }
+  return {
+    iata: record.iata, name: record.name, fare_class: fareClass, strictness,
+    /* Absence is the signal. A fare with no cabin row means no cabin bag at any
+       size — never a zero-size row, which a naive comparison would let pass. */
+    allowance: cabin ? { max_cm: assertDims(cabin.max_cm, subject), max_kg: cabin.max_kg ?? null } : null,
+    no_cabin_bag: !cabin,
+    regional_jets: Boolean(record.operates_regional_jets),
+    /* Documented per-catch commission, if any. Carried on the carrier because
+       it is a fact about the airline, not about the bag. */
+    agent_commission: record.agent_commission ?? null,
+
+    /* Default to operating: a record without a status is one nobody has thought
+       about, and the overwhelming majority of carriers are flying. Absence here
+       is not evidence of failure — unlike an absent cabin row, which IS the
+       signal for "no bag permitted". */
+    status: record.status ?? 'operating',
+    ceased_at: record.ceased_at ?? null,
+    successor: record.successor ?? null,
+    /* The one question every caller must ask before rendering a verdict. */
+    flying: (record.status ?? 'operating') === 'operating',
+  };
+}
+
+const ENGINE = createEngine();
+/* ENGINE:END */
+
+/* Page adapter. This page compares one bag against a bare limit array rather
+   than a carrier record, so it wraps the limit in the minimum a carrier needs.
+   Kept deliberately thin — when this becomes an Astro page reading
+   data/carriers/*.json, the wrapper goes and the engine call stays.
+   ENGINE is declared by the generated block above — never redeclare it. */
+function fit(bag, lim, st){
+  const r = ENGINE.evaluate(
+    { slug: "", model: BAG.m ?? "", external_cm: bag, soft: Boolean(BAG.soft),
+      weight_kg: BAG.kg ?? null, shell: BAG.soft ? "softside" : "hardside",
+      type: null, expands_cm: 0, measured: false },
+    { iata: "", name: "", strictness: st, fare_class: "",
+      allowance: { max_cm: lim, max_kg: null },
+      no_cabin_bag: false, regional_jets: false });
+  return { band: r.band, delta: +r.delta_cm.toFixed(1), dim: r.dimension };
+}
+const LABEL={clears:"It fits",line:"Just fits",gamble:"Risky",wont:"Won't fit"};
+const $=i=>document.getElementById(i);
+const dstr=d=>`${U.cm(d[0])}<span class="x">×</span>${U.cm(d[1])}<span class="x">×</span>${U.cm(d[2])}<span class="u">${U.dl()}</span>`;
+
+$("kind").textContent=BAG.b+" · "+BAG.t;
+$("title").textContent=BAG.b+" "+BAG.m;
+$("claim").innerHTML=dstr(BAG.c);
+$("meas").innerHTML=dstr(BAG.x);
+$("wt").textContent=U.kg(BAG.kg)+" "+U.wl();
+
+const results=AIR.map(a=>({a,r:fit(BAG.x,a.d,a.st)}));
+const pass=results.filter(x=>x.r.band!=="wont").length;
+const over=[0,1,2].filter(i=>BAG.x[i]>BAG.c[i]).length;
+
+// Neutral by policy: describe the measurement and the mechanism, never accuse.
+// The numbers in the table are persuasive on their own; editorialising over them
+// makes the whole dataset read as motivated. See docs/16-editorial-policy.md
+const vl=$("vline");
+if(over===0){
+  vl.className="verdictline ok";
+  vl.innerHTML=`<b>The label is accurate.</b> We measured this bag at exactly the size ${BAG.b} publishes —
+    including the wheels and handle. That is less common than it should be, and worth knowing.`;
+}else{
+  vl.className="verdictline";
+  vl.innerHTML=`<b>We measured it ${Math.max(...[0,1,2].map(i=>+(BAG.x[i]-BAG.c[i]).toFixed(1)))} cm over the label
+    on ${over===3?"all three sides":over===1?"one side":over+" sides"}.</b>
+    Most makers measure the case itself; airlines measure whatever sticks out, so a difference of a centimetre or two
+    is normal rather than unusual. It matters only where it crosses a limit — which is what the table below shows.`;
+}
+
+$("covh").textContent=`Where this bag flies — ${pass} of ${AIR.length} airlines`;
+$("covsub").textContent=`Checked against each airline's published limit on a standard economy ticket. Where a cheaper fare would change the answer, we've said which fare this assumes.`;
+
+const REGIONS=["United States","Europe","Asia","Middle East"];
+$("table").innerHTML=REGIONS.map(rg=>{
+  const rows=results.filter(x=>x.a.r===rg);
+  return `<div class="region"><h3>${rg}</h3><div class="tbl">${rows.map(({a,r})=>`
+    <div class="tr">
+      <span><b style="font-weight:600">${a.n}</b> <span style="color:var(--muted);font-size:14.5px">· ${a.fare}</span></span>
+      <span class="lim">${U.dims(a.d)}</span>
+      <span class="why">${r.delta>0?`${r.delta} cm too ${r.dim}`:`${Math.abs(r.delta)} cm to spare`}</span>
+      <span class="tag t-${r.band}">${LABEL[r.band]}</span>
+    </div>`).join("")}</div></div>`;
+}).join("");
+
+$("alth").textContent = pass>=AIR.length*0.8
+  ? "Other bags we've measured" : "If this one won't work for your trip";
+$("altsub").textContent = pass>=AIR.length*0.8
+  ? "Similar bags, with our measurements, for comparison."
+  : "Bags we've measured that clear more of the list — same job, fewer questions at the gate.";
+$("alts").innerHTML=ALTS.map(x=>`<article class="alt">
+  <span class="n">${x.n}</span>
+  <span class="d">${x.d}</span>
+  <span class="c">Fits ${x.cov} of ${AIR.length}</span>
+  <a href="#">$${x.p} · see this bag →</a>
+</article>`).join("");
+
+/* ---- units: metric default for everyone, never locale-inferred ----
+   The data is metric (airlines publish cm). Imperial-only would tell an EU or
+   Asian visitor the site isn't for them; metric is merely unfamiliar to a US one. */
+const U = {
+  /* Inches first for a US audience — that's who this is for. Metric everywhere else.
+     The toggle is always visible, which is what stops an EU or Asian visitor
+     concluding the site isn't for them. An explicit choice always wins. */
+  unit: (()=>{
+    try {
+      const saved = localStorage.getItem('units');
+      if (saved) return saved;
+      const loc = (navigator.language || '') + ' ' + (navigator.languages||[]).join(' ');
+      return /\b(en-US|en-us)\b/.test(loc) ? 'in' : 'cm';
+    } catch { return 'in' }
+  })(),
+  cm(v){ return this.unit==='cm' ? +(+v).toFixed(1) : +((+v)/2.54).toFixed(1) },
+  kg(v){ return this.unit==='cm' ? +(+v).toFixed(1) : +((+v)*2.2046).toFixed(1) },
+  dl(){ return this.unit==='cm' ? 'cm' : 'in' },
+  wl(){ return this.unit==='cm' ? 'kg' : 'lb' },
+  dims(a, sep=' × '){ return a.map(v=>this.cm(v)).join(sep)+' '+this.dl() },
+  set(u){ this.unit=u; try{ localStorage.setItem('units',u) }catch{}; 
+    document.querySelectorAll('.units button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.u===u));
+    if (typeof rerender==='function') rerender(); }
+};
+document.querySelectorAll('.units button').forEach(b=>b.onclick=()=>U.set(b.dataset.u));
+document.querySelectorAll('.units button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.u===U.unit));
+</script>
+</body>
+</html>

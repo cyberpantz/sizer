@@ -1,0 +1,49 @@
+{
+ "slug": "peak-design-roller-pro",
+ "brand": "Peak Design",
+ "model": "Roller Pro",
+ "variant": null,
+ "line": null,
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": null,
+ "external_cm": null,
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": null,
+ "capacity_l": null,
+ "reviews": [
+  {
+   "src": "packhacker-international",
+   "publication": "Pack Hacker",
+   "url": "https://www.packhacker.com/blog/general/best-luggage-for-international-travel/",
+   "at": "2026-07-27",
+   "award": null,
+   "rank": 10,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": null,
+   "caveat": null,
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "At roughly 34L (expandable to about 39L), it's sized for carry-on travel.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   },
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": true,
+ "observed": [],
+ "compliance_unbacked": true
+}

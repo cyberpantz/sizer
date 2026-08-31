@@ -1,0 +1,63 @@
+{
+ "iata": "UA",
+ "name": "United",
+ "region": "NA",
+ "type": "full_service",
+ "strictness": {
+  "score": 6,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Staff do check bags at the gate on busy flights, though rarely over a centimetre or two.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
+  ],
+  "updated": null
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": true,
+ "allowances": [
+  {
+   "fare_class": "basic",
+   "type": "cabin",
+   "max_cm": [
+    43,
+    25,
+    22
+   ],
+   "max_kg": null,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "On domestic routes this fare gives you a personal item only — no full-size carry-on. This catches people out constantly, because American and Delta's basic fares do include one.",
+   "source_url": "",
+   "verified_at": null
+  },
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": [
+    56,
+    35,
+    22
+   ],
+   "max_kg": null,
+   "includes_wheels": true,
+   "count": 1,
+   "note": "Full carry-on plus a personal item.",
+   "source_url": "",
+   "verified_at": null
+  }
+ ],
+ "source_url": "",
+ "verified_at": null,
+ "verified_by": null,
+ "placeholder": true,
+ "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+}

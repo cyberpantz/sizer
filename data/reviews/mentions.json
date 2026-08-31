@@ -1,0 +1,1007 @@
+{
+ "$comment": "One row per bag per publication. These are THEIR claims and THEIR words, never merged into our bag records. 'claimed' is what the outlet printed; our measurements live in data/bags/. Conflicts are derived from this file, not authored.",
+ "mentions": [
+  {
+   "bag": "away-carryon",
+   "source": "strategist-carryon",
+   "award": "Best overall",
+   "claimed": {
+    "weight_lb": 7.5,
+    "capacity_l": 39.8,
+    "price_usd": 275
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "away-bigger",
+   "source": "strategist-carryon",
+   "award": "Best overall (larger)",
+   "claimed": {
+    "weight_lb": 7.9,
+    "capacity_l": 47.9,
+    "price_usd": 295
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "quince-small",
+   "source": "strategist-carryon",
+   "award": "Best less expensive",
+   "claimed": {
+    "weight_lb": 6.2,
+    "capacity_l": 40,
+    "price_usd": 120
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "amazon-21",
+   "source": "strategist-carryon",
+   "award": "Best ABS",
+   "claimed": {
+    "weight_lb": 7.3,
+    "capacity_l": 37,
+    "price_usd": 56
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "rimowa-cabin",
+   "source": "strategist-carryon",
+   "award": "Best statusy",
+   "claimed": {
+    "weight_lb": 7.1,
+    "capacity_l": 37,
+    "price_usd": 990
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "solgaard-closet-med",
+   "source": "strategist-carryon",
+   "award": "Best for longer trips",
+   "claimed": {
+    "weight_lb": 8.25,
+    "capacity_l": 39,
+    "price_usd": 325
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "eagle-creek-gear-warrior-xe",
+   "source": "strategist-carryon",
+   "award": "Best for cobblestones",
+   "claimed": {
+    "weight_lb": 8,
+    "capacity_l": 60,
+    "price_usd": 449
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "away-aluminum",
+   "source": "strategist-carryon",
+   "award": "Best aluminum",
+   "claimed": {
+    "weight_lb": 10.1,
+    "capacity_l": 35,
+    "price_usd": 625
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "travelpro-versapack",
+   "source": "strategist-carryon",
+   "award": "Best soft-side",
+   "claimed": {
+    "weight_lb": 7.7,
+    "capacity_l": 47,
+    "price_usd": 323
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "travelpro-maxlite5-compact",
+   "source": "strategist-carryon",
+   "award": "Best less expensive soft-side",
+   "claimed": {
+    "weight_lb": 5.4,
+    "capacity_l": 46,
+    "price_usd": 160
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "calpak-hue",
+   "source": "strategist-carryon",
+   "award": "Best with laptop pocket",
+   "claimed": {
+    "weight_lb": 8.25,
+    "capacity_l": 45,
+    "price_usd": 265
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "beis-carryon-roller",
+   "source": "strategist-carryon",
+   "award": "Best with luggage scale",
+   "claimed": {
+    "weight_lb": 8.36,
+    "capacity_l": "49-61",
+    "price_usd": 268
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "aer-carryon-max",
+   "source": "strategist-carryon",
+   "award": "Best with brakes",
+   "claimed": {
+    "weight_lb": 8.4,
+    "capacity_l": 48,
+    "price_usd": 319
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "patagonia-black-hole-40",
+   "source": "strategist-carryon",
+   "award": "Best duffel",
+   "claimed": {
+    "weight_lb": 2.7,
+    "capacity_l": 40,
+    "price_usd": 165
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "cotopaxi-allpa-35",
+   "source": "strategist-carryon",
+   "award": "Best backpack (short trips)",
+   "claimed": {
+    "weight_lb": 3.7,
+    "capacity_l": 35,
+    "price_usd": 230
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "tortuga-40",
+   "source": "strategist-carryon",
+   "award": "Best backpack (long trips)",
+   "claimed": {
+    "weight_lb": 4.5,
+    "capacity_l": 40,
+    "price_usd": 359
+   },
+   "dimensions_published": false
+  },
+  {
+   "bag": "samsonite-freeform",
+   "source": "tl-carryon",
+   "award": "Best overall",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     23,
+     15,
+     10
+    ],
+    "weight_lb": 6.5,
+    "capacity_l": null
+   },
+   "praise": "Compression straps fit a 4-day load without the expander; dent-proof in the bat test.",
+   "caveat": "May be too large for some overhead bins."
+  },
+  {
+   "bag": "tumi-alpha-dual-access",
+   "source": "tl-carryon",
+   "award": "Best overall, runner-up",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     14,
+     9
+    ],
+    "weight_lb": 10.7,
+    "capacity_l": 35
+   },
+   "praise": "Front-access pocket, removable garment sleeve, compression straps.",
+   "caveat": "Heaviest pick at 10.7 lb."
+  },
+  {
+   "bag": "samsonite-proxis",
+   "source": "tl-carryon",
+   "award": "Most durable",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     14,
+     9
+    ],
+    "weight_lb": 4.7,
+    "capacity_l": null
+   },
+   "praise": "Lightest pick; Roxkin shell bounces back into shape.",
+   "caveat": "Expands only 0.5 in; minimal organization."
+  },
+  {
+   "bag": "delsey-chatelet-air-2",
+   "source": "tl-carryon",
+   "award": "Most stylish",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22.75,
+     15,
+     10
+    ],
+    "weight_lb": 7.7,
+    "capacity_l": 44
+   },
+   "praise": "Smooth wheels even on carpet; stayed clean over 6 months.",
+   "caveat": "Limited capacity \u2014 best for light packers."
+  },
+  {
+   "bag": "amazon-21-expandable",
+   "source": "tl-carryon",
+   "award": "Best budget",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.7,
+     14.8,
+     10
+    ],
+    "weight_lb": 7.7,
+    "capacity_l": 34
+   },
+   "praise": "Strong capacity for the price; scratches buffed out by hand.",
+   "caveat": "Wobbly telescoping handle; no TSA lock."
+  },
+  {
+   "bag": "away-carryon-flex",
+   "source": "tl-carryon",
+   "award": "Best compression",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.7,
+     14.4,
+     9
+    ],
+    "weight_lb": 7.9,
+    "capacity_l": 41
+   },
+   "praise": "2.25 in of expansion, more than typical; minimal damage in drop and bat tests.",
+   "caveat": "Some international airlines may force a check when fully expanded."
+  },
+  {
+   "bag": "travelpro-versapack",
+   "source": "tl-carryon",
+   "award": "Best with packing cubes",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     23,
+     14.5,
+     9.5
+    ],
+    "weight_lb": 7.7,
+    "capacity_l": 47
+   },
+   "praise": "Ships with compression cubes, shoe bags, laundry bag; external laptop sleeve.",
+   "caveat": "23-in height risks a forced check on smaller airlines."
+  },
+  {
+   "bag": "monos-hybrid",
+   "source": "tl-carryon",
+   "award": "Best for international travel",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     14,
+     9
+    ],
+    "weight_lb": 8.8,
+    "capacity_l": 34.2
+   },
+   "praise": "Zipperless build makes it impossible to overpack past international limits.",
+   "caveat": "No expansion; ~8.8 lb empty."
+  },
+  {
+   "bag": "july-carryon-max",
+   "source": "tl-carryon",
+   "award": "Largest carry-on",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     23,
+     16,
+     9
+    ],
+    "weight_lb": 8.16,
+    "capacity_l": 50
+   },
+   "praise": "Largest capacity tested (50 to 62 L); 20 handle heights.",
+   "caveat": "Cumbersome in tight corners when full; may be gate-checked."
+  },
+  {
+   "bag": "brics-xbag-rolling-duffel",
+   "source": "tl-carryon",
+   "award": "Best rolling duffel",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     12.5,
+     10
+    ],
+    "weight_lb": 5.5,
+    "capacity_l": 28
+   },
+   "praise": "Minimalist and easy to pack; only 5.5 lb.",
+   "caveat": "Smallest capacity on the list; 2 fixed wheels, not 360."
+  },
+  {
+   "bag": "hartmann-reserve",
+   "source": "tl-carryon",
+   "award": "Best design",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     23,
+     15,
+     10
+    ],
+    "weight_lb": 9.5,
+    "capacity_l": null
+   },
+   "praise": "Among the smoothest wheels; 12 handle heights.",
+   "caveat": "No expansion zipper \u2014 caps it at a 2-3 day trip."
+  },
+  {
+   "bag": "samsonite-uplift",
+   "source": "tl-international",
+   "award": "Best overall",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     14,
+     9
+    ],
+    "weight_lb": 5.07,
+    "capacity_l": null
+   },
+   "praise": "Lightest full-size pick; resisted dents under the bat test.",
+   "caveat": "No interior compartments; picked up cosmetic scratches."
+  },
+  {
+   "bag": "kenneth-cole-underseater",
+   "source": "tl-international",
+   "award": "Best underseater",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     17,
+     13,
+     9
+    ],
+    "weight_lb": 5.6,
+    "capacity_l": 34
+   },
+   "praise": "Smallest wheeled bag on the list; fits under most seats.",
+   "caveat": "Interior lining doesn't feel durable."
+  },
+  {
+   "bag": "thule-aion",
+   "source": "tl-international",
+   "award": "Best compression",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.7,
+     13.8,
+     9.1
+    ],
+    "weight_lb": 7.16,
+    "capacity_l": 35
+   },
+   "praise": "Removable compression cube; big wheels work on 2 or 4.",
+   "caveat": "Front pocket lacks padding \u2014 a laptop screen broke in T+L's table-drop test."
+  },
+  {
+   "bag": "travelers-choice-maxporter-ii",
+   "source": "tl-international",
+   "award": "Best features",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     14,
+     9
+    ],
+    "weight_lb": 8.14,
+    "capacity_l": 39
+   },
+   "praise": "Armor-like textured shell, corner guards, USB port, 4 interior zip compartments.",
+   "caveat": "Not expandable."
+  },
+  {
+   "bag": "herschel-heritage",
+   "source": "tl-international",
+   "award": "Best minimalist",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     19.76,
+     12.99,
+     9.02
+    ],
+    "weight_lb": 6.17,
+    "capacity_l": 35
+   },
+   "praise": "Spacious for its compact footprint; zero wear after drop and bat tests.",
+   "caveat": "Would benefit from more interior pockets."
+  },
+  {
+   "bag": "away-aluminum",
+   "source": "tl-international",
+   "award": "Best aluminum",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.5,
+     13.5,
+     9
+    ],
+    "weight_lb": 10.5,
+    "capacity_l": 32
+   },
+   "praise": "Latch closure means it can't be overstuffed \u2014 a plus for tight bins.",
+   "caveat": "Heaviest pick at 10.5 lb; aluminum dents and scratches easily."
+  },
+  {
+   "bag": "tumi-19-degree-lite",
+   "source": "tl-international",
+   "award": "Most stylish",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.8,
+     14,
+     9
+    ],
+    "weight_lb": 6.3,
+    "capacity_l": 34
+   },
+   "praise": "Tegris shell survived a table drop with only bumper scuffing.",
+   "caveat": "Minimal organization \u2014 just one zip pocket."
+  },
+  {
+   "bag": "calpak-luka",
+   "source": "tl-international",
+   "award": "Best laptop compartment",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21,
+     13.75,
+     9
+    ],
+    "weight_lb": 6.4,
+    "capacity_l": 31
+   },
+   "praise": "Well-padded 17-in laptop pocket; flexible softside squeezes into tight spaces.",
+   "caveat": "Flimsy-feeling handle; rolls better on two wheels than four."
+  },
+  {
+   "bag": "patagonia-black-hole-40",
+   "source": "tl-international",
+   "award": "Best duffel",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     19.7,
+     12.5,
+     8.5
+    ],
+    "weight_lb": 2.1,
+    "capacity_l": 40
+   },
+   "praise": "40 L in a compact, 2.1 lb package; converts to a backpack.",
+   "caveat": "Rugged look won't suit everyone."
+  },
+  {
+   "bag": "pacsafe-venturesafe-exp45",
+   "source": "tl-international",
+   "award": "Best anti-theft backpack",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.7,
+     13,
+     7.5
+    ],
+    "weight_lb": 4,
+    "capacity_l": 45
+   },
+   "praise": "Lockable zippers, slashproof fabric, RFID pocket, steel cable anchor.",
+   "caveat": "Heavy and bulky for a backpack."
+  },
+  {
+   "bag": "bagsmart-roamer",
+   "source": "tl-international",
+   "award": "Best value",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.7,
+     13.9,
+     9
+    ],
+    "weight_lb": 7.05,
+    "capacity_l": 35
+   },
+   "praise": "Best value on the list; smoothest zippers tested; strong interior organization.",
+   "caveat": "Wheels stick on carpet."
+  },
+  {
+   "bag": "bellroy-lite",
+   "source": "tl-international",
+   "award": "Best with two wheels",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     20.1,
+     13.6,
+     9.1
+    ],
+    "weight_lb": 4.63,
+    "capacity_l": 38
+   },
+   "praise": "Under 5 lb thanks to two wheels; two wheels performed almost like four.",
+   "caveat": "No backpack straps."
+  },
+  {
+   "bag": "bellroy-transit",
+   "source": "tl-international",
+   "award": "Best with packing cubes",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.9,
+     13.8,
+     8.9
+    ],
+    "weight_lb": 6.83,
+    "capacity_l": 34
+   },
+   "praise": "Fit every overhead bin across 4 US flights (Delta, Southwest, United); scuffs wipe clean.",
+   "caveat": "Telescopic handle sticks between its three heights."
+  },
+  {
+   "bag": "beis-hybrid-roller",
+   "source": "tl-international",
+   "award": "Best design",
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     14,
+     9
+    ],
+    "weight_lb": 8.39,
+    "capacity_l": 35
+   },
+   "praise": "Latches onto the matching checked roller to pull both at once.",
+   "caveat": "Quick turns can detach it from the checked bag."
+  },
+  {
+   "bag": "beis-small-carryon-roller",
+   "source": "tl-international",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21,
+     13,
+     9
+    ],
+    "weight_lb": 7.16
+   },
+   "praise": "Holds more than it looks.",
+   "caveat": "Hard to maneuver despite not being heavy.",
+   "rejected_on_fit": false
+  },
+  {
+   "bag": "dagne-dover-smaller-seattle",
+   "source": "tl-international",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     20.5,
+     13,
+     8.75
+    ],
+    "weight_lb": 9.12
+   },
+   "praise": "Thoughtful organization.",
+   "caveat": "Over 9 lb empty eats into strict international weight allowances.",
+   "rejected_on_fit": true
+  },
+  {
+   "bag": "lojel-cubo-small-lite",
+   "source": "tl-international",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.1,
+     14.2,
+     7.8
+    ],
+    "weight_lb": 6.4
+   },
+   "praise": "Spacious expandable interior.",
+   "caveat": "14.2 in wide may exceed some airline limits.",
+   "rejected_on_fit": true
+  },
+  {
+   "bag": "vera-bradley-adair-duffel",
+   "source": "tl-international",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21,
+     13,
+     10
+    ],
+    "weight_lb": 4.82
+   },
+   "praise": "Separate compartment for dirty shoes.",
+   "caveat": "Materials feel less durable; width runs large.",
+   "rejected_on_fit": true
+  },
+  {
+   "bag": "monos-carryon",
+   "source": "packhacker-international",
+   "rank": 1,
+   "award": "Best value",
+   "dimensions_published": false,
+   "claimed": {},
+   "rolling_score": 7.05,
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "Carry On Luggage is carry on-sized, so they should work with most airlines.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "travelpro-maxlite5-21",
+   "source": "packhacker-international",
+   "rank": 2,
+   "award": "Best budget",
+   "dimensions_published": false,
+   "claimed": {},
+   "rolling_score": 6.7,
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "Carry On Luggage is carry on-sized, so they should work with most airlines.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "briggs-riley-torq-xl",
+   "source": "packhacker-international",
+   "rank": 3,
+   "award": "Best splurge",
+   "dimensions_published": false,
+   "claimed": {},
+   "compliance_claim": null,
+   "category": "checked",
+   "caveat": "Room for 'everything, including the kitchen sink'. A checked-size trunk spinner, not a carry-on."
+  },
+  {
+   "bag": "aer-carryon-small",
+   "source": "packhacker-international",
+   "rank": 4,
+   "award": null,
+   "dimensions_published": false,
+   "claimed": {},
+   "rolling_score": 6.7,
+   "caveat": "we prefer the Small version, as it's more compatible with the most popular airlines",
+   "caveat_verbatim": true,
+   "compliance_claim": {
+    "kind": "more_compliant_variant",
+    "basis": "assertion_only",
+    "quote": "While there's a regular size of the Aer Carry-On we prefer the Small version, as it's more compatible with the most popular airlines.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "july-carryon",
+   "source": "packhacker-international",
+   "rank": 5,
+   "award": null,
+   "dimensions_published": false,
+   "claimed": {},
+   "rolling_score": 6.4,
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "Carry On Luggage is carry on-sized, so they should work with most airlines.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "away-carryon-flex",
+   "source": "packhacker-international",
+   "rank": 6,
+   "award": null,
+   "dimensions_published": false,
+   "claimed": {},
+   "caveat": "The expansion system may affect carry on compliance",
+   "caveat_verbatim": true,
+   "compliance_claim": {
+    "kind": "expansion_risk",
+    "basis": "assertion_only",
+    "quote": "If you plan to use the expansion feature, you should ensure that the dimensions of the larger size work for the airplane you're flying.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "carl-friedrik-carryon-x",
+   "source": "packhacker-international",
+   "rank": 7,
+   "award": null,
+   "dimensions_published": false,
+   "claimed": {},
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "Carry On Luggage is carry on-sized, so they should work with most airlines.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "osprey-transporter-wheeled-38",
+   "source": "packhacker-international",
+   "rank": 8,
+   "award": "Best soft-sided",
+   "dimensions_published": false,
+   "claimed": {},
+   "praise": "Highest score of every bag on brick; tied highest on grass.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "Carry On Luggage is carry on-sized, so they should work with most airlines.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "bellroy-transit",
+   "source": "packhacker-international",
+   "rank": 9,
+   "award": "Best lightweight",
+   "dimensions_published": false,
+   "claimed": {},
+   "caveat": "if you regularly fly strict airlines where every kilo matters",
+   "caveat_verbatim": true,
+   "compliance_claim": {
+    "kind": "weight_advantage",
+    "basis": "assertion_only",
+    "quote": "The lightweight construction and relatively compact size also help if you regularly fly strict airlines where every kilo matters.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "peak-design-roller-pro",
+   "source": "packhacker-international",
+   "rank": 10,
+   "award": null,
+   "dimensions_published": false,
+   "claimed": {},
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "assertion_only",
+    "quote": "At roughly 34L (expandable to about 39L), it's sized for carry-on travel.",
+    "hedge": "Sometimes, bag manufacturers make bags that are meant to be used as a carry on but are slightly too large to be used with some airlines. We recommend checking your specific airline before flying."
+   }
+  },
+  {
+   "bag": "calpak-luka-mini",
+   "source": "packhacker-international",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": false,
+   "claimed": {},
+   "praise": "Small, good-looking, useful secondary compartment.",
+   "caveat": "Likely too small for most travelers.",
+   "caveat_verbatim": false,
+   "compliance_claim": {
+    "kind": "underseat",
+    "basis": "assertion_only",
+    "quote": "it slides under the seat in front of you on the plane"
+   }
+  },
+  {
+   "bag": "eagle-creek-cargo-hauler-xt",
+   "source": "packhacker-international",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": false,
+   "claimed": {},
+   "praise": "Converts into a duffel in a jiffy.",
+   "caveat": "Takes a while to get used to carrying it that way.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "product_name",
+    "quote": "Cargo Hauler XT Wheeled 21.5\" International Carry On Duffel"
+   }
+  },
+  {
+   "bag": "ricksteves-rolling-carryon",
+   "source": "ricksteves-store",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21,
+     13.5,
+     9
+    ],
+    "weight_lb": 6.5,
+    "capacity_l": 40
+   },
+   "claimed_packing_in": [
+    20,
+    13.5,
+    9
+   ],
+   "praise": "Twin-shaft two-stop handle and a wide 10.5-inch wheel track; recessed two-wheel design is less exposed to breakage.",
+   "caveat": "Expansion adds 2 inches of depth, which the manufacturer states puts it over the carry-on limit.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "stated_external_dimension",
+    "quote": "It easily fits in the smaller overhead bins common to European airlines."
+   },
+   "expansion_honesty": "making it \u201cfatter\u201d than the carry-on limit, but perfect for checking"
+  },
+  {
+   "bag": "ricksteves-spinner-carryon",
+   "source": "ricksteves-store",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.75,
+     14,
+     10
+    ],
+    "weight_lb": 6.7,
+    "capacity_l": 41
+   },
+   "claimed_packing_in": [
+    19.5,
+    14,
+    9
+   ],
+   "praise": "Dual 360-degree recessed wheels; internal frame keeps it upright.",
+   "caveat": "Expands up to two inches across three-quarters of the bag.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "stated_external_dimension",
+    "quote": "Our Spinner Carry-On luggage offers maximum mobility"
+   },
+   "observed": [
+    {
+     "outcome": "forced_to_check",
+     "carriers": [
+      "Turkish",
+      "Swiss"
+     ],
+     "where": "customer review on the product page",
+     "quote": "Even with closed extensor zipper, it is too wide for some airlines (Turkish air, Swiss air) and does not fit width wise in the sample for allowable space for overhead compartment - I've had to check bag a few times."
+    },
+    {
+     "outcome": "cleared",
+     "carriers": [
+      "unspecified"
+     ],
+     "where": "customer review on the product page",
+     "quote": "meets size regulations for every domestic and international airline I have checked"
+    }
+   ]
+  },
+  {
+   "bag": "travelpro-maxlite5-international",
+   "source": "travelpro-store",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     21.75,
+     15.75,
+     7.75
+    ],
+    "weight_lb": 5.3,
+    "capacity_l": 39
+   },
+   "praise": "Designed to the European 55 x 40 x 20 envelope: it trades depth for width rather than maximising a US-shaped box.",
+   "caveat": "Only 19.7 cm deep. Less usable space than the domestic variants, which is the trade being made.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "stated_external_dimension",
+    "quote": "Designed to meet published carry-on size restrictions for many international airlines."
+   },
+   "claimed_packing_in": [
+    19,
+    15,
+    7.75
+   ]
+  },
+  {
+   "bag": "travelpro-maxlite5-compact",
+   "source": "travelpro-store",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     22,
+     14,
+     9
+    ],
+    "weight_lb": 5.1,
+    "capacity_l": 38
+   },
+   "praise": "Sized to the US 22 x 14 x 9 standard exactly.",
+   "caveat": "Sits on the US limit, so it has no margin on the tighter European carriers.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "stated_external_dimension",
+    "quote": "Complies with published carry-on size restrictions for nearly all major domestic airlines."
+   }
+  },
+  {
+   "bag": "travelpro-maxlite5-21",
+   "source": "travelpro-store",
+   "award": null,
+   "ranked": false,
+   "dimensions_published": true,
+   "claimed": {
+    "dimensions_in": [
+     23,
+     14.5,
+     9
+    ],
+    "weight_lb": 5.4,
+    "capacity_l": 46
+   },
+   "praise": "The largest of the three and the lightest per litre.",
+   "caveat": "Sold as a 21-inch carry-on and measures 23 inches overall. Over the published limit of every major US carrier on length.",
+   "compliance_claim": {
+    "kind": "asserted_carryon",
+    "basis": "stated_external_dimension",
+    "quote": "Fits in the overhead bins of most major US airlines with extra room for packing."
+   }
+  }
+ ]
+}

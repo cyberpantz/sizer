@@ -1,0 +1,66 @@
+{
+ "slug": "herschel-heritage",
+ "brand": "Herschel",
+ "model": "Heritage Hardshell Carry-On",
+ "variant": null,
+ "line": null,
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   50.2,
+   33,
+   22.9
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 2.8,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 35,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": "Best minimalist",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Spacious for its compact footprint; zero wear after drop and bat tests.",
+   "caveat": "Would benefit from more interior pockets.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

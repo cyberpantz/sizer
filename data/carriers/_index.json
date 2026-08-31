@@ -1,0 +1,41 @@
+{
+ "generated": "2026-08-31",
+ "count": 23,
+ "target": 50,
+ "verified": 0,
+ "note": "Every record is placeholder: true until someone reads the carrier page and fills source_url + verified_at.",
+ "carriers": [
+  "AA",
+  "AF",
+  "B6",
+  "BA",
+  "CX",
+  "DL",
+  "EK",
+  "F9",
+  "FR",
+  "IB",
+  "JL",
+  "KL",
+  "LH",
+  "NH",
+  "QR",
+  "SQ",
+  "TK",
+  "TR",
+  "U2",
+  "UA",
+  "VY",
+  "W6",
+  "WN"
+ ],
+ "removed": [
+  {
+   "iata": "NK",
+   "name": "Spirit Airlines",
+   "reason": "ceased operations 2026-05-02",
+   "removed_at": "2026-08-30",
+   "note": "Record deleted rather than flagged \u2014 nobody should be shown a carrier that no longer flies. Research retained at resources/carriers/NK-spirit.md."
+  }
+ ]
+}

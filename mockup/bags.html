@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bags we've measured — Sizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FBF9F6; --surface:#FFFFFF; --surface-2:#F5F2ED;
+  --rule:#E7E2DA; --rule-strong:#C8C1B5;
+  --ink:#1C1A17; --ink-2:#4C4741; --muted:#736C63;
+  --blue:#1D4E89; --blue-hover:#163D6C; --blue-wash:#EDF2F8;
+  --green:#14713D; --green-wash:#E9F3EC;
+  --amber:#8A5D00; --amber-wash:#FBF3E2;
+  --orange:#B4530F; --orange-wash:#FBEEE4;
+  --red:#B3261E; --red-wash:#FAECEA;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --body:"Figtree",system-ui,-apple-system,sans-serif;
+  --r:14px; --r-sm:9px;
+  --shadow:0 1px 2px rgba(28,26,23,.04), 0 6px 20px -8px rgba(28,26,23,.10);
+  --shadow-lift:0 2px 4px rgba(28,26,23,.05), 0 12px 32px -10px rgba(28,26,23,.16);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:72rem;margin:0 auto;padding:0 24px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+header{background:var(--surface);border-bottom:1px solid var(--rule)}
+.hd{display:flex;align-items:center;height:68px;gap:30px}
+.mark{font-weight:600;font-size:22px;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+.mark span{color:var(--blue)}
+nav{margin-left:auto;display:flex;align-items:center;gap:24px}
+nav a{color:var(--ink-2);text-decoration:none;font-size:16px;padding:8px 0}
+nav a[aria-current]{color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--blue)}
+.cta{background:var(--blue);color:#fff;font-weight:600;font-size:16px;
+  padding:12px 22px;border-radius:999px;min-height:46px}
+
+.notice{background:var(--amber-wash);border:1px solid #E8D5A8;padding:14px 18px;
+  margin:22px 0 0;font-size:15px;color:var(--ink-2);border-radius:var(--r-sm)}
+.notice b{color:var(--ink)}
+
+/* page head */
+.phead{padding:44px 0 28px}
+h1{font-weight:600;font-size:clamp(1.9rem,4.4vw,2.7rem);line-height:1.12;
+  letter-spacing:-.02em;margin:0 0 12px;max-width:22ch;text-wrap:balance}
+.lede{font-size:19px;color:var(--ink-2);max-width:60ch;margin:0}
+.meta{margin:16px 0 0;font-size:15px;color:var(--muted);font-family:var(--mono)}
+
+/* controls */
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  padding:16px 0 0;border-top:1px solid var(--rule);margin-top:26px}
+.bar .lbl{font-size:15px;color:var(--muted);margin-right:2px}
+.pill{background:#fff;border:1px solid var(--rule-strong);border-radius:999px;
+  padding:10px 17px;font-size:15.5px;min-height:44px;transition:.14s}
+.pill:hover{border-color:var(--blue);color:var(--blue)}
+.pill[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.count{margin-left:auto;font-size:15px;color:var(--muted)}
+.fnote{margin:14px 0 0;padding:13px 16px;background:var(--blue-wash);border-radius:var(--r-sm);
+  font-size:16px;color:var(--ink-2);max-width:70ch;display:none}
+.fnote.on{display:block}
+.fnote b{color:var(--ink);font-weight:600}
+
+/* groups */
+.group{padding:38px 0 0}
+.ghead{margin-bottom:4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ghead h2{margin:0;font-size:21px;font-weight:700;letter-spacing:-.015em}
+.ghead .n{font-family:var(--mono);font-size:15px;color:var(--muted)}
+.gwhy{margin:0 0 20px;font-size:16.5px;color:var(--ink-2);max-width:64ch}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.bag{position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:.15s}
+.cardlink{position:absolute;inset:0;z-index:1}
+.bag:focus-within{box-shadow:0 0 0 3px var(--blue)}
+.bag .buy,.bag .model{position:relative;z-index:2}
+.bag:hover .model{text-decoration:underline;text-underline-offset:3px}
+.bag:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+.pic{background:var(--surface-2);padding:22px;display:grid;place-items:center;min-height:150px}
+.pic svg{width:88px;height:100px}
+.body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.brand{font-size:14px;color:var(--muted);letter-spacing:.01em}
+.model{font-size:17.5px;font-weight:600;line-height:1.25;margin-top:-6px}
+
+.cov{display:flex;align-items:center;gap:9px}
+.covbar{flex:1;height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.covfill{height:100%;border-radius:99px}
+.covn{font-family:var(--mono);font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+
+.dims{font-size:14.5px;line-height:1.5;color:var(--ink-2);
+  border-top:1px solid var(--rule);padding-top:10px}
+.dims .r{display:flex;justify-content:space-between;gap:10px}
+.dims b{font-family:var(--mono);font-weight:500;color:var(--ink);font-size:14px}
+.dims .cl{color:var(--muted);text-decoration:line-through;font-family:var(--mono);font-size:14px}
+.dims .k{color:var(--muted)}
+
+.revs{display:flex;flex-direction:column;gap:5px}
+.rev{font-size:13.5px;color:var(--ink-2);background:var(--surface-2);
+  border-radius:var(--r-sm);padding:7px 10px;line-height:1.4}
+.rev b{color:var(--ink);font-weight:600}
+.rev .cav{display:block;color:var(--muted);font-style:italic;margin-top:3px;font-size:13px}
+.norev{margin:0;font-size:13px;color:var(--muted);line-height:1.4;
+  padding:7px 10px;border:1px dashed var(--rule-strong);border-radius:var(--r-sm)}
+.buy{margin-top:auto;padding-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.price{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.buy a{position:relative;z-index:2;font-size:15.5px;font-weight:600;text-decoration:none;
+  border:1px solid var(--blue);border-radius:999px;padding:9px 15px;min-height:44px;
+  display:inline-flex;align-items:center}
+.buy a:hover{background:var(--blue);color:#fff}
+.aff{font-size:13px;color:var(--muted);padding:0 18px 14px;margin:0}
+
+footer{background:var(--surface);border-top:1px solid var(--rule);
+  margin-top:56px;padding:32px 0 52px;font-size:15px;color:var(--muted)}
+footer p{max-width:70ch;margin:0}
+
+@media(max-width:820px){nav a{display:none}}
+
+/* unit toggle — metric default, remembered */
+.units{display:flex;border:1px solid var(--rule-strong);border-radius:999px;overflow:hidden;
+  margin-left:8px;flex:none}
+.units button{padding:8px 13px;font-size:14px;font-weight:600;min-height:40px;
+  color:var(--muted);border-right:1px solid var(--rule-strong);line-height:1}
+.units button:last-child{border-right:0}
+.units button[aria-pressed="true"]{background:var(--ink);color:#fff}
+@media(max-width:520px){.units button{padding:8px 11px;font-size:13.5px}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap hd">
+  <a class="mark" href="index.html">Sizer<span>.</span></a>
+  <nav>
+    <a href="bags.html" aria-current="page">Bags</a><a href="guide.html">Guide</a>
+    <div class="units" role="group" aria-label="Units">
+      <button data-u="cm" aria-pressed="true">cm</button><button data-u="in" aria-pressed="false">in</button>
+    </div>
+    <a class="cta" href="check.html" style="text-decoration:none;display:inline-flex;align-items:center">Check a bag</a>
+  </nav>
+</div></header>
+
+<div class="wrap"><p class="notice">
+  <b>Rough cut.</b> Measurements, prices and coverage figures are placeholders. Bag drawings are generic outlines by type, not the actual products.
+</p></div>
+
+<section class="phead"><div class="wrap">
+  <h1>Bags we've put a tape measure on</h1>
+  <p class="lede">Every bag here we measured ourselves — wheels, handle and pockets included, the way an airline measures it. Where that differs from the label, we show you both.</p>
+  <p class="meta" id="meta"></p>
+
+  <div class="bar">
+    <span class="lbl">Show</span>
+    <button class="pill" data-t="all" aria-pressed="true">Everything</button>
+    <button class="pill" data-t="spinner" aria-pressed="false">Spinners</button>
+    <button class="pill" data-t="roller" aria-pressed="false">2-wheel rollers</button>
+    <button class="pill" data-t="backpack" aria-pressed="false">Backpacks</button>
+    <button class="pill" data-t="underseat" aria-pressed="false">Under-seat</button>
+    <span class="count" id="count"></span>
+  </div>
+  <p class="fnote" id="fnote"></p>
+</div></section>
+
+<div class="wrap" id="groups"></div>
+
+<footer><div class="wrap">
+  <p>Some links here earn us a commission — it never changes what we recommend or what we measure. As an Amazon Associate I earn from qualifying purchases.</p>
+</div></footer>
+
+<script>
+const AIRLINES=24;
+const BAGS=[
+ {b:"Cabin Max",m:"Metz under-seat",t:"underseat",c:[40,20,25],x:[40,20,25],kg:0.7,p:45,mer:"Cabin Max",cov:24},
+ {b:"Narwey",m:"Foldable under-seat",t:"underseat",c:[40,30,20],x:[40,30,20],kg:0.5,p:30,mer:"Amazon",cov:24},
+ {b:"Monos",m:"Cabin",t:"spinner",c:[53,35,21],x:[54,35,22],kg:3.1,p:255,mer:"Monos",cov:19},
+ {b:"Tortuga",m:"Travel Backpack 40L",t:"backpack",c:[55,35,23],x:[55,35,23],kg:1.9,p:350,mer:"Tortuga",cov:18,lists:[{who:"Strategist",award:"Best backpack, long trips"}],rev:[{o:"Strategist",a:"Best backpack, long trips",d:"2026-06-22"}]},
+ {b:"Travelpro",m:'Platinum Elite 20" International',t:"roller",c:[53,35,20],x:[54,36,21],kg:3.4,p:260,mer:"Travelpro",cov:15},
+ {b:"Osprey",m:"Farpoint 40",t:"backpack",c:[54,35,23],x:[55,36,24],kg:1.6,p:185,mer:"Osprey",cov:14},
+ {b:"July",m:"Carry On",t:"spinner",c:[55,36,23],x:[56,37,24],kg:3.5,p:295,mer:"July",cov:9},
+ {b:"Away",m:"The Carry-On",t:"spinner",c:[55,35,23],x:[56,36,24],kg:3.2,p:275,mer:"Away",cov:9,lists:[{who:"Strategist",award:"Best overall"}],rev:[{o:"Strategist",a:"Best overall",d:"2026-06-22"}]},
+ {b:"Monos",m:"Carry-On Pro",t:"spinner",c:[55,40,20],x:[56,40,23],kg:3.5,p:295,mer:"Monos",cov:8},
+ {b:"Rimowa",m:"Essential Cabin",t:"spinner",c:[55,40,23],x:[56,40,23],kg:4.3,p:1150,mer:"Rimowa",cov:8,lists:[{who:"Strategist",award:"Best statusy"}],rev:[{o:"Strategist",a:"Best statusy",d:"2026-06-22"}]},
+ {b:"Travelpro",m:'Platinum Elite 21"',t:"roller",c:[56,36,23],x:[57,37,24],kg:3.9,p:280,mer:"Travelpro",cov:5},
+ {b:"Briggs & Riley",m:'Baseline Essential 22"',t:"roller",c:[55.9,35.6,22.9],x:[57.2,36.8,23.5],kg:4.1,p:599,mer:"Briggs & Riley",cov:5,rev:[{o:"Travel + Leisure",a:"Runner-up (Sympatico)",d:"2026-06-10",t:1,c:"Hardshell scratches too easily for the price"}]},
+ {b:"Béis",m:"The Carry-On Roller",t:"spinner",c:[56,36,23],x:[57,37,24],kg:3.6,p:218,mer:"Béis",cov:5,lists:[{who:"Strategist",award:"Best with luggage scale"}],rev:[{o:"Strategist",a:"Best with luggage scale",d:"2026-06-22"}]},
+ {b:"Calpak",m:"Ambeur Carry-On",t:"spinner",c:[56,36,23],x:[57,38,25],kg:3.3,p:195,mer:"Calpak",cov:5},
+ {b:"Amazon Basics",m:'21" Hardside',t:"spinner",c:[55,38,25],x:[55.5,38,25.5],kg:3.1,p:90,mer:"Amazon",cov:5,lists:[{who:"Strategist",award:"Best ABS"}],rev:[{o:"Strategist",a:"Best ABS",d:"2026-06-22"},{o:"Travel + Leisure",a:"Best budget",d:"2026-06-10",t:1,c:"Wobbly telescoping handle; no TSA lock"}]},
+ {b:"Peak Design",m:"Travel 45L",t:"backpack",c:[56,33,24],x:[57,34,25],kg:2.1,p:300,mer:"Peak Design",cov:5},
+ {b:"Away",m:"The Bigger Carry-On",t:"spinner",c:[56,39,24],x:[57,40,25],kg:3.4,p:345,mer:"Away",cov:4,lists:[{who:"Strategist",award:"Best overall, larger"}],rev:[{o:"Strategist",a:"Best overall, larger",d:"2026-06-22"}]},
+ {b:"Samsonite",m:"Winfield 3",t:"spinner",c:[56,40,23],x:[57,41,25],kg:3.2,p:180,mer:"Samsonite",cov:4},
+];
+
+/* Grouped by what the bag is FOR, not sorted by a number.
+   The group name carries the explanation — that's the whole thesis. */
+const GROUPS=[
+ {id:"all",name:"Goes anywhere",min:22,
+  why:"Clears every airline we track, including Ryanair and Wizz Air on their cheapest tickets. If you fly European budget carriers at all, this is the only group that never surprises you."},
+ {id:"most",name:"Goes almost anywhere",min:14,
+  why:"Clears most of our list. Safe across the US, Asia and full-service Europe — but check before a budget European flight."},
+ {id:"us",name:"Fine in the US, a problem abroad",min:0,
+  why:"Built to the American 22-inch standard, which is wider and deeper than much of Europe and Asia allows. These are the bags that get stopped on the second leg of a trip, not the first."},
+];
+
+const SIL={
+ spinner:`<svg viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="2.2">
+   <path d="M32 12h16M40 12V4" stroke-linecap="round"/>
+   <rect x="14" y="20" width="52" height="58" rx="7"/>
+   <path d="M14 40h52M14 58h52" opacity=".45"/>
+   <circle cx="24" cy="86" r="6"/><circle cx="56" cy="86" r="6"/>
+ </svg>`,
+ roller:`<svg viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="2.2">
+   <path d="M32 12h16M40 12V4" stroke-linecap="round"/>
+   <rect x="14" y="20" width="52" height="62" rx="7"/>
+   <path d="M14 40h52M14 58h52" opacity=".45"/>
+   <path d="M20 82v4M60 82v4" stroke-linecap="round" opacity=".7"/>
+ </svg>`,
+ backpack:`<svg viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="2.2">
+   <path d="M28 22c0-9 4-14 12-14s12 5 12 14" stroke-linecap="round"/>
+   <rect x="12" y="22" width="56" height="64" rx="12"/>
+   <path d="M12 52h56" opacity=".45"/>
+   <rect x="26" y="60" width="28" height="18" rx="5" opacity=".45"/>
+ </svg>`,
+ underseat:`<svg viewBox="0 0 80 96" fill="none" stroke="currentColor" stroke-width="2.2">
+   <path d="M30 34h20" stroke-linecap="round"/>
+   <rect x="12" y="34" width="56" height="42" rx="7"/>
+   <path d="M12 52h56" opacity=".45"/>
+ </svg>`
+};
+
+const FNOTE={
+ spinner:"<b>What most people want, and for good reason.</b> You push a spinner alongside you instead of dragging it behind — which is the difference between a pleasant walk and a miserable one across a long terminal or a crowded jetway. The trade-off: the wheels sit below the shell, so a spinner tends to stand 1–2 cm taller than the same bag on two wheels. Worth knowing before you buy, not a reason to avoid them.",
+ roller:"<b>You drag these rather than push them</b>, which is more work across a terminal — but on anything rougher than a polished floor they win. Pack Hacker rolled every bag over cobblestones and grass and found the second pair of wheels stops helping the moment the surface does; their highest brick score went to a two-wheeler. For old European streets that matters more than airport glide. The wheels are also recessed into the corners and add almost nothing to the height, so a roller sometimes clears a limit the spinner version of the same bag fails.",
+ backpack:"<b>No wheels, soft sides.</b> Nothing protrudes, and a soft bag squashes into a frame that a hard shell will not. The most forgiving thing to carry onto a strict airline.",
+ underseat:"<b>Sized for the space in front of your feet.</b> The only category that works on a Ryanair or Wizz Air basic ticket, where there is no overhead locker at any price."
+};
+let filter="all";
+const $=i=>document.getElementById(i);
+
+function covColour(n){
+  const r=n/AIRLINES;
+  return r>=0.8?"var(--green)":r>=0.4?"var(--amber)":"var(--red)";
+}
+/* Two axes: we answer "does it fit", reviewers answer "is it any good".
+   Cite them, never absorb them — and say plainly when nobody has looked. */
+function revHTML(g){
+  if(!g.rev) return `<p class="norev">No independent review we could find. We measured it — we can't tell you how it lasts.</p>`;
+  return `<div class="revs">${g.rev.map(r=>`<span class="rev">
+    <b>${r.o}</b> · ${r.a}${r.c?`<span class="cav">"${r.c}"</span>`:""}</span>`).join("")}</div>`;
+}
+function card(g){
+  const over=[0,1,2].filter(i=>g.x[i]>g.c[i]).length;
+  return `<article class="bag">
+    <a class="cardlink" href="bag.html" aria-label="${g.b} ${g.m} — see our measurements"></a>
+    <div class="pic" style="color:${covColour(g.cov)}">${SIL[g.t]}</div>
+    <div class="body">
+      <div>
+        <div class="brand">${g.b}</div>
+        <div class="model">${g.m}</div>
+      </div>
+      <div class="cov">
+        <span class="covbar"><span class="covfill" style="width:${g.cov/AIRLINES*100}%;background:${covColour(g.cov)}"></span></span>
+        <span class="covn">${g.cov}/${AIRLINES}</span>
+      </div>
+      <div class="dims">
+        <div class="r"><span class="k">We measured</span><b>${U.dims(g.x)}</b></div>
+        <div class="r"><span class="k">${over?"Label says":"Label agrees"}</span>${over?`<span class="cl">${U.dims(g.c)}</span>`:`<b>${U.dims(g.c)}</b>`}</div>
+        <div class="r"><span class="k">Empty weight</span><b>${U.kg(g.kg)} ${U.wl()}</b></div>
+      </div>
+            ${revHTML(g)}
+      <div class="buy">
+        <span class="price">$${g.p}</span>
+        <a href="#" rel="sponsored nofollow">Check price →</a>
+      </div>
+    </div>
+    <p class="aff">Price at ${g.mer}. We may earn a commission.</p>
+  </article>`;
+}
+
+function render(){
+  const list=BAGS.filter(b=>filter==="all"||b.t===filter);
+  $("count").textContent=list.length+" of "+BAGS.length+" shown";
+  const fn=$("fnote");
+  fn.innerHTML=FNOTE[filter]||"";
+  fn.classList.toggle("on",!!FNOTE[filter]);
+  $("meta").textContent=BAGS.length+" bags measured · checked against "+AIRLINES+" airlines · last updated 28 Aug 2026";
+  let html="",used=new Set();
+  GROUPS.forEach(gr=>{
+    const items=list.filter(b=>!used.has(b)&&b.cov>=gr.min);
+    items.forEach(b=>used.add(b));
+    if(!items.length) return;
+    html+=`<section class="group">
+      <div class="ghead"><h2>${gr.name}</h2><span class="n">${items.length} bag${items.length>1?"s":""}</span></div>
+      <p class="gwhy">${gr.why}</p>
+      <div class="grid">${items.map(card).join("")}</div>
+    </section>`;
+  });
+  $("groups").innerHTML=html;
+}
+document.querySelectorAll(".pill").forEach(p=>p.onclick=()=>{
+  filter=p.dataset.t;
+  document.querySelectorAll(".pill").forEach(q=>q.setAttribute("aria-pressed",q===p));
+  render();
+});
+function rerender(){ render(); }
+render();
+
+/* ---- units: metric default for everyone, never locale-inferred ----
+   The data is metric (airlines publish cm). Imperial-only would tell an EU or
+   Asian visitor the site isn't for them; metric is merely unfamiliar to a US one. */
+const U = {
+  /* Inches first for a US audience — that's who this is for. Metric everywhere else.
+     The toggle is always visible, which is what stops an EU or Asian visitor
+     concluding the site isn't for them. An explicit choice always wins. */
+  unit: (()=>{
+    try {
+      const saved = localStorage.getItem('units');
+      if (saved) return saved;
+      const loc = (navigator.language || '') + ' ' + (navigator.languages||[]).join(' ');
+      return /\b(en-US|en-us)\b/.test(loc) ? 'in' : 'cm';
+    } catch { return 'in' }
+  })(),
+  cm(v){ return this.unit==='cm' ? +(+v).toFixed(1) : +((+v)/2.54).toFixed(1) },
+  kg(v){ return this.unit==='cm' ? +(+v).toFixed(1) : +((+v)*2.2046).toFixed(1) },
+  dl(){ return this.unit==='cm' ? 'cm' : 'in' },
+  wl(){ return this.unit==='cm' ? 'kg' : 'lb' },
+  dims(a, sep=' × '){ return a.map(v=>this.cm(v)).join(sep)+' '+this.dl() },
+  set(u){ this.unit=u; try{ localStorage.setItem('units',u) }catch{}; 
+    document.querySelectorAll('.units button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.u===u));
+    if (typeof rerender==='function') rerender(); }
+};
+document.querySelectorAll('.units button').forEach(b=>b.onclick=()=>U.set(b.dataset.u));
+document.querySelectorAll('.units button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.u===U.unit));
+</script>
+</body>
+</html>

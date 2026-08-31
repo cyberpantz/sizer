@@ -1,0 +1,66 @@
+{
+ "slug": "pacsafe-venturesafe-exp45",
+ "brand": "Pacsafe",
+ "model": "Venturesafe EXP45 ECONYL",
+ "variant": null,
+ "line": null,
+ "type": "backpack",
+ "soft": 1,
+ "wheels": 0,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.1,
+   33,
+   19.1
+  ],
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 1.81,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 45,
+  "src": "review",
+  "ref": "tl-international",
+  "at": "2026-02-23",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "tl-international",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/best-international-carry-on-luggage-7866989",
+   "at": "2026-02-23",
+   "award": "Best anti-theft backpack",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Lockable zippers, slashproof fabric, RFID pocket, steel cable anchor.",
+   "caveat": "Heavy and bulky for a backpack.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}

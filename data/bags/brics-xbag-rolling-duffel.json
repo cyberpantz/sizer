@@ -1,0 +1,66 @@
+{
+ "slug": "brics-xbag-rolling-duffel",
+ "brand": "Bric's",
+ "model": "X-Bag 21\" Rolling Carry-On Duffle",
+ "variant": null,
+ "line": null,
+ "type": "2-wheel roller",
+ "soft": 1,
+ "wheels": 2,
+ "role": "overhead",
+ "fits_personal_item": false,
+ "external_cm": {
+  "v": [
+   55.9,
+   31.8,
+   25.4
+  ],
+  "src": "review",
+  "ref": "tl-carryon",
+  "at": "2026-06-10",
+  "note": "Publication's own measurement. Not ours. Re-measure before this drives a verdict."
+ },
+ "claimed_packing_cm": null,
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "weight_kg": {
+  "v": 2.49,
+  "src": "review",
+  "ref": "tl-carryon",
+  "at": "2026-06-10",
+  "unit": "kg"
+ },
+ "capacity_l": {
+  "v": 28,
+  "src": "review",
+  "ref": "tl-carryon",
+  "at": "2026-06-10",
+  "unit": "L"
+ },
+ "reviews": [
+  {
+   "src": "tl-carryon",
+   "publication": "Travel + Leisure",
+   "url": "https://www.travelandleisure.com/style/travel-bags/best-carry-on-luggage",
+   "at": "2026-06-10",
+   "award": "Best rolling duffel",
+   "rank": null,
+   "ranked": true,
+   "rolling_score": null,
+   "praise": "Minimalist and easy to pack; only 5.5 lb.",
+   "caveat": "Smallest capacity on the list; 2 fixed wheels, not 360.",
+   "compliance_claim": null,
+   "observed": null,
+   "category": "carryon",
+   "verbatim": false,
+   "rejected_on_fit": false
+  }
+ ],
+ "conflicts": [],
+ "mentions": 1,
+ "needs_measurement": true,
+ "compliance_claimed": false,
+ "observed": [],
+ "compliance_unbacked": false
+}
