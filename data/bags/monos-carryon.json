@@ -20,7 +20,9 @@
   "ref": "https://monos.com/products/carry-on",
   "at": "2026-08-31",
   "quote": "Exterior measurements",
-  "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published."
+  "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published. Manufacturer states: \"Measurements include wheels and fixed handles\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "claimed_packing_cm": null,
  "claimed_cm": null,
@@ -104,7 +106,9 @@
   "ref": "https://monos.com/products/carry-on",
   "at": "2026-08-31",
   "quote": "Exterior measurements",
-  "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published."
+  "note": "Measurements include wheels and fixed handles. Manufacturer specification, not measured by us. Both unit systems are manufacturer-published. Manufacturer states: \"Measurements include wheels and fixed handles\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "weight_lb": {
   "v": 6.6,

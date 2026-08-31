@@ -3,7 +3,12 @@
 import { readdirSync, readFileSync } from 'node:fs';
 
 const dir = new URL('bags/', import.meta.url);
-const files = readdirSync(dir).filter((f) => f.endsWith('.json') && f !== '_index.json');
+/* `!startsWith('_')` — the convention every other loader in this repo uses.
+   This one excluded `_index.json` BY NAME, so the next underscore file added
+   to the directory was read as a bag record and crashed the validator on a
+   missing field. A filter that lists its exceptions individually will always
+   be one behind. */
+const files = readdirSync(dir).filter((f) => f.endsWith('.json') && !f.startsWith('_'));
 const bags = files.map((f) => JSON.parse(readFileSync(new URL(f, dir))));
 const M = JSON.parse(readFileSync(new URL('reviews/mentions.json', import.meta.url)));
 let fail = 0;

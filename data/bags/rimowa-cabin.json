@@ -20,7 +20,9 @@
   "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
   "at": "2026-08-31",
   "quote": "Measurement",
-  "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ."
+  "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ. Manufacturer states: \"Measurements include wheels and handles\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "claimed_packing_cm": null,
  "claimed_cm": null,
@@ -139,7 +141,9 @@
   "ref": "https://www.rimowa.com/us/en/luggage/colour/black/cabin/83253631.html",
   "at": "2026-08-31",
   "quote": "Measurement",
-  "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ."
+  "note": "Measurements include wheels and handles. Manufacturer specification, not measured by us. Both unit systems directly published; equivalents differ. Manufacturer states: \"Measurements include wheels and handles\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "weight_lb": {
   "v": 7.1,

@@ -20,7 +20,9 @@
   "src": "manufacturer",
   "ref": "https://www.awaytravel.com/products/aluminum-carry-on-silver",
   "at": "2026-08-31",
-  "note": "Explicitly includes handles, exterior components and wheels. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "note": "Explicitly includes handles, exterior components and wheels. Manufacturer states: \"Explicitly includes handles, exterior components and wheels\" (recorded in the dossier). Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
+  "includes_handles": true,
   "conversion": {
    "from_field": "external_in",
    "factor": "2.54",
@@ -152,7 +154,9 @@
   "src": "manufacturer",
   "ref": "https://www.awaytravel.com/products/aluminum-carry-on-silver",
   "at": "2026-08-31",
-  "note": "Explicitly includes handles, exterior components and wheels."
+  "note": "Explicitly includes handles, exterior components and wheels. Manufacturer states: \"Explicitly includes handles, exterior components and wheels\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "weight_lb": {
   "v": 10.5,

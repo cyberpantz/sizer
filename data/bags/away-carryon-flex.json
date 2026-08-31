@@ -32,7 +32,8 @@
   "src": "manufacturer",
   "ref": "https://www.awaytravel.com/products/the-carry-on-flex-in-coast-blue",
   "at": "2026-08-31",
-  "note": "Measurements explicitly include wheels, but handles not stated. Exterior saved as claimed, not overall verified. Unexpanded dimensions. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "note": "Measurements explicitly include wheels, but handles not stated. Exterior saved as claimed, not overall verified. Unexpanded dimensions. Manufacturer states: \"Measurements explicitly include wheels, but handles not stated\" (recorded in the dossier). Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "includes_wheels": true,
   "conversion": {
    "from_field": "claimed_in",
    "factor": "2.54",
@@ -127,7 +128,8 @@
   "src": "manufacturer",
   "ref": "https://www.awaytravel.com/products/the-carry-on-flex-in-coast-blue",
   "at": "2026-08-31",
-  "note": "Measurements explicitly include wheels, but handles not stated. Exterior saved as claimed, not overall verified. Unexpanded dimensions."
+  "note": "Measurements explicitly include wheels, but handles not stated. Exterior saved as claimed, not overall verified. Unexpanded dimensions. Manufacturer states: \"Measurements explicitly include wheels, but handles not stated\" (recorded in the dossier).",
+  "includes_wheels": true
  },
  "weight_lb": {
   "v": 7.9,

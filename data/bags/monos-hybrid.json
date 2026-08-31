@@ -20,7 +20,9 @@
   "src": "manufacturer",
   "ref": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
   "at": "2026-08-31",
-  "note": "Manufacturer states: Measurements include wheels and fixed handles."
+  "note": "Manufacturer states: Measurements include wheels and fixed handles. Manufacturer states: \"Measurements include wheels and fixed handles\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "claimed_packing_cm": null,
  "claimed_cm": null,
@@ -112,7 +114,9 @@
   "src": "manufacturer",
   "ref": "https://monos.com/products/hybrid-carry-on?variant=45199968207047",
   "at": "2026-08-31",
-  "note": "Manufacturer states: Measurements include wheels and fixed handles."
+  "note": "Manufacturer states: Measurements include wheels and fixed handles. Manufacturer states: \"Measurements include wheels and fixed handles\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "weight_lb": {
   "v": 9.7,

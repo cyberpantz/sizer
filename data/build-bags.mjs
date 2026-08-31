@@ -360,6 +360,32 @@ for (const b of bags) {
   b.fits_personal_item = e.every((v, i) => v <= p[i]);
 }
 
+/* THE EXCLUSION REGISTER IS ENFORCED, NOT DECORATIVE.
+ *
+ * Two bags were removed because neither can ever be sourced: Amazon Basics is
+ * an Amazon-owned brand and our own intake brief forbids marketplace sources,
+ * and the Pacsafe ECONYL is discontinued with its URL redirecting to a
+ * different product in a different material.
+ *
+ * Deleting them silently would leave nothing to stop the next intake pass
+ * helpfully re-adding both and re-running the same dead end — with no record
+ * anywhere of why they had gone. So the register carries the reason, and the
+ * build refuses to emit anything on it. */
+/* Kept OUTSIDE data/bags/ on purpose. A register of things that are not bags
+   has no business in the directory every loader globs for bags — validate.mjs
+   read it as a record and crashed on the first missing field. */
+const excludedPath = new URL('excluded-bags.json', here);
+const excluded = existsSync(excludedPath) ? JSON.parse(readFileSync(excludedPath)).bags : {};
+const smuggled = bags.filter((b) => excluded[b.slug]);
+if (smuggled.length) {
+  throw new Error(
+    `${smuggled.length} excluded bag(s) reached the build:\n` +
+      smuggled.map((b) => `  ${b.slug} — ${excluded[b.slug].reason}`).join('\n') +
+      '\nRemove them from the source data, or delete the entry in data/bags/_excluded.json ' +
+      'if the reason no longer holds.'
+  );
+}
+
 mkdirSync(new URL('bags/', here), { recursive: true });
 for (const b of bags)
   writeFileSync(new URL(`bags/${b.slug}.json`, here), JSON.stringify(b, null, 1));

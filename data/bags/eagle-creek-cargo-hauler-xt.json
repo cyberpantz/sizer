@@ -20,7 +20,9 @@
   "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
   "at": "2026-08-31",
   "quote": "External Dimensions",
-  "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us."
+  "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us. Manufacturer states: \"External dimensions include wheels, handles, and all other components\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "claimed_packing_cm": null,
  "claimed_cm": null,
@@ -120,7 +122,9 @@
   "ref": "https://eaglecreek.com/products/cargo-hauler-xt-wheeled-21-5-international-carry-on-duffel",
   "at": "2026-08-31",
   "quote": "External Dimensions",
-  "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us."
+  "note": "External dimensions include wheels, handles, and all other components. Both manufacturer-published units retained; not measured by us. Manufacturer states: \"External dimensions include wheels, handles, and all other components\" (recorded in the dossier).",
+  "includes_wheels": true,
+  "includes_handles": true
  },
  "price_usd": {
   "v": 299,

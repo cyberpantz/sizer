@@ -246,23 +246,6 @@
    "caveat": "Limited capacity \u2014 best for light packers."
   },
   {
-   "bag": "amazon-21-expandable",
-   "source": "tl-carryon",
-   "award": "Best budget",
-   "dimensions_published": true,
-   "claimed": {
-    "dimensions_in": [
-     21.7,
-     14.8,
-     10
-    ],
-    "weight_lb": 7.7,
-    "capacity_l": 34
-   },
-   "praise": "Strong capacity for the price; scratches buffed out by hand.",
-   "caveat": "Wobbly telescoping handle; no TSA lock."
-  },
-  {
    "bag": "away-carryon-flex",
    "source": "tl-carryon",
    "award": "Best compression",
@@ -516,23 +499,6 @@
    },
    "praise": "40 L in a compact, 2.1 lb package; converts to a backpack.",
    "caveat": "Rugged look won't suit everyone."
-  },
-  {
-   "bag": "pacsafe-venturesafe-exp45",
-   "source": "tl-international",
-   "award": "Best anti-theft backpack",
-   "dimensions_published": true,
-   "claimed": {
-    "dimensions_in": [
-     21.7,
-     13,
-     7.5
-    ],
-    "weight_lb": 4,
-    "capacity_l": 45
-   },
-   "praise": "Lockable zippers, slashproof fabric, RFID pocket, steel cable anchor.",
-   "caveat": "Heavy and bulky for a backpack."
   },
   {
    "bag": "bagsmart-roamer",

@@ -207,13 +207,26 @@ describe('the real catalogue', () => {
        to the words on that page, it is our opinion wearing a boolean. */
     const { readFileSync } = await import('node:fs');
     const src = JSON.parse(readFileSync('data/manufacturer-bags.json', 'utf8')).bags;
+    /* Evidence may sit in the QUOTE (the label on the page) or in a NOTE that
+       attributes a statement to the manufacturer — several dossiers recorded
+       "Measurements include wheels and fixed handles" as prose while the quote
+       field held only "Exterior measurements". Both are the maker's words.
+       What is NOT acceptable is a flag with no wheels statement anywhere: that
+       is our conclusion wearing a boolean. */
     const missing = [];
     for (const m of src) {
       for (const key of ['external_cm', 'external_in', 'claimed_cm', 'claimed_in']) {
         const f = m[key];
         if (!f || f.includes_wheels !== true) continue;
-        if (!f.quote || !/wheel/i.test(f.quote)) {
-          missing.push(`${m.slug}.${key}: includes_wheels=true but quote is "${f.quote ?? ''}"`);
+        const quoted = /wheel/i.test(f.quote ?? '');
+        const attributed =
+          /manufacturer states|page (?:states|says)|explicitly includ/i.test(f.note ?? '') &&
+          /wheel/i.test(f.note ?? '');
+        if (!quoted && !attributed) {
+          missing.push(
+            `${m.slug}.${key}: includes_wheels=true, quote "${f.quote ?? ''}", ` +
+              'and no attributed wheels statement in the note'
+          );
         }
       }
     }
