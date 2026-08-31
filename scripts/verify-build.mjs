@@ -6,7 +6,12 @@
 import { existsSync, readFileSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
-const dir = new URL('dist/client/', root);
+/* Without the Cloudflare adapter, a static build writes to dist/ directly.
+   With it, output moves to dist/client/. Accept either so this keeps working
+   when the adapter comes back for the first SSR route. */
+const dir = existsSync(new URL('dist/client/index.html', root))
+  ? new URL('dist/client/', root)
+  : new URL('dist/', root);
 let fail = 0;
 const bad = (m) => {
   console.log(`  FAIL  ${m}`);
