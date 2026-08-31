@@ -122,7 +122,7 @@ Ranked first because it is the homepage, the SEO surface, and the only door that
 └────────────────────────────────────────────────────────────┘
 ```
 
-The coverage toggle is the interesting control and it needs to feel like a tradeoff, not a setting. Selecting 100% shrinks the envelope visibly and names what it costs: *"Clears all 50 carriers. Wizz Air and Gulf Air are what make this small."*
+The coverage toggle is the interesting control and it needs to feel like a tradeoff, not a setting. Selecting 100% shrinks the envelope visibly and names what it costs: *"Clears all 100 carriers. Wizz Air and Gulf Air are what make this small."*
 
 ### Result
 

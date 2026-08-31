@@ -5,7 +5,7 @@
 These docs specify more than v1 should build. That's fine — the thinking is banked — but **only this ships in two weeks:**
 
 **In**
-- ~50 carriers: published limits, `source_url`, `verified_at`
+- ~100 carriers: published limits, `source_url`, `verified_at` (58 researched at time of writing; ship at 58+, fill in after)
 - Fare-class rows for the 12 carriers where it changes the answer
 - 60–80 bags with measured dimensions, shown against the manufacturer's claim
 - Weight compared alongside dimensions
@@ -279,7 +279,7 @@ Your Kit stays in `localStorage` — it's a within-burst convenience for compari
 - Pure functions, full unit test suite. This is the one place where a bug costs a user money.
 
 ### The data
-- **50 carriers.** Hand-entered, each with a source URL and a `verified_at` date.
+- **100 carriers.** Hand-entered, each with a source URL and a `verified_at` date. Raised from 50 — that was underwhelming coverage for a site whose whole claim is breadth of airline data.
 - **Fare-class rows for the twelve that matter:** Ryanair, Wizz, easyJet, Vueling, Spirit, Frontier, Lufthansa, American, United, Delta, British Airways, Air France.
 - **Strictness score per carrier**, with written basis. Published methodology page ships in the same pass — it's a trust asset, not documentation.
 - **60–80 bags.** Physically measured wherever possible; the rest marked `manufacturer` and visibly labeled as such.

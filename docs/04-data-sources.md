@@ -4,8 +4,8 @@ Four datasets. Three are cheap and one is the entire competitive position.
 
 | Dataset | Size at launch | Build cost | Defensibility |
 |---|---|---|---|
-| Carrier allowances | 50 carriers | ~2 days | Low — anyone can copy it |
-| Strictness scores | 50 carriers | ~1 day | **Medium** — methodology is the asset |
+| Carrier allowances | 100 carriers | ~4 days | Low — anyone can copy it |
+| Strictness scores | 100 carriers | ~2 days | **Medium** — methodology is the asset |
 | Bag dimensions | 60–80 bags | ~3 days | **High** — nobody else does this |
 | Product offers | 200+ SKUs | ~½ day | None — it's a feed |
 
@@ -34,7 +34,7 @@ Hand-entry is a deliberate choice, not a fallback:
 1. **Legal exposure is real and specific.** Airline sites generally prohibit automated access in their terms, and **Ryanair in particular has actively litigated against screen-scraping** — repeatedly, and against much larger companies. They are also the single most important carrier in our dataset. That's not a risk worth taking to save a few hours.
 2. **The pages are prose, not tables.** Allowances live in marketing copy with fare-class conditionals, route exceptions, and footnotes. A scraper reliably extracts the number and reliably misses *"except on flights operated by…"*. The interpretation is the work, and it's the part that has to be right.
 3. **Brittle by nature.** Baggage pages get restructured constantly. A scraper is a permanent maintenance burden that fails silently — and silent failure on stale data is the one existential risk in [01-mvp.md](01-mvp.md).
-4. **The volume doesn't justify it.** 50 carriers, re-verified quarterly. Automation would cost more to build and babysit than the manual pass costs to run.
+4. **The volume doesn't justify it.** 100 carriers, re-verified quarterly. Automation would cost more to build and babysit than the manual pass costs to run.
 5. **Hand-entry produces the trust asset.** A human read the page, recorded the URL, and dated it. That chain is what `verified_at` means, and it's not something a scraper can honestly claim.
 
 ### The legal picture, briefly
@@ -69,7 +69,7 @@ The European Parliament has been working on [standardised carry-on dimensions](h
 
 ### Build
 
-Hand-enter from each carrier's official baggage page. One JSON file per carrier, each allowance carrying its own `source_url` and `verified_at`. Two full days for 50 carriers including the fare-class rows.
+Hand-enter from each carrier's official baggage page. One JSON file per carrier, each allowance carrying its own `source_url` and `verified_at`. Roughly four days for 100 carriers including the fare-class rows.
 
 **Cross-check against [CarryFit](https://github.com/AxelUser/carry-fit)**, which is open source and covers 172 airlines. Use it to catch omissions and disagreements — a disagreement is a signal to go read the airline page a third time. Do not copy it wholesale: their data has the same manufacturer-vs-external problem on the bag side, their licence terms need reading, and a dataset you didn't verify is a dataset you can't defend.
 
@@ -103,7 +103,7 @@ Emirates, Qatar, Turkish
 
 ### Collect checked allowances in the same pass
 
-**They're printed on the page you're already reading.** Capturing them during the audit is close to free; returning to 50 carriers later is a day's work. Even though checked is a second- or third-order concern for v1, collect it now.
+**They're printed on the page you're already reading.** Capturing them during the audit is close to free; returning to 100 carriers later is two days' work. Even though checked is a second- or third-order concern for v1, collect it now.
 
 Per carrier, per fare class:
 

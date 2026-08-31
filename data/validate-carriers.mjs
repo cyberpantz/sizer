@@ -172,7 +172,7 @@ const researched = records.filter(
 ).length;
 const pendingReview = records.filter(({ rec }) => rec.publication_ready === false).length;
 console.log(
-  `${records.length} carriers · ${researched} researched · ${placeholders} placeholder · ${pendingReview} pending publication review · target 50`
+  `${records.length} carriers · ${researched} researched · ${placeholders} placeholder · ${pendingReview} pending publication review · target 100`
 );
 if (banned || unanswerable) {
   console.log(

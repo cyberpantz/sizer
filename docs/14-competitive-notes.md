@@ -96,7 +96,7 @@ Every genuinely defensible asset in our plan is unautomatable:
 
 - Measuring 80 bags requires a tape measure and a Saturday
 - Enforcement evidence requires reading filings and news, then writing down why
-- Verifying 50 carriers quarterly requires someone to actually read the pages
+- Verifying 100 carriers quarterly requires someone to actually read the pages — twice the standing cost of the original 50, and the reason the freshness checks matter
 
 None of it derives from anything. **That's why it holds** — not because the work is hard, but because it doesn't look like engineering, so a developer-led competitor won't be drawn to it.
 

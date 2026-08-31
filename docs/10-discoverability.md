@@ -68,7 +68,7 @@ The allowance appears because it's needed context, sourced and linked. The page 
 
 ### The bag × carrier matrix — dynamic, not pre-built
 
-80 bags × 50 carriers × fare classes is a combinatorial space too large and too sparse to pre-generate. **This part of the app is dynamic:** `/bag/[slug]/[carrier]` is rendered on demand and cached, not built ahead of time.
+80 bags × 100 carriers × fare classes is a combinatorial space too large and too sparse to pre-generate. **This part of the app is dynamic:** `/bag/[slug]/[carrier]` is rendered on demand and cached, not built ahead of time.
 
 This costs nothing in ranking terms. What determines whether a page can rank is that the URL exists and returns real HTML when fetched — not when it was rendered. Server-rendered-on-demand and pre-rendered are equally indexable.
 

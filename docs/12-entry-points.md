@@ -31,7 +31,7 @@ Both are shareable. Only nouns are indexable. Landing on a stranger's saved quer
 | `/luggage-for/[carrier]-[fare]` | ✅ **Strongest** | A shopping question with urgency. The spearhead. |
 | `/bag/[slug]` | ✅ **Strong** | "Is the Monos Carry-On Pro too big?" Our measurement, commercially valuable |
 | `/bag/[slug]/[carrier]` | ✅ **Strong** | The most specific complete question there is. Zero ambiguity. |
-| `/size/[l]x[w]x[d]` | ⚠️ **Conditional** | Only if framed as an *answer* — "Bags this size fly on 31 of the 50 airlines we track" — not as a filter result |
+| `/size/[l]x[w]x[d]` | ⚠️ **Conditional** | Only if framed as an *answer* — "Bags this size fly on 62 of the 100 airlines we track" — not as a filter result |
 | `/region/[slug]` | ✅ Fine | "What size luggage works in Europe?" |
 | `/airline/[slug]` | ⚠️ **Reference only** | Exists for transparency and internal linking. **Not an SEO surface** — we can't outrank the airline for its own policy, and the intent is wrong. See [10-discoverability.md](10-discoverability.md). |
 | `/check?…` | ❌ **`noindex`** | App state, not a page |
@@ -112,7 +112,7 @@ The strongest asset we have is the one thing no competitor can show: **the gap b
 ├──────────────────────────────────────────────────────────────┤
 │   ▸ THE ANSWER — updates live, never navigates               │
 │                                                              │
-│   Nothing filled: 40 × 30 × 20 cm flies on all 50 airlines   │
+│   Nothing filled: 40 × 30 × 20 cm flies on all 100 airlines   │
 │                   ▓ 12 bags we've measured clear it →        │
 ├──────────────────────────────────────────────────────────────┤
 │   LUGGAGE FOR A STRICT AIRLINE                               │

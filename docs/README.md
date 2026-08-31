@@ -42,7 +42,7 @@ Manufacturers publish *packing* dimensions; airlines measure *external* ones, wh
 |---|---|---|
 | **SEO routes** | `/luggage-for/[carrier]` and `/luggage-for/[carrier]-[fare]`. Never `/airline/*`. | [10](10-discoverability.md#the-airline-is-a-qualifier-not-the-subject) |
 | **`/airline/*`** | Exists for transparency and internal linking. Not promoted, not in the sitemap. | [15](15-sitemap.md) |
-| **Launch carriers** | **50** | [04](04-data-sources.md#the-launch-50) |
+| **Launch carriers** | **100.** 58 researched so far; ship at 58+ and fill in after. | [04](04-data-sources.md#the-launch-50) |
 | **Fare-class carriers** | The 12 where fare changes the answer | [04](04-data-sources.md) |
 | **Launch bags** | 60–80 measured | [04](04-data-sources.md) |
 | **Units** | Inches for US locale, cm elsewhere. Always-visible header toggle, remembered. Dual display only on the hero envelope. **SSR never infers a locale — static HTML ships metric, the client corrects.** | [01](01-mvp.md#units) |
