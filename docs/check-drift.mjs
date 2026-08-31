@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 const docs = fs.readdirSync('.').filter((f) => /^\d\d-.*\.md$/.test(f));
 let bad = 0;
-const OURS = ['100', '58', '24', '12'];   // 24/12 are historical placeholder-era figures
+const OURS = ['100', '58', '24', '12']; // 24/12 are historical placeholder-era figures
 const COMPETITOR_COVERAGE = ['190', '180', '172', '146', '9'];
 
 const flag = (f, l, why) => {
