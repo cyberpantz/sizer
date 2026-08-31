@@ -137,14 +137,34 @@ describe('a paywalled cabin bag is a finding, not a gap', () => {
 });
 
 describe('the real catalogue', () => {
-  test('every operating carrier is answerable except the known schema gap', async () => {
+  test('every operating carrier is answerable', async () => {
+    /* Was `['SQ']` for about an hour. Singapore publishes only "sum of
+       dimensions <= 115 cm", which the schema could not express, so its
+       researched figure sat parked in `published_cabin_allowances` with a note
+       saying it was waiting on the engine. The engine honours linear limits
+       now and the row moved into `allowances`.
+       Zero is the standing bar: an airline we cannot answer for is a hole in
+       every coverage figure on the site, so a new one has to be deliberate. */
     const { loadCarriers } = await import('../../lib/data.mjs');
     const cs = await loadCarriers();
     const unknown = cs.filter((c) => c.cabin_unknown).map((c) => c.iata);
-    /* SQ publishes only "sum of dimensions <= 115 cm", which the schema cannot
-       express. That is a real gap and the only one left; if this list grows,
-       something regressed. */
-    assert.deepEqual(unknown, ['SQ'], `unexpected unanswerable carriers: ${unknown.join(', ')}`);
+    assert.deepEqual(unknown, [], `unanswerable carriers: ${unknown.join(', ')}`);
+  });
+
+  test('every carrier record survives normalisation', async () => {
+    /* loadCarriers() swallows a throwing record so one bad file cannot take
+       down the build — which also means a record can vanish in total silence.
+       SQ did exactly that for a few minutes: `reconcileUnits(null, undefined)`
+       returns null rather than { cm: null }, buildAllowance threw, the loader
+       dropped it, and "zero unanswerable" was Singapore disappearing rather
+       than Singapore answered. Count, do not assume. */
+    const { loadCarriers } = await import('../../lib/data.mjs');
+    const { readdirSync } = await import('node:fs');
+    const onDisk = readdirSync('data/carriers').filter(
+      (f) => f.endsWith('.json') && !f.startsWith('_')
+    ).length;
+    const loaded = (await loadCarriers()).length;
+    assert.equal(loaded, onDisk, `${onDisk - loaded} carrier record(s) threw and were dropped`);
   });
 
   test('the three ULCCs answer "no cabin bag" rather than "unknown"', async () => {

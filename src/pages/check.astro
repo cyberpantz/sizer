@@ -718,6 +718,27 @@ const RISK = [
 
   function comparator(bagRecord, engineBag, carrier, band) {
     if (!carrier?.allowance) return '';
+
+    /* NOTHING TO DRAW AGAINST. Singapore publishes no box at all — the rule is
+       the sum of the three sides — so there is no rectangle to put the bag
+       inside. Drawing a plausible one would be the single most misleading
+       thing on this page: a picture reads as a measurement.
+       Say the rule in words instead, with the arithmetic shown, because that
+       is the whole of what the airline published. */
+    if (!carrier.allowance.max_cm) {
+      const cap = carrier.allowance.linear_max_cm;
+      if (typeof cap !== 'number') return '';
+      const sides3 = desc(bagRecord.external_cm);
+      const sum = sides3.reduce((a, v) => a + v, 0);
+      const sides = sides3.map((v) => U.len(v)).join(' + ');
+      return `<div class="mt-6 rounded-card border border-rule bg-surface-2 p-5 text-[0.9375rem] text-ink-2">
+        <p><b class="font-semibold text-ink">${esc(carrier.name)} sets no box.</b> Their limit is on the
+        three sides added together, so no amount of turning the bag helps.</p>
+        <p class="mt-2 font-mono text-[0.875rem]">${sides} = <b class="font-semibold text-ink">${U.len(sum)} ${esc(U.lenLabel())}</b>
+        &nbsp;against&nbsp;<b class="font-semibold text-ink">${U.len(cap)} ${esc(U.lenLabel())}</b></p>
+      </div>`;
+    }
+
     const E = ENGINES[state.risk] ?? ENGINES.balanced;
     const bag = E.effective(engineBag);
     const box = desc(carrier.allowance.max_cm);
@@ -896,6 +917,7 @@ const RISK = [
     const setters = env
       ? dedupeBy(
           scorable
+            .filter((x) => x.carrier.allowance?.max_cm)
             .filter((x) => desc(x.carrier.allowance.max_cm).some((v, i) => v === env[i]))
             .map((x) => ({ name: x.carrier.name, iata: x.leg.iata })),
           (x) => x.iata

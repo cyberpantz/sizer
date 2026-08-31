@@ -513,16 +513,6 @@ export const IDENTITY = {
     wheels: 2,
     role: 'overhead',
   },
-  'briggs-riley-torq-xl': {
-    brand: 'Briggs & Riley',
-    model: 'Torq Extra Large Trunk Spinner',
-    variant: 'Extra Large',
-    line: 'briggs-torq',
-    type: 'hardside spinner',
-    soft: 0,
-    wheels: 4,
-    role: 'checked',
-  },
   'carl-friedrik-carryon-x': {
     brand: 'Carl Friedrik',
     model: 'Carry-on X',

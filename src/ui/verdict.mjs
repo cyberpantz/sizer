@@ -99,6 +99,22 @@ export function verdictLine(result, U) {
   if (result.no_cabin_bag) return 'This fare includes no cabin bag at any size.';
 
   const d = result.delta_cm;
+
+  /* A LINEAR limit binds on the SUM of the sides, not on one of them, so the
+     per-axis phrasing does not survive the substitution — "3.1 cm too in
+     total" is not a sentence, and "3.1 cm too long" would name a dimension
+     that is not the one at fault. Singapore publishes nothing but a linear
+     rule; Delta, JAL, ANA and Scoot publish one beside their box.
+
+     The reader also needs different advice: no rotation helps, and the fix is
+     a smaller bag rather than a different orientation. */
+  if (result.basis === 'linear') {
+    if (d > 0)
+      return `${U.len(d)} ${U.lenLabel()} over their limit on the three sides added together.`;
+    if (d === 0) return 'Exactly on their total-size limit.';
+    return `${U.len(Math.abs(d))} ${U.lenLabel()} to spare on their total-size limit.`;
+  }
+
   if (d > 0) return `${U.len(d)} ${U.lenLabel()} too ${result.dimension}.`;
   if (d === 0) return 'Exactly on the limit.';
   return `${U.len(Math.abs(d))} ${U.lenLabel()} to spare.`;

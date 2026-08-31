@@ -511,7 +511,18 @@ export function resolveFare(record, booking) {
 function buildAllowance(row, subject, rows = []) {
   const u = reconcileUnits(row.max_cm, row.max_in);
   return {
-    max_cm: assertDims(u.cm, subject),
+    /* A LINEAR-ONLY ALLOWANCE IS STILL AN ALLOWANCE.
+       Singapore publishes no box at all — their whole cabin rule is "sum of
+       dimensions <= 115 cm". Requiring three axes made that record
+       unrepresentable, so the researched figure sat parked in
+       `published_cabin_allowances` with a note saying it was waiting on the
+       engine. Dimensions are required only when there is no linear cap to
+       fall back on; one of the two must exist or there is no rule to check. */
+    max_cm:
+      u?.cm == null && typeof row.linear_max_cm === 'number' ? null : assertDims(u?.cm, subject),
+    /* Sum of the three sides. Published alongside a box by Delta, JAL, ANA and
+       Scoot, and instead of one by Singapore. The stricter constraint binds. */
+    linear_max_cm: typeof row.linear_max_cm === 'number' ? row.linear_max_cm : null,
     max_kg: row.max_kg ?? null,
     /* IS THAT WEIGHT CAP FOR THIS BAG, OR FOR BOTH BAGS?
 
@@ -538,7 +549,7 @@ function buildAllowance(row, subject, rows = []) {
       : false,
     /* Kept so a page can show the airline's own figures rather than ours, and
        flag when they disagree — that disagreement is a finding worth printing. */
-    units: u,
+    units: u ?? null,
   };
 }
 

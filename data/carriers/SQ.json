@@ -1,68 +1,66 @@
 {
-  "iata": "SQ",
-  "name": "Singapore",
-  "region": "AS",
-  "type": "full_service",
-  "strictness": {
-    "score": 6,
-    "contested": false,
-    "evidence": [
-      {
-        "claim": "Weighs cabin bags at check-in — 7 kg, and they do enforce it.",
-        "tier": null,
-        "url": "",
-        "retrieved": null,
-        "unverified": true
-      }
-    ],
-    "updated": null,
-    "score_basis": "legacy_prior_only"
-  },
-  "sizer": {
-    "at_gate": null,
-    "cabin_cm": null,
-    "personal_cm": null
-  },
-  "operates_regional_jets": false,
-  "allowances": [
-    {
-      "fare_class": "economy",
-      "type": "personal",
-      "max_cm": [
-        40,
-        30,
-        10
-      ],
-      "max_kg": null,
-      "includes_wheels": null,
-      "count": 1,
-      "source_url": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/",
-      "verified_at": "2026-08-31",
-      "cabin_absence": "not_published",
-      "note": "Additional small bag. Main cabin bag IS permitted, but its per-axis dimensions are not published; linear-only rule stored separately."
-    }
+ "iata": "SQ",
+ "name": "Singapore",
+ "region": "AS",
+ "type": "full_service",
+ "strictness": {
+  "score": 6,
+  "contested": false,
+  "evidence": [
+   {
+    "claim": "Weighs cabin bags at check-in \u2014 7 kg, and they do enforce it.",
+    "tier": null,
+    "url": "",
+    "retrieved": null,
+    "unverified": true
+   }
   ],
-  "source_url": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/",
-  "verified_at": "2026-08-31",
-  "verified_by": "codex (official policy read)",
-  "placeholder": false,
-  "research_status": "official_allowances_researched",
-  "publication_ready": false,
-  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
-  "checked_allowance_status": "not_researched",
-  "audit_note": "Read cabin table and additional-items section. Economy: 1 piece, 7 kg, sum of dimensions <=115 cm; no per-axis box published. Removed unsupported 55x40x20 placeholder. Keep linear rule as published_cabin_allowances until engine supports linear-only cabin constraints. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
-  "research_dossier": "resources/carriers/SQ-allowance-audit-2026-08-31.md",
-  "published_cabin_allowances": [
-    {
-      "fare_class": "economy",
-      "type": "cabin",
-      "max_cm": null,
-      "linear_max_cm": 115,
-      "max_kg": 7,
-      "count": 1,
-      "source_url": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/",
-      "verified_at": "2026-08-31"
-    }
-  ],
-  "cabin_absence": "not_published"
+  "updated": null,
+  "score_basis": "legacy_prior_only"
+ },
+ "sizer": {
+  "at_gate": null,
+  "cabin_cm": null,
+  "personal_cm": null
+ },
+ "operates_regional_jets": false,
+ "allowances": [
+  {
+   "fare_class": "economy",
+   "type": "personal",
+   "max_cm": [
+    40,
+    30,
+    10
+   ],
+   "max_kg": null,
+   "includes_wheels": null,
+   "count": 1,
+   "source_url": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/",
+   "verified_at": "2026-08-31",
+   "note": "Additional small bag. Main cabin bag IS permitted, but its per-axis dimensions are not published."
+  },
+  {
+   "fare_class": "economy",
+   "type": "cabin",
+   "max_cm": null,
+   "linear_max_cm": 115,
+   "max_kg": 7,
+   "count": 1,
+   "source_url": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/",
+   "verified_at": "2026-08-31",
+   "includes_wheels": null,
+   "note": "Singapore publishes no per-axis box for the cabin bag \u2014 the rule is the sum of the three sides. Held in published_cabin_allowances until the engine supported linear-only constraints; moved into allowances 2026-08-31."
+  }
+ ],
+ "source_url": "https://www.singaporeair.com/en_UK/us/travel-info/baggage/cabin-baggage/",
+ "verified_at": "2026-08-31",
+ "verified_by": "codex (official policy read)",
+ "placeholder": false,
+ "research_status": "official_allowances_researched",
+ "publication_ready": false,
+ "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+ "checked_allowance_status": "not_researched",
+ "audit_note": "Read cabin table and additional-items section. Economy: 1 piece, 7 kg, sum of dimensions <=115 cm; no per-axis box published. Removed unsupported 55x40x20 placeholder. Linear rule moved into allowances 2026-08-31, once the engine honoured linear-only cabin constraints. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+ "research_dossier": "resources/carriers/SQ-allowance-audit-2026-08-31.md"
 }

@@ -62,21 +62,62 @@ export function createEngine(overrides = {}) {
     return e;
   }
 
-  /** Overage on the worst dimension. Negative means room to spare. Reports the
-   *  binding dimension, because that is the fact the traveller can act on. */
-  function delta(bag, allowanceCm) {
-    const e = effective(bag),
-      m = desc(allowanceCm);
-    let worst = -Infinity,
-      idx = 0;
-    for (let i = 0; i < 3; i++) {
-      const d = e[i] - m[i];
-      if (d > worst) {
-        worst = d;
-        idx = i;
+  /** Overage on the worst constraint. Negative means room to spare. Reports the
+   *  binding dimension, because that is the fact the traveller can act on.
+   *
+   *  TWO KINDS OF LIMIT, and we honoured only one.
+   *
+   *  Most airlines publish a box. Some also publish a LINEAR limit — the sum
+   *  of the three sides — and a few publish nothing else. Singapore's entire
+   *  cabin rule is "sum of dimensions <= 115 cm"; Delta, JAL, ANA and Scoot
+   *  print a linear cap beside their box.
+   *
+   *  The engine held `linear_max_cm` in the schema and never read it, so 24
+   *  bag/airline pairs passed the box check while breaking a limit the airline
+   *  publishes and we already stored — two of them reported as "Fits" outright.
+   *  Wrong in the direction that costs a reader a gate fee.
+   *
+   *  Both constraints are real and the STRICTER one binds, so this returns the
+   *  worst of the two. Measured on the same compressed dimensions the box
+   *  check uses, or a soft bag would be judged generously on one and strictly
+   *  on the other. */
+  function delta(bag, allowance) {
+    /* A bare triple is still accepted — it is the honest shape for "check this
+       against this box", and several callers and tests use it. An allowance
+       object is what carries the linear cap. */
+    const a = Array.isArray(allowance) ? { max_cm: allowance } : (allowance ?? {});
+    const e = effective(bag);
+    let worst = -Infinity;
+    let idx = 0;
+    let basis = 'axis';
+
+    if (a.max_cm) {
+      const m = desc(a.max_cm);
+      for (let i = 0; i < 3; i++) {
+        const d = e[i] - m[i];
+        if (d > worst) {
+          worst = d;
+          idx = i;
+        }
       }
     }
-    return { cm: +worst.toFixed(2), dimension: DIM_LABEL[idx], index: idx };
+
+    if (typeof a.linear_max_cm === 'number') {
+      const d = e[0] + e[1] + e[2] - a.linear_max_cm;
+      if (d > worst) {
+        worst = d;
+        basis = 'linear';
+      }
+    }
+
+    /* No constraint at all is a caller error, not a pass. */
+    if (worst === -Infinity) return null;
+    return {
+      cm: +worst.toFixed(2),
+      dimension: basis === 'linear' ? 'in total' : DIM_LABEL[idx],
+      index: basis === 'linear' ? null : idx,
+      basis,
+    };
   }
 
   /** Exhaustive by construction: every finite delta lands in exactly one band
@@ -157,11 +198,15 @@ export function createEngine(overrides = {}) {
         advisories: runAdvisories({ bag, carrier, deltaCm: null }),
       };
     }
-    const d = delta(bag, carrier.allowance.max_cm);
+    const d = delta(bag, carrier.allowance);
     return {
       band: band(d.cm, carrier.strictness, carrier.enforcement_researched),
       delta_cm: d.cm,
       dimension: d.dimension,
+      /* Which KIND of limit bound: one side of the box, or the sum of all
+         three. The copy differs — no rotation helps against a linear cap — so
+         the page must be able to tell them apart. */
+      basis: d.basis,
       no_cabin_bag: false,
       /* The release gate: may this bag be RECOMMENDED, not merely displayed?
          See isPromotable — manufacturer's own overall figure, or ours. */
@@ -178,8 +223,12 @@ export function createEngine(overrides = {}) {
   /** Strictest common box across an itinerary: the biggest bag surviving every
    *  leg. Minimum per SORTED dimension, so it is rotation-independent. */
   function envelope(carriers) {
+    /* A linear-only carrier constrains the SUM of the sides, not any one of
+       them, so it cannot narrow a box — there is no rectangle to intersect.
+       Singapore is excluded here rather than crashing on a null, and the page
+       says so separately; silently dropping it would overstate the envelope. */
     const boxes = carriers
-      .filter((c) => c.allowance && c.flying !== false)
+      .filter((c) => c.allowance?.max_cm && c.flying !== false)
       .map((c) => desc(c.allowance.max_cm));
     if (!boxes.length) return null;
     return [0, 1, 2].map((i) => Math.min(...boxes.map((b) => b[i])));
