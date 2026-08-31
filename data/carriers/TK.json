@@ -1,7 +1,7 @@
 {
  "iata": "TK",
  "name": "Turkish",
- "region": "AS",
+ "region": "ME",
  "type": "full_service",
  "strictness": {
   "score": 7,
