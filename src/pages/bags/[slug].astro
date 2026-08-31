@@ -130,6 +130,21 @@ const ref = refRaw?.startsWith('http')
   ? refRaw
   : ((record.reviews ?? []).find((r) => r.src === refRaw)?.url ?? null);
 const at = record.external_cm?.at ?? null;
+
+/* Name the destination, do not call it "the page".
+
+   Link text has to make sense read on its own: a screen-reader user tabbing
+   through links hears only the text, and "their page" or "the page we read"
+   tells them nothing about where they are being sent. Same reason /sources
+   says "baggage policy" — which is now what the carrier rows say too, since
+   four phrasings for one kind of link was three too many. */
+const sourceReview = (record.reviews ?? []).find((r) => r.src === refRaw);
+const sourceLinkText =
+  record.external_cm?.src === 'manufacturer'
+    ? `${bag.brand}'s product page`
+    : sourceReview?.publication
+      ? `${sourceReview.publication}'s review`
+      : 'the page this came from';
 const gap = record.wheel_handle_delta_cm ?? null;
 const dims = (cm) => cm.map((v) => v.toFixed(1).replace(/\.0$/, '')).join(' × ');
 const pct = cov.of ? Math.round((cov.pass / cov.of) * 100) : 0;
@@ -195,7 +210,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           {ref && (
             <p class="mt-2 text-[0.9375rem]">
               <a href={ref} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">
-                The page we read ↗
+                {sourceLinkText} ↗
               </a>
               {at && <span class="text-muted"> · read {at}</span>}
             </p>
@@ -269,7 +284,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                     {sourceOf.has(carrier.iata) ? (
                       <>
                         {' · '}
-                        <a href={sourceOf.get(carrier.iata).url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">their page ↗</a>
+                        <a href={sourceOf.get(carrier.iata).url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">baggage policy ↗</a>
                       </>
                     ) : (
                       <span> · no source recorded yet</span>

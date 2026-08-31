@@ -85,6 +85,33 @@ describe('outbound links', () => {
     }
   });
 
+  test('no link is named "here", "this page" or "their page"', () => {
+    /* Link text has to make sense read on its own. A screen-reader user
+       tabbing through a page hears only the link text, so "their page" tells
+       them nothing about where they are being sent — WCAG 2.4.4. It is also
+       just vague: this one said "their page ↗" next to British Airways, on a
+       row already labelled British Airways.
+
+       Four phrasings existed for the same link — "their page", "their baggage
+       page", "the page we read", and "baggage policy" on /sources. The last
+       one was right, so it is now the only one. */
+    const VAGUE = /^(their page|this page|the page we read|here|click here|link|read more|more)$/i;
+    let examined = 0;
+    for (const file of walk('src')) {
+      const src = stripComments(readFileSync(file, 'utf8'));
+      for (const [, text] of src.matchAll(/<a\b[^>]*>([^<]{1,60})<\/a>/g)) {
+        const clean = text.replace(/[↗→\s]+/g, ' ').trim();
+        if (!clean || clean.startsWith('{')) continue; // expression, not literal copy
+        examined++;
+        assert.doesNotMatch(clean, VAGUE, `${file}: link named "${clean}" — say where it goes`);
+      }
+    }
+    assert.ok(
+      examined > 5,
+      `only ${examined} link texts examined — the matcher stopped seeing them`
+    );
+  });
+
   test('the layout sets a referrer policy as well', () => {
     /* Belt and braces: a link added later without the rel attribute still
        cannot leak, because the document-level policy covers it. */
