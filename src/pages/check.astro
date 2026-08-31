@@ -137,6 +137,8 @@ const RISK = [
      That is the whole payoff of keeping it pure: no DOM, no I/O, no units, so
      a verdict computed in this browser is byte-identical to one computed at
      build time. */
+  import { h, render } from 'preact';
+  import AirlinePicker from '../components/AirlinePicker.jsx';
   import { createEngine, desc, engine as DEFAULT } from '../engine/fit.mjs';
   import { toBag, toCarrier } from '../engine/normalize.mjs';
   import { createUnits } from '../ui/units.mjs';
@@ -196,6 +198,7 @@ const RISK = [
 
   const state = { bags: [], legs: [], risk: 'balanced' };
   let DATA = null;
+  let CARRIER_ITEMS = [];
 
   /* ---------- boot ---------- */
 
@@ -203,6 +206,25 @@ const RISK = [
     const res = await fetch('/catalogue.json');
     if (!res.ok) throw new Error(`catalogue unavailable (${res.status})`);
     DATA = await res.json();
+
+    /* Built ONCE. The picker takes {value,name,code}; rebuilding this array on
+       every keystroke would defeat the useMemo inside the component and make
+       58 airlines feel like a lag. */
+    CARRIER_ITEMS = DATA.carriers.map((c) => ({ value: c.iata, name: c.name, code: c.iata }));
+
+    /* Registered once, here, NOT in renderInputs — that runs on every state
+       change and would stack a listener per render, so one click would fire
+       the handler N times and the trip would jump. */
+    document.addEventListener('sizer:airline', (e) => {
+      const { leg, value } = e.detail;
+      const c = carrierOf(value);
+      if (!c || !state.legs[leg]) return;
+      /* Fares do not survive a carrier change — "Priority" means nothing on
+         the next airline, and silently keeping it would answer a question
+         about a fare that does not exist. */
+      state.legs[leg] = { iata: c.iata, fare: c.fares[0] };
+      draw();
+    });
 
     restore();
     el('[data-loading]').hidden = true;
@@ -313,15 +335,7 @@ const RISK = [
           return `<div class="grid grid-cols-[1.625rem_1fr_auto] items-start gap-3 border-b border-rule py-3 last:border-b-0">
             <span class="mt-0.5 grid h-[1.625rem] w-[1.625rem] place-items-center rounded-full bg-surface-2 font-mono text-[0.875rem] text-muted">${i + 1}</span>
             <span class="min-w-0">
-              <select data-leg-carrier="${i}" aria-label="Airline for flight ${i + 1}"
-                class="w-full cursor-pointer rounded-chip border border-rule-strong bg-surface px-2.5 py-1.5 text-[1.03125rem] font-semibold text-ink">
-                ${DATA.carriers
-                  .map(
-                    (x) =>
-                      `<option value="${esc(x.iata)}"${x.iata === leg.iata ? ' selected' : ''}>${esc(x.name)}</option>`
-                  )
-                  .join('')}
-              </select>
+              <div data-carrier-mount="${i}"></div>
               <select data-leg-fare="${i}" aria-label="Fare for flight ${i + 1}"
                 class="mt-1.5 w-full cursor-pointer rounded-chip border border-rule-strong bg-surface px-2.5 py-1.5 text-[0.90625rem] text-muted">
                 ${c.fares
@@ -380,15 +394,32 @@ const RISK = [
       state.legs.push({ iata: c.iata, fare: c.fares[0] });
       draw();
     });
-    for (const s of root.querySelectorAll('[data-leg-carrier]')) {
-      s.addEventListener('change', (e) => {
-        const c = carrierOf(e.target.value);
-        /* Fares do not survive a carrier change — "Priority" means nothing on
-           the next airline, and silently keeping it would answer a question
-           about a fare that does not exist. */
-        state.legs[+e.target.dataset.legCarrier] = { iata: c.iata, fare: c.fares[0] };
-        draw();
-      });
+    /* Downshift, mounted imperatively rather than as an Astro island.
+
+       An island has to exist in the server-rendered template, and these rows
+       are built here from a variable-length array — one per leg, added and
+       removed as the trip changes. Preact's own render() handles that; the
+       @astrojs/preact integration is still what configures the JSX transform.
+
+       The picker reports a choice on `sizer:airline` (see AirlinePicker.jsx —
+       Astro cannot pass a function across an island boundary, so a DOM event
+       is the contract), and the handler below is registered ONCE in boot(),
+       not here, because renderInputs() runs on every state change. */
+    for (const mount of root.querySelectorAll('[data-carrier-mount]')) {
+      const i = +mount.dataset.carrierMount;
+      /* h(), not AirlinePicker({...}). Calling the component as a plain
+         function executes its hooks outside a render context and throws —
+         Preact has to own the invocation. There is no JSX in an .astro script
+         to hide that for us. */
+      render(
+        h(AirlinePicker, {
+          items: CARRIER_ITEMS,
+          value: state.legs[i].iata,
+          label: `Airline for flight ${i + 1}`,
+          legIndex: i,
+        }),
+        mount
+      );
     }
 
     for (const s of root.querySelectorAll('[data-leg-fare]')) {
