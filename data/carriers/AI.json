@@ -1,0 +1,59 @@
+{
+  "iata": "AI",
+  "name": "Air India",
+  "region": "AS",
+  "type": "full_service",
+  "strictness": {
+    "score": 6,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Economy/Premium Economy one cabin bag; personal item up to 3 kg separately. Personal dimensions apply to the listed handbag/camera/laptop bags.",
+      "source_url": "https://www.airindia.com/content/air-india/jp/en/travel-information/baggage-guidelines/cabin-baggage.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 3,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.airindia.com/content/air-india/jp/en/travel-information/baggage-guidelines/cabin-baggage.html",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.airindia.com/content/air-india/jp/en/travel-information/baggage-guidelines/cabin-baggage.html",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/AI-air-india.md"
+}

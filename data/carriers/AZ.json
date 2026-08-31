@@ -1,0 +1,113 @@
+{
+  "iata": "AZ",
+  "name": "ITA Airways",
+  "region": "EU",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Economy; includes handles, side pockets and wheels. Light includes the same cabin allowance.",
+      "source_url": "https://www.ita-airways.com/us/en/book-and-prepare/travel-information/baggage/carry-on-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.ita-airways.com/us/en/book-and-prepare/travel-information/baggage/carry-on-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Standard Economy US itinerary. Light has no checked bag; route exceptions apply.",
+      "source_url": "https://www.ita-airways.com/jp/en/book-and-prepare/travel-information/baggage/checked-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Economy; includes handles, side pockets and wheels. Light includes the same cabin allowance.",
+      "source_url": "https://www.ita-airways.com/us/en/book-and-prepare/travel-information/baggage/carry-on-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.ita-airways.com/us/en/book-and-prepare/travel-information/baggage/carry-on-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Economy Light: 0 included checked bags. Same itinerary scope as economy row.",
+      "source_url": "https://www.ita-airways.com/jp/en/book-and-prepare/travel-information/baggage/checked-baggage",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.ita-airways.com/us/en/book-and-prepare/travel-information/baggage/carry-on-baggage",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/AZ-ita-airways.md"
+}

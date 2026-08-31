@@ -1,0 +1,69 @@
+{
+  "iata": "KE",
+  "name": "Korean Air",
+  "region": "AS",
+  "type": "full_service",
+  "strictness": {
+    "score": 6,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Economy: cabin bag and personal item share 10 kg. Official page rendered in Korean; dimensions and economy table read.",
+      "source_url": "https://www.koreanair.com/contents/plan-your-travel/baggage/carry-on-baggage?hl=en",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Shares the 10 kg combined allowance with the cabin bag.",
+      "source_url": "https://www.koreanair.com/contents/plan-your-travel/baggage/carry-on-baggage?hl=en",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 10,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    }
+  ],
+  "source_url": "https://www.koreanair.com/contents/plan-your-travel/baggage/carry-on-baggage?hl=en",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/KE-korean-air.md"
+}

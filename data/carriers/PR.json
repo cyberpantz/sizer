@@ -1,0 +1,59 @@
+{
+  "iata": "PR",
+  "name": "Philippine Airlines",
+  "region": "AS",
+  "type": "full_service",
+  "strictness": {
+    "score": 6,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "One main cabin bag plus one permitted personal item. The personal dimensions apply specifically to a laptop with case, not every kind of personal bag.",
+      "source_url": "https://www.philippineairlines.com/us/en/before-you-fly/baggage-information/baggage-allowance/baggage-allowance-fees/carry-on-baggage.html",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        45,
+        35,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "45 × 35 × 20 cm applies specifically to a laptop with case. Other permitted personal items do not have numeric dimensions on this page.",
+      "source_url": "https://www.philippineairlines.com/us/en/before-you-fly/baggage-information/baggage-allowance/baggage-allowance-fees/carry-on-baggage.html",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.philippineairlines.com/us/en/before-you-fly/baggage-information/baggage-allowance/baggage-allowance-fees/carry-on-baggage.html",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/PR-philippine-airlines.md"
+}

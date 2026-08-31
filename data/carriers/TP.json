@@ -1,0 +1,71 @@
+{
+  "iata": "TP",
+  "name": "TAP Air Portugal",
+  "region": "EU",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Economy; personal item has a separate 2 kg limit. North American business flights also allow only one main cabin bag.",
+      "source_url": "https://www.flytap.com/en-gb/information/baggage/hand-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": 2,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.flytap.com/en-gb/information/baggage/hand-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Intercontinental Economy Basic/Classic/Plus: one 23 kg bag; Discount has no included bag. Prime has different allowances.",
+      "source_url": "https://www.flytap.com/en-br/information/baggage/hold-baggage",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.flytap.com/en-gb/information/baggage/hand-baggage",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/TP-tap-air-portugal.md"
+}

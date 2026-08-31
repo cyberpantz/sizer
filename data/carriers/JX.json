@@ -1,0 +1,71 @@
+{
+  "iata": "JX",
+  "name": "STARLUX Airlines",
+  "region": "AS",
+  "type": "full_service",
+  "strictness": {
+    "score": 6,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_kg": 7,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Economy/Premium Economy main bag plus personal item. Business differs (two bags, combined 14 kg, up to 10 kg each).",
+      "source_url": "https://www.starlux-airlines.com/en-US/check-in-fly/baggage-information/general/carry-on-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        10
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.starlux-airlines.com/en-US/check-in-fly/baggage-information/general/carry-on-baggage",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 23,
+      "free_pieces": 2,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "North America excluding Guam: Economy Saving/Basic/Full two pieces; Limited (Q) one piece. Checked size not verified in this pass.",
+      "source_url": "https://www.starlux-airlines.com/en-US/check-in-fly/baggage-information/general/checked-baggage/free-checked-baggage-allowance/long-haul-routes",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.starlux-airlines.com/en-US/check-in-fly/baggage-information/general/carry-on-baggage",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/JX-starlux-airlines.md"
+}

@@ -1,0 +1,81 @@
+{
+  "iata": "S4",
+  "name": "Azores Airlines",
+  "region": "EU",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 8,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Economy cabin bag and personal item share 8 kg. Charter flights may differ; S4 is not SATA Air Açores (SP).",
+      "source_url": "https://www.azoresairlines.pt/en/information/baggage/carry-on-baggage",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 8,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Shares the 8 kg combined allowance with the cabin bag.",
+      "source_url": "https://www.azoresairlines.pt/en/information/baggage/carry-on-baggage",
+      "verified_at": "2026-08-30",
+      "combined_max_kg": 8,
+      "combined_weight_types": [
+        "cabin",
+        "personal"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "S4 Economy Basic/Flex: one 23 kg bag; Simple has none; Top has two. Numerical standard size limit not verified on this page.",
+      "source_url": "https://www.azoresairlines.pt/en/information/baggage/checked-baggage?language=pt-pt",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.azoresairlines.pt/en/information/baggage/carry-on-baggage",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/S4-azores-airlines.md"
+}

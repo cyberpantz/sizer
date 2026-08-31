@@ -1,0 +1,71 @@
+{
+  "iata": "CI",
+  "name": "China Airlines",
+  "region": "AS",
+  "type": "full_service",
+  "strictness": {
+    "score": 6,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_kg": 7,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "Economy/Premium Economy one cabin bag plus one personal item. Includes wheels, handles and side pockets.",
+      "source_url": "https://www.china-airlines.com/us/en/prepare-for-the-fly/information/baggage/carry-on-baggage?tab=BasicRegulationsTab",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.china-airlines.com/us/en/prepare-for-the-fly/information/baggage/carry-on-baggage?tab=BasicRegulationsTab",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 2,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "US long-haul Economy Basic/Standard/Flex: two 23 kg bags. Discount (L) includes one. Interline rules can differ.",
+      "source_url": "https://www.china-airlines.com/us/en/prepare-for-the-fly/information/baggage/checked-baggage",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.china-airlines.com/us/en/prepare-for-the-fly/information/baggage/carry-on-baggage?tab=BasicRegulationsTab",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/CI-china-airlines.md"
+}

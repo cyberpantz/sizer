@@ -1,0 +1,55 @@
+{
+  "iata": "CZ",
+  "name": "China Southern Airlines",
+  "region": "AS",
+  "type": "full_service",
+  "strictness": {
+    "score": 6,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Economy/Premium Economy. One additional small personal item must fit under the seat; no numerical personal dimensions stated.",
+      "source_url": "https://www.csair.com/sg/en/tourguide/luggage_service/carryon_luggage/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "One additional under-seat item. Numerical dimensions not published; null does not mean unlimited.",
+      "source_url": "https://www.csair.com/sg/en/tourguide/luggage_service/carryon_luggage/",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.csair.com/sg/en/tourguide/luggage_service/carryon_luggage/",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/CZ-china-southern-airlines.md"
+}

@@ -1,0 +1,98 @@
+{
+  "iata": "DE",
+  "name": "Condor",
+  "region": "EU",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [],
+    "updated": null,
+    "score_basis": "type_region_prior_only",
+    "components": {},
+    "note": "Enforcement not scored from airline size restrictions. Existing engine prior only; research incomplete."
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": null,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "Long-haul Economy Classic/Green/Flex. Spanish baggage page gives dimensions effective May 1, 2026. Economy Zero includes only the personal item. English fare page still shows older 55 × 40 × 20 / 40 × 30 × 10: unresolved official-source conflict; review before publishing.",
+      "source_url": "https://www.condor.com/es-es/informacion-servicios/equipaje/equipaje-de-mano/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.condor.com/es-es/informacion-servicios/equipaje/equipaje-de-mano/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "economy",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "USA/Canada Economy Classic/Green/Flex; Zero excludes checked baggage.",
+      "source_url": "https://www.condor.com/en-gb/information-services/travel-classes-fares/economy-class/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "note": "One additional personal item. See cabin row for route/fare scope.",
+      "source_url": "https://www.condor.com/es-es/informacion-servicios/equipaje/equipaje-de-mano/",
+      "verified_at": "2026-08-30"
+    },
+    {
+      "fare_class": "basic",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "note": "Economy Zero: 0 included checked bags. Same itinerary scope as economy row.",
+      "source_url": "https://www.condor.com/en-gb/information-services/travel-classes-fares/economy-class/",
+      "verified_at": "2026-08-30"
+    }
+  ],
+  "source_url": "https://www.condor.com/es-es/informacion-servicios/equipaje/equipaje-de-mano/",
+  "verified_at": "2026-08-30",
+  "verified_by": "codex",
+  "placeholder": true,
+  "placeholder_note": "Published allowance rows researched from official pages. Full carrier audit is incomplete: enforcement, physical sizers, fleet exceptions and unmodeled fare/checked rules require review. Do not publish.",
+  "research_dossier": "resources/carriers/DE-condor.md"
+}
