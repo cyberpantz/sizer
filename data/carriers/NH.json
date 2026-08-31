@@ -1,59 +1,73 @@
 {
- "iata": "NH",
- "name": "ANA",
- "region": "AS",
- "type": "full_service",
- "strictness": {
-  "score": 5,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Generally relaxed on size, but bags are weighed.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    55,
-    40,
-    25
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "A 10 kg cabin allowance and a checked bag included — among the more forgiving carriers in Asia on both counts.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "NH",
+  "name": "ANA",
+  "region": "AS",
+  "type": "full_service",
+  "strictness": {
+    "score": 5,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Generally relaxed on size, but bags are weighed.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "checked",
-   "linear_max_cm": null,
-   "max_kg": null,
-   "free_pieces": 1,
-   "system": "piece",
-   "weight_total_kg": null,
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        25
+      ],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.ana.co.jp/en/us/travel-information/baggage-information/carry-on/",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 115,
+      "weight_scope": "combined",
+      "allowance_group": "cabin_total",
+      "group_max_kg": 10
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.ana.co.jp/en/us/travel-information/baggage-information/carry-on/",
+      "verified_at": "2026-08-31",
+      "allowance_group": "cabin_total",
+      "group_max_kg": 10
+    }
+  ],
+  "source_url": "https://www.ana.co.jp/en/us/travel-information/baggage-information/carry-on/",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read carry-on table and footnotes. One cabin plus one personal, 10 kg combined. Both 115 cm total and 55x40x25 limits apply; personal 40x30x20. Wheels/handles included. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/NH-allowance-audit-2026-08-31.md"
 }

@@ -1,59 +1,67 @@
 {
- "iata": "TK",
- "name": "Turkish",
- "region": "ME",
- "type": "full_service",
- "strictness": {
-  "score": 7,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Checks both size and weight at the gate.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    55,
-    40,
-    23
-   ],
-   "max_kg": 8,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Cabin bag plus a checked bag, 8 kg in the cabin.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "TK",
+  "name": "Turkish",
+  "region": "ME",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Checks both size and weight at the gate.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "checked",
-   "linear_max_cm": null,
-   "max_kg": null,
-   "free_pieces": 1,
-   "system": "piece",
-   "weight_total_kg": null,
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 8,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/",
+      "verified_at": "2026-08-31"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": 4,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/",
+      "verified_at": "2026-08-31"
+    }
+  ],
+  "source_url": "https://www.turkishairlines.com/en-int/any-questions/carry-on-baggage/",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read Economy allowance and personal item limits. Cabin 8 kg plus separately limited personal item 4 kg. Business and US-departure second-bag rules not modeled in this Economy audit. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/TK-allowance-audit-2026-08-31.md"
 }

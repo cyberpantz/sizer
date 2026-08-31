@@ -1,48 +1,131 @@
 {
- "iata": "TR",
- "name": "Scoot",
- "region": "AS",
- "type": "lcc",
- "strictness": {
-  "score": 8,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Budget carrier — weighs and measures, and charges a lot at the gate.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
+  "iata": "TR",
+  "name": "Scoot",
+  "region": "AS",
+  "type": "lcc",
+  "strictness": {
+    "score": 8,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Budget carrier — weighs and measures, and charges a lot at the gate.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        54,
+        38,
+        23
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 115,
+      "weight_scope": "combined",
+      "allowance_group": "cabin_total",
+      "group_max_kg": 10
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        10
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage",
+      "verified_at": "2026-08-31",
+      "allowance_group": "cabin_total",
+      "group_max_kg": 10
+    },
+    {
+      "fare_class": "scootplus",
+      "type": "cabin",
+      "max_cm": [
+        54,
+        38,
+        23
+      ],
+      "max_kg": 15,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage",
+      "verified_at": "2026-08-31",
+      "linear_max_cm": 115,
+      "weight_scope": "combined",
+      "allowance_group": "cabin_total",
+      "group_max_kg": 15
+    },
+    {
+      "fare_class": "scootplus",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        10
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage",
+      "verified_at": "2026-08-31",
+      "allowance_group": "cabin_total",
+      "group_max_kg": 15
+    },
+    {
+      "fare_class": "economy",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 32,
+      "free_pieces": 0,
+      "system": "weight",
+      "weight_total_kg": null,
+      "source_url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage",
+      "verified_at": "2026-08-31",
+      "note": "32 kg is the maximum per checked piece, not an included piece entitlement. Economy purchases 20–40 kg; ScootPlus includes 30 kg total."
+    },
+    {
+      "fare_class": "scootplus",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 30,
+      "source_url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage",
+      "verified_at": "2026-08-31",
+      "note": "32 kg is the maximum per checked piece, not an included piece entitlement. Economy purchases 20–40 kg; ScootPlus includes 30 kg total."
+    }
   ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    54,
-    38,
-    23
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Cabin bag only. Checked bags are an add-on, cheapest when bought at booking.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "source_url": "https://www.flyscoot.com/en/plan/booking-your-flight/baggage",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "partially_researched",
+  "audit_note": "Read cabin and checked tables. Economy 10 kg combined, ScootPlus 15 kg combined. Cabin 54x38x23 and 115 cm total; personal 40x30x10. Checked standard 158 cm, per-piece 32 kg ceiling; total purchased allowance separate. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/TR-allowance-audit-2026-08-31.md"
 }

@@ -1,63 +1,173 @@
 {
- "iata": "VY",
- "name": "Vueling",
- "region": "EU",
- "type": "lcc",
- "strictness": {
-  "score": 8,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Strict, and the basic fare is under-seat only.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    40,
-    30,
-    20
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Under-seat only. No overhead locker on this fare.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "VY",
+  "name": "Vueling",
+  "region": "EU",
+  "type": "lcc",
+  "strictness": {
+    "score": 8,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Strict, and the basic fare is under-seat only.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    55,
-    40,
-    20
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Adds an overhead cabin bag to the under-seat item. Checked bags are still an extra on this fare.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31",
+      "cabin_absence": "not_permitted",
+      "note": "Base fare includes an underseat item, not an overhead bag; paid or membership exceptions require the appropriate entitlement."
+    },
+    {
+      "fare_class": "two_pieces",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31",
+      "fare_name": "Purchased two_pieces_on_board",
+      "note": "Legacy selection explicitly represents the purchased add-on, not the base fare."
+    },
+    {
+      "fare_class": "two_pieces",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31"
+    },
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31",
+      "addon": "two_pieces_on_board",
+      "note": "Only reachable with this purchased add-on."
+    },
+    {
+      "fare_class": "fly_grande",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31"
+    },
+    {
+      "fare_class": "fly_grande",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31"
+    },
+    {
+      "fare_class": "fly_pro",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31"
+    },
+    {
+      "fare_class": "fly_pro",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31"
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+      "verified_at": "2026-08-31",
+      "cabin_absence": "not_researched",
+      "note": "Select actual bundle or purchased two-pieces option; generic economy does not establish overhead entitlement."
+    }
+  ],
+  "source_url": "https://help.vueling.com/hc/en-gb/articles/19798835176081-Hand-Luggage-Allowance-Cabin-bags-allowance",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read bundle table and footnotes. Fly Light personal only; Fly Grande/Fly Pro include overhead. Fly depends on selected luggage option, so not treated as unconditional. Added explicit paid 2-pieces entitlement; legacy economy is unknown until bundle selected. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/VY-allowance-audit-2026-08-31.md"
 }

@@ -1,63 +1,115 @@
 {
- "iata": "B6",
- "name": "JetBlue",
- "region": "NA",
- "type": "full_service",
- "strictness": {
-  "score": 5,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Occasional checks, mostly when bins are full.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    56,
-    36,
-    23
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Blue Basic did once restrict you to a personal item, but a carry-on is included again on most routes. Worth re-checking at booking, since this one has changed twice.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "B6",
+  "name": "JetBlue",
+  "region": "NA",
+  "type": "full_service",
+  "strictness": {
+    "score": 5,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Occasional checks, mostly when bins are full.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    56,
-    36,
-    23
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Carry-on plus a personal item.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        55.88,
+        35.56,
+        22.86
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.jetblue.com/help/carry-on-bags",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        22,
+        14,
+        9
+      ]
+    },
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        43.2,
+        33,
+        20.32
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.jetblue.com/help/carry-on-bags",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        17,
+        13,
+        8
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55.88,
+        35.56,
+        22.86
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.jetblue.com/help/carry-on-bags",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        22,
+        14,
+        9
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        43.2,
+        33,
+        20.32
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.jetblue.com/help/carry-on-bags",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        17,
+        13,
+        8
+      ]
+    }
+  ],
+  "source_url": "https://www.jetblue.com/help/carry-on-bags",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read all-fares inclusion, size and weight sections. Blue Basic includes a carry-on. No published carry-on weight restriction; passenger must lift it. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/B6-allowance-audit-2026-08-31.md"
 }

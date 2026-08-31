@@ -1,63 +1,115 @@
 {
- "iata": "AA",
- "name": "American",
- "region": "NA",
- "type": "full_service",
- "strictness": {
-  "score": 5,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "They took the measuring frames out of every gate in October 2025 and told staff to give passengers the benefit of the doubt. A bag slightly over is usually fine.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": true,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    56,
-    36,
-    23
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Unlike United, American's Basic Economy still includes a full carry-on. Worth knowing \u2014 the same words mean different things at different airlines.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "AA",
+  "name": "American",
+  "region": "NA",
+  "type": "full_service",
+  "strictness": {
+    "score": 5,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "They took the measuring frames out of every gate in October 2025 and told staff to give passengers the benefit of the doubt. A bag slightly over is usually fine.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    56,
-    36,
-    23
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Carry-on plus a personal item. Checked bags cost extra on domestic routes.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": true,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.aa.com/web/i18n/travel-info/baggage/carry-on-baggage.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        22,
+        14,
+        9
+      ]
+    },
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        45,
+        35,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.aa.com/web/i18n/travel-info/baggage/carry-on-baggage.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        18,
+        14,
+        8
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        36,
+        23
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.aa.com/web/i18n/travel-info/baggage/carry-on-baggage.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        22,
+        14,
+        9
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        45,
+        35,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.aa.com/web/i18n/travel-info/baggage/carry-on-baggage.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        18,
+        14,
+        8
+      ]
+    }
+  ],
+  "source_url": "https://www.aa.com/web/i18n/travel-info/baggage/carry-on-baggage.html",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read personal/carry-on limits and American Eagle valet exception. No numeric cabin weight on this page. ERJ-175 exception and gate space remain operational caveats. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/AA-allowance-audit-2026-08-31.md"
 }

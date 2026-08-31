@@ -2,8 +2,8 @@
  "generated": "2026-08-31",
  "count": 58,
  "target": 100,
- "verified": 35,
- "note": "58 airlines: 35 have researched, dated baggage allowances from official airline sources and are not placeholders. The 23 original mockup records have not been re-audited. verified counts sourced allowance research, not completed enforcement or publication audits. Remaining limitations are tracked in publication_ready, audit_note and research dossiers.",
+ "verified": 58,
+ "note": "All 58 carrier records now have official allowance research; no mockup size placeholders remain. Research covers the documented scope, not every fare or checked-bag rule. Singapore Airlines publishes a linear-only cabin limit that the current rectangular engine cannot evaluate. Enforcement, sizers, shared-weight and other publication limitations remain in audit notes and dossiers.",
  "carriers": [
   "A3",
   "AA",
@@ -70,10 +70,10 @@
    "name": "Spirit Airlines",
    "reason": "ceased operations 2026-05-02",
    "removed_at": "2026-08-30",
-   "note": "Record deleted rather than flagged \u2014 nobody should be shown a carrier that no longer flies. Research retained at resources/carriers/NK-spirit.md."
+   "note": "Record deleted rather than flagged — nobody should be shown a carrier that no longer flies. Research retained at resources/carriers/NK-spirit.md."
   }
  ],
- "researched": 35,
- "placeholders": 23,
- "pending_publication_review": 35
+ "researched": 58,
+ "placeholders": 0,
+ "pending_publication_review": 58
 }

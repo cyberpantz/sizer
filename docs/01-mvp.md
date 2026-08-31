@@ -5,7 +5,7 @@
 These docs specify more than v1 should build. That's fine — the thinking is banked — but **only this ships in two weeks:**
 
 **In**
-- 100 carriers for MVP: published limits, `source_url`, `verified_at` (currently 58 records: 35 with researched official allowances and 23 original records awaiting re-audit; 42 more carriers needed)
+- 100 carriers for MVP: published limits, `source_url`, `verified_at` (currently 58 records: 58 with researched official allowances and no remaining size placeholders; 42 more carriers needed)
 - Fare-class rows for the 12 carriers where it changes the answer
 - 60–80 bags with measured dimensions, shown against the manufacturer's claim
 - Weight compared alongside dimensions
@@ -318,7 +318,7 @@ Your Kit stays in `localStorage` — it's a within-burst convenience for compari
 
 ### Week one — get the truth into a file
 
-1. **Carrier data — expand and audit.** Target is **100 carriers** ([04](04-data-sources.md#the-launch-100)). The dataset currently contains **58**: 35 with researched official allowances and 23 original records awaiting re-audit. Add **42 more carriers** and complete the publication audits; researched allowances alone do not mean a record is ready to ship.
+1. **Carrier data — expand and audit.** Target is **100 carriers** ([04](04-data-sources.md#the-launch-100)). The dataset currently contains **58**: 58 with researched official allowances and no remaining size placeholders. Add **42 more carriers** and complete the publication audits; researched allowances alone do not mean a record is ready to ship.
 
    Audit requirements — check each record individually; the original gap list below is not a current inventory of the researched records:
 
@@ -331,7 +331,7 @@ Your Kit stays in `localStorage` — it's a within-burst convenience for compari
    | `strictness.evidence` | Missing | The differentiator |
    | `gauge_cm` vs `max_cm` | Missing | Ryanair's frame ≠ Ryanair's published number |
 
-   **The audit pass cannot be skipped.** All 100 carriers need sourced, dated allowances and a publication review. For the 23 original records and 42 additions: open the carrier's official page, confirm the number, record the URL, archive it, date it, and add the relevant fare-class rows. For the 35 researched records, preserve the sourced work and resolve the remaining gaps tracked in their audit notes and dossiers. **Inherited numbers with no provenance are exactly what we criticize the category for** — and a wrong number we adopted without checking is worse than one we never had.
+   **The audit pass cannot be skipped.** All 100 carriers need sourced, dated allowances and a publication review. For the 42 additions: open the carrier's official page, confirm the number, record the URL, archive it, date it, and add the relevant fare-class rows. For the 58 researched records, preserve the sourced work and resolve the remaining scope, schema, and publication gaps tracked in their audit notes and dossiers. The 2026-08-31 pass removed the remaining cabin-size placeholders; it did not verify every checked allowance or enforcement claim. **Inherited numbers with no provenance are exactly what we criticize the category for** — and a wrong number we adopted without checking is worse than one we never had.
 
    *Storage:* carrier records already live in `data/carriers/` as JSON. Keep additions and audit corrections there so every correction is a reviewable diff.
 2. **Strictness scores** with written basis per carrier. Draft the methodology page while the reasoning is fresh.

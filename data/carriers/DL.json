@@ -1,63 +1,101 @@
 {
- "iata": "DL",
- "name": "Delta",
- "region": "NA",
- "type": "full_service",
- "strictness": {
-  "score": 5,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Relaxed in practice. There are measuring frames at the check-in desks, but they are rarely used.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": true,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    56,
-    35,
-    23
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Delta's Basic Economy does include a full carry-on — unlike United's.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "DL",
+  "name": "Delta",
+  "region": "NA",
+  "type": "full_service",
+  "strictness": {
+    "score": 5,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Relaxed in practice. There are measuring frames at the check-in desks, but they are rarely used.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    56,
-    35,
-    23
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Carry-on plus a personal item.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": true,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        35,
+        23
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        22,
+        14,
+        9
+      ],
+      "linear_max_cm": 114
+    },
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",
+      "verified_at": "2026-08-31",
+      "note": "Underseat item; no numerical dimensions published on reviewed page."
+    },
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        56,
+        35,
+        23
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        22,
+        14,
+        9
+      ],
+      "linear_max_cm": 114
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",
+      "verified_at": "2026-08-31",
+      "note": "Underseat item; no numerical dimensions published on reviewed page."
+    }
+  ],
+  "source_url": "https://www.delta.com/us/en/baggage/carry-on-baggage",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read free allowance, size restrictions and Delta Connection notes. Both 114 cm total and per-axis limits apply. Personal item must fit beneath seat; no numeric personal size or general cabin weight found. Airport-specific weight exceptions not resolved. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/DL-allowance-audit-2026-08-31.md"
 }

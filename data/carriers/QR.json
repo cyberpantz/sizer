@@ -1,59 +1,308 @@
 {
- "iata": "QR",
- "name": "Qatar",
- "region": "ME",
- "type": "full_service",
- "strictness": {
-  "score": 7,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Weighs cabin bags — 7 kg in economy.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    50,
-    37,
-    25
-   ],
-   "max_kg": 7,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "One of the shortest length limits we track, at 50 cm.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "QR",
+  "name": "Qatar",
+  "region": "ME",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Weighs cabin bags \u2014 7 kg in economy.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "checked",
-   "linear_max_cm": null,
-   "max_kg": null,
-   "free_pieces": 1,
-   "system": "piece",
-   "weight_total_kg": null,
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        50,
+        37,
+        25
+      ],
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        20,
+        15,
+        10
+      ],
+      "note": "Brazil to/from permits 10 kg; standard Economy otherwise."
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+    },
+    {
+      "fare_class": "lite",
+      "type": "cabin",
+      "max_cm": [
+        50,
+        37,
+        25
+      ],
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        20,
+        15,
+        10
+      ],
+      "note": "Brazil to/from permits 10 kg; standard Economy otherwise."
+    },
+    {
+      "fare_class": "lite",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+    },
+    {
+      "fare_class": "classic",
+      "type": "cabin",
+      "max_cm": [
+        50,
+        37,
+        25
+      ],
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        20,
+        15,
+        10
+      ],
+      "note": "Brazil to/from permits 10 kg; standard Economy otherwise."
+    },
+    {
+      "fare_class": "classic",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+    },
+    {
+      "fare_class": "convenience",
+      "type": "cabin",
+      "max_cm": [
+        50,
+        37,
+        25
+      ],
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        20,
+        15,
+        10
+      ],
+      "note": "Brazil to/from permits 10 kg; standard Economy otherwise."
+    },
+    {
+      "fare_class": "convenience",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+    },
+    {
+      "fare_class": "comfort",
+      "type": "cabin",
+      "max_cm": [
+        50,
+        37,
+        25
+      ],
+      "max_kg": 7,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        20,
+        15,
+        10
+      ],
+      "note": "Brazil to/from permits 10 kg; standard Economy otherwise."
+    },
+    {
+      "fare_class": "comfort",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Small purse or briefcase; no numeric personal dimensions given. A separate laptop bag counts as the main carry-on."
+    }
+  ],
+  "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; route-dependent checked research retained separately in published_checked_allowances pending route-schema support.",
+  "checked_allowance_status": "partially_researched",
+  "audit_note": "Read fare table and baggage guidelines. Economy cabin 7 kg except Brazil to/from 10 kg. Laptop carried separately counts as cabin bag; only a small purse/briefcase is additional. Checked allowance varies by fare and route. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/QR-allowance-audit-2026-08-31.md",
+  "published_checked_allowances": [
+    {
+      "fare_class": "lite",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Economy fare on flights to/from Africa or the Americas; route exceptions require ticket confirmation.",
+      "route_scope": "Flights to/from Africa or the Americas",
+      "requires_route_confirmation": true
+    },
+    {
+      "fare_class": "lite",
+      "type": "checked",
+      "linear_max_cm": 300,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 20,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "All other destinations, subject to route exceptions; 32 kg per-piece ceiling within fare total.",
+      "route_scope": "Other destinations (excluding Africa and Americas)",
+      "requires_route_confirmation": true
+    },
+    {
+      "fare_class": "classic",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 2,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Economy fare on flights to/from Africa or the Americas; route exceptions require ticket confirmation.",
+      "route_scope": "Flights to/from Africa or the Americas",
+      "requires_route_confirmation": true
+    },
+    {
+      "fare_class": "classic",
+      "type": "checked",
+      "linear_max_cm": 300,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 25,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "All other destinations, subject to route exceptions; 32 kg per-piece ceiling within fare total.",
+      "route_scope": "Other destinations (excluding Africa and Americas)",
+      "requires_route_confirmation": true
+    },
+    {
+      "fare_class": "convenience",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 2,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Economy fare on flights to/from Africa or the Americas; route exceptions require ticket confirmation.",
+      "route_scope": "Flights to/from Africa or the Americas",
+      "requires_route_confirmation": true
+    },
+    {
+      "fare_class": "convenience",
+      "type": "checked",
+      "linear_max_cm": 300,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 30,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "All other destinations, subject to route exceptions; 32 kg per-piece ceiling within fare total.",
+      "route_scope": "Other destinations (excluding Africa and Americas)",
+      "requires_route_confirmation": true
+    },
+    {
+      "fare_class": "comfort",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 2,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "Economy fare on flights to/from Africa or the Americas; route exceptions require ticket confirmation.",
+      "route_scope": "Flights to/from Africa or the Americas",
+      "requires_route_confirmation": true
+    },
+    {
+      "fare_class": "comfort",
+      "type": "checked",
+      "linear_max_cm": 300,
+      "max_kg": 32,
+      "free_pieces": null,
+      "system": "weight",
+      "weight_total_kg": 35,
+      "source_url": "https://www.qatarairways.com/en/baggage/allowance.html",
+      "verified_at": "2026-08-31",
+      "note": "All other destinations, subject to route exceptions; 32 kg per-piece ceiling within fare total.",
+      "route_scope": "Other destinations (excluding Africa and Americas)",
+      "requires_route_confirmation": true
+    }
+  ]
 }

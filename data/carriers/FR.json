@@ -1,63 +1,125 @@
 {
- "iata": "FR",
- "name": "Ryanair",
- "region": "EU",
- "type": "ulcc",
- "strictness": {
-  "score": 9,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "They measure bags at the gate and pay staff a bonus for spotting oversize ones.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    40,
-    30,
-    20
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "No overhead locker at any size. A wheeled cabin bag is simply not allowed on this fare — you'd need to add Priority when booking.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "FR",
+  "name": "Ryanair",
+  "region": "EU",
+  "type": "ulcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "They measure bags at the gate and pay staff a bonus for spotting oversize ones.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "priority",
-   "type": "cabin",
-   "max_cm": [
-    55,
-    40,
-    20
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Adds one overhead bag on top of the under-seat item.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+      "verified_at": "2026-08-31",
+      "cabin_absence": "not_permitted",
+      "note": "Base fare includes an underseat item, not an overhead bag; paid or membership exceptions require the appropriate entitlement."
+    },
+    {
+      "fare_class": "priority",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+      "verified_at": "2026-08-31",
+      "fare_name": "Purchased priority",
+      "note": "Legacy selection explicitly represents the purchased add-on, not the base fare."
+    },
+    {
+      "fare_class": "priority",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+      "verified_at": "2026-08-31"
+    },
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+      "verified_at": "2026-08-31",
+      "addon": "priority",
+      "note": "Only reachable with this purchased add-on."
+    },
+    {
+      "fare_class": "basic",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 20,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+      "verified_at": "2026-08-31",
+      "note": "20 kg checked option for purchase; policy also offers 10 kg and 23 kg options. Numerical checked dimensions not established on this page."
+    },
+    {
+      "fare_class": "priority",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 20,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+      "verified_at": "2026-08-31",
+      "note": "20 kg checked option for purchase; policy also offers 10 kg and 23 kg options. Numerical checked dimensions not established on this page."
+    }
+  ],
+  "source_url": "https://help.ryanair.com/hc/en-gb/articles/12888036565521-Ryanair-s-Bag-Policy",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "partially_researched",
+  "audit_note": "Read bag policy. Base fare 40x30x20 underseat only; Priority adds 55x40x20 at 10 kg. Personal weight and wheels inclusion not explicit here; left unknown. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/FR-allowance-audit-2026-08-31.md"
 }

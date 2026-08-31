@@ -1,65 +1,107 @@
 {
- "iata": "WN",
- "name": "Southwest",
- "region": "NA",
- "type": "hybrid",
- "strictness": {
-  "score": 3,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Rarely measures anything. The most forgiving airline we track.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null,
-  "override": {
-   "score": 3,
-   "reason": "Structural outlier. An LCC by cost base but a legacy carrier by baggage policy: free checked bags, the largest cabin allowance we track (61x41x25), and no gate sizers. The business-model prior predicts 7 and is wrong here for a documented reason.",
-   "by": "frank",
-   "at": "2026-08-30"
-  }
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    61,
-    41,
-    25
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "The most generous allowance we track \u2014 a large carry-on and, historically, two free checked bags.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "WN",
+  "name": "Southwest",
+  "region": "NA",
+  "type": "hybrid",
+  "strictness": {
+    "score": 3,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Rarely measures anything. The most forgiving airline we track.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "override": {
+      "score": 3,
+      "reason": "Structural outlier. An LCC by cost base but a legacy carrier by baggage policy: free checked bags, the largest cabin allowance we track (61x41x25), and no gate sizers. The business-model prior predicts 7 and is wrong here for a documented reason.",
+      "by": "frank",
+      "at": "2026-08-30"
+    },
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "checked",
-   "linear_max_cm": null,
-   "max_kg": null,
-   "free_pieces": 2,
-   "system": "piece",
-   "weight_total_kg": null,
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        60.96,
+        40.64,
+        25.4
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        24,
+        16,
+        10
+      ],
+      "note": "Centimetres converted exactly from published inches."
+    },
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",
+      "verified_at": "2026-08-31",
+      "note": "Must fit beneath seat; no numeric dimensions on reviewed policy."
+    },
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        60.96,
+        40.64,
+        25.4
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        24,
+        16,
+        10
+      ],
+      "note": "Centimetres converted exactly from published inches."
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",
+      "verified_at": "2026-08-31",
+      "note": "Must fit beneath seat; no numeric dimensions on reviewed policy."
+    }
+  ],
+  "source_url": "https://support.southwest.com/helpcenter/s/article/carryon-baggage-policy",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read rendered policy: one carry-on 24x16x10 inches including attachments, plus underseat personal item. No numeric personal box or cabin weight stated. Stored exact cm conversion, not rounded-up placeholder. Legacy two-free-checked-bags claim removed; current fees depend on fare/date/status. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/WN-allowance-audit-2026-08-31.md"
 }

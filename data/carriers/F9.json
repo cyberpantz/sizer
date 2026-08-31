@@ -1,88 +1,194 @@
 {
- "iata": "F9",
- "name": "Frontier",
- "region": "NA",
- "type": "ulcc",
- "strictness": {
-  "score": 9,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "Frontier personnel can earn as much as $10 for each bag a passenger is forced to check at the gate.",
-    "quote_verbatim": true,
-    "tier": 1,
-    "source": "US Senate Permanent Subcommittee on Investigations, Majority staff report, 'The Sky's the Limit \u2014 The Rise of Junk Fees in American Travel', 26 Nov 2024",
-    "url": "https://www.hsgac.senate.gov/subcommittees/investigations/library/files/majority-staff-report-the-skys-the-limit-the-rise-of-junk-fees-in-american-travel/",
-    "via": "https://www.blumenthal.senate.gov/newsroom/press/release/senate-permanent-subcommittee-on-investigations-releases-majority-staff-report-slamming-sky-high-airline-junk-fees",
-    "retrieved": "2026-08-30",
-    "unverified": false,
-    "corroboration": "PSI: Frontier and Spirit paid $26 million to gate agents and other personnel between 2022 and 2023 to catch passengers allegedly not following airline bag policies, often forcing those passengers to pay a bag fee or miss their flight.",
-    "verified_against": "subcommittee press release read in full; the 55-page report itself has NOT been read"
-   }
-  ],
-  "updated": null,
-  "components": {
-   "staff_incentive": {
-    "v": true,
-    "src": "review",
-    "at": "2026-08-30",
-    "note": "up to $10 per bag gate-checked",
-    "url": "https://www.hsgac.senate.gov/subcommittees/investigations/library/files/majority-staff-report-the-skys-the-limit-the-rise-of-junk-fees-in-american-travel/"
-   }
-  }
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    46,
-    36,
-    20
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Personal item only. Adding a carry-on at the gate is the most expensive way to do it.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "F9",
+  "name": "Frontier",
+  "region": "NA",
+  "type": "ulcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "Frontier personnel can earn as much as $10 for each bag a passenger is forced to check at the gate.",
+        "quote_verbatim": true,
+        "tier": 1,
+        "source": "US Senate Permanent Subcommittee on Investigations, Majority staff report, 'The Sky's the Limit — The Rise of Junk Fees in American Travel', 26 Nov 2024",
+        "url": "https://www.hsgac.senate.gov/subcommittees/investigations/library/files/majority-staff-report-the-skys-the-limit-the-rise-of-junk-fees-in-american-travel/",
+        "via": "https://www.blumenthal.senate.gov/newsroom/press/release/senate-permanent-subcommittee-on-investigations-releases-majority-staff-report-slamming-sky-high-airline-junk-fees",
+        "retrieved": "2026-08-30",
+        "unverified": false,
+        "corroboration": "PSI: Frontier and Spirit paid $26 million to gate agents and other personnel between 2022 and 2023 to catch passengers allegedly not following airline bag policies, often forcing those passengers to pay a bag fee or miss their flight.",
+        "verified_against": "subcommittee press release read in full; the 55-page report itself has NOT been read"
+      }
+    ],
+    "updated": null,
+    "components": {
+      "staff_incentive": {
+        "v": true,
+        "src": "review",
+        "at": "2026-08-30",
+        "note": "up to $10 per bag gate-checked",
+        "url": "https://www.hsgac.senate.gov/subcommittees/investigations/library/files/majority-staff-report-the-skys-the-limit-the-rise-of-junk-fees-in-american-travel/"
+      }
+    },
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    61,
-    46,
-    25
-   ],
-   "max_kg": null,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Carry-on bundled into the fare, and a notably generous size limit. Adding it later, especially at the gate, is far more expensive.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish.",
- "agent_commission": {
-  "amount_usd": 10,
-  "amount_is_maximum": true,
-  "amount_verified": true,
-  "where": "gate",
-  "consequence": "pay a bag fee or miss the flight",
-  "source": "US Senate PSI, 'The Sky's the Limit', 26 Nov 2024",
-  "url": "https://www.hsgac.senate.gov/subcommittees/investigations/library/files/majority-staff-report-the-skys-the-limit-the-rise-of-junk-fees-in-american-travel/",
-  "retrieved": "2026-08-30"
- },
- "research_dossier": "resources/carriers/F9-frontier.md"
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        45.72,
+        35.56,
+        20.32
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+      "verified_at": "2026-08-31",
+      "cabin_absence": "not_permitted",
+      "note": "Base fare includes an underseat item, not an overhead bag; paid or membership exceptions require the appropriate entitlement.",
+      "max_in": [
+        18,
+        14,
+        8
+      ],
+      "source_urls": [
+        "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+        "https://faq.flyfrontier.com/help/bags-seats-general-info"
+      ]
+    },
+    {
+      "fare_class": "carry_on",
+      "type": "cabin",
+      "max_cm": [
+        60.96,
+        40.64,
+        25.4
+      ],
+      "max_kg": 15.8757,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+      "verified_at": "2026-08-31",
+      "fare_name": "Purchased carry_on",
+      "note": "Legacy selection explicitly represents the purchased add-on, not the base fare.",
+      "max_in": [
+        24,
+        16,
+        10
+      ],
+      "source_urls": [
+        "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+        "https://faq.flyfrontier.com/help/bags-seats-general-info"
+      ]
+    },
+    {
+      "fare_class": "carry_on",
+      "type": "personal",
+      "max_cm": [
+        45.72,
+        35.56,
+        20.32
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        18,
+        14,
+        8
+      ],
+      "source_urls": [
+        "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+        "https://faq.flyfrontier.com/help/bags-seats-general-info"
+      ]
+    },
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        60.96,
+        40.64,
+        25.4
+      ],
+      "max_kg": 15.8757,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+      "verified_at": "2026-08-31",
+      "addon": "carry_on",
+      "note": "Only reachable with this purchased add-on.",
+      "max_in": [
+        24,
+        16,
+        10
+      ],
+      "source_urls": [
+        "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+        "https://faq.flyfrontier.com/help/bags-seats-general-info"
+      ]
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        45.72,
+        35.56,
+        20.32
+      ],
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        18,
+        14,
+        8
+      ],
+      "cabin_absence": "not_researched",
+      "note": "Choose carry-on purchase/bundle explicitly; generic Economy is insufficient."
+    },
+    {
+      "fare_class": "basic",
+      "type": "checked",
+      "linear_max_cm": 157.48,
+      "max_kg": 18.1437,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+      "verified_at": "2026-08-31",
+      "note": "Purchased standard checked bag: 62 linear inches and 40 lb, converted to cm/kg. Overweight/oversize paid options are separate."
+    }
+  ],
+  "source_url": "https://faq.flyfrontier.com/help/bags-seats-general-info-what-are-the-sizes-and-weight-limits-for-bags",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "agent_commission": {
+    "amount_usd": 10,
+    "amount_is_maximum": true,
+    "amount_verified": true,
+    "where": "gate",
+    "consequence": "pay a bag fee or miss the flight",
+    "source": "US Senate PSI, 'The Sky's the Limit', 26 Nov 2024",
+    "url": "https://www.hsgac.senate.gov/subcommittees/investigations/library/files/majority-staff-report-the-skys-the-limit-the-rise-of-junk-fees-in-american-travel/",
+    "retrieved": "2026-08-30"
+  },
+  "research_dossier": "resources/carriers/F9-allowance-audit-2026-08-31.md",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "partially_researched",
+  "audit_note": "Read size/weight article modified July 22, 2026, and linked general bag-fee page. Standard personal free; carry-on purchase/bundle required. Carry-on 24x16x10 inches, 35 lb; checked 62 linear inches, standard 40 lb. Bundle entitlement not inferred from generic economy. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit."
 }

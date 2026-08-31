@@ -1,63 +1,120 @@
 {
- "iata": "W6",
- "name": "Wizz Air",
- "region": "EU",
- "type": "ulcc",
- "strictness": {
-  "score": 9,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "One of the strictest airlines in Europe. Bags are checked at the gate as a matter of routine, not just when they look oversized.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
-  ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    40,
-    30,
-    20
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Under-seat bag only. No overhead locker unless you buy WIZZ Priority.",
-   "source_url": "",
-   "verified_at": null
+  "iata": "W6",
+  "name": "Wizz Air",
+  "region": "EU",
+  "type": "ulcc",
+  "strictness": {
+    "score": 9,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "One of the strictest airlines in Europe. Bags are checked at the gate as a matter of routine, not just when they look oversized.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
   },
-  {
-   "fare_class": "priority",
-   "type": "cabin",
-   "max_cm": [
-    55,
-    40,
-    23
-   ],
-   "max_kg": 10,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "WIZZ Priority adds an overhead cabin bag alongside the under-seat item, and gets you on the plane earlier so there is still bin space left.",
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": false,
+      "count": 1,
+      "source_url": "https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance",
+      "verified_at": "2026-08-31",
+      "cabin_absence": "not_permitted",
+      "note": "Base fare includes an underseat item, not an overhead bag; paid or membership exceptions require the appropriate entitlement. Published box excludes handles/wheels; wheels may add at most 5 cm. No automatic dimension adjustment applied."
+    },
+    {
+      "fare_class": "priority",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 10,
+      "includes_wheels": false,
+      "count": 1,
+      "source_url": "https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance",
+      "verified_at": "2026-08-31",
+      "fare_name": "Purchased wizz_priority",
+      "note": "Legacy selection explicitly represents the purchased add-on, not the base fare. Published box excludes handles/wheels; wheels may add at most 5 cm. No automatic dimension adjustment applied."
+    },
+    {
+      "fare_class": "priority",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        20
+      ],
+      "max_kg": 10,
+      "includes_wheels": false,
+      "count": 1,
+      "source_url": "https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance",
+      "verified_at": "2026-08-31",
+      "note": " Published box excludes handles/wheels; wheels may add at most 5 cm. No automatic dimension adjustment applied."
+    },
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        40,
+        23
+      ],
+      "max_kg": 10,
+      "includes_wheels": false,
+      "count": 1,
+      "source_url": "https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance",
+      "verified_at": "2026-08-31",
+      "addon": "wizz_priority",
+      "note": "Only reachable with this purchased add-on. Published box excludes handles/wheels; wheels may add at most 5 cm. No automatic dimension adjustment applied."
+    },
+    {
+      "fare_class": "basic",
+      "type": "checked",
+      "linear_max_cm": null,
+      "max_kg": 32,
+      "free_pieces": 0,
+      "system": "piece",
+      "weight_total_kg": null,
+      "source_url": "https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance",
+      "verified_at": "2026-08-31",
+      "note": "Purchased options: 10, 20, 26 or 32 kg; up to six checked bags. This row records the largest purchasable weight, not an included entitlement. Published axes sorted from 149x119x171.",
+      "max_cm": [
+        171,
+        149,
+        119
+      ],
+      "includes_wheels": false
+    }
+  ],
+  "source_url": "https://www.wizzair.com/en-gb/help-centre/booking-information-and-services/baggage/baggage-allowance",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "partially_researched",
+  "audit_note": "Read live baggage allowance page. Free 40x30x20 10 kg; Priority adds 55x40x23 10 kg. Handles/wheels excluded; wheels may add at most 5 cm. That protrusion rule is not enforced by current engine. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/W6-allowance-audit-2026-08-31.md"
 }

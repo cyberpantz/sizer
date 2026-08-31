@@ -1,74 +1,129 @@
 {
- "iata": "AF",
- "name": "Air France",
- "region": "EU",
- "type": "full_service",
- "strictness": {
-  "score": 7,
-  "contested": false,
-  "evidence": [
-   {
-    "claim": "If your bag looks big, staff will ask you to drop it into the metal frame at the gate to check it fits.",
-    "tier": null,
-    "url": "",
-    "retrieved": null,
-    "unverified": true
-   }
+  "iata": "AF",
+  "name": "Air France",
+  "region": "EU",
+  "type": "full_service",
+  "strictness": {
+    "score": 7,
+    "contested": false,
+    "evidence": [
+      {
+        "claim": "If your bag looks big, staff will ask you to drop it into the metal frame at the gate to check it fits.",
+        "tier": null,
+        "url": "",
+        "retrieved": null,
+        "unverified": true
+      }
+    ],
+    "updated": null,
+    "score_basis": "legacy_prior_only"
+  },
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "operates_regional_jets": false,
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": 12,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://wwws.airfrance.us/information/bagages/bagage-cabine-soute",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        16,
+        12,
+        6
+      ],
+      "cabin_absence": "not_permitted",
+      "group_max_kg": 12,
+      "allowance_group": "cabin_total",
+      "weight_scope": "combined"
+    },
+    {
+      "fare_class": "economy",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        35,
+        25
+      ],
+      "max_kg": 12,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://wwws.airfrance.us/information/bagages/bagage-cabine-soute",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        21.7,
+        13.8,
+        9.9
+      ],
+      "weight_scope": "combined",
+      "group_max_kg": 12,
+      "allowance_group": "cabin_total",
+      "note": "Non-Basic Economy with an included hand baggage item."
+    },
+    {
+      "fare_class": "economy",
+      "type": "personal",
+      "max_cm": [
+        40,
+        30,
+        15
+      ],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://wwws.airfrance.us/information/bagages/bagage-cabine-soute",
+      "verified_at": "2026-08-31",
+      "max_in": [
+        16,
+        12,
+        6
+      ],
+      "group_max_kg": 12,
+      "allowance_group": "cabin_total"
+    },
+    {
+      "fare_class": "basic",
+      "type": "cabin",
+      "max_cm": [
+        55,
+        35,
+        25
+      ],
+      "max_kg": 12,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://wwws.airfrance.us/information/bagages/bagage-cabine-soute",
+      "verified_at": "2026-08-31",
+      "addon": "hand_baggage",
+      "max_in": [
+        21.7,
+        13.8,
+        9.9
+      ],
+      "weight_scope": "combined",
+      "group_max_kg": 12,
+      "allowance_group": "cabin_total"
+    }
   ],
-  "updated": null
- },
- "sizer": {
-  "at_gate": null,
-  "cabin_cm": null,
-  "personal_cm": null
- },
- "operates_regional_jets": false,
- "allowances": [
-  {
-   "fare_class": "basic",
-   "type": "cabin",
-   "max_cm": [
-    55,
-    35,
-    25
-   ],
-   "max_kg": 12,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Includes a full cabin bag — unusual for a basic fare. No checked bag.",
-   "source_url": "",
-   "verified_at": null
-  },
-  {
-   "fare_class": "economy",
-   "type": "cabin",
-   "max_cm": [
-    55,
-    35,
-    25
-   ],
-   "max_kg": 12,
-   "includes_wheels": true,
-   "count": 1,
-   "note": "Cabin bag plus one checked bag.",
-   "source_url": "",
-   "verified_at": null
-  },
-  {
-   "fare_class": "economy",
-   "type": "checked",
-   "linear_max_cm": null,
-   "max_kg": null,
-   "free_pieces": 1,
-   "system": "piece",
-   "weight_total_kg": null,
-   "source_url": "",
-   "verified_at": null
-  }
- ],
- "source_url": "",
- "verified_at": null,
- "verified_by": null,
- "placeholder": true,
- "placeholder_note": "Lifted from mockup/index.html. Not verified against the carrier. Do not publish."
+  "source_url": "https://wwws.airfrance.us/information/bagages/bagage-cabine-soute",
+  "verified_at": "2026-08-31",
+  "verified_by": "codex (official policy read)",
+  "placeholder": false,
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "research_scope": "Standard adult cabin/personal allowances; checked allowances remain unresearched unless a sourced checked row is present.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Read Basic option and dimension sections. Basic needs Hand Baggage option unless qualifying status; other Economy includes main bag plus small bag, 12 kg combined. Higher cabins, status exemptions and US-departure restrictions not modeled. Shared-weight groups, linear constraints, aircraft and entitlement exceptions require further engine/publication review. Strictness and sizer measurements were not verified in this audit.",
+  "research_dossier": "resources/carriers/AF-allowance-audit-2026-08-31.md"
 }

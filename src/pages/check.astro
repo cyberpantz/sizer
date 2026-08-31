@@ -147,7 +147,6 @@ const RISK = [
     enforcementLabel,
     enforcementNote,
     enforcementScore,
-    isResearched,
     strictnessIcon,
     tierIndex,
   } from '../ui/strictness.mjs';
@@ -386,7 +385,6 @@ const RISK = [
                   )
                   .join('')}
               </select>
-              ${strictnessLine(c.record?.strictness)}
               ${
                 regional
                   ? `<span class="mt-1.5 block text-[0.90625rem] leading-snug text-amber">⚠ Often a regional jet. The overhead bins are smaller than the airline's own limit, so a full-size bag is frequently taken at the door.</span>`
@@ -572,22 +570,53 @@ const RISK = [
       : `${n}/${SCALE_MAX}, ${enforcementLabel(st.score).toLowerCase()}`;
   };
 
-  function strictnessLine(strictness) {
+  /* ONE place on this page says how strict the airline is.
+
+     It used to be two: a line under every flight's fare dropdown AND this
+     callout beside the answer. Frank wanted it here only, and he is right for
+     a reason beyond clutter — strictness is an explanation of THE ANSWER, and
+     the answer is what this column is. Under the dropdown it was decoration
+     next to a control it has nothing to do with.
+
+     Everything about enforcement is therefore said here, once: the icon, the
+     score, the tier word, the airline's own researched claim where we have
+     one, and — where the tier leaves no room to give — what that means for
+     the risk setting. riskEffect() used to carry that last sentence and named
+     the airline and its behaviour a second time, three lines above a block
+     that said it better. */
+  function strictnessCallout(iata, carrier) {
+    const strictness = carrierOf(iata)?.record?.strictness;
     if (!strictness) return '';
     const n = enforcementScore(strictness.score);
     const i = tierIndex(strictness.score);
-    const assumed = !isResearched(strictness) && !(strictness.evidence ?? []).some((e) => e.claim);
+
+    /* No "· assumed" marker here: enforcementNote() already ends a prior with
+       "This is our starting assumption…", in words. A chip saying the same
+       thing is the duplication this block exists to remove. */
+    const note = enforcementNote(strictness);
+
+    /* The consequence, but only when there IS one. At ceiling 0 the risk
+       control genuinely cannot move the answer, and a reader who just dragged
+       it needs to know that is the airline, not a broken control. */
+    const noMargin =
+      carrier?.allowance && DEFAULT.config.gambleCeiling(carrier.strictness) === 0
+        ? ' At this level the risk setting cannot change the answer — there is no margin to give.'
+        : '';
 
     /* Icon, number, word. The icon carries the level by bar height, so it
        still reads in greyscale; the number differentiates within a tier —
        easyJet at 8 and Ryanair at 9 both "measure every bag" and are not the
        same airline to fly. */
-    return `<span class="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-[0.84375rem] leading-snug text-muted">
-      ${strictnessIcon(strictness.score, { size: 15 })}
-      <span class="font-mono ${i >= 0 ? (STRICT_INK[i] ?? 'text-muted') : 'text-muted'}">${n === null ? '—' : `${n}/${SCALE_MAX}`}</span>
-      <span>${esc(enforcementLabel(strictness.score).toLowerCase())}</span>
-      ${assumed ? '<span class="text-muted">· assumed</span>' : ''}
-    </span>`;
+    return `<div class="mt-4 flex items-start gap-2.5 rounded-chip bg-surface-2 px-4 py-3 text-[0.9375rem] leading-normal text-ink-2">
+      <span class="mt-[0.1875rem]">${strictnessIcon(strictness.score, { size: 17 })}</span>
+      <span class="min-w-0">
+        <b class="font-semibold text-ink">${esc(carrier?.name ?? carrierOf(iata)?.name ?? '')} — strictness
+          <span class="font-mono ${i >= 0 ? (STRICT_INK[i] ?? 'text-muted') : 'text-muted'}">${n === null ? 'unknown' : `${n}/${SCALE_MAX}`}</span>${
+            n === null ? '' : `, ${esc(enforcementLabel(strictness.score).toLowerCase())}`
+          }.</b>
+        ${esc(note)}${noMargin}
+      </span>
+    </div>`;
   }
 
   /* ---------- provenance ---------- */
@@ -647,10 +676,14 @@ const RISK = [
     }
 
     /* No difference. Say WHY, because "nothing changed" from a control the
-       reader just moved reads as broken. */
-    const ceiling = DEFAULT.config.gambleCeiling(carrier.strictness);
-    if (ceiling === 0) {
-      return `All three settings agree here. <b class="font-semibold text-ink">${esc(carrier.name)} measures bags as routine</b>, so there is no margin for any of them to give you — the risk setting cannot change an answer at an airline like this.`;
+       reader just moved reads as broken.
+
+       At ceiling 0 the reason is the airline's strictness, and the callout
+       directly below owns that — it names the carrier, gives the score, and
+       ends with what it means for this control. Repeating it here named
+       Ryanair twice and stated its enforcement three times in four lines. */
+    if (DEFAULT.config.gambleCeiling(carrier.strictness) === 0) {
+      return 'All three settings agree here.';
     }
     return 'All three settings agree here, so this answer does not depend on how much risk you are willing to take.';
   }
@@ -886,14 +919,7 @@ const RISK = [
           ${riskEffect(bagOfEngine, worst.carrier, band)}
         </p>
 
-        ${
-          worst.carrier?.allowance
-            ? `<p class="mt-4 rounded-chip bg-surface-2 px-4 py-3 text-[0.9375rem] text-ink-2">
-                 <b class="font-semibold text-ink">${esc(worst.carrier.name)} — strictness ${esc(strictScore(worst.leg.iata))}.</b>
-                 ${esc(enforcementNote(carrierOf(worst.leg.iata)?.record?.strictness))}
-               </p>`
-            : ''
-        }
+        ${strictnessCallout(worst.leg.iata, worst.carrier)}
 
         ${comparator(b, bagOfEngine, worst.carrier, band)}
 
