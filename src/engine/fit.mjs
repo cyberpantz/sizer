@@ -27,7 +27,6 @@ import {
   EPS_CM,
   gambleCeiling,
   LIKELY_SHARE,
-  PERSONAL_ITEM_CM,
   SOFT_COMPRESS_CM,
   SQUISH_CM,
   WEIGHT_TIGHT_RATIO,
@@ -49,7 +48,6 @@ export function createEngine(overrides = {}) {
     SQUISH_CM,
     SOFT_COMPRESS_CM,
     WEIGHT_TIGHT_RATIO,
-    PERSONAL_ITEM_CM,
     advisories: DEFAULT_ADVISORIES,
     ...overrides,
   };
@@ -247,12 +245,57 @@ export function createEngine(overrides = {}) {
     return worst;
   }
 
-  /** Does an overhead carry-on also fit a personal-item envelope? Shown on a bag
-   *  page; never a reason to move it out of the carry-on shelf. */
-  function fitsPersonalItem(bag) {
-    const e = desc(bag.external_cm),
-      p = desc(config.PERSONAL_ITEM_CM);
-    return e.every((v, i) => v <= p[i]);
+  /**
+   * Does this bag fit UNDER THE SEAT ON THIS AIRLINE?
+   *
+   * THE CLAIM THIS REPLACES WAS WRONG FOR MOST CARRIERS. It took no carrier at
+   * all. Every bag page compared the bag to one hard-coded `[40, 30, 20]`,
+   * described in the constants as "the common floor across the strict European
+   * budget carriers". It is not a floor. Of the 48 carriers publishing a
+   * personal-item size, 12 sit at 40 × 30 × 20 and **29 are stricter on some
+   * axis** — BA, Lufthansa, KLM, Air France, Turkish and United among them, and
+   * Singapore, EVA, Starlux and Scoot at ten centimetres deep.
+   *
+   * So the old answer was not conservative-but-rough. It was wrong in the
+   * expensive direction — the one that ends with a bag being gate-checked — for
+   * the majority of airlines a reader is likely to fly. The data to answer it
+   * properly was in the records the whole time; nothing could read it.
+   *
+   * Returns `null`, never `false`, when the carrier publishes no size. An
+   * airline that says only "it must fit under the seat in front of you" has not
+   * told us your bag is too big, and we must not say it did.
+   */
+  function fitsPersonalItem(bag, carrier) {
+    const p = carrier?.allowances?.personal;
+    if (!p) return null;
+    const e = desc(bag.external_cm);
+    if (p.max_cm) {
+      const box = desc(p.max_cm);
+      if (!e.every((v, i) => v <= box[i] + config.EPS_CM)) return false;
+    }
+    if (typeof p.linear_max_cm === 'number') {
+      if (e.reduce((s, v) => s + v, 0) > p.linear_max_cm + config.EPS_CM) return false;
+    }
+    return true;
+  }
+
+  /** The strictest common under-seat box across a carrier set — the same
+   *  intersection `envelope()` takes for the overhead bin, and now derivable
+   *  rather than typed. Across the full catalogue it comes to 40 × 25 × 10,
+   *  which is worth printing precisely because it is so much smaller than the
+   *  figure this codebase used to assume. */
+  function personalEnvelope(carriers) {
+    const boxes = carriers
+      .filter((c) => c.allowances?.personal?.max_cm && c.flying !== false)
+      .map((c) => desc(c.allowances.personal.max_cm));
+    if (!boxes.length) return null;
+    return [0, 1, 2].map((i) => Math.min(...boxes.map((b) => b[i])));
+  }
+
+  /** Which legs actually decide the under-seat answer, so the page can name
+   *  them instead of stating a bare number. */
+  function personalBindingLegs(bag, carriers) {
+    return carriers.filter((c) => fitsPersonalItem(bag, c) === false).map((c) => c.name ?? c.iata);
   }
 
   /** Share of a carrier set the bag clears. `line` counts — it does fit. */
@@ -307,11 +350,23 @@ export function createEngine(overrides = {}) {
     envelope,
     bindingLeg,
     fitsPersonalItem,
+    personalEnvelope,
+    personalBindingLegs,
     coverage,
   };
 }
 
 export const engine = createEngine();
-export const { delta, band, evaluate, envelope, bindingLeg, fitsPersonalItem, coverage } = engine;
+export const {
+  delta,
+  band,
+  evaluate,
+  envelope,
+  bindingLeg,
+  fitsPersonalItem,
+  personalEnvelope,
+  personalBindingLegs,
+  coverage,
+} = engine;
 export * from './constants.mjs';
 export { EngineInputError, isPromotable, isSized, toBag, toCarrier };

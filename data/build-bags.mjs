@@ -171,9 +171,6 @@ for (const [slug, ms] of byBag) {
       conflicts.push({ field, values: seen.map(([src, v]) => ({ src, v })) });
   }
 
-  /* Reference personal-item envelope. The common floor across the strict European
-     budget carriers (Ryanair, Wizz, Vueling all publish 40 x 30 x 20). */
-  const _PI = [40, 30, 20];
   bags.push({
     slug,
     brand: id.brand,
@@ -184,10 +181,12 @@ for (const [slug, ms] of byBag) {
     soft: id.soft,
     wheels: id.wheels,
     role: id.role, // overhead | underseat — see bag-identity.mjs
-    /* Derived, and deliberately separate from role: plenty of overhead carry-ons
-       are also small enough to go under a seat. That is a useful fact to show on a
-       bag page. It is NOT a reason to move the bag out of the carry-on shelf. */
-    fits_personal_item: null,
+    /* `fits_personal_item` USED TO BE STORED HERE, and it was a claim no record
+       can carry. It was computed against one hard-coded [40, 30, 20], so a bag
+       page answered "does this go under the seat" without naming an airline —
+       and 29 of the 48 carriers that publish a size are stricter than that on
+       some axis. The question only has an answer once you say which flight.
+       fitsPersonalItem(bag, carrier) in fit.mjs answers it per leg. */
 
     external_cm: dim
       ? {
@@ -282,7 +281,6 @@ for (const raw of manufacturerBags) {
       variant: null,
       line: null,
       role: 'overhead',
-      fits_personal_item: null,
       claimed_packing_cm: null,
       claimed_cm: null,
       measured_cm: null,
@@ -351,13 +349,6 @@ for (const b of bags) {
   }
   b.observed = b.reviews.flatMap((r) => r.observed ?? []);
   b.compliance_unbacked = b.compliance_claimed && !b.external_cm;
-}
-
-for (const b of bags) {
-  if (!b.external_cm) continue;
-  const e = desc(b.external_cm.v),
-    p = desc([40, 30, 20]);
-  b.fits_personal_item = e.every((v, i) => v <= p[i]);
 }
 
 /* BRAND-LEVEL DIMENSION POLICY.

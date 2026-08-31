@@ -33,7 +33,7 @@ for (const b of BAGS) {
         name: a.n,
         strictness: a.st,
         fare_class: fare,
-        allowance: { max_cm: alw.d, max_kg: alw.kg ?? null },
+        allowance: { max_cm: alw.d, linear_max_cm: alw.lin ?? null, max_kg: alw.kg ?? null },
         no_cabin_bag: false,
         regional_jets: false,
       });

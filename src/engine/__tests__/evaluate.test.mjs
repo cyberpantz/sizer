@@ -3,7 +3,15 @@
 import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 import { ALL_CARRIERS, BAGS, bag, CARRIERS, carrier } from '../__fixtures__/catalogue.mjs';
-import { bindingLeg, coverage, delta, envelope, evaluate, fitsPersonalItem } from '../fit.mjs';
+import {
+  bindingLeg,
+  coverage,
+  delta,
+  envelope,
+  evaluate,
+  fitsPersonalItem,
+  personalEnvelope,
+} from '../fit.mjs';
 
 const adv = (r, id) => r.advisories.find((a) => a.id === id);
 
@@ -136,10 +144,53 @@ describe('multi-leg', () => {
   });
 });
 
-describe('personal item', () => {
-  test('a carry-on named "underseater" may not fit a personal-item envelope', () => {
+describe('personal item — the question has no answer without an airline', () => {
+  /* WHAT THIS REPLACED. `fitsPersonalItem(bag)` took no carrier and compared
+     every bag to one hard-coded [40, 30, 20] — "the floor Ryanair, Wizz and
+     Vueling share". It is not a floor: of the 48 carriers publishing an
+     under-seat size, 12 sit there and 29 are STRICTER on some axis. So a bag
+     page told 60% of readers their bag fits under a seat it does not fit, in
+     the direction that ends with the bag gate-checked. */
+  const withPersonal = (max_cm, extra = {}) => ({
+    name: 'Test Air',
+    flying: true,
+    allowances: { cabin: null, personal: max_cm ? { max_cm, ...extra } : null },
+    personal_absence: max_cm ? null : 'not_published',
+  });
+
+  test('a carry-on named "underseater" is judged against the airline in front of you', () => {
     const kc = bag('kenneth-cole-underseater', [43.2, 33, 22.9]);
-    assert.equal(fitsPersonalItem(kc), false);
+    assert.equal(fitsPersonalItem(kc, withPersonal([45, 35, 20])), false, 'too deep for 20 cm');
+    assert.equal(fitsPersonalItem(kc, withPersonal([45, 35, 25])), true, 'fits a roomier one');
+  });
+
+  test('the 10 cm carriers reject a bag that clears the old constant', () => {
+    /* Singapore, EVA, Starlux and Scoot all publish 40 x 30 x 10. */
+    const laptopBag = bag('slim', [40, 30, 15]);
+    assert.equal(fitsPersonalItem(laptopBag, withPersonal([40, 30, 20])), true);
+    assert.equal(fitsPersonalItem(laptopBag, withPersonal([40, 30, 10])), false);
+  });
+
+  test('no published size returns null, NEVER false', () => {
+    /* Delta says only "it must fit beneath the seat". That is not the airline
+       telling us the bag is too big, and we must not say it did. Same rule as
+       cabin_unknown: absence never renders as a verdict. */
+    assert.equal(fitsPersonalItem(bag('any', [40, 30, 15]), withPersonal(null)), null);
+    assert.equal(fitsPersonalItem(bag('any', [40, 30, 15]), {}), null);
+  });
+
+  test('a linear-only personal cap binds too', () => {
+    const b = bag('cube', [40, 30, 20]);
+    assert.equal(fitsPersonalItem(b, withPersonal(null, {})), null);
+    assert.equal(fitsPersonalItem(b, { allowances: { personal: { linear_max_cm: 85 } } }), false);
+    assert.equal(fitsPersonalItem(b, { allowances: { personal: { linear_max_cm: 95 } } }), true);
+  });
+
+  test('the reference envelope is derived from the carriers, not typed in', () => {
+    const set = [withPersonal([40, 30, 20]), withPersonal([40, 30, 10]), withPersonal([43, 25, 22])];
+    assert.deepEqual(personalEnvelope(set), [40, 25, 10]);
+    assert.equal(personalEnvelope([]), null, 'no carriers means no envelope, not a default');
+    assert.equal(personalEnvelope([withPersonal(null)]), null);
   });
 });
 

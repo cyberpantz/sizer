@@ -70,7 +70,21 @@ export const SOFT_COMPRESS_CM = 2;
  *  Air France's 12kg and nearly disqualifying on Emirates' 7. */
 export const WEIGHT_TIGHT_RATIO = 0.4;
 
-/** Reference personal-item envelope — the floor Ryanair, Wizz and Vueling share. */
-export const PERSONAL_ITEM_CM = [40, 30, 20];
+/* THERE IS NO CONSTANT FOR THE PERSONAL ITEM, AND THAT IS THE POINT.
+ *
+ * `PERSONAL_ITEM_CM = [40, 30, 20]` lived here, described as "the floor Ryanair,
+ * Wizz and Vueling share". Those three do publish it. It is not a floor: of the
+ * 48 carriers publishing an under-seat size, 12 sit at 40 x 30 x 20 and 29 are
+ * STRICTER on some axis — BA, Lufthansa, KLM, Air France, Turkish and United
+ * among them; Singapore, EVA, Starlux and Scoot allow ten centimetres of depth.
+ *
+ * Every bag page compared bags to it anyway, because toCarrier() returned only
+ * the cabin allowance and there was nothing else to compare against. A reference
+ * envelope used as an airline's rule is the same error as an unscored airline
+ * rendering as a lenient one: an absent fact producing a confident answer.
+ *
+ * The intersection is now DERIVED from the published limits — see
+ * personalEnvelope() in fit.mjs, which comes to 40 x 25 x 10. Deriving it means
+ * it moves when the data moves, and can name the carriers that bind it. */
 
 export const BANDS = ['clears', 'line', 'gamble', 'wont'];

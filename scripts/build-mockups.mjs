@@ -89,8 +89,16 @@ function inlineCarriers() {
         const chk = c.allowances.find((x) => x.type === 'checked' && x.fare_class === a.fare_class);
         fares[a.fare_class] = {
           d: a.max_cm,
+          /* THE SUM-ONLY CARRIERS. Singapore publishes no box — their cabin
+             rule is "the three sides add up to at most 115 cm" — so `d` is
+             legitimately null and this is the only constraint they state.
+             Dropping it here emitted a carrier with NO rule at all, which
+             delta() correctly refuses to answer and evaluate() then threw on. */
+          lin: a.linear_max_cm ?? null,
           kg: a.max_kg,
-          ovh: a.max_cm[0] >= 45 ? 1 : 0,
+          /* Unknown, not "no overhead bin" — indexing a null box threw here
+             before the page drew anything. */
+          ovh: a.max_cm ? (a.max_cm[0] >= 45 ? 1 : 0) : null,
           chk: chk?.free_pieces ?? 0,
           note: a.note ?? '',
         };
@@ -145,9 +153,16 @@ async function inlineBags() {
        page render nothing at all. Both bugs were one absent field. */
     cov: coverage(bag, carriers).pass,
     /* Manufacturer packing figure where we have it, else the external one —
-       the pages show "claimed vs actual" and need something in both slots. */
-    c: b.claimed_packing_cm?.v ?? b.external_cm.v,
-    x: b.external_cm.v,
+       the pages show "claimed vs actual" and need something in both slots.
+       READ THE RESOLVED FIGURE, NOT THE FIELD. `b.external_cm.v` assumed every
+       sized bag carries that particular field, and several do not: Béis has
+       only `claimed_*`, and isSized() rightly counts it. So this threw on a
+       perfectly good record and took the whole mockup build with it — which is
+       why `npm run check` has not completed in a while. `bag` is the
+       toBag()-normalised object, where the ladder has already picked the best
+       available source. */
+    c: b.claimed_packing_cm?.v ?? bag.external_cm,
+    x: bag.external_cm,
     soft: b.soft ? 1 : 0,
     kg: b.weight_kg?.v ?? null,
     /* Carried so the UI can mark a figure as not ours. Every bag is `false`

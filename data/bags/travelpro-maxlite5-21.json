@@ -8,7 +8,6 @@
  "soft": 1,
  "wheels": 4,
  "role": "overhead",
- "fits_personal_item": false,
  "external_cm": {
   "v": [
    58.4,

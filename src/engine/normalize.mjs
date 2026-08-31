@@ -674,6 +674,61 @@ export function resolveFare(record, booking) {
   return { row: null, matched: null };
 }
 
+/**
+ * The under-seat allowance for the same booking the cabin bag was answered for.
+ *
+ * WHY THIS DID NOT EXIST UNTIL NOW, AND WHAT IT COST. `toCarrier` returned one
+ * allowance — the cabin one — so 48 carriers' published personal-item limits
+ * sat in the records, correctly researched, read by nothing. In their place the
+ * engine used a single hard-coded `PERSONAL_ITEM_CM = [40, 30, 20]`: a
+ * REFERENCE ENVELOPE, the common floor across the strict European ULCCs, and
+ * not any particular airline's rule. Every bag page then claimed the bag did or
+ * did not fit "as a personal item" — measured against a number no carrier had
+ * necessarily published.
+ *
+ * Singapore's personal item is 40 × 30 × 10 cm. Ten centimetres deep. A normal
+ * laptop bag fails it, and the site could not say so.
+ *
+ * `tier` is the fare the CABIN resolution actually landed on, passed in rather
+ * than re-derived. On Ryanair that is `basic`, and the Priority personal item
+ * must not answer for a passenger who did not buy Priority — the same mistake,
+ * in the same direction, that the add-on gating exists to prevent.
+ */
+export function resolvePersonal(record, booking, tier) {
+  const b =
+    typeof booking === 'string'
+      ? { fare: booking, ...(CABIN_CLASS.has(booking) ? { class: booking } : {}) }
+      : (booking ?? {});
+  const fare = tier ?? b.fare ?? null;
+  const all = (record.allowances ?? []).filter((a) => a.type === 'personal');
+  const rows = all.filter((a) => routeApplies(a, b.route).applies === true);
+  const bought = new Set(b.addons ?? []);
+  const reachable = rows.filter((a) => !a.addon || bought.has(a.addon));
+  const eq = (x, y) => x != null && y != null && x === y;
+
+  /* A SIZELESS ROW IS STILL THE ANSWER. Delta and Southwest publish a personal
+     item with no dimensions; that row is what says so, and returning null here
+     would collapse their finding back into "we do not know". The caller reads
+     `absence` off the row it gets. */
+  const byFare = reachable.find((a) => eq(a.fare_class, fare) || eq(a.fare_brand, fare));
+  if (byFare) return { row: byFare, matched: 'fare' };
+  const byClass = reachable.find((a) => eq(a.cabin_class, b.class) || eq(a.fare_class, b.class));
+  if (byClass) return { row: byClass, matched: 'class' };
+
+  /* Same entitlement-before-vocabulary rule as the cabin fallback, and the same
+     reason: a carrier selling nothing called "economy" still sells an economy
+     product. Smallest first — this branch is a guess, and a guess must not
+     promise the roomier of two allowances. */
+  const tiers = reachable.filter((a) => isTierOf(a.fare_class, b.class));
+  if (tiers.length) {
+    const size = (a) =>
+      a.max_cm ? a.max_cm.reduce((s, v) => s + v, 0) : (a.linear_max_cm ?? Number.POSITIVE_INFINITY);
+    const row = [...tiers].sort((x, y) => size(x) - size(y))[0];
+    return { row, matched: 'class', tier: row.fare_class };
+  }
+  return { row: null, matched: null };
+}
+
 function buildAllowance(row, subject, rows = []) {
   const u = reconcileUnits(row.max_cm, row.max_in);
   return {
@@ -745,6 +800,17 @@ export function toCarrier(record, fareClass) {
   if (typeof strictness !== 'number' || strictness < 1 || strictness > 10) {
     throw new EngineInputError(`strictness must be 1-10, got ${strictness}`, subject);
   }
+
+  /* Answered for the fare the CABIN resolution landed on, not for the string
+     the caller happened to pass. When resolveFare fell back to the cheapest
+     tier it reports which one; the personal item has to follow it there or the
+     two halves of the answer describe two different tickets. */
+  const personal = resolvePersonal(record, fareClass, resolved.tier);
+  const personalSized = Boolean(
+    personal.row?.max_cm || typeof personal.row?.linear_max_cm === 'number'
+  );
+
+  const cabinAllowance = cabin ? buildAllowance(cabin, subject, rows) : null;
   return {
     iata: record.iata,
     name: record.name,
@@ -766,7 +832,25 @@ export function toCarrier(record, fareClass) {
        cost a reader money rather than convenience. */
     enforcement_researched: (record.strictness?.evidence ?? []).some((e) => e?.claim),
     /* Never a zero-size row — a naive comparison would let one pass. */
-    allowance: cabin ? buildAllowance(cabin, subject, rows) : null,
+    allowance: cabinAllowance,
+    /* BOTH BAGS, KEYED BY ROLE. `allowance` above stays as an alias for
+       `allowances.cabin` — the same object, not a copy — so every existing
+       caller keeps working unchanged; new code should read this. */
+    allowances: {
+      cabin: cabinAllowance,
+      personal: personalSized ? buildAllowance(personal.row, subject, rows) : null,
+    },
+    /* Why there is no personal allowance — the same four-way taxonomy the cabin
+       bag uses, and for the same reason. `not_published` is a FINDING: Delta,
+       Southwest, Qatar, Aegean, Air Serbia and three Chinese majors publish no
+       under-seat dimensions at all, so the real limit is the space beneath the
+       seat in front, which varies by aircraft. Saying that is a better answer
+       than any number, and it is only available because someone recorded the
+       absence instead of omitting the row. */
+    personal_absence: personalSized
+      ? null
+      : (personal.row?.absence ?? record.personal_absence ?? CABIN_ABSENCE.NOT_RESEARCHED),
+    personal_matched_on: personal.matched,
     /* Only an EXPLICIT finding means "no cabin bag". Everything else is unknown:
        silence from a half-researched carrier must never read as a ban. */
     no_cabin_bag: absence === CABIN_ABSENCE.NOT_PERMITTED,
