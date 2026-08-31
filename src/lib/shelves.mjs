@@ -21,7 +21,8 @@ export const SHELVES = [
   {
     id: 'us_only',
     title: 'Fine in the US, a problem abroad',
-    blurb: 'Built to the 22 × 14 × 9 in domestic standard, which is larger than most of the world allows.',
+    blurb:
+      'Built to the 22 × 14 × 9 in domestic standard, which is larger than most of the world allows.',
     min: 0,
   },
 ];

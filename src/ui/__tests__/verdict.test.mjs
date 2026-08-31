@@ -100,7 +100,11 @@ describe('editorial policy — name the behaviour, not the actor', () => {
     const { join } = await import('node:path');
     const walk = (d) =>
       readdirSync(d, { withFileTypes: true }).flatMap((e) =>
-        e.isDirectory() ? walk(join(d, e.name)) : /\.(astro|mjs)$/.test(e.name) ? [join(d, e.name)] : []
+        e.isDirectory()
+          ? walk(join(d, e.name))
+          : /\.(astro|mjs)$/.test(e.name)
+            ? [join(d, e.name)]
+            : []
       );
     for (const f of walk('src')) {
       const src = readFileSync(f, 'utf8');

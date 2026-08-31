@@ -4,9 +4,9 @@
    product knows about where data lives is in one file, and these tests pin the
    two properties that must survive that move. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { loadBags, loadCarriers, coverageStats } from '../data.mjs';
+import { describe, test } from 'node:test';
+import { coverageStats, loadBags, loadCarriers } from '../data.mjs';
 
 describe('the loaders are async before they need to be', () => {
   /* Making them async LATER would ripple through every caller at exactly the

@@ -18,9 +18,13 @@ const bySource = Object.fromEntries(
 
 const SOURCE_ROWS = [
   [DIM_SOURCE.MEASURED, 'We measured it ourselves', 'Yes'],
-  [DIM_SOURCE.MAKER_OVERALL, "The manufacturer's own overall figure — wheels and handle included", 'Yes'],
+  [
+    DIM_SOURCE.MAKER_OVERALL,
+    "The manufacturer's own overall figure — wheels and handle included",
+    'Yes',
+  ],
   [DIM_SOURCE.REVIEW, 'A review publication measured it', 'No — shown and attributed'],
-  [DIM_SOURCE.MAKER_UNSPECIFIED, "One figure, without saying which", 'No'],
+  [DIM_SOURCE.MAKER_UNSPECIFIED, 'One figure, without saying which', 'No'],
   [DIM_SOURCE.MAKER_PACKING, 'Explicitly the packing size', 'No'],
   [DIM_SOURCE.RESELLER, 'A marketplace or retail listing', 'Never'],
 ];

@@ -36,7 +36,10 @@ for (const c of carrierRecords) {
       strictness: { score: c.record.strictness?.score },
       operates_regional_jets: c.record.operates_regional_jets,
       agent_commission: c.record.agent_commission
-        ? { amount_usd: c.record.agent_commission.amount_usd, where: c.record.agent_commission.where }
+        ? {
+            amount_usd: c.record.agent_commission.amount_usd,
+            where: c.record.agent_commission.where,
+          }
         : null,
       cabin_absence: c.record.cabin_absence,
       allowances: (c.record.allowances ?? []).map((a) => ({
@@ -75,4 +78,6 @@ const payload = {
 mkdirSync(new URL('../public/', import.meta.url), { recursive: true });
 writeFileSync(new URL('../public/catalogue.json', import.meta.url), JSON.stringify(payload));
 const kb = (JSON.stringify(payload).length / 1024).toFixed(0);
-console.log(`catalogue.json — ${payload.bags.length} bags, ${payload.carriers.length} carriers, ${kb} kB`);
+console.log(
+  `catalogue.json — ${payload.bags.length} bags, ${payload.carriers.length} carriers, ${kb} kB`
+);

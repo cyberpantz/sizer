@@ -15,7 +15,7 @@
    because a guard reporting coverage it does not have is how the mockup drift
    and the dead drift-checker regex both survived. If the source is unreachable,
    THROW. */
-import { readFileSync, readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { isPromotable, isSized, toBag, toCarrier } from '../engine/normalize.mjs';
 
 const root = new URL('../../data/', import.meta.url);
@@ -27,11 +27,14 @@ const root = new URL('../../data/', import.meta.url);
 async function readAll(dir) {
   let files;
   try {
-    files = readdirSync(new URL(dir, root)).filter((f) => f.endsWith('.json') && !f.startsWith('_'));
+    files = readdirSync(new URL(dir, root)).filter(
+      (f) => f.endsWith('.json') && !f.startsWith('_')
+    );
   } catch (cause) {
     throw new Error(`data source unreachable: ${dir}`, { cause });
   }
-  if (!files.length) throw new Error(`data source returned nothing for ${dir} — refusing to continue`);
+  if (!files.length)
+    throw new Error(`data source returned nothing for ${dir} — refusing to continue`);
   return files.map((f) => JSON.parse(readFileSync(new URL(`${dir}${f}`, root))));
 }
 

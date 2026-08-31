@@ -10,10 +10,10 @@
    the tape, it is WHICH FIGURE — overall, wheels and handle included, is the
    one an airline checks. */
 
-import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { DIM_SOURCE, dimSourceOf, isPromotable } from '../normalize.mjs';
+import { describe, test } from 'node:test';
 import { loadBags } from '../../lib/data.mjs';
+import { DIM_SOURCE, dimSourceOf, isPromotable } from '../normalize.mjs';
 
 const withSource = (src) => ({ dim_source: src });
 
@@ -63,12 +63,19 @@ describe('inference is conservative', () => {
   });
 
   test('a review-sourced dimension is labelled as one', () => {
-    assert.equal(dimSourceOf({ external_cm: { v: [55, 40, 20], src: 'review' } }), DIM_SOURCE.REVIEW);
+    assert.equal(
+      dimSourceOf({ external_cm: { v: [55, 40, 20], src: 'review' } }),
+      DIM_SOURCE.REVIEW
+    );
   });
 
   test('an explicit dim_source always wins over inference', () => {
     assert.equal(
-      dimSourceOf({ dim_source: DIM_SOURCE.RESELLER, claimed_packing_cm: { v: [1, 1, 1] }, external_cm: { v: [2, 2, 2] } }),
+      dimSourceOf({
+        dim_source: DIM_SOURCE.RESELLER,
+        claimed_packing_cm: { v: [1, 1, 1] },
+        external_cm: { v: [2, 2, 2] },
+      }),
       DIM_SOURCE.RESELLER
     );
   });
@@ -78,8 +85,10 @@ describe('against the real catalogue', () => {
   test('the gate is reachable — promotable is not zero', async () => {
     const bags = await loadBags();
     const n = bags.filter(isPromotable).length;
-    assert.ok(n > 0,
-      'a gate nothing can pass blocks the product forever, which is what the measure-it-ourselves plan did');
+    assert.ok(
+      n > 0,
+      'a gate nothing can pass blocks the product forever, which is what the measure-it-ourselves plan did'
+    );
   });
 
   test('no reseller-sourced dimension is in the catalogue at all', async () => {

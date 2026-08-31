@@ -10,7 +10,7 @@
    — and they did: the audit reported 4 bags on the top shelf while the page
    showed 5. An audit measuring a different dataset than the product is worse
    than no audit, because it reads as coverage. */
-import { coverage, evaluate, isPromotable } from '../src/engine/fit.mjs';
+import { evaluate, isPromotable } from '../src/engine/fit.mjs';
 import { loadBags, loadCarriers } from '../src/lib/data.mjs';
 import { shelve } from '../src/lib/shelves.mjs';
 
@@ -50,7 +50,12 @@ for (const [type, min, defer] of [
   ['backpack', 4, 'one-bag audience, not the launch case'],
   ['duffel', 2, 'niche form factor'],
 ]) {
-  need(`carry-on filter: ${type}`, carryon.filter((b) => b.record.type === type).length, min, defer);
+  need(
+    `carry-on filter: ${type}`,
+    carryon.filter((b) => b.record.type === type).length,
+    min,
+    defer
+  );
 }
 
 /* 3 · the three shelves on the landing page — the claims the site makes */
@@ -97,8 +102,12 @@ need(
 );
 /* The release gate, post-plan-change: the manufacturer's own overall figure,
    not our tape measure. Raised by reading product pages, not by buying bags. */
-need('bags promotable (maker overall)', allBags.filter(isPromotable).length, 15,
-  'raised one product page at a time; 9 of 40 today');
+need(
+  'bags promotable (maker overall)',
+  allBags.filter(isPromotable).length,
+  15,
+  'raised one product page at a time; 9 of 40 today'
+);
 
 /* 7 · carriers we cannot answer for, reported rather than hidden */
 const unknown = carriers.filter((c) => c.cabin_unknown).length;
@@ -109,11 +118,15 @@ console.log(
     blocking.map((s) => `  THIN  ${s}`).join('\n') || '  none'
   }`
 );
-console.log(`\nDEFERRED — real gaps, not launch blockers\n${deferred.map((s) => `  later ${s}`).join('\n')}`);
+console.log(
+  `\nDEFERRED — real gaps, not launch blockers\n${deferred.map((s) => `  later ${s}`).join('\n')}`
+);
 console.log(
   `\n${ready.length} of ${ready.length + blocking.length} launch paths exercised  ·  ${deferred.length} deferred`
 );
 console.log(
   `catalogue: ${allBags.length} bags · ${carriers.length} carriers, ${unknown} unanswerable`
 );
-console.log(`lines with sized variants: ${multi.map((m) => `${m[0]}(${m[1].length})`).join(', ') || 'none'}`);
+console.log(
+  `lines with sized variants: ${multi.map((m) => `${m[0]}(${m[1].length})`).join(', ') || 'none'}`
+);

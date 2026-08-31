@@ -17,7 +17,7 @@
    collapses that the same way without running the compiler, and a guard that
    flags cases it has not verified trains people to ignore it. Confirm against
    the compiler and widen it, or leave it narrow and honest. */
-import { readFileSync, readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const walk = (d) =>
@@ -55,5 +55,7 @@ for (const file of walk('src')) {
     fail++;
   }
 }
-console.log(fail ? `\n${fail} place(s) will lose a space when rendered` : 'no lost spaces in wrapped copy');
+console.log(
+  fail ? `\n${fail} place(s) will lose a space when rendered` : 'no lost spaces in wrapped copy'
+);
 process.exit(fail ? 1 : 0);

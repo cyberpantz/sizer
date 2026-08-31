@@ -9,7 +9,7 @@
      - `const ENGINE` declared by both the generated block and the adapter
    All five are the same failure mode: the module was fine, the page was broken.
    None would have been caught by `npm test`. */
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('../', import.meta.url);
@@ -85,7 +85,10 @@ const walkAll = (d) =>
 
 const routes = new Set(
   walkAll('src/pages').map((f) =>
-    `/${f.replace(/^src\/pages\/?/, '').replace(/index\.astro$/, '').replace(/\.astro$/, '/')}`.replace(/\/+/g, '/')
+    `/${f
+      .replace(/^src\/pages\/?/, '')
+      .replace(/index\.astro$/, '')
+      .replace(/\.astro$/, '/')}`.replace(/\/+/g, '/')
   )
 );
 
@@ -94,7 +97,8 @@ for (const f of walkAll('src')) {
   const src = readFileSync(f, 'utf8');
   for (const m of src.matchAll(/href[=:]\s*['"](\/[^'"#?]*)['"]/g)) {
     const href = m[1];
-    if (!routes.has(href) && !routes.has(`${href}/`)) fail(f, `links to ${href}, which is not a route`);
+    if (!routes.has(href) && !routes.has(`${href}/`))
+      fail(f, `links to ${href}, which is not a route`);
   }
 }
 
