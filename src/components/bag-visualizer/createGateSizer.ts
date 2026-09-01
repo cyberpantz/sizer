@@ -38,6 +38,11 @@ export function createGateSizer(dims: BagDimensions): THREE.Group {
     metalness: 0.1,
     roughness: 0.72,
   });
+  /* Every tube shares ONE material instance, so the alarm below is a single
+     colour write rather than a traverse. Exposed on the group because the
+     caller animates it and has no other handle on it. */
+  group.userData.frameMaterial = frame;
+  group.userData.frameBaseHex = 0x74808d;
 
   const post = (x: number, z: number) => {
     const m = new THREE.Mesh(new THREE.CylinderGeometry(tube, tube, h, 12), frame);

@@ -174,6 +174,25 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     });
   }
 
+  /* Only an oversize bag arms the frame. `null` — an unanswered leg — arms
+     nothing: we have no finding to announce. */
+  const overLimit = fitsWithinLimit(result.band) === false;
+  /* prefers-reduced-motion gets the finding without the flash: the frame sits
+     permanently red rather than pulsing. The information is not the animation,
+     and a reader who has asked for less movement has not asked for less
+     information. */
+  const reducedMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
+  const alarmMaterial =
+    overLimit && sizer
+      ? ((sizer.userData.frameMaterial as THREE.MeshStandardMaterial) ?? null)
+      : null;
+  const FRAME_BASE = new THREE.Color(0x74808d);
+  const FRAME_ALARM = new THREE.Color(bandHex('wont'));
+  const alarmStrength = 1;
+  if (alarmMaterial && reducedMotion) alarmMaterial.color.copy(FRAME_ALARM);
+
   content.updateMatrixWorld(true);
   const bagBox = visibleBox(bagScene.exterior);
   bagRig.position.y = -bagBox.min.y;
@@ -524,8 +543,21 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       fitCamera();
     }
 
-    if (visible && fitAnim) {
-      fitAnim.update(bagRig, performance.now() - animStart);
+    if (visible && fitAnim && !reducedMotion) {
+      const { seated } = fitAnim.update(bagRig, performance.now() - animStart);
+      /* THE FRAME REDDENS WHEN THE BAG IS IN IT.
+       *
+       * A gate sizer answers on arrival, not during the approach — it is a
+       * slot, not a continuous gauge. Colouring the frame while the bag is
+       * still travelling would be pre-judging, and the drawing would state its
+       * claim before the measurement it rests on had been taken.
+       *
+       * Only when the bag is actually over. A frame that flashes on every bag
+       * teaches a reader to ignore it, which costs exactly the readers it is
+       * there for. */
+      if (alarmMaterial) {
+        alarmMaterial.color.copy(FRAME_BASE).lerp(FRAME_ALARM, seated * alarmStrength);
+      }
     }
 
     const viewMoving =

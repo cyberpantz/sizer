@@ -204,3 +204,52 @@ describe('the slide animation is visible from the view it opens in', () => {
     );
   });
 });
+
+describe('the frame answers on arrival, not during the approach', () => {
+  const anim = readFileSync('src/components/bag-visualizer/fitAnimation.ts', 'utf8');
+  const body = anim.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  test('the alarm is zero while the bag is still travelling', () => {
+    /* A gate sizer is a slot, not a continuous gauge — it answers when the bag
+       is IN it. A frame reddening mid-approach would be pre-judging: the
+       drawing stating its claim before the measurement it rests on was taken. */
+    const seat = Number(body.match(/SEAT_T = ([\d.]+)/)?.[1]);
+    const lift = Number(body.match(/LIFT_T = ([\d.]+)/)?.[1]);
+    assert.ok(seat && lift, 'the seat/lift phase marks have moved');
+    assert.ok(seat < lift, 'the bag must arrive before it leaves');
+    assert.match(body, /t >= SEAT_T && t < LIFT_T/, 'the alarm no longer starts at arrival');
+  });
+
+  test('the reset is quicker than the alarm', () => {
+    /* Warnings should land and leave cleanly. A slow fade out reads as the
+       frame being unsure. */
+    const rampIn = Number(body.match(/ALARM_IN = ([\d.]+)/)?.[1]);
+    const rampOut = Number(body.match(/ALARM_OUT = ([\d.]+)/)?.[1]);
+    assert.ok(rampOut < rampIn, 'the frame lingers red after the bag has gone');
+    assert.ok(rampIn < 0.08, 'the alarm is too slow to read as a reaction');
+  });
+
+  test('only an oversize bag arms it', () => {
+    /* A frame that flashes on every bag teaches a reader to ignore it, which
+       costs exactly the readers it exists for. And an unanswered leg arms
+       nothing: there is no finding to announce. */
+    const src = code(client);
+    assert.match(
+      src,
+      /fitsWithinLimit\(result\.band\) === false/,
+      'the alarm no longer checks that the bag is actually over'
+    );
+  });
+
+  test('reduced motion gets the finding without the flash', () => {
+    /* The information is not the animation. A reader who asked for less
+       movement has not asked for less information — the frame sits red. */
+    const src = code(client);
+    assert.match(src, /prefers-reduced-motion/, 'the alarm ignores the motion preference');
+    assert.match(
+      src,
+      /if \(alarmMaterial && reducedMotion\) alarmMaterial\.color\.copy\(FRAME_ALARM\)/,
+      'reduced motion loses the verdict instead of stating it statically'
+    );
+  });
+});
