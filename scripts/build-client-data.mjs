@@ -7,6 +7,7 @@
    Generated, never hand-edited. Rebuilt by `npm run build:client-data`, which
    runs before the Astro build. */
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { projectAllowance } from '../src/engine/normalize.mjs';
 import { loadBags, loadCarriers } from '../src/lib/data.mjs';
 
 /** Where a carrier's allowance was read from. Per-allowance first — a fare can
@@ -89,23 +90,29 @@ for (const c of carrierRecords) {
       source_url: primarySource(c.record)?.url ?? null,
       verified_at: primarySource(c.record)?.at ?? null,
       placeholder: c.record.placeholder === true,
-      allowances: (c.record.allowances ?? []).map((a) => ({
-        type: a.type,
-        fare_class: a.fare_class,
-        cabin_class: a.cabin_class,
-        addon: a.addon,
-        max_cm: a.max_cm,
-        max_in: a.max_in,
-        max_kg: a.max_kg,
-        /* Ships because toCarrier() reads it: it is what tells the engine
-           whether a cabin weight cap covers this bag alone or this bag plus
-           the personal item. It was absent, so the browser computed a
-           different — and more generous — answer than the build did, on the
-           axis a US traveller has never had to think about. */
-        allowance_group: a.allowance_group,
-        applies_to: a.applies_to,
-        cabin_absence: a.cabin_absence,
-      })),
+      /* PROJECTED THROUGH THE ENGINE'S OWN FIELD LIST, not a hand-kept one.
+
+         This was a literal object built field by field, and it had silently
+         fallen behind the engine twice:
+
+           linear_max_cm  never shipped — so /check THREW on Singapore and
+                          Xiamen, whose cabin rule is a sum-of-sides with no box
+                          at all. Two of 58 airlines crashed the page, and the
+                          comparator's entire "this airline sets no box" branch
+                          was unreachable code that had never once run.
+           absence        never shipped — so Delta's researched "publishes no
+                          under-seat dimensions" arrived in the browser as
+                          "nobody has looked". A finding, silently downgraded to
+                          a gap, on the exact axis the taxonomy exists to keep
+                          apart.
+
+         Neither is the kind of mistake reading harder would have caught. A
+         hand-kept list of fields cannot stay right: the engine grows a reader,
+         nothing grows a writer, and the breakage is invisible on 56 of 58
+         carriers. So the list lives next to the code that reads it, and
+         client-payload.test.mjs round-trips every carrier and fare through both
+         shapes to prove the browser computes what this build computed. */
+      allowances: (c.record.allowances ?? []).map(projectAllowance),
     },
   });
 }
