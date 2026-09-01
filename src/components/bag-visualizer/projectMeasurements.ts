@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import type { AxisMap } from './createBagGeometry';
 import type { BagDimensions, MeasurementAxis, ProjectedMeasurement } from './types';
 
 const AXIS_VALUE: Record<MeasurementAxis, (d: BagDimensions) => number> = {
@@ -17,26 +16,10 @@ function project(v: THREE.Vector3, camera: THREE.Camera, width: number, height: 
   };
 }
 
-/* THE LABEL FOLLOWS THE OBJECT, NOT THE RECORD.
- *
- * `dimensions` is sorted largest-first and labelled height/width/depth, which
- * is right for a roller standing up. A duffel lies down: its longest side runs
- * ACROSS the screen. Without a per-shape map the leader lines kept measuring
- * the axes of a bag that was no longer standing, so "Height" pointed at the
- * short vertical edge of a bag whose height is its longest dimension. */
-function axisPoints(
-  axis: MeasurementAxis,
-  box: THREE.Box3,
-  axes: AxisMap
-): [THREE.Vector3, THREE.Vector3] {
+function axisPoints(axis: MeasurementAxis, box: THREE.Box3): [THREE.Vector3, THREE.Vector3] {
   const min = box.min;
   const max = box.max;
   const center = box.getCenter(new THREE.Vector3());
-  /* Read the label back to the screen axis it now occupies. */
-  const on = axes[axis];
-  if (on === 'y') axis = 'height';
-  else if (on === 'x') axis = 'width';
-  else axis = 'depth';
 
   if (axis === 'height') {
     const x = max.x + (max.x - min.x) * 0.15;
@@ -73,22 +56,17 @@ export function projectMeasurements(
   stageWidth: number,
   stageHeight: number,
   root: THREE.Object3D,
-  box: THREE.Box3,
-  axes: AxisMap = { height: 'y', width: 'x', depth: 'z' }
+  box: THREE.Box3
 ): ProjectedMeasurement[] {
   root.updateMatrixWorld(true);
   camera.updateMatrixWorld(true);
 
-  /* Renamed from `axes`, which now collides with the axis-map parameter above.
-     A shadowed const in the same scope is a redeclaration, and it would have
-     thrown the moment this file ran — invisible to a test suite that reads the
-     source rather than executing it. */
   const ORDER: MeasurementAxis[] = ['height', 'width', 'depth'];
   const raycaster = new THREE.Raycaster();
   const toWorld = (v: THREE.Vector3) => v.clone().applyMatrix4(root.matrixWorld);
 
   return ORDER.map((axis) => {
-    const [a, b] = axisPoints(axis, box, axes);
+    const [a, b] = axisPoints(axis, box);
     const wa = toWorld(a);
     const wb = toWorld(b);
     const pa = project(wa, camera, stageWidth, stageHeight);

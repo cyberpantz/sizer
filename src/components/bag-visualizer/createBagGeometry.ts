@@ -5,15 +5,6 @@ import { resolveWheelCount } from './visualProfile';
 
 const CORNER_SCALE = { small: 0.1, medium: 0.15, large: 0.2 };
 
-/** Which SCREEN axis each labelled dimension runs along, per shape.
- *
- *  Everything upright uses the obvious mapping. A duffel lies down, so its
- *  longest dimension — the one the record labels `heightCm`, because the record
- *  sorts largest-first — runs across the screen. Without this the leader lines
- *  keep pointing at the axes of a bag that is no longer standing up. */
-export type AxisMap = Record<'height' | 'width' | 'depth', 'x' | 'y' | 'z'>;
-export const UPRIGHT_AXES: AxisMap = { height: 'y', width: 'x', depth: 'z' };
-export const DUFFEL_AXES: AxisMap = { height: 'x', width: 'z', depth: 'y' };
 
 function roundedBox(
   w: number,
@@ -266,18 +257,26 @@ function buildBackpack(
  * than a position on the body — so it floated 6.7 cm clear of a barrel that
  * stopped short. Everything here anchors to meshBoundsLocalY() instead. */
 function buildDuffel(dims: BagDimensions, materials: MaterialSet): THREE.Group {
-  /* A DUFFEL LIES DOWN. Its longest side is horizontal — it has no wheels and
-     no telescoping handle to stand on, and nobody stores one on end.
-     `dimensions` arrives sorted largest-first and LABELLED height/width/depth,
-     which is right for a roller and upends a holdall: the Black Hole was drawn
-     as a 50 cm tower when the photograph is a wide, low box.
-     So the geometry takes the axes in the order the OBJECT uses them —
-     longest across, smallest vertical — and DUFFEL_AXES below tells the
-     measurement overlay where each labelled dimension now points, so "Height
-     19.7 in" still lands on the 50 cm edge. */
-  const w = dims.heightCm; // longest, across the screen
-  const d = dims.widthCm; // middle, into the screen
-  const h = dims.depthCm; // smallest, vertical
+  /* UPRIGHT, LIKE EVERY OTHER SHAPE AND LIKE THE FRAME.
+   *
+   * I laid this down to match the product photo, and it made a bag that fits
+   * with 5 cm to spare render OVERHANGING the sizer on two sides. The reason
+   * is the one thing this file must never get wrong: I rotated the BAG and not
+   * the SIZER, so the two were being drawn on different axis conventions.
+   *
+   *   sizer   X=width 45   Y=height 55.9   Z=depth 25
+   *   bag     X=height 50  Y=depth 21.6    Z=width 31.8
+   *   top view compares X and Z: 50 vs 45, and 31.8 vs 25. Both "over".
+   *
+   * Rotating the sizer to match is not the fix either — an airport frame
+   * stands upright, and turning it would misrepresent the thing we are
+   * claiming to draw exactly.
+   *
+   * And the upright pose is the honest one anyway: `delta()` compares
+   * largest-to-largest precisely because a bag ROTATES, so the drawing should
+   * show the orientation in which it fits. A traveller with a holdall and a
+   * sizer turns the holdall. */
+  const { heightCm: h, widthCm: w, depthCm: d } = dims;
   const group = new THREE.Group();
   const small = Math.min(w, d, h);
 
@@ -382,8 +381,6 @@ export type BagScene = {
   exterior: THREE.Group;
   envelope: THREE.LineSegments;
   packing: THREE.Group | null;
-  /** Which screen axis each labelled dimension runs along for THIS shape. */
-  axes: AxisMap;
   bounds: THREE.Box3;
   dispose: () => void;
 };
@@ -457,7 +454,6 @@ export function createBagGeometry(
     exterior,
     envelope,
     packing,
-    axes: type === 'duffel' ? DUFFEL_AXES : UPRIGHT_AXES,
     bounds,
     dispose() {
       root.traverse((obj) => {

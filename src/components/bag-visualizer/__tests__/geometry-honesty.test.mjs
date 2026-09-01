@@ -546,3 +546,40 @@ describe('every shape fills the box it claims, and every part hangs off it', () 
     );
   });
 });
+
+describe('the bag and the frame are drawn on the same axes', () => {
+  test('no builder permutes the dimensions', () => {
+    /* THE BUG THIS EXISTS FOR, and it is the worst kind this file can have:
+       the drawing disagreeing with the verdict beside it.
+
+       I laid the duffel down to match its product photo — longest side across,
+       smallest vertical — and left createGateSizer building the allowance in
+       the record's own order. Two different axis conventions in one scene:
+
+         sizer  X=width 45   Y=height 55.9  Z=depth 25
+         bag    X=height 50  Y=depth 21.6   Z=width 31.8
+
+       Top view compares X and Z, so a bag that clears Aegean by 5 cm rendered
+       overhanging the frame on both. The numbers on the left said it fits.
+
+       Rotating the SIZER to match is not the fix either: an airport frame
+       stands upright, and turning it would misrepresent the one thing we claim
+       to draw exactly. And upright is the honest pose anyway — delta() compares
+       largest-to-largest BECAUSE a bag rotates, so the drawing should show the
+       orientation in which it fits. A traveller with a holdall turns the
+       holdall.
+
+       Every builder therefore destructures the dimensions in the record's
+       order and never reassigns them. */
+    const src = code(geometry);
+    for (const m of src.matchAll(/function build(\w+)\(([\s\S]*?)\n\}/g)) {
+      const [, name, body] = m;
+      assert.doesNotMatch(
+        body,
+        /const (w|h|d) = dims\.(height|width|depth)Cm/,
+        `build${name} re-maps a dimension onto a different axis than the gate ` +
+          `sizer uses — the drawing will contradict the verdict`
+      );
+    }
+  });
+});
