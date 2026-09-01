@@ -64,8 +64,14 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
           class="group rounded-card border border-rule bg-surface p-4 no-underline shadow-panel hover:border-blue"
         >
           <span class="block font-semibold text-ink group-hover:text-blue">I am buying one</span>
+          {/* NO COUNT. It said "Browse 57 bags", and a catalogue size is a
+              number that can only lose. Say it and a reader either finds it
+              small — next to marketplaces listing thousands — or does not care.
+              Neither reaction helps them, and the useful claim is the one after
+              the comma: these are RANKED, by something no marketplace ranks by.
+              Inventory is a boast; the ordering is the service. */}
           <span class="mt-1 block text-[0.875rem] leading-snug text-muted">
-            Browse {stats.bags_sized} bags, ranked by how many airlines they clear.
+            Bags ranked by how many airlines they actually clear.
           </span>
         </a>
         <a

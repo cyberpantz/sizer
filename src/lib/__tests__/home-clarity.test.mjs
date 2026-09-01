@@ -60,14 +60,20 @@ describe('no figure on the page is typed by hand', () => {
        footer-disclosure mistake in a different costume. */
     assert.match(page, /const answerable = carriers\.filter\(\(c\) => !c\.cabin_unknown\)\.length/);
     assert.match(body, /\{answerable\} airlines/, 'the airline count is no longer derived');
-    assert.doesNotMatch(
-      body.replace(/\{[^}]*\}/g, ''),
-      /\b\d{2,}\s+airlines\b/,
-      'a hard-coded airline count has appeared'
-    );
   });
 
-  test('the catalogue count is derived too', () => {
-    assert.match(body, /\{stats\.bags_sized\} bags/, 'the bag count is hard-coded');
+  test('no count anywhere on the page is a literal', () => {
+    /* The rule is that a figure must be DERIVED — not that any particular
+       figure must be present. Frank cut the catalogue size from the "I am
+       buying one" card ("people don't need to know how many bags we have"),
+       and a guard demanding `{stats.bags_sized} bags` would have made that
+       edit look like a regression. So this checks the invariant instead: every
+       count on the page comes from an expression, whichever counts survive. */
+    const literal = [...body.replace(/\{[^}]*\}/g, '§').matchAll(/\b\d[\d,.]*\s+(airlines?|bags?|carriers?)\b/g)];
+    assert.deepEqual(
+      literal.map((m) => m[0]),
+      [],
+      'a hard-coded count has appeared — derive it, or the page keeps claiming it after the data changes'
+    );
   });
 });
