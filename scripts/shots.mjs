@@ -55,6 +55,56 @@ const WIDTH = 1280; // × deviceScaleFactor 2 = 2560px, inside the 2322–2956 r
  * return. */
 const TRIP = '?legs=AA.basic,CA.economy&bags=away-aluminum';
 
+/* The bag page needs an airline chosen before the visualiser has anything to
+   draw. Lufthansa economy puts the Away just over the line — "Probably fine" —
+   so the bag sits proud of the frame by a visible sliver rather than rattling
+   around inside it or missing it entirely. A clean pass photographs as an empty
+   box; a hopeless one photographs as a mistake. */
+   I first wrote this as `?airline=LH&fare=economy` on the URL. The bag page
+   does not read either parameter — I invented them — and the shot would have
+   been a silently empty visualiser, which is the worst kind of wrong because
+   the script still succeeds. It has to be selected on the page. */
+const pickAirline = (label) => async (p) => {
+  await p.selectOption('select', { label });
+  /* Wait for the panel to actually name the airline rather than sleeping a
+     fixed amount: the island re-renders asynchronously and a timeout that is
+     long enough on a fast machine is not on a slow one. */
+  await p.waitForFunction(
+    (n) => document.body.innerText.includes(n),
+    label,
+    { timeout: 10000 }
+  );
+  await p.waitForTimeout(500); // the 3D view eases into position
+};
+
+/** Bounding box of the first match, in page coordinates, with asymmetric
+ *  padding — a visualiser needs room for the caption underneath it and the
+ *  panel header above, and those are different amounts. */
+const boxOf = (page, selector, { padTop = 0, padBottom = 0 } = {}) =>
+  page.evaluate(
+    ([sel, top, bottom]) => {
+      const el = document.querySelector(sel);
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      if (r.height < 40) return null; // canvas that never sized: see the note below
+      return { y: Math.max(0, r.top + scrollY - top), height: r.height + top + bottom };
+    },
+    [selector, padTop, padBottom]
+  );
+
+/* RUN THIS AGAINST `dist`, NOT `astro dev`.
+ *
+ * Not a style preference. Driving the dev server live, the console filled with
+ * `504 (Outdated Optimize Dep)` — Vite re-optimising dependencies mid-session,
+ * which kills the already-loaded module graph. The visible symptom is that the
+ * bag page's 3D visualiser never sizes past its default 300×150 and paints
+ * nothing, and the airline picker appears to freeze one selection behind.
+ *
+ * I spent a while treating that as a bug in the component. It is not: a clean
+ * reload fixes it and a production build never does it at all. Worth writing
+ * down because the failure looks exactly like a broken product and photographs
+ * like one too — an empty white box where the best screen on the site should be.
+ */
 const SHOTS = [
   {
     /* THE CARD COVER, AND IT IS 4:3 ON PURPOSE.
@@ -68,8 +118,11 @@ const SHOTS = [
      * 800×600 at dsf 2 lands exactly on the 1600×1200 the other covers use.
      */
     name: 'sizer-cover',
-    url: `/check/${TRIP}`,
-    clip: { y: 150, width: 800, height: 600 },
+    url: `/bags/away-carryon/${VIZ}`,
+    /* The visualiser, cropped square-ish. Measured, not guessed: the canvas
+       sits around y 265 at a 1440 viewport with the panel's caption below it. */
+    box: (p) => boxOf(p, 'canvas', { padTop: 120, padBottom: 190 }),
+    ratio: 4 / 3,
     cover: true,
   },
   {
@@ -79,10 +132,64 @@ const SHOTS = [
     clip: { y: 0, height: 1040 },
   },
   {
+    /* THE 3D SIZER FRAME — the prettiest thing on the site, and the one screen
+       that cannot be explained in text. Needs an airline chosen, or the panel
+       renders an empty state instead of the comparison. */
+    name: 'sizer-visualizer',
+    url: `/bags/away-carryon/${VIZ}`,
+    box: (p) => boxOf(p, 'canvas', { padTop: 150, padBottom: 220 }),
+  },
+  {
+    /* THE COMPARATOR — your bag against the airline's opening, same subtraction
+       as the verdict above it. */
+    name: 'sizer-comparator',
+    url: `/bags/away-carryon/${VIZ}`,
+    box: (p) =>
+      p.evaluate(() => {
+        const h = [...document.querySelectorAll('*')].find(
+          (e) => e.children.length === 0 && /^Compare sizes$/i.test(e.textContent.trim())
+        );
+        if (!h) return null;
+        const card = h.closest('[class*="rounded-card"]') ?? h.parentElement;
+        const r = card.getBoundingClientRect();
+        return { y: r.top + scrollY, height: r.height };
+      }),
+    pad: 28,
+  },
+  {
+    /* THE FARE THAT GRANTS NOTHING. Ryanair Basic renders a dedicated empty
+       state — "Not 'too big' — nothing is allowed in the overhead locker at any
+       size" — which is the most opinionated screen on the site and says more
+       about the product than another table would. */
+    name: 'sizer-no-cabin-bag',
+    url: '/bags/away-carryon/?airline=FR',
+    before: async (p) => {
+      await p.selectOption('select', { label: 'Ryanair' }).catch(() => {});
+      await p.waitForTimeout(900);
+    },
+    box: (p) => boxOf(p, '[class*="rounded-card"]:has(canvas), canvas', { padTop: 150, padBottom: 200 }),
+  },
+  {
+    /* Both legs visible and disagreeing. ANCHORED, because the answer card sits
+       around y 3190 on a populated trip — my first draft clipped from y 90 and
+       would have photographed an empty form with total confidence. */
     name: 'sizer-check-verdict',
     url: `/check/${TRIP}`,
-    /* The answer panel, with both legs visible and disagreeing. */
-    clip: { y: 90, height: 900 },
+    box: (p) =>
+      p.evaluate(() => {
+        const row = [...document.querySelectorAll('*')].find(
+          (e) =>
+            e.children.length <= 6 &&
+            /American/.test(e.textContent) &&
+            /(Fits|Tight|Over|Risky|Probably fine)/.test(e.textContent) &&
+            e.textContent.length < 220
+        );
+        const card = row?.closest('[class*="border-l-"]');
+        if (!card) return null;
+        const r = card.getBoundingClientRect();
+        return { y: r.top + scrollY, height: Math.min(r.height, 1100) };
+      }),
+    pad: 24,
   },
   {
     name: 'sizer-check-envelope',
@@ -181,6 +288,10 @@ for (const shot of SHOTS) {
 
   if (shot.box) {
     const b = await shot.box(page);
+    /* A canvas stuck at its default 300×150 means the island never hydrated —
+       almost always the dev server's `504 Outdated Optimize Dep`. boxOf returns
+       null for it rather than handing back a box around an empty white square,
+       which is what a portfolio screenshot of a broken page looks like. */
     /* THROW RATHER THAN FALL BACK. A resolver that silently returns the whole
        page produces a plausible-looking image of the wrong thing, and you would
        not notice until it was on the portfolio. */
@@ -192,6 +303,18 @@ for (const shot of SHOTS) {
       y: Math.max(0, b.y - pad),
       height: Math.round(b.height + pad * 2),
     };
+    /* The cover has to land on 4:3 exactly or the card auto-crops it, so it
+       takes its width from the height rather than the page. Centred, because
+       the visualiser is centred in its panel. */
+    if (shot.ratio) {
+      clip.width = Math.round(clip.height * shot.ratio);
+      clip.x = Math.max(0, Math.round((WIDTH - clip.width) / 2));
+      if (clip.x + clip.width > WIDTH) {
+        clip.width = WIDTH;
+        clip.x = 0;
+        clip.height = Math.round(WIDTH / shot.ratio);
+      }
+    }
   }
 
   /* A clip taller than the page yields a short image with a white band at the

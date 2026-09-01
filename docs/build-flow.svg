@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" width="1600" height="980" font-family="Helvetica, Arial, sans-serif">
+  <!--
+    HOW A PUBLISHED FIGURE BECOMES A VERDICT.
+
+    Drawn from the actual pipeline, not an idealised one. Every count is real:
+    75 carrier records, 57 published bags, 37 promotable, 20 held back,
+    3,861 golden verdicts, 694 tests, 66 built pages.
+
+    The fork in the middle is the point of the whole diagram. Most of this is
+    an ordinary ETL; the release gate is the part that is unusual and the part
+    the case study is actually about.
+  -->
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#0D0D0C"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#4F6B2A"/>
+    </marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9A6B1F"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="980" fill="#FCFBF9"/>
+
+  <text x="60" y="72" font-size="40" font-weight="700" fill="#0D0D0C">How a published figure becomes a verdict</text>
+  <text x="60" y="112" font-size="24" fill="#6B6B66">Every number carries where it came from. Only the top two rungs may be recommended.</text>
+
+  <!-- ── 1. SOURCES ────────────────────────────────────────────── -->
+  <text x="60" y="188" font-size="20" font-weight="700" fill="#6B6B66" letter-spacing="2">01 · READ</text>
+  <rect x="60" y="210" width="300" height="86" rx="8" fill="#fff" stroke="#0D0D0C" stroke-opacity="0.16"/>
+  <text x="82" y="248" font-size="25" font-weight="600" fill="#0D0D0C">Airline baggage pages</text>
+  <text x="82" y="278" font-size="21" fill="#6B6B66">75 carriers, fare by fare</text>
+
+  <rect x="60" y="312" width="300" height="86" rx="8" fill="#fff" stroke="#0D0D0C" stroke-opacity="0.16"/>
+  <text x="82" y="350" font-size="25" font-weight="600" fill="#0D0D0C">Manufacturer pages</text>
+  <text x="82" y="380" font-size="21" fill="#6B6B66">the maker's own figures</text>
+
+  <rect x="60" y="414" width="300" height="86" rx="8" fill="#fff" stroke="#0D0D0C" stroke-opacity="0.16"/>
+  <text x="82" y="452" font-size="25" font-weight="600" fill="#0D0D0C">Review measurements</text>
+  <text x="82" y="482" font-size="21" fill="#6B6B66">where no maker figure exists</text>
+
+  <text x="60" y="536" font-size="20" fill="#9A6B1F">Never a marketplace listing.</text>
+  <text x="60" y="562" font-size="20" fill="#6B6B66">Each figure stored with its URL</text>
+  <text x="60" y="588" font-size="20" fill="#6B6B66">and the date it was read.</text>
+
+  <line x1="370" y1="355" x2="428" y2="355" stroke="#0D0D0C" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- ── 2. NORMALISE ──────────────────────────────────────────── -->
+  <text x="440" y="188" font-size="20" font-weight="700" fill="#6B6B66" letter-spacing="2">02 · NORMALISE</text>
+  <rect x="440" y="210" width="300" height="200" rx="8" fill="#fff" stroke="#0D0D0C" stroke-opacity="0.16"/>
+  <text x="462" y="250" font-size="25" font-weight="600" fill="#0D0D0C">toBag() · toCarrier()</text>
+  <text x="462" y="286" font-size="21" fill="#6B6B66">One validated shape.</text>
+  <text x="462" y="314" font-size="21" fill="#6B6B66">Units converted once.</text>
+  <text x="462" y="342" font-size="21" fill="#6B6B66">A zero, a negative or a</text>
+  <text x="462" y="370" font-size="21" fill="#6B6B66">missing axis is rejected,</text>
+  <text x="462" y="398" font-size="21" fill="#6B6B66">not guessed.</text>
+
+  <line x1="750" y1="310" x2="808" y2="310" stroke="#0D0D0C" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- ── 3. RANK ───────────────────────────────────────────────── -->
+  <text x="820" y="188" font-size="20" font-weight="700" fill="#6B6B66" letter-spacing="2">03 · RANK THE SOURCE</text>
+  <rect x="820" y="210" width="300" height="270" rx="8" fill="#fff" stroke="#0D0D0C" stroke-opacity="0.16"/>
+
+  <rect x="836" y="226" width="268" height="38" rx="5" fill="#EAF0E0"/>
+  <text x="850" y="252" font-size="21" font-weight="600" fill="#3D5420">measured</text>
+  <text x="1058" y="252" font-size="19" fill="#4F6B2A" text-anchor="end">0</text>
+
+  <rect x="836" y="270" width="268" height="38" rx="5" fill="#EAF0E0"/>
+  <text x="850" y="296" font-size="21" font-weight="600" fill="#3D5420">maker_overall</text>
+  <text x="1058" y="296" font-size="19" fill="#4F6B2A" text-anchor="end">37</text>
+
+  <line x1="836" y1="320" x2="1104" y2="320" stroke="#0D0D0C" stroke-opacity="0.3" stroke-dasharray="4 4"/>
+
+  <text x="850" y="352" font-size="21" fill="#6B6B66">review</text>
+  <text x="1058" y="352" font-size="19" fill="#6B6B66" text-anchor="end">11</text>
+  <text x="850" y="388" font-size="21" fill="#6B6B66">maker_unspecified</text>
+  <text x="1058" y="388" font-size="19" fill="#6B6B66" text-anchor="end">9</text>
+  <text x="850" y="424" font-size="21" fill="#6B6B66">maker_packing</text>
+  <text x="1058" y="424" font-size="19" fill="#6B6B66" text-anchor="end">0</text>
+  <text x="850" y="460" font-size="21" fill="#6B6B66">reseller</text>
+  <text x="1058" y="460" font-size="19" fill="#6B6B66" text-anchor="end">excluded</text>
+
+
+  <!-- fork -->
+  <path d="M1130 300 L1170 300 L1170 250 L1214 250" fill="none" stroke="#4F6B2A" stroke-width="2.5" marker-end="url(#ag)"/>
+  <path d="M1130 400 L1170 400 L1170 452 L1214 452" fill="none" stroke="#9A6B1F" stroke-width="2.5" marker-end="url(#aa)"/>
+
+  <!-- ── 4. GATE OUTCOMES ──────────────────────────────────────── -->
+  <text x="1226" y="188" font-size="20" font-weight="700" fill="#6B6B66" letter-spacing="2">04 · GATE</text>
+
+  <rect x="1226" y="212" width="314" height="86" rx="8" fill="#EAF0E0" stroke="#4F6B2A" stroke-opacity="0.45"/>
+  <text x="1246" y="248" font-size="23" font-weight="600" fill="#3D5420">May be recommended</text>
+  <text x="1246" y="278" font-size="21" fill="#4F6B2A">37 bags</text>
+
+  <rect x="1226" y="414" width="314" height="112" rx="8" fill="#F6EFE2" stroke="#9A6B1F" stroke-opacity="0.45"/>
+  <text x="1246" y="450" font-size="23" font-weight="600" fill="#7A5416">Shown, not suggested</text>
+  <text x="1246" y="480" font-size="21" fill="#9A6B1F">20 bags — source named</text>
+  <text x="1246" y="508" font-size="21" fill="#9A6B1F">on the page</text>
+
+  <text x="1226" y="560" font-size="19" fill="#6B6B66">The dashed line is the release gate.</text>
+  <text x="1226" y="584" font-size="19" fill="#6B6B66">Both sides are still evaluated — it</text>
+  <text x="1226" y="608" font-size="19" fill="#6B6B66">only decides what we put forward.</text>
+
+  <!-- ── 5. ENGINE ─────────────────────────────────────────────
+       The arrow into EVALUATE comes from RANK, not from the gate. Every bag
+       is evaluated whatever its provenance; the gate governs recommendation
+       only. Drawing it from the held-back box implied the opposite. -->
+  <line x1="970" y1="490" x2="970" y2="660" stroke="#0D0D0C" stroke-width="2" marker-end="url(#a)"/>
+
+  <text x="60" y="668" font-size="20" font-weight="700" fill="#6B6B66" letter-spacing="2">05 · EVALUATE</text>
+  <rect x="60" y="690" width="1480" height="130" rx="8" fill="#fff" stroke="#0D0D0C" stroke-opacity="0.16"/>
+  <text x="86" y="730" font-size="25" font-weight="600" fill="#0D0D0C">evaluate(bag, carrier, { fare, role })</text>
+  <text x="86" y="764" font-size="21" fill="#6B6B66">three axes · sum-of-sides limit · 2 cm give on a soft bag · how strictly that airline checks, 1–10</text>
+  <text x="86" y="796" font-size="21" fill="#6B6B66">Nothing resolves below 0.3 cm — not a tape measure, not a gate frame, not us.</text>
+
+  <g font-size="21" font-weight="600">
+    <rect x="880" y="708" width="112" height="42" rx="21" fill="#EAF0E0"/><text x="936" y="736" fill="#3D5420" text-anchor="middle">Fits</text>
+    <rect x="1004" y="708" width="112" height="42" rx="21" fill="#EAF0E0"/><text x="1060" y="736" fill="#3D5420" text-anchor="middle">Tight</text>
+    <rect x="1128" y="708" width="176" height="42" rx="21" fill="#F6EFE2"/><text x="1216" y="736" fill="#7A5416" text-anchor="middle">Probably fine</text>
+    <rect x="1316" y="708" width="112" height="42" rx="21" fill="#F6EFE2"/><text x="1372" y="736" fill="#7A5416" text-anchor="middle">Risky</text>
+    <rect x="1440" y="708" width="88" height="42" rx="21" fill="#F5E3E0"/><text x="1484" y="736" fill="#8C3A2E" text-anchor="middle">Over</text>
+  </g>
+
+  <!-- ── 6. VERIFY & SHIP ──────────────────────────────────────── -->
+  <line x1="800" y1="826" x2="800" y2="866" stroke="#0D0D0C" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="60" y="878" width="1480" height="72" rx="8" fill="#F2F0EB" stroke="#0D0D0C" stroke-opacity="0.16"/>
+  <text x="86" y="922" font-size="22" fill="#0D0D0C">
+    <tspan font-weight="600">Verify</tspan><tspan fill="#6B6B66">  —  3,861 golden verdicts, byte-identical  ·  694 tests  ·  every claim on the site recomputed at build  →  </tspan><tspan font-weight="600">66 static pages</tspan>
+  </text>
+</svg>
