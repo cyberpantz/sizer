@@ -31,7 +31,14 @@ import {
   SQUISH_CM,
   WEIGHT_TIGHT_RATIO,
 } from './constants.mjs';
-import { EngineInputError, isPromotable, isSized, toBag, toCarrier } from './normalize.mjs';
+import {
+  CABIN_ABSENCE,
+  EngineInputError,
+  isPromotable,
+  isSized,
+  toBag,
+  toCarrier,
+} from './normalize.mjs';
 
 /** Compared largest-to-smallest, never by axis name: a bag rotates, so
  *  length/width/depth are the manufacturer's convention rather than a physical
@@ -148,8 +155,28 @@ export function createEngine(overrides = {}) {
     return 'clears';
   }
 
-  /** One bag against one carrier+fare. The single call every surface should use. */
-  function evaluate(bag, carrier) {
+  /**
+   * One bag against one carrier+fare, IN A ROLE.
+   *
+   * `role` is 'cabin' (the overhead bin) or 'personal' (under the seat), and it
+   * defaults to 'cabin' so every existing caller — the build, the bag pages,
+   * the golden snapshot's 3,861 verdicts — is untouched.
+   *
+   * THE ROLE IS NOT A PROPERTY OF THE BAG. Nobody is undecided about which of
+   * their two bags is going overhead; they own a roller and a rucksack and they
+   * already know. Every competitor asks the other question — "could this object
+   * theoretically be a personal item?" — and prints two percentages side by
+   * side, which is a question no traveller has. The role is a fact about the
+   * TRIP, so it is an argument here rather than a field on the record.
+   *
+   * The band ladder is shared deliberately. It is a model of how likely an
+   * airline is to measure, and the gauge at a Ryanair gate is the same gauge
+   * whichever bag you put in it. Giving personal items their own, laxer curve
+   * would be inventing enforcement data we do not have, in the expensive
+   * direction — which is the one thing this engine will not do.
+   */
+  function evaluate(bag, carrier, { role = 'cabin' } = {}) {
+    if (role === 'personal') return evaluatePersonal(bag, carrier);
     /* A carrier that no longer flies cannot produce a verdict. Returning
        'clears' or 'wont' would both be wrong — the honest answer is that the
        question no longer applies. Checked FIRST, before the allowance, because
@@ -214,6 +241,106 @@ export function createEngine(overrides = {}) {
     };
   }
 
+  /**
+   * The same bag, judged against the space under the seat in front.
+   *
+   * Kept as its own function rather than a branch threaded through evaluate(),
+   * because the ABSENCES are different and that is most of what this has to get
+   * right. A cabin allowance is missing for four reasons; an under-seat one is
+   * missing for a fifth that has no cabin equivalent and is the most
+   * interesting answer we give:
+   *
+   *   NOT_PUBLISHED — the airline was read, and publishes no number at all.
+   *
+   * Delta, Southwest, Qatar, Aegean, Air Serbia and three Chinese majors are
+   * all in this state. It is a FINDING, not a gap: it means the real limit is
+   * the physical space beneath a particular seat on a particular aircraft, and
+   * no website can honestly give you a figure for that. Every competitor either
+   * invents one or shows nothing. "Delta publishes no size; it has to fit under
+   * the seat in front of you" is a better answer than both, and we can only
+   * give it because somebody recorded the absence instead of omitting the row.
+   *
+   * So this returns `unpublished: true` — distinct from `unknown`, which means
+   * WE have not looked. Collapsing the two would throw away the more useful of
+   * the two facts.
+   */
+  function evaluatePersonal(bag, carrier) {
+    if (carrier.flying === false) {
+      return {
+        role: 'personal',
+        band: null,
+        delta_cm: null,
+        dimension: null,
+        no_cabin_bag: false,
+        not_flying: true,
+        status: carrier.status,
+        ceased_at: carrier.ceased_at,
+        successor: carrier.successor ?? null,
+        advisories: [
+          {
+            id: 'not_flying',
+            level: carrier.status,
+            ceased_at: carrier.ceased_at,
+            successor: carrier.successor ?? null,
+          },
+        ],
+      };
+    }
+
+    const allowance = carrier.allowances?.personal ?? null;
+    if (!allowance) {
+      const why = carrier.personal_absence ?? null;
+      /* NOT_PERMITTED has no real instances today — every carrier researched so
+         far grants a personal item even on the fares that grant nothing else,
+         which is exactly why Ryanair Basic is survivable. Handled anyway,
+         because the shape of the answer differs completely: "you may not bring
+         one" is a fact about the ticket, not a fact about our data. */
+      if (why === CABIN_ABSENCE.NOT_PERMITTED) {
+        return {
+          role: 'personal',
+          band: 'wont',
+          delta_cm: null,
+          dimension: null,
+          no_personal_item: true,
+          advisories: [{ id: 'no_personal_item', level: why }],
+        };
+      }
+      const unpublished = why === CABIN_ABSENCE.NOT_PUBLISHED;
+      return {
+        role: 'personal',
+        band: null,
+        delta_cm: null,
+        dimension: null,
+        unknown: true,
+        /* The distinction the whole taxonomy exists for. `unknown` says we
+           cannot answer; `unpublished` says nobody can, and says why. */
+        unpublished,
+        reason: why,
+        advisories: [{ id: unpublished ? 'personal_unpublished' : 'personal_unknown', level: why }],
+      };
+    }
+
+    const d = delta(bag, allowance);
+    return {
+      role: 'personal',
+      band: band(d.cm, carrier.strictness, carrier.enforcement_researched),
+      delta_cm: d.cm,
+      dimension: d.dimension,
+      basis: d.basis,
+      no_cabin_bag: false,
+      promotable: isPromotable(bag),
+      dim_source: bag.dim_source,
+      /* WEIGHT ADVISORIES DO NOT RUN HERE, and the omission is deliberate.
+         36 of the 48 sized personal rows carry no weight at all, and on Air
+         France, KLM, Cathay, JAL, ANA and Scoot the figure that exists is a
+         cabin TOTAL covering both bags — `weight_shared`. Running the cabin
+         weight rules against one bag of a shared pair would produce a confident
+         number that is wrong in the generous direction. Set-level weight is
+         docs/27 phase 4; until it is built, saying nothing beats saying that. */
+      advisories: [],
+    };
+  }
+
   function runAdvisories(ctx) {
     return config.advisories.map((fn) => fn({ ...ctx, config })).filter(Boolean);
   }
@@ -233,12 +360,17 @@ export function createEngine(overrides = {}) {
   }
 
   /** Which leg decides the trip — the one to name in the copy. A leg with no
-   *  cabin allowance always binds, whatever the dimensions say. */
-  function bindingLeg(bag, carriers) {
+   *  allowance always binds, whatever the dimensions say.
+   *
+   *  Takes the same `role` as evaluate(), because "which leg decides" has a
+   *  different answer for each bag you are carrying: your suitcase may be
+   *  stopped by Ryanair and your rucksack by Singapore's ten-centimetre slot,
+   *  and naming one leg for both would be wrong about one of them. */
+  function bindingLeg(bag, carriers, { role = 'cabin' } = {}) {
     let worst = null;
     for (const carrier of carriers) {
-      const result = evaluate(bag, carrier);
-      if (result.no_cabin_bag) return { carrier, result };
+      const result = evaluate(bag, carrier, { role });
+      if (result.no_cabin_bag || result.no_personal_item) return { carrier, result };
       if (result.unknown) return { carrier, result }; // an unanswerable leg decides the trip
       if (!worst || result.delta_cm > worst.result.delta_cm) worst = { carrier, result };
     }
@@ -264,6 +396,15 @@ export function createEngine(overrides = {}) {
    * Returns `null`, never `false`, when the carrier publishes no size. An
    * airline that says only "it must fit under the seat in front of you" has not
    * told us your bag is too big, and we must not say it did.
+   *
+   * THE STRICT ANSWER, deliberately narrower than evaluate(..., 'personal').
+   * This one asks "is it inside the published box", full stop: no soft-bag
+   * compression, no strictness, no bands. That is what a CATALOGUE claim needs —
+   * `fits_personal_item` on a bag page is a durable statement about a product,
+   * not a judgement about one traveller's odds at one gate. The banded answer is
+   * what /check gives, because there the reader has told us the airline and the
+   * fare. Two questions, two functions; conflating them would put "Probably
+   * fine" on a product page, where there is no gate to be probably fine at.
    */
   function fitsPersonalItem(bag, carrier) {
     const p = carrier?.allowances?.personal;
