@@ -10,3 +10,9 @@ icon-preview.html
 # tracked, so every run showed up as a modified file and every commit either
 # carried someone's process id or had to skip it deliberately.
 .astro/dev.json
+
+# pnpm's content-addressable package cache. Committed by accident in
+# "Standardise on pnpm" — 19,392 files, 1.1 GB, including a 149.7 MB blob that
+# GitHub refuses outright. Nothing in the repo configures a store-dir here; it
+# is just the cache, and it is reproducible from the lockfile.
+.pnpm-store/
