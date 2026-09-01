@@ -112,6 +112,15 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   let targetPitch = PRESETS.default.pitch;
   let yaw = targetYaw;
   let pitch = targetPitch;
+  /* A TWEEN, NOT A DECAY. The old move was `yaw += (target - yaw) * 0.2` —
+     exponential, so it covers most of the distance in the first few frames and
+     then crawls. That reads as a snap followed by a settle, which is a UI
+     transition; a solid object turning has a beginning, a middle and an end.
+     Fixed duration, eased both ends, so the eye can follow it round. */
+  let turnFrom = { yaw, pitch };
+  let turnTo = { yaw, pitch };
+  let turnStart = 0;
+  const TURN_MS = 620;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xf5f2ed);
@@ -269,41 +278,73 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   scene.add(fill);
   scene.add(new THREE.AmbientLight(0xffffff, 0.32));
 
+  /** The model's bounds with the rig UNROTATED — the one measurement that does
+   *  not change as the view turns. */
+  function localBounds(): THREE.Box3 {
+    const y = rig.rotation.y;
+    const x = rig.rotation.x;
+    rig.rotation.set(0, 0, 0);
+    rig.updateMatrixWorld(true);
+    const box = visibleBox(content);
+    rig.rotation.set(x, y, 0);
+    rig.updateMatrixWorld(true);
+    return box;
+  }
+
+  /* ONE FRUSTUM FOR EVERY VIEW — this is what makes it read as a rotation.
+   *
+   * fitCamera used to run on each view change and re-fit to whatever the model
+   * measured in that orientation. Front frames the width, side frames the
+   * depth, so the bag was drawn at a different SCALE in each: turning it made
+   * it grow and shrink. Under an orthographic camera there is no perspective
+   * convergence to say "this is turning", so a scale change is the only signal
+   * the eye gets — and it reads as zoom, not rotation. Frank: "it just kinda
+   * looks like it is growing and collapsing."
+   *
+   * Orthographic stays. It is the honest projection for comparing a bag to a
+   * box, and swapping to perspective would make near edges read as larger than
+   * far ones in a drawing whose whole job is that they do not.
+   *
+   * So the frustum is sized ONCE, for the worst case across every preset, and
+   * never touched again. Exact rather than a bounding sphere: we only ever show
+   * four orientations, so rotate the local box into each and take the largest
+   * extent any of them needs. Nothing clips, and nothing moves. */
   function fitCamera() {
     width = stage.clientWidth;
     height = stage.clientHeight;
     renderer.setSize(width, height, false);
 
-    content.updateMatrixWorld(true);
-    /* AIM AT WHAT IS ACTUALLY THERE, rather than trusting that it was moved to
-       the origin. content.position centres the model in its OWN frame, but the
-       box measured here is a world box: it changes as the rig rotates, and any
-       asymmetry — a sizer deck, a binding marker, the invisible envelope before
-       visibleBox() excluded it — leaves the drawn centre somewhere other than
-       (0, 0, 0), while the frustum stays symmetric about it. That is a residual
-       vertical drift you cannot fix by padding. Centre the camera on the box. */
-    const bounds = visibleBox(content);
-    const size = bounds.getSize(new THREE.Vector3());
-    const focus = bounds.getCenter(new THREE.Vector3());
+    const local = localBounds();
+    const size = local.getSize(new THREE.Vector3());
+    const focus = local.getCenter(new THREE.Vector3());
 
-    /* THE SLIDE ALLOWANCE IS ONLY NEEDED WHERE THE SLIDE IS VISIBLE.
-     *
-     * The bag travels along Z. Under an ORTHOGRAPHIC camera looking down -Z,
-     * motion along Z changes nothing on screen at all — so in the front view
-     * this allowance bought nothing, and cost a great deal: it widened halfW,
-     * which flipped the aspect branch below, which sized the frustum off
-     * halfW / aspect and made it ~35% taller than the model needed. That is
-     * the dead band under the bag. The allowance is real in side and top,
-     * where Z maps to screen X.
-     *
-     * Sized per view, so fitCamera() now has to run when the view changes. */
-    const travel = activePreset === 'front' ? 0 : (fitAnim?.travelCm ?? 0) * 0.6;
-    /* Headroom for the overlay furniture. The width leader sits 8% of the
-       height ABOVE the bag and carries a label chip, so a pad that only
-       cleared the geometry clipped it off the top of the stage. */
+    /* The slide runs along Z and needs room wherever Z has a screen direction,
+       which is every view except the dead-on front elevation. Folded into the
+       shared frustum rather than applied per view, for the same reason as
+       everything else here: a term that varies by view is a scale change. */
+    const travel = (fitAnim?.travelCm ?? 0) * 0.6;
+    const half = new THREE.Vector3(size.x, size.y, size.z + travel).multiplyScalar(0.5);
+
+    let needW = 0;
+    let needH = 0;
+    for (const p of Object.values(PRESETS)) {
+      /* Extent of the box after this rotation, per screen axis. */
+      const cy = Math.abs(Math.cos(p.yaw));
+      const sy = Math.abs(Math.sin(p.yaw));
+      const cx = Math.abs(Math.cos(p.pitch));
+      const sx = Math.abs(Math.sin(p.pitch));
+      const w = half.x * cy + half.z * sy;
+      const dAfterYaw = half.x * sy + half.z * cy;
+      const h = half.y * cx + dAfterYaw * sx;
+      needW = Math.max(needW, w);
+      needH = Math.max(needH, h);
+    }
+
+    /* Headroom for the overlay furniture: the width leader sits above the bag
+       and carries a label chip. */
     const pad = 1.16;
-    const halfW = Math.max(size.x, size.z) * 0.5 * pad + travel * 0.25;
-    const halfH = Math.max(size.y, size.z) * 0.5 * pad;
+    const halfW = needW * pad;
+    const halfH = needH * pad;
 
     const aspect = width / height;
     if (aspect >= halfW / halfH) {
@@ -318,7 +359,9 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       camera.bottom = -halfW / aspect;
     }
 
-    const dist = Math.max(size.x, size.y, size.z) * 2.4;
+    /* Far enough back that nothing clips at any angle, measured from the
+       rotation-invariant diagonal. */
+    const dist = half.length() * 4;
     camera.position.set(focus.x, focus.y, focus.z + dist);
     camera.lookAt(focus);
     camera.updateProjectionMatrix();
@@ -573,9 +616,13 @@ export function initFitVisualizer(opts: InitOptions): () => void {
 
   function setView(name: ViewPreset) {
     activePreset = name;
-    fitCamera();
-    targetYaw = PRESETS[name].yaw;
-    targetPitch = PRESETS[name].pitch;
+    turnFrom = { yaw, pitch };
+    turnTo = { yaw: PRESETS[name].yaw, pitch: PRESETS[name].pitch };
+    /* No arc on the very first paint — the opening view should already be
+       there, not swing into place while the reader is still reading the badge. */
+    turnStart = performance.now() - (turnStart === 0 ? TURN_MS : 0);
+    targetYaw = turnTo.yaw;
+    targetPitch = turnTo.pitch;
     /* No button is pressed in the opening view, because none of them describes
        it — claiming "Front" while showing a three-quarter angle would make the
        control lie about what you are looking at. */
@@ -623,21 +670,35 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       }
     }
 
-    const viewMoving =
-      Math.abs(yaw - targetYaw) > 0.001 || Math.abs(pitch - targetPitch) > 0.001;
+    const elapsed = performance.now() - turnStart;
+    const viewMoving = elapsed < TURN_MS;
 
     if (viewMoving) {
-      yaw += (targetYaw - yaw) * 0.2;
-      pitch += (targetPitch - pitch) * 0.2;
+      const t = elapsed / TURN_MS;
+      const e = t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+      yaw = turnFrom.yaw + (turnTo.yaw - turnFrom.yaw) * e;
+
+      /* THE ARC IS WHAT MAKES IT READ AS A SOLID.
+       *
+       * front and side are both flat elevations at pitch 0. Interpolating
+       * straight between them keeps the model edge-on the whole way, and under
+       * an ORTHOGRAPHIC camera — which has no perspective convergence to give
+       * depth away — an edge-on box turning looks like a rectangle changing
+       * width. Nothing tells the eye there is a third dimension.
+       *
+       * So the path lifts through a three-quarter view and comes back down:
+       * for the length of the move the reader sees the TOP face, which is the
+       * one cue orthographic still gives you. It lands exactly on the target,
+       * because the bump is a sine that is zero at both ends. */
+      const arc = Math.sin(t * Math.PI) * 0.26;
+      pitch = turnFrom.pitch + (turnTo.pitch - turnFrom.pitch) * e + arc;
       applyView();
       settled = false;
     } else if (!settled) {
-      /* fitCamera() measures a WORLD box, and setView() calls it before the rig
-         has actually turned — so the framing it computes belongs to the OLD
-         orientation. Re-fit once, on the frame the rotation comes to rest, or
-         side and top stay framed for the front view. */
       settled = true;
-      fitCamera();
+      yaw = targetYaw;
+      pitch = targetPitch;
+      applyView();
     }
 
     if (!visible) return;

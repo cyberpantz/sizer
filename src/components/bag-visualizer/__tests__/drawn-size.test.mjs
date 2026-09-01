@@ -193,3 +193,59 @@ describe('surface detail earns its place or is not drawn', () => {
     }
   });
 });
+
+describe('turning reads as turning, not as zooming', () => {
+  const client = readFileSync(
+    'src/components/bag-visualizer/BagVisualizer.client.ts',
+    'utf8'
+  ).replace(/\/\*[\s\S]*?\*\//g, '');
+
+  test('the frustum is sized once, for every preset at once', () => {
+    /* THE BUG. fitCamera ran on each view change and re-fit to whatever the
+       model measured in THAT orientation — front frames the width, side frames
+       the depth — so the bag was drawn at a different scale in each. Under an
+       orthographic camera there is no perspective convergence to say "this is
+       turning", so a scale change is the only signal the eye gets, and it
+       reads as zoom. Frank: "it just kinda looks like it is growing and
+       collapsing." */
+    assert.match(client, /for \(const p of Object\.values\(PRESETS\)\)/, 'the frustum is not sized across every preset');
+    assert.doesNotMatch(
+      client,
+      /function setView\([\s\S]{0,200}?fitCamera\(\)/,
+      'the camera re-fits on a view change again — the model will rescale as it turns'
+    );
+  });
+
+  test('it stays orthographic', () => {
+    /* Perspective would give the depth cue for free and cost the thing the
+       drawing is for: near edges would render larger than far ones in a picture
+       whose entire job is that they do not. */
+    assert.match(client, /new THREE\.OrthographicCamera/);
+    assert.doesNotMatch(client, /PerspectiveCamera/, 'a perspective camera would distort the comparison');
+  });
+
+  test('the move is a fixed-duration tween, not an exponential decay', () => {
+    /* `yaw += (target - yaw) * 0.2` covers most of the distance in a few frames
+       then crawls: a snap followed by a settle. A solid turning has a
+       beginning, a middle and an end. */
+    assert.doesNotMatch(client, /yaw \+= \(targetYaw - yaw\)/, 'the decay is back');
+    assert.match(client, /const TURN_MS = \d+/, 'the move has no duration');
+  });
+
+  test('the path arcs through a three-quarter view and lands flat', () => {
+    /* front and side are both pitch 0. Interpolating straight between them
+       keeps the box edge-on the whole way, and an edge-on box turning under an
+       orthographic camera is a rectangle changing width. The arc lifts the
+       path so the reader sees the TOP face — the one cue orthographic still
+       gives — and returns to zero, so it lands exactly on the preset. */
+    assert.match(client, /Math\.sin\(t \* Math\.PI\) \* ([\d.]+)/, 'the arc is gone');
+    const arc = Number(client.match(/const arc = Math\.sin\(t \* Math\.PI\) \* ([\d.]+)/)[1]);
+    assert.ok(arc > 0.1, `${arc} rad is too shallow to show the top face`);
+    assert.ok(arc < 0.5, `${arc} rad swings past a three-quarter view`);
+    /* sin(0) and sin(pi) are both 0, so the endpoints are exact by
+       construction — no drift onto a preset that is meant to be square-on. */
+    for (const t of [0, 1]) {
+      assert.ok(Math.abs(Math.sin(t * Math.PI) * arc) < 1e-12, 'the arc does not land flat');
+    }
+  });
+});
