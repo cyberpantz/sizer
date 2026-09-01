@@ -542,7 +542,22 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     },
     { rootMargin: '200px' }
   );
-  io.observe(root);
+  /* OBSERVE THE STAGE, NOT THE ROOT.
+   *
+   * The root is `display: contents` now, so the picker could sit in one column
+   * and the canvas in another. An element with `display: contents` GENERATES NO
+   * BOX: it has no layout, its bounding rect is 0 x 0 at the origin, and an
+   * IntersectionObserver watching it reports isIntersecting: false forever.
+   *
+   * `visible` therefore latched false, and render() returns before both
+   * renderer.render() and scheduleRender() — so the loop drew one frame and
+   * stopped. The view buttons still fired, still set their targets, still
+   * updated aria-pressed; the rig simply never got another frame to turn in.
+   * A control that is perfectly wired and does nothing.
+   *
+   * The stage is the thing whose visibility we actually care about, it has a
+   * real box, and ResizeObserver above already watches it. */
+  io.observe(stage);
 
   fitCamera();
   applyView();

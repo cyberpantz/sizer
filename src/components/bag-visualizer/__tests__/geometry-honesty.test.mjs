@@ -134,3 +134,31 @@ describe('the dimension lines are drawn the way a drawing is drawn', () => {
     assert.match(body, /const nx = -vy \/ len/, 'the screen-space perpendicular is gone');
   });
 });
+
+describe('a box-less element is never observed', () => {
+  test('IntersectionObserver watches the stage, not the display:contents root', () => {
+    /* THE REGRESSION THIS EXISTS FOR. Splitting the visualiser across two
+       columns made its root `display: contents`, which generates NO BOX — no
+       layout, a 0 x 0 bounding rect, and isIntersecting: false forever. The
+       render loop gates on that flag and returns before scheduling the next
+       frame, so the view buttons went dead: wired correctly, firing correctly,
+       setting their targets correctly, and never given another frame to turn
+       in.
+       Nothing failed. Nothing logged. The canvas simply stopped. */
+    const src = code(client);
+    assert.match(src, /io\.observe\(stage\)/, 'the observer is back on a box-less element');
+    assert.doesNotMatch(
+      src,
+      /io\.observe\(root\)/,
+      'root is display:contents and reports isIntersecting:false forever — the loop will die'
+    );
+  });
+
+  test('the root really is display:contents, so the rule above still applies', () => {
+    assert.match(
+      stage,
+      /class="bag-visualizer contents"/,
+      'the root no longer uses display:contents; this guard may be obsolete'
+    );
+  });
+});
