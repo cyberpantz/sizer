@@ -27,11 +27,21 @@
  * the interesting thing ends. `full: true` would give you a mile of footer.
  */
 import { chromium } from 'playwright';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 
 const BASE = process.env.BASE ?? 'http://localhost:4321';
-const OUT = 'shots';
-const WIDTH = 1280; // × deviceScaleFactor 2 = 2560px assets
+
+/* WRITES STRAIGHT INTO THE PORTFOLIO, because that is where they have to end
+   up and a copy step is a chance to forget. Override with OUT= if the repo
+   lives somewhere else. */
+const OUT =
+  process.env.OUT ?? '../portfolio/frank-portfolio/src/assets/projects';
+
+/* PNG, NOT WEBP. My first version wrote webp, which was wrong: the portfolio
+   imports PNGs through astro:assets and emits its own responsive AVIF/WebP.
+   Handing it a webp means it re-encodes an already-lossy file. Read off the
+   existing assets, not assumed. */
+const WIDTH = 1280; // × deviceScaleFactor 2 = 2560px, inside the 2322–2956 range there
 
 /* THE ITINERARY IS CHOSEN, NOT ARBITRARY.
  *
@@ -46,6 +56,22 @@ const WIDTH = 1280; // × deviceScaleFactor 2 = 2560px assets
 const TRIP = '?legs=AA.basic,CA.economy&bags=away-aluminum';
 
 const SHOTS = [
+  {
+    /* THE CARD COVER, AND IT IS 4:3 ON PURPOSE.
+     *
+     * projectsV2.ts is explicit about this: covers are pre-cropped to 4:3
+     * rather than left to object-cover, because these screens are shot at
+     * 1.6–2.3 and a centred auto-crop "throws away 17–42% of the width — on
+     * the wide ones that removed a headline and half a card."
+     *
+     * So this is a composed window, not a resized version of the landing shot.
+     * 800×600 at dsf 2 lands exactly on the 1600×1200 the other covers use.
+     */
+    name: 'sizer-cover',
+    url: `/check/${TRIP}`,
+    clip: { y: 150, width: 800, height: 600 },
+    cover: true,
+  },
   {
     name: 'sizer-landing',
     url: '/',
@@ -143,7 +169,9 @@ for (const shot of SHOTS) {
   await page.waitForTimeout(400); // webfonts settle; text reflows without this
   if (shot.before) await shot.before(page);
 
-  let clip = shot.clip && { x: 0, width: WIDTH, ...shot.clip };
+  /* A cover is a composed window, so it carries its own width and must not be
+     stretched to the full page width like the spread shots are. */
+  let clip = shot.clip && { x: 0, width: shot.clip.width ?? WIDTH, ...shot.clip };
 
   if (shot.anchor) {
     const box = await page.locator(shot.anchor).first().boundingBox();
@@ -171,12 +199,39 @@ for (const shot of SHOTS) {
   const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
   if (clip.y + clip.height > pageHeight) clip.height = pageHeight - clip.y;
 
-  const file = `${OUT}/${shot.name}.webp`;
-  await page.screenshot({ path: file, clip, type: 'webp', quality: 90 });
-  const ratio = (WIDTH / clip.height).toFixed(2);
-  console.log(`  ${file}  ${WIDTH * 2}×${clip.height * 2}  ratio ${ratio}`);
+  const file = `${OUT}/${shot.name}.png`;
+  await page.screenshot({ path: file, clip, type: 'png' });
+
+  const w = clip.width * 2;
+  const h = Math.round(clip.height) * 2;
+  const ratio = (clip.width / clip.height).toFixed(3);
+  /* The cover is the one shot with a hard requirement, so it is checked rather
+     than trusted — a cover that is not 4:3 gets auto-cropped by the card and
+     loses the part that made it worth choosing. */
+  const flag = shot.cover
+    ? Math.abs(clip.width / clip.height - 4 / 3) < 0.01
+      ? '  4:3 ✓'
+      : '  ⚠ NOT 4:3 — the card will crop this'
+    : '';
+  console.log(`  ${shot.name}.png  ${w}×${h}  ratio ${ratio}${flag}`);
 }
 
 await browser.close();
-console.log(`\n${SHOTS.length} shots in ${OUT}/ — 2× webp, no chrome, no border.`);
+
+/* THE SNIPPET, GENERATED. projectsV2.ts wants an `import` per shot plus a
+   `shots` array, and hand-typing eight import lines against eight filenames is
+   exactly the sort of thing that ends with one typo and a build error. Captions
+   are sentence case here because CaseStudy.astro uppercases them in CSS —
+   writing them in caps would double up. */
+const snippet = `${SHOTS.filter((s) => !s.cover)
+  .map((s) => {
+    const ident = s.name.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    return `import ${ident} from '../assets/projects/${s.name}.png';`;
+  })
+  .join('\n')}
+import sizerCover from '../assets/projects/sizer-cover.png';
+`;
+writeFileSync('shots-imports.txt', snippet);
+console.log(`\n${SHOTS.length} PNGs written to ${OUT}/`);
+console.log('Import lines for projectsV2.ts are in shots-imports.txt.');
 console.log('Captions and alt text are in docs/case-study.md.');
