@@ -33,8 +33,9 @@ export function createFitAnimation(opts: FitAnimationOptions) {
    * bag is seated so a reader glancing over mid-cycle still sees the verdict. */
   const SEAT_T = 0.38; // the slide-in completes
   const LIFT_T = 0.58; // the slide-out begins
-  const ALARM_IN = 0.042; // ~220ms of the 5.2s cycle
-  const ALARM_OUT = 0.03; // ~160ms — the reset is quicker than the alarm
+  const PULSE_LEN = 0.2; // ~1.04s of the 5.2s cycle — 1.5 beats, about 1.4 Hz
+  const HOLD = 0.72; // what it settles to, so the verdict stays stated
+  const ALARM_OUT = 0.03; // ~160ms — the reset is quicker than the pulse
 
   function update(bagRig: THREE.Group, elapsedMs: number) {
     const t = (elapsedMs % CYCLE_MS) / CYCLE_MS;
@@ -60,12 +61,30 @@ export function createFitAnimation(opts: FitAnimationOptions) {
     bagRig.position.z = z;
     bagRig.rotation.x = tilt;
 
-    /* 0 while approaching and after it has left, 1 while seated. */
+    /* 0 while approaching and after it has left; a PULSE on arrival that
+       settles to a sustained hold while seated.
+     *
+     * Two beats, not a strobe. The swell is what makes the frame read as
+     * REACTING to the bag rather than being painted a colour — and it settles
+     * rather than blinking, so a reader who looks over mid-dwell still finds a
+     * stated verdict instead of a flicker.
+     *
+     * Deliberately slow enough to be safe: the whole pulse runs over ~0.6s,
+     * roughly 1.6 Hz. The photosensitive-seizure threshold is three flashes a
+     * second, and this never reaches half of it. Nothing here should ever be
+     * tuned faster without revisiting that. */
     let seated = 0;
     if (t >= SEAT_T && t < LIFT_T) {
-      seated = Math.min(1, (t - SEAT_T) / ALARM_IN);
+      const since = (t - SEAT_T) / PULSE_LEN;
+      if (since >= 1) {
+        seated = HOLD;
+      } else {
+        /* Rise, dip, rise, settle — sin over 1.5 cycles, decaying onto HOLD. */
+        const swell = Math.sin(since * Math.PI * 1.5) ** 2;
+        seated = HOLD + (1 - HOLD) * swell * (1 - since * 0.35);
+      }
     } else if (t >= LIFT_T && t < LIFT_T + ALARM_OUT) {
-      seated = 1 - (t - LIFT_T) / ALARM_OUT;
+      seated = HOLD * (1 - (t - LIFT_T) / ALARM_OUT);
     }
     return { seated };
   }

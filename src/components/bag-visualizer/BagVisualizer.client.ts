@@ -179,9 +179,17 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     });
   }
 
-  /* Only an oversize bag arms the frame. `null` — an unanswered leg — arms
-     nothing: we have no finding to announce. */
-  const overLimit = fitsWithinLimit(result.band) === false;
+  /* THE FRAME ANSWERS EITHER WAY — green when it fits, red when it does not.
+   *
+   * The first version only reddened on failure, so a bag that sailed through
+   * got a frame that never reacted at all: the reader watched it slide in and
+   * nothing happened. Silence is a poor way to say yes, and it left the reader
+   * unsure whether the drawing had finished thinking.
+   *
+   * `null` — an unanswered leg — still arms nothing. We have no finding to
+   * announce, and a frame that goes green because we did not check would be
+   * the worst thing on this page. */
+  const fits = fitsWithinLimit(result.band);
   /* prefers-reduced-motion gets the finding without the flash: the frame sits
      permanently red rather than pulsing. The information is not the animation,
      and a reader who has asked for less movement has not asked for less
@@ -190,13 +198,18 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     typeof window !== 'undefined' &&
     window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
   const alarmMaterial =
-    overLimit && sizer
+    fits !== null && sizer
       ? ((sizer.userData.frameMaterial as THREE.MeshStandardMaterial) ?? null)
       : null;
   const FRAME_BASE = new THREE.Color(0x74808d);
-  const FRAME_ALARM = new THREE.Color(bandHex('wont'));
-  const alarmStrength = 1;
-  if (alarmMaterial && reducedMotion) alarmMaterial.color.copy(FRAME_ALARM);
+  const FRAME_ALARM = new THREE.Color(bandHex(fits ? 'clears' : 'wont'));
+  /* Asymmetric, as everywhere else: a refusal is worth more of the frame than
+     an approval. Telling someone their bag is fine when it is not costs them a
+     gate fee and their bag; a green slightly too quiet costs nobody anything. */
+  const alarmStrength = fits ? 0.75 : 1;
+  if (alarmMaterial && reducedMotion) {
+    alarmMaterial.color.copy(FRAME_BASE).lerp(FRAME_ALARM, alarmStrength);
+  }
 
   content.updateMatrixWorld(true);
   const bagBox = visibleBox(bagScene.exterior);
@@ -557,9 +570,9 @@ export function initFitVisualizer(opts: InitOptions): () => void {
        * still travelling would be pre-judging, and the drawing would state its
        * claim before the measurement it rests on had been taken.
        *
-       * Only when the bag is actually over. A frame that flashes on every bag
-       * teaches a reader to ignore it, which costs exactly the readers it is
-       * there for. */
+       * Green when it fits, red when it does not, and NOTHING when the engine
+       * declined to answer — a frame that went green because nobody checked
+       * would be the worst thing on this page. */
       if (alarmMaterial) {
         alarmMaterial.color.copy(FRAME_BASE).lerp(FRAME_ALARM, seated * alarmStrength);
       }

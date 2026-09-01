@@ -220,25 +220,54 @@ describe('the frame answers on arrival, not during the approach', () => {
     assert.match(body, /t >= SEAT_T && t < LIFT_T/, 'the alarm no longer starts at arrival');
   });
 
-  test('the reset is quicker than the alarm', () => {
-    /* Warnings should land and leave cleanly. A slow fade out reads as the
-       frame being unsure. */
-    const rampIn = Number(body.match(/ALARM_IN = ([\d.]+)/)?.[1]);
+  test('the reset is quicker than the pulse', () => {
+    /* A verdict should land and leave cleanly. A slow fade out reads as the
+       frame being unsure of what it just said. */
+    const pulse = Number(body.match(/PULSE_LEN = ([\d.]+)/)?.[1]);
     const rampOut = Number(body.match(/ALARM_OUT = ([\d.]+)/)?.[1]);
-    assert.ok(rampOut < rampIn, 'the frame lingers red after the bag has gone');
-    assert.ok(rampIn < 0.08, 'the alarm is too slow to read as a reaction');
+    assert.ok(pulse && rampOut, 'the pulse timings have moved');
+    assert.ok(rampOut < pulse, 'the frame lingers coloured after the bag has gone');
   });
 
-  test('only an oversize bag arms it', () => {
-    /* A frame that flashes on every bag teaches a reader to ignore it, which
-       costs exactly the readers it exists for. And an unanswered leg arms
-       nothing: there is no finding to announce. */
+  test('it settles to a sustained hold rather than blinking', () => {
+    /* A reader who looks over mid-dwell must find a STATED verdict, not a
+       flicker they have to wait out. */
+    const hold = Number(body.match(/HOLD = ([\d.]+)/)?.[1]);
+    assert.ok(hold > 0.5, `a hold of ${hold} lets the verdict fade out between beats`);
+    assert.ok(hold < 1, 'with no swell above the hold there is no pulse at all');
+  });
+
+  test('it answers both ways — green for a pass, red for a refusal', () => {
+    /* The first version only reddened on failure, so a bag that sailed through
+       got a frame that never reacted: the reader watched it slide in and
+       nothing happened. Silence is a poor way to say yes. */
     const src = code(client);
-    assert.match(
-      src,
-      /fitsWithinLimit\(result\.band\) === false/,
-      'the alarm no longer checks that the bag is actually over'
-    );
+    assert.match(src, /bandHex\(fits \? 'clears' : 'wont'\)/, 'the frame only knows one answer');
+  });
+
+  test('an unanswered leg arms nothing at all', () => {
+    /* A frame that went green because nobody checked would be the worst thing
+       on this page. */
+    const src = code(client);
+    assert.match(src, /fits !== null && sizer/, 'an unresearched carrier can now colour the frame');
+  });
+
+  test('a refusal is louder than an approval', () => {
+    const strength = code(client).match(/alarmStrength = fits \? ([\d.]+) : ([\d.]+)/);
+    assert.ok(strength, 'the asymmetry has gone');
+    assert.ok(+strength[1] < +strength[2], 'approval must not shout louder than refusal');
+  });
+
+  test('the pulse is well under the flash threshold', () => {
+    /* Two beats over ~600ms is about 1.6 Hz. The photosensitive-seizure
+       guidance is three flashes a second; this must never be tuned past half
+       of it without revisiting that. */
+    const len = Number(body.match(/PULSE_LEN = ([\d.]+)/)?.[1]);
+    assert.ok(len, 'PULSE_LEN has moved');
+    /* sin squared has period pi, so sin(s * pi * 1.5) squared is 1.5 peaks
+       across the pulse. Guidance is three flashes a second. */
+    const hz = 1.5 / (len * 5.2);
+    assert.ok(hz < 1.5, `${hz.toFixed(2)} Hz is too close to the flash threshold`);
   });
 
   test('reduced motion gets the finding without the flash', () => {
@@ -248,7 +277,7 @@ describe('the frame answers on arrival, not during the approach', () => {
     assert.match(src, /prefers-reduced-motion/, 'the alarm ignores the motion preference');
     assert.match(
       src,
-      /if \(alarmMaterial && reducedMotion\) alarmMaterial\.color\.copy\(FRAME_ALARM\)/,
+      /if \(alarmMaterial && reducedMotion\) \{\s*alarmMaterial\.color\.copy\(FRAME_BASE\)\.lerp\(FRAME_ALARM/,
       'reduced motion loses the verdict instead of stating it statically'
     );
   });
