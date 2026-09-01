@@ -109,3 +109,28 @@ describe('the model is centred in the frustum', () => {
     assert.match(args[1], /layoutBox/, 'Y should be centred on the same box as X and Z');
   });
 });
+
+describe('the dimension lines are drawn the way a drawing is drawn', () => {
+  test('the arrowhead is anchored at its tip, not its middle', () => {
+    /* The marker path points at (10, 5). refX="5" anchors the marker's MIDDLE
+       to the line end, so half an arrowhead hung past it and the arrows sat
+       somewhere other than where the measurement stops. */
+    const marker = stage.match(/<marker id="viz-arrow"[^>]*>/)?.[0] ?? '';
+    assert.ok(marker, 'the viz-arrow marker has moved; this guard needs rewriting');
+    assert.match(marker, /refX="10"/, 'the arrowhead is anchored by its middle again');
+  });
+
+  test('the witness ticks are perpendicular to the measurement, not collinear', () => {
+    /* They used to run along the same axis, 8% past each end — so the visible
+       stroke continued BEYOND the arrowheads and the arrows read as landing
+       short. A dimension line terminates at its arrows; the ticks cross it. */
+    const src = readFileSync('src/components/bag-visualizer/projectMeasurements.ts', 'utf8');
+    const body = src.replace(/\/\*[\s\S]*?\*\//g, '');
+    assert.doesNotMatch(
+      body,
+      /ext1End|ext2End/,
+      'the collinear extension points are back; the arrows will sit inside the line ends'
+    );
+    assert.match(body, /const nx = -vy \/ len/, 'the screen-space perpendicular is gone');
+  });
+});

@@ -75,13 +75,31 @@ export function projectMeasurements(
     const mid = wa.clone().lerp(wb, 0.5);
     const label = project(mid, camera, stageWidth, stageHeight);
 
+    /* WITNESS LINES RUN ACROSS THE MEASUREMENT, NOT ALONG IT.
+     *
+     * These were collinear: the same direction as the dimension line, extended
+     * 8% past each end. So the visible stroke ran BEYOND the arrowheads, and
+     * the arrows read as landing short of the line's ends — which is exactly
+     * what they were doing.
+     *
+     * A dimension line in any technical drawing terminates AT its arrowheads,
+     * and the ticks that mark the extent sit perpendicular to it. Computed in
+     * SCREEN space rather than world space, because "perpendicular" is a fact
+     * about the drawing, not about the bag: a world-space normal projects to
+     * something skewed under rotation, and the tick would lean. */
+    const vx = pb.x - pa.x;
+    const vy = pb.y - pa.y;
+    const len = Math.hypot(vx, vy) || 1;
+    const nx = -vy / len;
+    const ny = vx / len;
+    const TICK = 5;
+    const pe1 = { x: pa.x + nx * TICK, y: pa.y + ny * TICK };
+    const pe2 = { x: pb.x + nx * TICK, y: pb.y + ny * TICK };
+    const pe1b = { x: pa.x - nx * TICK, y: pa.y - ny * TICK };
+    const pe2b = { x: pb.x - nx * TICK, y: pb.y - ny * TICK };
+
     const dir = wb.clone().sub(wa).normalize();
     const span = wa.distanceTo(wb);
-    const ext1End = wa.clone().sub(dir.clone().multiplyScalar(span * 0.08));
-    const ext2End = wb.clone().add(dir.clone().multiplyScalar(span * 0.08));
-    const pe1 = project(ext1End, camera, stageWidth, stageHeight);
-    const pe2 = project(ext2End, camera, stageWidth, stageHeight);
-
     raycaster.set(wa, dir);
     const hits = raycaster.intersectObject(root, true);
     const occluded = hits.length > 0 && hits[0].distance < span * 0.95;
@@ -90,8 +108,10 @@ export function projectMeasurements(
       axis,
       valueCm: AXIS_VALUE[axis](dims),
       line: { x1: pa.x, y1: pa.y, x2: pb.x, y2: pb.y },
-      ext1: { x1: pa.x, y1: pa.y, x2: pe1.x, y2: pe1.y },
-      ext2: { x1: pb.x, y1: pb.y, x2: pe2.x, y2: pe2.y },
+      /* Full ticks, crossing the line at each end — so the arrowheads sit
+         exactly where the measurement stops. */
+      ext1: { x1: pe1b.x, y1: pe1b.y, x2: pe1.x, y2: pe1.y },
+      ext2: { x1: pe2b.x, y1: pe2b.y, x2: pe2.x, y2: pe2.y },
       label: { x: label.x, y: label.y },
       occluded,
     };

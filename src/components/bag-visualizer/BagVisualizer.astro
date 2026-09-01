@@ -162,7 +162,11 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
           aria-hidden="true"
         >
           <defs>
-            <marker id="viz-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            {/* refX is the TIP, not the middle. The path's point is at (10, 5), so
+                anchoring at refX="5" hung half an arrowhead past each end of the
+                line — the arrows sat somewhere other than where the measurement
+                actually stops. */}
+            <marker id="viz-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
               <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
             </marker>
           </defs>
