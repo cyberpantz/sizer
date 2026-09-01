@@ -78,20 +78,42 @@ const RISK = [
       <div data-ui hidden class="grid items-start gap-7 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
 
         <div>
-          <section class="rounded-card border border-rule bg-surface shadow-panel">
-            <div class="border-b border-rule px-5 py-4">
-              <h2 class="text-lg font-semibold">Your bags</h2>
-              <p class="mt-0.5 text-[0.9375rem] text-muted">Add the ones you're choosing between.</p>
-            </div>
-            <div class="relative z-20 px-5 pt-4 pb-[1.125rem]" data-bagbox></div>
-          </section>
+          {/* FLIGHTS FIRST, AND THAT IS AN ARGUMENT ABOUT WHAT IS KNOWABLE.
 
-          <section class="mt-4 rounded-card border border-rule bg-surface shadow-panel">
+              Frank: "What if we swapped the order of Flights and Bags, so a
+              user adds their flights and fare class then adds their bags. We
+              could impose some sort of rules that way."
+
+              The old order asked "which bag?" before the page knew whether the
+              ticket allowed one. On a Ryanair Basic fare the honest first
+              sentence is "this fare includes no cabin bag" — knowable before
+              the reader picks anything — so asking for a bag first meant
+              collecting input we might have to invalidate.
+
+              And it is what lets the bag panel be SHAPED by the answer rather
+              than merely validated against it. Once the fare is known, "you get
+              one cabin bag and one personal item" is a fact, so the slots can
+              start as the fare's own shape instead of a generic "add a bag"
+              that can produce a set no ticket permits.
+
+              The z-index swaps with the order. Both panels open a combobox that
+              overhangs the panel below it, so whichever is on top needs the
+              higher stacking context — this was z-20 on bags purely because
+              bags used to be first. */}
+          <section class="rounded-card border border-rule bg-surface shadow-panel">
             <div class="border-b border-rule px-5 py-4">
               <h2 class="text-lg font-semibold">Your flights</h2>
               <p class="mt-0.5 text-[0.9375rem] text-muted">Every leg, in order. The strictest one wins.</p>
             </div>
-            <div class="relative z-10 px-5 pt-4 pb-[1.125rem]" data-legbox></div>
+            <div class="relative z-20 px-5 pt-4 pb-[1.125rem]" data-legbox></div>
+          </section>
+
+          <section class="mt-4 rounded-card border border-rule bg-surface shadow-panel">
+            <div class="border-b border-rule px-5 py-4">
+              <h2 class="text-lg font-semibold">Your bags</h2>
+              <p class="mt-0.5 text-[0.9375rem] text-muted" data-bagbox-hint>Add the ones you're choosing between.</p>
+            </div>
+            <div class="relative z-10 px-5 pt-4 pb-[1.125rem]" data-bagbox></div>
           </section>
 
           <section class="mt-4 rounded-card border border-rule bg-surface shadow-panel">
@@ -340,7 +362,18 @@ const RISK = [
        it recommends carefully. An empty slot asks the question the page is
        for. */
     state.bags = bags.length ? bags : [{ slug: '', role: 'cabin' }];
-    state.legs = legs.length ? legs : [{ iata: DATA.carriers[0].iata, fare: DATA.carriers[0].fares[0] }];
+    /* NO AIRLINE IS PRESELECTED EITHER.
+
+       This opened on DATA.carriers[0] — Aegean, by alphabet — and that was
+       tolerable while flights were the second panel and a bag was the subject.
+       Now that flights LEAD and everything below is computed from them, opening
+       on an arbitrary carrier would make the whole page an answer about an
+       airline the reader never named.
+
+       It is the rule already written three lines above for bags, applied to the
+       thing that now decides more: an empty slot asks the question the page is
+       for. */
+    state.legs = legs.length ? legs : [{ iata: '', fare: '' }];
     if (['strict', 'balanced', 'chance'].includes(p.get('risk'))) state.risk = p.get('risk');
   }
 
@@ -349,7 +382,10 @@ const RISK = [
       .filter((x) => x.slug)
       .map(encodeSlot)
       .join(',')}` +
-    `&legs=${state.legs.map((l) => `${l.iata}.${l.fare}`).join(',')}&risk=${state.risk}`;
+    `&legs=${state.legs
+      .filter((l) => l.iata)
+      .map((l) => `${l.iata}.${l.fare}`)
+      .join(',')}&risk=${state.risk}`;
 
   /* ---------- model ---------- */
 
@@ -357,6 +393,10 @@ const RISK = [
      call site, so score(), the card header, the comparator and the leg table
      all work on it without knowing it was typed rather than chosen. The shape
      is the same shape the catalogue ships. */
+  /* Legs the reader has actually named an airline for. Every computation runs
+     on these; the empty slots are a form state, not part of the trip. */
+  const flownLegs = () => state.legs.filter((l) => l.iata && carrierOf(l.iata));
+
   const bagOf = (slug) => {
     if (isCustom(slug)) {
       const rec = toCustomRecord(slug);
@@ -382,7 +422,7 @@ const RISK = [
   function score({ slug, role = 'cabin' }) {
     const E = ENGINES[state.risk] ?? ENGINES.balanced;
     const bag = toEngineBag(bagOf(slug));
-    const rows = state.legs.map((leg, i) => {
+    const rows = flownLegs().map((leg, i) => {
       const rec = carrierOf(leg.iata).record;
       const carrier = toCarrier(rec, leg.fare);
       return { i, leg, carrier, record: rec, result: E.evaluate(bag, carrier, { role }) };
@@ -611,13 +651,19 @@ const RISK = [
     el('[data-legbox]').innerHTML =
       state.legs
         .map((leg, i) => {
-          const c = carrierOf(leg.iata);
-          const regional = c.record.operates_regional_jets === true;
+          /* AN EMPTY LEG IS A LEGITIMATE STATE NOW. The page opens on one, and
+             it renders the picker and nothing else — no fare dropdown for an
+             airline nobody has chosen, and no regional-jet warning about a
+             fleet we have not been told about. */
+          const c = leg.iata ? carrierOf(leg.iata) : null;
+          const regional = c?.record.operates_regional_jets === true;
           return `<div class="grid grid-cols-[1.625rem_1fr_auto] items-start gap-3 border-b border-rule py-3 last:border-b-0">
             <span class="mt-0.5 grid h-[1.625rem] w-[1.625rem] place-items-center rounded-full bg-surface-2 font-mono text-[0.875rem] text-muted">${i + 1}</span>
             <span class="min-w-0">
               <div data-carrier-mount="${i}"></div>
-              <select data-leg-fare="${i}" aria-label="Fare for flight ${i + 1}"
+              ${
+                c
+                  ? `<select data-leg-fare="${i}" aria-label="Fare for flight ${i + 1}"
                 class="mt-1.5 w-full cursor-pointer rounded-chip border border-rule-strong bg-surface px-2.5 py-1.5 text-[0.90625rem] text-muted">
                 ${c.fares
                   .map(
@@ -625,7 +671,9 @@ const RISK = [
                       `<option value="${esc(f)}"${f === leg.fare ? ' selected' : ''}>${esc(fareLabel(f, c.fare_names?.[f]))}</option>`
                   )
                   .join('')}
-              </select>
+              </select>`
+                  : ''
+              }
               ${
                 regional
                   ? `<span class="mt-1.5 block text-[0.90625rem] leading-snug text-amber">⚠ Often a regional jet. The overhead bins are smaller than the airline's own limit, so a full-size bag is frequently taken at the door.</span>`
@@ -758,8 +806,8 @@ const RISK = [
       draw();
     });
     root.querySelector('[data-addleg]').addEventListener('click', () => {
-      const c = DATA.carriers[0];
-      state.legs.push({ iata: c.iata, fare: c.fares[0] });
+      /* Empty, for the same reason the first one is. */
+      state.legs.push({ iata: '', fare: '' });
       draw();
     });
     /* Downshift, mounted imperatively rather than as an Astro island.
@@ -1458,22 +1506,39 @@ const RISK = [
     </div>`;
   }
 
+  /* Two empty states now, in the order the page asks its questions. Each says
+     what the NEXT step buys the reader rather than merely naming it — an empty
+     panel that says "choose a bag" is a label on a hole. */
+  const emptyPanel = (title, body) => `
+    <div class="rounded-card border border-dashed border-rule-strong bg-surface p-[1.625rem]">
+      <p class="text-lg font-semibold text-ink">${title}</p>
+      <p class="mt-2 max-w-[56ch] text-ink-2">${body}</p>
+    </div>`;
+
   function renderAnswer() {
+    const legs = flownLegs();
     const chosen = state.bags.filter((x) => x.slug);
 
-    /* Nothing chosen yet. Say what the page will do rather than showing an
-       empty panel — and say it in terms of the thing that makes this tool
-       different from a per-airline lookup. */
+    /* THE FLIGHT COMES FIRST, so its absence is the first thing to say. Nothing
+       below this point is answerable without it: the fare decides whether a
+       cabin bag exists at all, and asking for a bag before we know that is
+       collecting input we may have to throw away. */
+    if (!legs.length) {
+      el('[data-answer]').innerHTML = emptyPanel(
+        'Start with your flights',
+        `Add every leg and the fare you booked. The fare decides more than the bag does —
+         on some tickets there is no cabin bag at any size, and we can tell you that
+         before you go looking for a suitcase.`
+      );
+      return;
+    }
+
     if (!chosen.length) {
-      el('[data-answer]').innerHTML = `
-        <div class="rounded-card border border-dashed border-rule-strong bg-surface p-[1.625rem]">
-          <p class="text-lg font-semibold text-ink">Choose a bag to see the answer</p>
-          <p class="mt-2 max-w-[56ch] text-ink-2">
-            We check it against every flight you list, name the leg that decides
-            the trip, and draw the biggest bag that survives all of them. Your
-            airlines are already set — pick a bag on the left.
-          </p>
-        </div>`;
+      el('[data-answer]').innerHTML = emptyPanel(
+        'Now add your bags',
+        `We check each one against every leg, name the flight that decides the trip, and
+         draw the biggest bag that survives all of them.`
+      );
       return;
     }
 
