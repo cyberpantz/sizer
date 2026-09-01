@@ -220,7 +220,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
   <div class="mx-auto max-w-page px-6 pt-6">
 
     <p class="text-[0.9375rem] text-muted">
-      <a href="/bags/" class="text-blue">Bags</a> › {bag.brand}
+      <a href="/bags/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">Bags</a> › {bag.brand}
     </p>
 
     <header class="pt-2 pb-5">
@@ -279,7 +279,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           </p>
           {ref && (
             <p class="mt-2 text-[0.9375rem]">
-              <a href={ref} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">
+              <a href={ref} rel="nofollow noopener noreferrer" target="_blank" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">
                 {sourceLinkText} ↗
               </a>
               {at && <span class="text-muted"> · read {at}</span>}
@@ -316,7 +316,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           {(gap || (record.conflicts ?? []).length > 0) && (
             <details class="group mt-2">
               <summary
-                class="inline-flex cursor-pointer list-none items-center gap-1 text-[0.875rem] font-semibold text-blue [&::-webkit-details-marker]:hidden"
+                class="inline-flex cursor-pointer list-none items-center gap-1 text-[0.875rem] font-semibold text-blue hover:text-blue-hover hover:underline underline-offset-2 [&::-webkit-details-marker]:hidden"
               >
                 <span class="group-open:hidden">Why that matters</span>
                 <span class="hidden group-open:inline">Show less</span>
@@ -382,7 +382,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
       <p class="mt-2 max-w-[64ch] text-ink-2">
         On the cheapest economy fare each airline publishes. A different fare
         often changes the answer, which is what{' '}
-        <a href="/check/" class="text-blue">the trip checker</a> is for.
+        <a href="/check/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">the trip checker</a> is for.
       </p>
 
       {byRegion.map((group) => (
@@ -411,7 +411,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                     {sourceOf.has(carrier.iata) ? (
                       <>
                         {' · '}
-                        <a href={sourceOf.get(carrier.iata).url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue">baggage policy ↗</a>
+                        <a href={sourceOf.get(carrier.iata).url} rel="nofollow noopener noreferrer" target="_blank" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">baggage policy ↗</a>
                       </>
                     ) : (
                       <span> · no source recorded yet</span>
@@ -478,7 +478,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           <ul class="mt-2 space-y-3">
             {record.reviews.map((r) => (
               <li class="text-ink-2">
-                <a href={r.url} rel="nofollow noopener noreferrer" target="_blank" class="font-semibold text-blue">{r.publication}</a>
+                <a href={r.url} rel="nofollow noopener noreferrer" target="_blank" class="font-semibold text-blue hover:text-blue-hover hover:underline underline-offset-2">{r.publication}</a>
                 {r.award && <span> — {r.award}</span>}
                 {r.caveat && <span class="block text-[0.9375rem] text-muted">“{r.caveat}”</span>}
               </li>

@@ -21,12 +21,16 @@
       button was for them. */}
   <button type="button" data-unit="cm" aria-pressed="true" aria-label="Show metric units, centimetres and kilograms"
     class="text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
-           aria-pressed:bg-blue aria-pressed:text-on-blue
+           hover:bg-surface-2 hover:text-ink
+           aria-pressed:bg-blue aria-pressed:text-on-blue aria-pressed:hover:bg-blue-hover
+           aria-pressed:hover:text-on-blue
            group-data-[resolved=false]:aria-pressed:bg-surface-2
            group-data-[resolved=false]:aria-pressed:text-ink-2">Metric</button>
   <button type="button" data-unit="in" aria-pressed="false" aria-label="Show imperial units, inches and pounds"
     class="text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
-           aria-pressed:bg-blue aria-pressed:text-on-blue
+           hover:bg-surface-2 hover:text-ink
+           aria-pressed:bg-blue aria-pressed:text-on-blue aria-pressed:hover:bg-blue-hover
+           aria-pressed:hover:text-on-blue
            group-data-[resolved=false]:aria-pressed:bg-surface-2
            group-data-[resolved=false]:aria-pressed:text-ink-2">Imperial</button>
 </div>
