@@ -2,7 +2,7 @@
 
 **Status:** implementation specification
 
-**Route:** `/bags/[slug]`
+**Route:** `/bags/[slug]` today, `/check` next — see *Reuse on /check* below.
 
 **Placement:** in the product header, replacing the large static silhouette in
 the right column on desktop and appearing between the title and dimensions on
@@ -440,6 +440,94 @@ development, but must fail silently in production.
 | Labels overlap | Snap labels to reserved card edges |
 | Narrow mobile | Default front view; place depth rule below model |
 | Reduced motion | Direct manipulation without inertia or idle motion |
+
+## Reuse on /check
+
+**Frank: "this 3D visualizer should be able to be reused without much work."**
+It can, and the constraint that makes it possible is worth stating as a rule.
+
+> **Geometry in, drawing out. The component never reads the page it is on.**
+
+Everything it needs arrives as a prop. The temptation is to have it fetch the
+bag, look up the carrier and resolve the fare — after which it works only where
+all three happen to exist.
+
+| Prop | `/bags/[slug]` | `/check` |
+|---|---|---|
+| `bag` | the record | the record |
+| `limit` | from the page's own airline picker | the binding leg's allowance |
+| `verdict` | the band | the band |
+| `role` | *(not applicable)* | `cabin` or `personal` |
+
+### The blocker was never in the component
+
+The first draft of this spec put the airline cage LAST, blocked on the bag page
+needing an airline picker that did not exist. `/check` already knows the
+airline — that is the entire point of the page. Sequencing a feature behind the
+one surface that lacks its input is how a reusable thing gets built as a
+single-page thing.
+
+### What /check adds that the bag page cannot ask
+
+The engine now returns both allowances (`docs/27`), so `/check` can pass a
+`role` and the same component answers a question the bag page has no way to
+pose:
+
+- a bag marked **carry-on** is caged against `allowances.cabin`
+- a bag marked **personal item** is caged against `allowances.personal`
+
+Singapore, EVA, Starlux, Scoot and airBaltic publish a personal item **10 cm
+deep**. Drawing a laptop bag against a ten-centimetre slot is the most
+persuasive thing this project can put on a screen, and it is unreachable
+without the role.
+
+### Three cases with no cage, and none of them draw a box
+
+The component refuses rather than approximates. Each is a finding, and each is
+worth saying in words instead:
+
+| Case | Scale | What the reader is told |
+|---|---|---|
+| `personal_absence: not_published` | 13 carriers | *"Delta publishes no size — it has to fit under the seat in front of you."* |
+| Linear-only limit | Singapore, Uzbekistan, Air Astana, Ural | A sum is not a box. There is nothing to build a cage from. |
+| `no_cabin_bag` | 5 fares | *"No allowance at any size."* The fare is the answer, not the drawing. |
+
+Inventing a box for any of these would undo the work that made those absences
+legible in the first place.
+
+### One instance per answer, not one per leg
+
+A trip has up to eight legs. Eight WebGL contexts is not a page, it is a
+device-heater — and browsers cap contexts anyway, so the later ones would fail
+silently. `/check` draws **the binding leg only**, which is the leg the verdict
+already names. The others stay in the comparison table.
+
+---
+
+## What was learned building it
+
+Recorded because each cost real time and none could fail on its own: the output
+is a picture, and pictures have no assertions. All five are now guarded in
+`src/components/bag-visualizer/__tests__/geometry-honesty.test.mjs`.
+
+1. **The drawing may not contradict the number.** The handle was drawn *above*
+   the stated height, so a bag that cleared its limit rendered poking out of the
+   sizer. `external_cm` already includes wheels and handles; adding height
+   double-counts the gap the rest of the codebase exists to be careful about.
+2. **The cage must BE the allowance.** Posts centred on the limit plane make the
+   opening smaller and the silhouette larger, both by a tube radius — about
+   0.6 cm, twice `EPS_CM`.
+3. **Fix the container before the camera.** `aspect-[4/5] w-full` derived the
+   stage height from the card width, and the canvas filled it. Three rounds of
+   camera tuning improved the framing without ever fixing it.
+4. **`display: contents` generates no box.** Splitting the component across two
+   columns silently killed its `IntersectionObserver`, and with it the render
+   loop. The view buttons stayed perfectly wired to nothing.
+5. **One colour ladder.** The visualizer grew its own, merged `clears` with
+   `line` — erasing Tight — and hard-coded hexes copied from the palette.
+   `BAND_COPY` now carries the CSS variable and the number side by side.
+
+---
 
 ## Delivery
 
