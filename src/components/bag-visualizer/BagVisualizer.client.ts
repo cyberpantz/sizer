@@ -706,11 +706,19 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   /* No drawing, no caption describing one. The stated finding IS the content
      now, and a legend for an absent picture is furniture. */
   const caption = root.querySelector('[data-stage-caption]') as HTMLElement | null;
-  if (caption && !canDrawSizer) caption.setAttribute('hidden', '');
+  caption?.toggleAttribute('hidden', !canDrawSizer);
+  /* SET, NEVER ACCUMULATE — the same rule as the stage reset above. Both of
+     these were written once and never cleared, so an over-limit fare left the
+     overlay pinned open and `data-binding-axis` on the root for whatever fare
+     the reader picked next. */
+  const overlayWrap = root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null;
   if (bindingAxis && overflowCm > 0) {
     root.dataset.bindingAxis = bindingAxis;
-    const overlayWrap = root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null;
     if (overlayWrap) overlayWrap.style.opacity = '1';
+  } else {
+    delete root.dataset.bindingAxis;
+    /* Back to the stylesheet's hover behaviour rather than a pinned value. */
+    overlayWrap?.style.removeProperty('opacity');
   }
   /* THE BADGE, ABOVE THE DRAWING IT LABELS.
    *
@@ -766,6 +774,31 @@ export function initFitVisualizer(opts: InitOptions): () => void {
    *
    * The finding is worth more than the picture here, and it is the finding a
    * competitor cannot state at all. */
+  /* RESET FIRST, THEN APPLY. Every mount puts the stage into a KNOWN state
+   * rather than only into the state it needs.
+   *
+   * The bug: the no-compare branch below hides the canvas, the view controls
+   * and the measurement overlay, and shows the finding panel. Nothing put them
+   * back. So picking Air France Basic (no cabin bag) and then switching the
+   * fare to Economy remounted with canDrawSizer true, skipped the branch
+   * entirely, and inherited the previous fare's DOM: the badge said "Fits" over
+   * a panel still reading "Air France includes no cabin bag on this fare".
+   *
+   * A one-way mutation is only safe while there is one way through. There are
+   * two, and a fare picker means either can follow either. Setting the state
+   * unconditionally is idempotent and cannot drift; an `else` branch would have
+   * worked today and rotted the next time a third case appeared. */
+  const stageParts = {
+    panel: root.querySelector('[data-no-compare]') as HTMLElement | null,
+    controls: root.querySelector('[data-view-controls]') as HTMLElement | null,
+    overlay: root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null,
+  };
+  stageParts.panel?.setAttribute('hidden', '');
+  stageParts.controls?.removeAttribute('hidden');
+  stageParts.overlay?.removeAttribute('hidden');
+  canvas.style.removeProperty('display');
+  for (const el of root.querySelectorAll('[data-icon]')) el.setAttribute('hidden', '');
+
   if (!canDrawSizer) {
     const panel = root.querySelector('[data-no-compare]') as HTMLElement | null;
     const title = root.querySelector('[data-no-compare-title]') as HTMLElement | null;

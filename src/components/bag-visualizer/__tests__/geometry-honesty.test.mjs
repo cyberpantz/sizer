@@ -611,3 +611,40 @@ describe('the badge bar reads subject-then-verdict', () => {
     assert.doesNotMatch(note, /text-muted/, 'the flight is greyed out again');
   });
 });
+
+describe('a remount leaves no trace of the previous fare', () => {
+  const src = code(client);
+
+  test('the stage is reset to a known state before the branch, not after it', () => {
+    /* THE BUG. The no-compare branch hides the canvas, the view controls and
+       the measurement overlay, and shows the finding panel. Nothing put them
+       back. Pick Air France Basic (no cabin bag), then switch the fare to
+       Economy: the remount has canDrawSizer true, skips the branch entirely,
+       and inherits the previous fare's DOM. The badge read "Fits" over a panel
+       still saying "Air France includes no cabin bag on this fare".
+
+       A one-way mutation is only safe while there is one way through. A fare
+       picker means either state can follow either, so the mount SETS the state
+       rather than adding to it. An `else` would have worked today and rotted
+       the next time a third case appeared. */
+    const resetAt = src.indexOf('canvas.style.removeProperty');
+    const branchAt = src.indexOf('if (!canDrawSizer)');
+    assert.ok(resetAt > 0, 'the stage is no longer reset on mount');
+    assert.ok(branchAt > 0, 'the no-compare branch has moved');
+    assert.ok(resetAt < branchAt, 'the reset runs after the branch, so it undoes it');
+  });
+
+  test('everything the branch hides is un-hidden by the reset', () => {
+    /* Each of these is a way the previous fare could bleed through. */
+    const reset = src.slice(src.indexOf('const stageParts'), src.indexOf('if (!canDrawSizer)'));
+    for (const [what, pattern] of [
+      ['the finding panel', /panel\?\.setAttribute\('hidden'/],
+      ['the view controls', /controls\?\.removeAttribute\('hidden'/],
+      ['the measurement overlay', /overlay\?\.removeAttribute\('hidden'/],
+      ['the canvas', /canvas\.style\.removeProperty\('display'\)/],
+      ['the empty-state icons', /\[data-icon\][\s\S]{0,60}setAttribute\('hidden'/],
+    ]) {
+      assert.match(reset, pattern, `${what} is not reset, so it can survive a fare change`);
+    }
+  });
+});
