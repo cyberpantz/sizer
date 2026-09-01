@@ -431,29 +431,66 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     }
   }
 
+  /* THE ALERT MARK, USED ONLY WHERE THERE IS SOMETHING TO ALERT ABOUT.
+   *
+   * Lucide's triangle-alert, inline, on the 24 grid the rest of the interface
+   * uses. It is NOT on the empty-state icon — that one stays grey. Two red
+   * marks in one view is one too many, and the drawing's job there is to be
+   * calm and legible while this line does the shouting.
+   *
+   * shrink-0 and mt-px because a flexed icon beside wrapping text otherwise
+   * squashes and drifts off the first line's baseline. */
+  const ALERT = `<svg class="mt-px h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`;
+
+  /** Bad news for the traveller wears the alert; everything else does not. */
+  function sayVerdict(text: string, alarming = false) {
+    if (!verdictEl) return;
+    verdictEl.classList.toggle('text-red', alarming);
+    verdictEl.classList.toggle('text-ink', !alarming);
+    verdictEl.classList.toggle('flex', true);
+    verdictEl.classList.toggle('items-start', true);
+    verdictEl.classList.toggle('gap-2', true);
+    const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    verdictEl.innerHTML = alarming ? `${ALERT}<span>${escaped}</span>` : `<span>${escaped}</span>`;
+  }
+
   function updateVerdictCopy() {
     if (!verdictEl) return;
     if (result.not_flying) {
-      verdictEl.textContent = `${session.carrierName} no longer operates — limits may not apply.`;
+      /* Not alarming: a ceased airline is not a threat to the reader's bag,
+         it is a fact about our data being out of date. */
+      sayVerdict(`${session.carrierName} no longer operates — limits may not apply.`);
       return;
     }
     if (result.no_cabin_bag) {
-      verdictEl.textContent = `No cabin bag on ${session.carrierName} ${session.fare} — size does not matter.`;
+      sayVerdict(
+        `No cabin bag on ${session.carrierName} ${session.fare} — size does not matter.`,
+        true
+      );
       return;
     }
     if (result.unknown) {
-      verdictEl.textContent = `We have not researched ${session.carrierName} ${session.fare} yet.`;
+      /* Our gap, not their problem. Alarming the reader about what we have not
+         done spends attention we will want later for something real. */
+      sayVerdict(`We have not researched ${session.carrierName} ${session.fare} yet.`);
       return;
     }
     if (result.basis === 'linear') {
-      verdictEl.textContent = `${session.carrierName} also limits total dimensions — see the comparison above.`;
+      sayVerdict(`${session.carrierName} also limits total dimensions — see the comparison above.`);
       return;
     }
     if (result.delta_cm > 0) {
-      verdictEl.textContent = `${units.len(Math.abs(result.delta_cm))} ${units.lenLabel()} too ${result.dimension} on ${session.carrierName} ${session.fare}.`;
+      sayVerdict(
+        `${units.lenText(Math.abs(result.delta_cm))} too ${result.dimension} on ${session.carrierName} ${session.fare}.`,
+        true
+      );
       return;
     }
-    verdictEl.textContent = `Fits ${session.carrierName} ${session.fare} with ${units.len(Math.abs(result.delta_cm))} ${units.lenLabel()} to spare.`;
+    sayVerdict(
+      `Fits ${session.carrierName} ${session.fare} with ${units.lenText(Math.abs(result.delta_cm))} to spare.`
+    );
   }
 
   function updateOverlay() {
@@ -744,9 +781,6 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     if (panel && title && body) {
       if (result.no_cabin_bag) {
         showIcon('no_cabin_bag');
-        /* The icon takes the alarm as well, so the eye lands on it before the
-           sentence. Only this case — the other two are not bad news. */
-        root.querySelector('[data-icon="no_cabin_bag"]')?.classList.replace('text-muted', 'text-red');
         title.textContent = `${session.carrierName} includes no cabin bag on this fare.`;
         body.textContent =
           'Not "too big" — nothing is allowed in the overhead locker at any size, so your ' +

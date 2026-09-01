@@ -112,8 +112,13 @@ describe('the ladder reaches every surface that states a verdict', () => {
        no margin — got the same red as one 5 cm over, and a comfortable pass
        got no colour at all. The number a reader looks at hardest was the one
        place the ladder did not reach. */
+    /* Scoped to the CHIP. The verdict line legitimately toggles text-red —
+       that is the alert, and it is a different decision from the axis label's
+       five-band tint. */
+    const chipBlock = client.match(/const chip = labels\.querySelector[\s\S]*?\n      \}/)?.[0] ?? '';
+    assert.ok(chipBlock, 'the chip block has moved; this guard needs rewriting');
     assert.doesNotMatch(
-      client,
+      chipBlock,
       /classList\.toggle\('(border|bg|text)-red/,
       'the axis label is back to a hard-coded red instead of the band'
     );

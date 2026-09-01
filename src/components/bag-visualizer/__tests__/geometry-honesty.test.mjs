@@ -444,3 +444,58 @@ describe('the empty states are drawn, not decorated', () => {
     assert.doesNotMatch(icons, /M12 9v2m0 4h\.01|exclamation|warning/i);
   });
 });
+
+describe('the verdict line alerts, and only where there is an alert', () => {
+  const src = code(client);
+
+  test('bad news for the traveller carries an alert mark and red text', () => {
+    /* Frank: "we need a small alert icon before this and the text should be a
+       color coordinated red." Two cases qualify — the fare grants no cabin bag,
+       or the bag is over the published limit. Both cost the reader money at a
+       gate. */
+    assert.match(src, /sayVerdict\([\s\S]{0,140}?size does not matter\.`,\s*true/);
+    assert.match(src, /sayVerdict\([\s\S]{0,180}?too \$\{result\.dimension\}[\s\S]{0,60}?,\s*true/);
+  });
+
+  test('our own gaps do NOT', () => {
+    /* "We have not researched this yet" and "this airline no longer operates"
+       are facts about OUR data, not threats to the reader's bag. Alarming them
+       about our backlog spends attention we will want for something real —
+       the same line the badge colour draws. */
+    for (const phrase of ['have not researched', 'no longer operates']) {
+      const at = src.indexOf(phrase);
+      assert.ok(at > 0, `no verdict copy for "${phrase}"`);
+      /* From the phrase to the end of that call — the `true` flag, if any,
+         is the last argument. */
+      const tail = src.slice(at, src.indexOf(');', at) + 2);
+      assert.doesNotMatch(tail, /,\s*true\s*\)/, `"${phrase}" is being alarmed about`);
+    }
+  });
+
+  test('a bag that fits is not decorated', () => {
+    const call = src.match(/sayVerdict\(\s*`Fits[\s\S]{0,200}?\);/);
+    assert.ok(call, 'the passing verdict has moved');
+    assert.doesNotMatch(call[0], /,\s*true\s*\)/, 'a passing bag is wearing an alert');
+  });
+
+  test('the empty-state icon stays greyscale', () => {
+    /* Two red marks in one view is one too many. The drawing is calm and
+       legible; this line does the shouting. */
+    assert.doesNotMatch(
+      src,
+      /data-icon="no_cabin_bag"[\s\S]{0,120}?text-red/,
+      'the empty-state icon is taking the alarm colour again'
+    );
+    for (const svg of stage.match(/<svg[^>]*data-icon="[^"]+"[\s\S]*?<\/svg>/g)) {
+      assert.match(svg, /text-muted/, 'an empty-state icon is not greyscale');
+    }
+  });
+
+  test('the alert mark is on the same icon grid as everything else', () => {
+    const alert = src.match(/const ALERT = `<svg[\s\S]*?<\/svg>`/)?.[0] ?? '';
+    assert.ok(alert, 'the ALERT mark has moved');
+    assert.match(alert, /viewBox="0 0 24 24"/);
+    assert.match(alert, /stroke-width="2"/);
+    assert.match(alert, /shrink-0/, 'a flexed icon beside wrapping text will squash without it');
+  });
+});
