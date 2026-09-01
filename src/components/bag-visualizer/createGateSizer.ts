@@ -1,100 +1,106 @@
 import * as THREE from 'three';
 import type { BagDimensions } from './types';
 
-/** Procedural airport gate sizer — open front, solid frame on a flat base.
+/** Procedural airport gate sizer — open front, welded frame on a flat deck.
  *
- * THE INNER SURFACE IS THE ALLOWANCE. Every tube is pushed OUT by its own
- * radius, so the clear opening measures exactly w x d x h — the airline's
- * published box — and the frame sits around it.
+ * Two rules govern every number in here, and both were learned the hard way.
+ * They are stated once at the top and referenced below rather than repeated.
  *
- * The first version centred the posts ON the limit plane, which is the natural
- * thing to write and is wrong in both directions at once: it made the clear
- * opening 2 x tube SMALLER than the published limit, and the outer silhouette
- * 2 x tube LARGER. On Air Astana's 55 x 40 x 23 that is a 23 cm slot drawn as
- * a 21.7 cm one. A bag exactly at the limit visibly fouled the rear posts —
- * which is what "the animation overshoots the back of the cage" was, in both
- * top and side view, because it was never a camera problem.
- *
- * The error is ~0.6 cm on a typical carrier. That is twice EPS_CM, the
- * tolerance the engine is careful to the tenth of a centimetre about, so a
- * drawing built this way contradicts the verdict printed beside it. */
+ *   1. THE INNER SURFACE IS THE ALLOWANCE.
+ *   2. ONE GAUGE, SQUARE SECTION, SHARED COORDINATES.
+ */
 export function createGateSizer(dims: BagDimensions): THREE.Group {
   const { heightCm: h, widthCm: w, depthCm: d } = dims;
   const group = new THREE.Group();
   const scale = Math.min(w, d, h);
-  const tube = scale * 0.028;
-  /* Post CENTRES, offset outward by the tube radius so the inner face lands on
-     the limit. Same for the rails below, which use tube * 0.9. */
-  const hw = w / 2 + tube;
-  const hd = d / 2 + tube;
-  const rr = tube * 0.9;
-  const railW = w / 2 + rr;
-  const railD = d / 2 + rr;
-  /* The top frame is the slot you must fit through, so it clears h as well. */
-  const railY = h + rr;
+
+  /* RULE 2. SQUARE SECTION, ONE GAUGE THROUGHOUT.
+   *
+   * The frame was round tube, and two cylinders crossing at a corner never
+   * meet: each is cut square to its OWN axis, so the join leaves a notch and
+   * the rail reads as overshooting the post. It was also two gauges — posts at
+   * `tube`, rails at `tube * 0.9` — so the outer faces sat 0.1 of a tube apart
+   * and nothing lined up with anything.
+   *
+   * A gate sizer is welded box section in real life, and box section is what
+   * aligns: flat ends, shared coordinates, corners that close. One half-
+   * thickness for every member, so posts and rails cannot drift apart. */
+  const t = scale * 0.028;
+
+  /* RULE 1. Every member is pushed out by its own half-thickness, so the clear
+     opening measures exactly w x d x h and the frame sits around it. Getting
+     this wrong makes the opening smaller than the limit AND the silhouette
+     larger, both at once: on Air Astana's 55 x 40 x 23 the first version drew
+     a 23 cm slot as 21.7 cm. Twice EPS_CM, so the drawing contradicted the
+     verdict printed beside it. */
+  const hw = w / 2 + t;
+  const hd = d / 2 + t;
+  const railY = h + t;
 
   const frame = new THREE.MeshStandardMaterial({
     color: 0x74808d,
     metalness: 0.1,
     roughness: 0.72,
   });
-  /* Every tube shares ONE material instance, so the alarm below is a single
+  /* Every member shares ONE material instance, so the verdict pulse is a single
      colour write rather than a traverse. Exposed on the group because the
      caller animates it and has no other handle on it. */
   group.userData.frameMaterial = frame;
   group.userData.frameBaseHex = 0x74808d;
 
-  const post = (x: number, z: number) => {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(tube, tube, h, 12), frame);
-    m.position.set(x, h / 2, z);
-    group.add(m);
-  };
-
-  post(-hw, -hd);
-  post(hw, -hd);
-  post(-hw, hd);
-  post(hw, hd);
-
-  const rail = (x1: number, y1: number, z1: number, x2: number, y2: number, z2: number) => {
-    const a = new THREE.Vector3(x1, y1, z1);
-    const b = new THREE.Vector3(x2, y2, z2);
-    const dir = b.clone().sub(a);
-    const len = dir.length();
-    const bar = new THREE.Mesh(
-      new THREE.CylinderGeometry(tube * 0.9, tube * 0.9, len, 10),
+  /** An axis-aligned square-section member between two points. */
+  const member = (
+    ax: number,
+    ay: number,
+    az: number,
+    bx: number,
+    by: number,
+    bz: number
+  ) => {
+    /* Extended by a half-thickness at each end so it reaches the CENTRE-LINE of
+       whatever it meets. That is what closes a corner: the two members overlap
+       by exactly the material they are made of, rather than stopping short and
+       leaving a notch. */
+    const span = (a: number, b: number) => (a === b ? t * 2 : Math.abs(b - a) + t * 2);
+    const box = new THREE.Mesh(
+      new THREE.BoxGeometry(span(ax, bx), span(ay, by), span(az, bz)),
       frame
     );
-    bar.position.copy(a).add(dir.multiplyScalar(0.5));
-    bar.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
-    group.add(bar);
+    box.position.set((ax + bx) / 2, (ay + by) / 2, (az + bz) / 2);
+    group.add(box);
   };
 
-  // Top frame — the slot you must fit through, clearing h.
-  rail(-railW, railY, -railD, railW, railY, -railD);
-  rail(-railW, railY, railD, railW, railY, railD);
-  rail(-railW, railY, -railD, -railW, railY, railD);
-  rail(railW, railY, -railD, railW, railY, railD);
+  // Uprights.
+  for (const [x, z] of [
+    [-hw, -hd],
+    [hw, -hd],
+    [-hw, hd],
+    [hw, hd],
+  ]) {
+    member(x, 0, z, x, h, z);
+  }
+
+  // Top frame — the slot the bag must pass through, clearing h.
+  member(-hw, railY, -hd, hw, railY, -hd);
+  member(-hw, railY, hd, hw, railY, hd);
+  member(-hw, railY, -hd, -hw, railY, hd);
+  member(hw, railY, -hd, hw, railY, hd);
 
   // Back and side braces — open at the front (+Z) where the bag slides in.
-  rail(-railW, h * 0.55, -railD, railW, h * 0.55, -railD);
-  rail(-railW, h * 0.35, -railD, -railW, h * 0.35, railD);
-  rail(railW, h * 0.35, -railD, railW, h * 0.35, railD);
-  rail(-railW, h * 0.35, -railD, railW, h * 0.35, -railD);
-  rail(-railW, h * 0.35, railD, railW, h * 0.35, railD);
+  member(-hw, h * 0.55, -hd, hw, h * 0.55, -hd);
+  member(-hw, h * 0.35, -hd, -hw, h * 0.35, hd);
+  member(hw, h * 0.35, -hd, hw, h * 0.35, hd);
+  member(-hw, h * 0.35, -hd, hw, h * 0.35, -hd);
+  member(-hw, h * 0.35, hd, hw, h * 0.35, hd);
 
   /* The deck the bag stands on. Sits BELOW y = 0 so the floor of the slot is
      the limit plane — the bag rests at y = 0 and the full height is clear. */
-  const base = new THREE.Mesh(new THREE.BoxGeometry(w * 1.08 + tube * 2, tube * 2.4, d * 1.1), frame);
-  base.position.set(0, -tube * 1.2, 0);
+  const base = new THREE.Mesh(
+    new THREE.BoxGeometry(hw * 2 + t * 2, t * 2.4, hd * 2 + t * 2),
+    frame
+  );
+  base.position.set(0, -t * 1.2, 0);
   group.add(base);
-
-  /* The entry lip, tucked INSIDE the deck's own footprint. It used to sit at
-     hd + tube * 1.5, past the front of the base — in the side view that read
-     as a stray nub hanging off the bottom corner rather than part of the
-     frame. Nothing should protrude further than the deck it stands on. */
-  const lip = new THREE.Mesh(new THREE.BoxGeometry(w * 0.96, tube * 2, tube * 3), frame);
-  lip.position.set(0, -tube * 1.2, d * 0.55 - tube * 1.5);
-  group.add(lip);
 
   return group;
 }

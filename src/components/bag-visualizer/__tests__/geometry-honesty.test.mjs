@@ -56,14 +56,14 @@ describe('the gate sizer opening IS the published allowance', () => {
     const src = code(sizer);
     assert.match(
       src,
-      /const hw = w \/ 2 \+ tube/,
-      'the post centres are back on the limit plane — the clear opening will be ' +
-        '2 x tube smaller than the airline publishes'
+      /const hw = w \/ 2 \+ t;/,
+      'the member centres are back on the limit plane — the clear opening will be ' +
+        'thinner than the airline publishes'
     );
-    assert.match(src, /const hd = d \/ 2 \+ tube/, 'same for depth');
+    assert.match(src, /const hd = d \/ 2 \+ t;/, 'same for depth');
     assert.match(
       src,
-      /const railY = h \+ rr/,
+      /const railY = h \+ t;/,
       'the top frame is the slot the bag must pass through; it has to clear h'
     );
   });
@@ -701,5 +701,41 @@ describe('wheels point the way the bag rolls', () => {
     /* Passed in, so the decision lives with the thing that knows the wheel
        count instead of being re-derived at the bottom of the call stack. */
     assert.match(src, /axle: 'x' \| 'z'/, 'addWheelPod no longer takes an axle');
+  });
+});
+
+describe('the frame is square section and its corners close', () => {
+  const src = code(sizer);
+
+  test('nothing is round', () => {
+    /* Two cylinders crossing at a corner never meet: each is cut square to its
+       OWN axis, so the join leaves a notch and the rail reads as overshooting
+       the post — most visibly at the top, where the reader is looking for the
+       slot the bag has to pass through. */
+    assert.doesNotMatch(src, /CylinderGeometry/, 'round tube is back in the frame');
+    assert.match(src, /BoxGeometry/, 'the frame is no longer square section');
+  });
+
+  test('one gauge for every member', () => {
+    /* Posts were `tube` and rails `tube * 0.9`, so their outer faces sat a
+       tenth of a tube apart and nothing lined up with anything. */
+    assert.match(src, /const t = scale \* [\d.]+;/, 'the shared half-thickness is gone');
+    assert.doesNotMatch(src, /const rr = /, 'a second gauge is back');
+  });
+
+  test('members reach the centre-line of what they meet', () => {
+    /* Overlapping by exactly the material they are made of is what closes a
+       corner. Stopping at the joint leaves a notch you can see. */
+    assert.match(
+      src,
+      /Math\.abs\(b - a\) \+ t \* 2/,
+      'members no longer extend to meet their neighbours'
+    );
+  });
+
+  test('the top frame still clears the published height', () => {
+    /* The whole point of squaring it was alignment, and alignment must not be
+       bought with a slot that is shorter than the airline allows. */
+    assert.match(src, /const railY = h \+ t;/);
   });
 });
