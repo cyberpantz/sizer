@@ -1,5 +1,8 @@
 ---
 import BagSilhouette from '../../components/BagSilhouette.astro';
+import BagVisualizer from '../../components/bag-visualizer/BagVisualizer.astro';
+import { isVisualizerEligible } from '../../components/bag-visualizer/eligible.mjs';
+import { bagTypeFromRecord, toBagDimensions } from '../../components/bag-visualizer/visualProfile';
 import Base from '../../layouts/Base.astro';
 import { coverage, evaluate } from '../../engine/fit.mjs';
 import { DIM_SOURCE, isPromotable, toCarrier } from '../../engine/normalize.mjs';
@@ -156,6 +159,50 @@ const gap = record.wheel_handle_delta_cm ?? null;
 const dims = (cm) => cm.map((v) => v.toFixed(1).replace(/\.0$/, '')).join(' × ');
 const pct = cov.of ? Math.round((cov.pass / cov.of) * 100) : 0;
 const tone = pct >= 80 ? 'green' : pct >= 40 ? 'amber' : 'red';
+const showVisualizer = isVisualizerEligible(bag);
+const packingCm = record.claimed_packing_cm?.v ?? null;
+const vizAirlines = rows.map((r) => {
+  const fares = [
+    ...new Set(
+      (r.record.allowances ?? [])
+        .filter((a) => a.type === 'cabin' && a.fare_class && !ADDONS.has(a.fare_class))
+        .map((a) => a.fare_class)
+    ),
+  ];
+  const fare = defaultFare(r.record);
+  return {
+    iata: r.record.iata,
+    name: r.carrier.name,
+    defaultFare: fare,
+    fares: fares.length ? fares : [fare],
+  };
+});
+const bagForFit = {
+  external_cm: bag.external_cm,
+  soft: bag.soft,
+  dim_source: bag.dim_source,
+  expands_cm: bag.expands_cm,
+};
+const vizProps = showVisualizer
+  ? {
+      slug: bag.slug,
+      name: `${bag.brand} ${bag.model}`,
+      dimensions: toBagDimensions(bag.external_cm),
+      packingDimensions: packingCm ? toBagDimensions(packingCm) : undefined,
+      dimensionSource: bag.dim_source,
+      type: bagTypeFromRecord(record.type),
+      wheels: (record.wheels ?? 0) as 0 | 2 | 4,
+      soft: Boolean(bag.soft),
+      expandsCm: bag.expands_cm > 0 ? bag.expands_cm : undefined,
+      wheelHandleDeltaCm: gap ?? null,
+      airlines: vizAirlines,
+      bagForFit,
+      coverage: cov,
+      promotable: bag.promotable,
+      tone,
+      pct,
+    }
+  : null;
 const TAG = {
   clears: 'bg-green-wash text-green',
   line: 'bg-lime-wash text-lime',
@@ -170,20 +217,22 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
   title={`${bag.brand} ${bag.model} — does it fit? — Sizer`}
   description={`${bag.brand} ${bag.model} measures ${dims(bag.external_cm)} cm on the outside and clears ${cov.pass} of ${cov.of} airlines we can answer for.`}
 >
-  <div class="mx-auto max-w-page px-6">
+  <div class="mx-auto max-w-page px-6 pt-6">
 
-    <p class="pt-8 text-[0.9375rem] text-muted">
+    <p class="text-[0.9375rem] text-muted">
       <a href="/bags/" class="text-blue">Bags</a> › {bag.brand}
     </p>
 
-    <div class="grid items-start gap-8 pt-4 pb-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
-      <div>
-        <p class="text-[0.9375rem] text-muted">{record.type}</p>
-        <h1 class="mt-1 text-4xl font-bold tracking-tight sm:text-[2.6rem]">
-          {bag.brand} {bag.model}
-        </h1>
+    <header class="pt-2 pb-5">
+      <p class="text-[0.9375rem] text-muted">{record.type}</p>
+      <h1 class="mt-1 max-w-[42ch] text-3xl font-bold tracking-tight sm:text-4xl lg:max-w-none lg:text-[2.35rem] lg:leading-tight">
+        {bag.brand} {bag.model}
+      </h1>
+    </header>
 
-        <dl class="mt-6 overflow-hidden rounded-card border border-rule bg-surface">
+    <div class="grid items-start gap-6 pb-10 lg:grid-cols-[minmax(0,1fr)_minmax(28rem,36rem)] lg:gap-8">
+      <div class="order-1 flex flex-col gap-4 lg:col-start-1 lg:row-start-1 lg:row-span-2">
+        <dl class="overflow-hidden rounded-card border border-rule bg-surface">
           <div class="flex items-baseline justify-between gap-4 border-b border-rule px-5 py-4">
             <dt class="text-[0.9375rem] text-muted">Outside, as an airline measures it</dt>
             <dd class="font-mono text-xl font-semibold" data-dims={JSON.stringify(bag.external_cm)}>{dims(bag.external_cm)} cm</dd>
@@ -210,9 +259,9 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
 
         {/* The mockup put a photograph of a tape measure here. We do not
             measure bags, so this says where the number came from instead. */}
-        <div class="mt-4 rounded-card border border-rule bg-surface-2 p-5">
+        <div class="rounded-card border border-rule bg-surface-2 p-5">
           <p class="text-[0.9375rem] font-semibold text-ink">Where this number comes from</p>
-          <p class="mt-1.5 max-w-[62ch] text-[0.9375rem] text-ink-2">
+          <p class="mt-1.5 text-[0.9375rem] text-ink-2">
             {SOURCE_LINE[bag.dim_source] ?? 'Source not recorded.'}
           </p>
           {ref && (
@@ -224,7 +273,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
             </p>
           )}
           {gap && (
-            <p class="mt-2 max-w-[62ch] text-[0.875rem] text-muted">
+            <p class="mt-2 text-[0.875rem] text-muted">
               Wheels, handle and feet add{' '}
               {/* One span per figure, each with its own data-cm hook. Joined
                   here rather than in a single string so the units toggle can
@@ -249,34 +298,41 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
         </div>
       </div>
 
-      <aside class="rounded-card border border-rule bg-surface p-5 shadow-panel">
-        <div class={`grid place-items-center rounded-chip bg-surface-2 py-6 ${INK[tone]}`} aria-hidden="true">
-          <BagSilhouette type={record.type} class="h-28 w-auto" />
+      {showVisualizer && vizProps ? (
+        <div class="order-2 lg:col-start-2 lg:row-start-1 lg:row-span-2">
+          <BagVisualizer {...vizProps} />
         </div>
-        <p class="mt-4 text-[2.25rem] font-bold leading-none tracking-tight tabular-nums">
-          {cov.pass}<span class="text-muted">/{cov.of}</span>
-        </p>
-        <p class="mt-1 text-[0.9375rem] text-ink-2">airlines it gets past</p>
-        <span class="mt-3 block h-2 overflow-hidden rounded-full bg-surface-2">
-          <span class={`block h-full rounded-full ${BAR[tone]}`} style={`width:${pct}%`}></span>
-        </span>
-        {cov.unknown > 0 && (
-          <p class="mt-2 text-[0.8125rem] text-muted">
-            {cov.unknown} more we cannot answer for yet, and they are left out of
-            that fraction rather than counted as passes.
+      ) : (
+        <aside class="order-2 rounded-card border border-rule bg-surface p-5 shadow-panel lg:col-start-2 lg:row-start-1 lg:sticky lg:top-6 lg:self-start">
+          <div class={`grid place-items-center rounded-chip bg-surface-2 py-6 ${INK[tone]}`} aria-hidden="true">
+            <BagSilhouette type={record.type} class="h-28 w-auto" />
+          </div>
+          <p class="mt-4 text-[2.25rem] font-bold leading-none tracking-tight tabular-nums">
+            {cov.pass}<span class="text-muted">/{cov.of}</span>
           </p>
-        )}
-        {!bag.promotable && (
-          <p class="mt-3 rounded-chip bg-amber-wash p-3 text-[0.8125rem] text-amber">
-            Shown, not recommended — the dimension above is not the maker's own
-            overall figure.
-          </p>
-        )}
-        <a
-          href="/check/"
-          class="mt-4 block rounded-chip bg-blue px-4 py-3 text-center font-semibold text-on-blue no-underline hover:bg-blue-hover"
-        >Check it against your trip</a>
-      </aside>
+          <p class="mt-1 text-[0.9375rem] text-ink-2">airlines it gets past</p>
+          <span class="mt-3 block h-2 overflow-hidden rounded-full bg-surface-2">
+            <span class={`block h-full rounded-full ${BAR[tone]}`} style={`width:${pct}%`}></span>
+          </span>
+          {cov.unknown > 0 && (
+            <p class="mt-2 text-[0.8125rem] text-muted">
+              {cov.unknown} more we cannot answer for yet, and they are left out of
+              that fraction rather than counted as passes.
+            </p>
+          )}
+          {!bag.promotable && (
+            <p class="mt-3 rounded-chip bg-amber-wash p-3 text-[0.8125rem] text-amber">
+              Shown, not recommended — the dimension above is not the maker's own
+              overall figure.
+            </p>
+          )}
+          <a
+            href="/check/"
+            class="mt-4 block rounded-chip bg-blue px-4 py-3 text-center font-semibold text-on-blue no-underline hover:bg-blue-hover"
+          >Check it against your trip</a>
+        </aside>
+      )}
+
     </div>
 
     <section class="border-t border-rule py-10">

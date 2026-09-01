@@ -8,10 +8,16 @@
 the right column on desktop and appearing between the title and dimensions on
 mobile.
 
-The visualizer is a measuring instrument with the finish of a product viewer.
-It shows the bag at its real proportions, makes height, width, and depth
-unambiguous, and explains which exterior parts count toward an airline limit.
-It should invite interaction without turning the page into a luggage ad.
+The visualizer is a measuring instrument with the finish of a product viewer,
+and it is intentionally more crafted than the minimum useful version needs to
+be. It should be the moment on the page that makes someone pause and think,
+“That is cool.” The polish is a product differentiator: familiar luggage data
+is made tactile, memorable, and obviously cared for.
+
+That reaction cannot come from spectacle pasted onto the page. It comes from a
+precise reveal, excellent motion, convincing restrained materials, and controls
+that feel obvious on first touch. The user should understand why the feature
+exists immediately after admiring it.
 
 ## Outcome
 
@@ -36,6 +42,37 @@ marketed as 20 inches can measure 22 inches at an airline sizer.
 The visualizer does not decide whether a bag fits. The existing fit engine
 remains authoritative. A later airline-cage mode may visualize an engine result,
 but must never calculate its own verdict.
+
+### The opening reveal
+
+The entrance is a short, choreographed reveal rather than a model that merely
+appears:
+
+1. The static silhouette occupies the reserved stage in the initial HTML.
+2. As soon as the first WebGL frame is ready, the silhouette begins resolving
+   into the 3D model over approximately 400 ms with no flash or scale jump.
+3. The bag rises a few pixels into place while its contact shadow settles just
+   behind it, giving the object weight without making it bounce.
+4. The bag turns 8–12° through a shallow three-quarter view, briefly exposing
+   its depth and construction before returning to its resting presentation.
+5. Height draws first, followed by width and depth. The rules and labels arrive
+   in a deliberate sequence rather than appearing simultaneously.
+6. A restrained light sweep travels across the material once, making the shell
+   ribs, aluminum edges, or fabric weave legible according to bag type.
+
+Target approximately 2–3 seconds for the full choreography. Tune the timing by
+feel during implementation; the sequence may run slightly longer when it earns
+the time. The model must accept pointer, touch, keyboard, or preset-view input as
+soon as it is visible. Any interaction immediately and gracefully completes the
+entrance at the user's chosen orientation. The reveal runs once per visit and
+collapses to an immediate render under `prefers-reduced-motion`.
+
+Fast readiness and reveal duration are separate requirements: the static stage
+appears in the initial HTML, the first interactive frame should still arrive
+within the performance budget, and the authored motion may continue afterward.
+
+This is the “wow” moment. Do not replace it with a loading spinner, perpetual
+turntable, dramatic camera flight, or decorative particle effect.
 
 ## Page composition
 
@@ -81,6 +118,23 @@ the same room as the rest of the site.
 Do not use an HDR showroom, glossy floor, dramatic spotlight, depth-of-field,
 lens flare, particles, or reflections of an imaginary room.
 
+### Craft details that earn the reaction
+
+The model should reward a second look with a small number of precise details:
+
+- Wheels rotate a few degrees with the model's invitation turn, then stop
+- The telescoping-handle socket and wheel mounts create believable contact
+  shadows rather than appearing painted onto a box
+- Hard-shell ribs catch the key light softly as the bag turns
+- Fabric highlights widen and disappear instead of sliding like plastic
+- Dimension arrowheads meet their extension lines exactly at projected bounds
+- Labels glide to collision-free positions without lagging behind the model
+- Front, Side, and Top views settle with the same confident easing and never
+  overshoot
+
+None of these details adds a new fact. Together they make the measured facts
+feel physical and make the site feel unusually finished.
+
 ### Palette and materials
 
 The model stays neutral because blue means interaction and the verdict palette
@@ -97,6 +151,64 @@ means status elsewhere on the site.
 | Labels | surface chip, ink text, mono value |
 | Interactive state | `--color-blue` |
 | Packing body | blue at 8–12% opacity with blue wire edges |
+
+### Material quality bar
+
+Material quality is a release gate. A correct model with weak shading does not
+ship. The renderer must follow these rules:
+
+**Geometry creates most of the realism.** Every exposed hard edge needs a small,
+consistent bevel that can catch the key light. Zipper tracks, piping, shell ribs,
+corner guards, wheel housings, and handle sockets must have real silhouette or
+surface depth. Do not fake major construction with dark lines painted onto a
+rounded box. Avoid perfectly sharp edges, paper-thin panels, intersecting parts,
+floating wheels, and handles with no visible mount.
+
+**Use physically plausible PBR values.** Non-metal luggage uses metalness `0`.
+Only the aluminum preset uses substantial metalness, and it must retain enough
+roughness to avoid chrome. Keep base colors away from pure black and pure white.
+Do not use clearcoat to manufacture a generic “premium” sheen. Specular response
+must belong to the material: broad and quiet on polycarbonate, tight but muted on
+aluminum, and diffuse on fabric and rubber.
+
+**Texture must survive close inspection.** Procedural normal maps should be
+low-amplitude, seamless, correctly scaled to the model, and invisible when the
+camera is still unless light moves across them. Fabric weave cannot resemble
+carbon fiber, denim wallpaper, or TV noise. Molded shell grain cannot resemble
+orange peel. If a texture calls attention to itself, remove it and rely on
+geometry and roughness.
+
+**Lighting is one controlled studio rig.** Use a large soft key, weaker fill,
+subtle rim, and soft contact shadow for every preset. Materials may change;
+lighting direction and exposure may not jump between bags. No point-light hot
+spots, crushed black cavities, glowing rims, or ambient light strong enough to
+flatten the form. Tune the neutral gray bag first, then verify every preset
+without per-bag exposure hacks.
+
+**Rendering must be technically clean.** Use the renderer's current color-space
+workflow, physically based lighting, a restrained filmic tone map, antialiasing,
+and shadow settings that avoid acne, detached shadows, and visibly pixelated
+edges. Normals must be smooth where the construction is molded and split where
+panels actually crease. There must be no z-fighting, texture swimming, banding,
+or one-frame lighting pop during the reveal.
+
+Do not download anonymous “free PBR” texture packs or mix assets from unrelated
+sources. A small internally consistent material system will look more expensive
+than six detailed materials made under different lighting assumptions.
+
+#### Material review board
+
+Before polishing all bag types, produce one fixed review sheet containing the
+same hard-shell, aluminum, fabric, and rubber swatches under the production
+camera and lighting rig. Show each at the default angle and at one grazing-light
+angle, on both desktop and a representative mobile viewport. Approve that sheet
+before propagating the materials across geometry.
+
+Review the finished presets side by side at 100% browser scale. Reject the build
+if any reviewer describes a material as plastic toy, wet, chrome, clay, velvet,
+noise, game asset, or generic 3D icon. Also reject it if the bag looks convincing
+only while moving; the resting frame is the primary product image and must hold
+up on its own.
 
 Use six controlled procedural presets:
 
@@ -181,6 +293,11 @@ source precision; only visible values use the shared formatter.
 - Use pointer capture once rotation begins
 - Run one subtle 5° invitation turn after intersection; once only, stopped by
   interaction, and disabled by reduced-motion
+
+Direct manipulation must feel attached to the pointer: no perceptible startup
+lag, no elastic delay, and no motion continuing after the user deliberately
+stops it. Inertia applies only to a clear release gesture. Slow placement should
+hold its exact angle.
 
 An orthographic fit-to-stage camera preserves the visual meaning of scale. Zoom
 would make the bag appear larger without changing its measurements and is not
@@ -301,16 +418,15 @@ The fallback is a supported mode, not an apology.
 
 ## Analytics
 
-Emit each at most once per page view:
+Do not install an analytics SDK or add visualizer-interaction events for this
+release. The project deliberately avoids treating engagement time and interface
+activity as success metrics; see `docs/18-analytics.md`. Existing trip-check and
+outbound-click measurement is sufficient to judge downstream value.
 
-- `bag_visualizer_loaded`
-- `bag_visualizer_rotated`
-- `bag_visualizer_view_selected` with `front | side | top | reset`
-- `bag_visualizer_packing_revealed`
-- `bag_visualizer_fallback` with `reduced_data | no_webgl | context_error`
-
-Rotation time is not a success metric. Useful downstream signals are trip-check
-starts and product clicks after interaction.
+Use browser performance marks during development for intersection-to-first-frame
+and reveal completion. These are implementation diagnostics and do not need to
+leave the visitor's browser. WebGL fallback reasons may be logged locally in
+development, but must fail silently in production.
 
 ## Failure states
 
@@ -327,10 +443,49 @@ starts and product clicks after interaction.
 
 ## Delivery
 
+### Implementation handoff
+
+This specification is ready to implement against the current repository. The
+implementer should make these integration choices explicitly rather than
+re-deriving them:
+
+- Install `three` as a production dependency with `pnpm add three`. Do not add
+  React Three Fiber, an animation framework, or a general-purpose gesture
+  library for this feature.
+- Integrate the shell in `src/pages/bags/[slug].astro`, replacing the current
+  `lg:grid-cols-[minmax(0,1fr)_18rem]` right-column silhouette/coverage region
+  while retaining its coverage facts and trip CTA.
+- Pass normalized `bag.external_cm` to `dimensions`. It is already the result
+  selected by the normalization layer. Use `record.claimed_packing_cm?.v` only
+  for `packingDimensions`, `bag.dim_source` for `dimensionSource`, and the
+  existing `record.type`, `record.wheels`, `record.soft`, and `bag.expands_cm`
+  values for presentation.
+- The current catalogue contains `hardside spinner`, `softside spinner`,
+  `2-wheel roller`, `backpack`, and `duffel`. Keep `underseat` support in the
+  renderer as a future-compatible preset; it must not require a schema change.
+- Put each visible axis value in a real DOM element with `data-cm`. The existing
+  `UnitToggle.astro` updates those elements directly, so the visualizer does not
+  need a second unit store or a custom unit event.
+- Keep visual-only profile overrides in code for the first release. Do not add
+  fields to bag data until repeated exceptions demonstrate that the catalogue
+  needs them.
+
+The first releasable pull request includes the measured model **and** the
+construction polish/opening reveal. A technically functional gray box is a
+development milestone, not the shipped differentiator. Airline cage mode is a
+separate later release.
+
+Before review, run `pnpm check`, then inspect at least one example of each
+catalogue type at desktop and mobile widths. Also inspect one bag with packing
+dimensions, one without them, one review-sourced record, reduced motion,
+keyboard-only use, and forced WebGL failure. Record the lazy chunk size and the
+measured first-frame time in the pull request description.
+
 ### Phase 1 — measured model
 
 - Astro shell and static fallback
-- Orthographic procedural models for all six bag types
+- Orthographic procedural models for the five current bag types, with the
+  future-compatible `underseat` preset
 - Hard-shell and fabric materials
 - Pointer, touch, keyboard, and preset views
 - Three projected measurement axes
@@ -339,6 +494,7 @@ starts and product clicks after interaction.
 
 ### Phase 2 — construction polish
 
+- Full opening choreography, including its interrupt and reduced-motion paths
 - Aluminum material
 - Wheels, handles, seams, ribs, and front-pocket details
 - Contact shadow and restrained ambient occlusion
@@ -380,6 +536,12 @@ starts and product clicks after interaction.
 - Axis labels remain clearer than decorative details
 - Packing shell explains the wheel-and-handle gap within three seconds
 - Nothing auto-rotates after the first user interaction
+- The first reveal feels authored and premium even before the user drags
+- Rotation feels like moving a physical object, not swiping a carousel
+- At least one construction detail catches the eye without competing with the
+  measurements
+- A reviewer can describe both why it is cool and why it is useful in one
+  sentence
 
 ## Non-goals
 
