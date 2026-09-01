@@ -421,10 +421,20 @@ export function createEngine(overrides = {}) {
   }
 
   /** The strictest common under-seat box across a carrier set — the same
-   *  intersection `envelope()` takes for the overhead bin, and now derivable
-   *  rather than typed. Across the full catalogue it comes to 40 × 25 × 10,
-   *  which is worth printing precisely because it is so much smaller than the
-   *  figure this codebase used to assume. */
+   *  intersection `envelope()` takes for the overhead bin, and DERIVED rather
+   *  than typed.
+   *
+   *  That distinction is the whole point. The figure this replaced was a
+   *  constant, PERSONAL_ITEM_CM = [40, 30, 20], described in the source as "the
+   *  common floor across the strict European budget carriers" — and 29 of the
+   *  48 sized carriers were stricter than it on some axis. It was not a floor,
+   *  it was a guess, and it was wrong in the direction that ends with a bag
+   *  taken at the gate.
+   *
+   *  No number is quoted here on purpose. The catalogue-wide intersection moves
+   *  every time a carrier is researched, and a figure written into a comment
+   *  stops being true silently — which is precisely how the constant this
+   *  replaces survived as long as it did. */
   function personalEnvelope(carriers) {
     const boxes = carriers
       .filter((c) => c.allowances?.personal?.max_cm && c.flying !== false)

@@ -128,6 +128,10 @@ const payload = {
     weight_kg: b.weight_kg,
     shell: b.shell,
     type: b.record.type ?? null,
+    /* What the bag is FOR, so /check can default its role instead of asking.
+       Two of the catalogue are under-seat bags; everything else is an overhead
+       bag that a reader may still choose to carry as their personal item. */
+    role: b.record.role ?? null,
     expands_cm: b.expands_cm,
     dim_source: b.dim_source,
     measured: b.measured,

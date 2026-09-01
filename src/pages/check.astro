@@ -143,6 +143,15 @@ const RISK = [
   import { toBag, toCarrier } from '../engine/normalize.mjs';
   import { fareLabel } from '../ui/fare.mjs';
   import {
+    asRole,
+    decodeSlot,
+    defaultRole,
+    encodeSlot,
+    ROLE_COPY,
+    roleLabel,
+    ROLES,
+  } from '../ui/role.mjs';
+  import {
     SCALE_MAX,
     enforcementLabel,
     enforcementNote,
@@ -210,6 +219,9 @@ const RISK = [
 
   const dedupeBy = (xs, key) => [...new Map(xs.map((x) => [key(x), x])).values()];
 
+  /* SLOTS, NOT SLUGS. Each entry is { slug, role } — the bag AND what it is
+     doing on this trip. A bare slug could only ever ask the overhead question,
+     which is the model every competitor is stuck in. */
   const state = { bags: [], legs: [], risk: 'balanced' };
   let DATA = null;
   let CARRIER_ITEMS = [];
@@ -236,8 +248,14 @@ const RISK = [
     document.addEventListener('sizer:pick', (e) => {
       const { kind, index, value } = e.detail;
       if (kind === 'bag') {
-        if (!bagOf(value)) return;
-        state.bags[index] = value;
+        const b = bagOf(value);
+        if (!b) return;
+        /* Choosing a bag RE-DEFAULTS its role, rather than keeping whatever the
+           previous occupant of this slot was. Swapping a roller for an
+           under-seat bag and silently leaving it marked "Carry-on" would answer
+           a question the reader did not ask, and they would have no reason to
+           look at a control they never touched. */
+        state.bags[index] = { slug: value, role: defaultRole(b) };
       } else {
         const c = carrierOf(value);
         if (!c || !state.legs[index]) return;
@@ -267,7 +285,15 @@ const RISK = [
      button that lies. Also means a reload keeps your itinerary. */
   function restore() {
     const p = new URLSearchParams(location.search);
-    const bags = (p.get('bags') ?? '').split(',').filter((s) => DATA.bags.some((b) => b.slug === s));
+    /* `away-carryon:p` — slug and role. A link written before roles existed has
+       no `:p` on it and decodes to cabin, which is exactly what its sender saw,
+       so every permalink already in the wild still resolves to its own answer. */
+    const bags = (p.get('bags') ?? '')
+      .split(',')
+      .filter(Boolean)
+      .map(decodeSlot)
+      .filter((x) => DATA.bags.some((b) => b.slug === x.slug))
+      .map((x) => ({ ...x, role: asRole(x.role) }));
     const legs = (p.get('legs') ?? '')
       .split(',')
       .filter(Boolean)
@@ -283,13 +309,16 @@ const RISK = [
        answer — an accidental endorsement, on a site whose whole claim is that
        it recommends carefully. An empty slot asks the question the page is
        for. */
-    state.bags = bags.length ? bags : [''];
+    state.bags = bags.length ? bags : [{ slug: '', role: 'cabin' }];
     state.legs = legs.length ? legs : [{ iata: DATA.carriers[0].iata, fare: DATA.carriers[0].fares[0] }];
     if (['strict', 'balanced', 'chance'].includes(p.get('risk'))) state.risk = p.get('risk');
   }
 
   const permalink = () =>
-    `${location.origin}${location.pathname}?bags=${state.bags.filter(Boolean).join(',')}` +
+    `${location.origin}${location.pathname}?bags=${state.bags
+      .filter((x) => x.slug)
+      .map(encodeSlot)
+      .join(',')}` +
     `&legs=${state.legs.map((l) => `${l.iata}.${l.fare}`).join(',')}&risk=${state.risk}`;
 
   /* ---------- model ---------- */
@@ -299,13 +328,23 @@ const RISK = [
 
   const toEngineBag = (b) => toBag({ ...b, external_cm: { v: b.external_cm } });
 
-  function score(bagSlug) {
+  /* THE ALLOWANCE THIS SLOT IS BEING JUDGED AGAINST.
+     One helper, because six places on this page draw or explain "the limit" and
+     six copies of `role === 'personal' ? … : …` is how the picture ends up
+     disagreeing with the verdict printed beside it. */
+  const allowanceFor = (carrier, role) =>
+    (role === 'personal' ? carrier?.allowances?.personal : carrier?.allowance) ?? null;
+
+  /* Takes a SLOT — the bag and the role it is playing — because the same
+     object gets a different answer depending on which allowance it is being
+     held against, and on some airlines a wildly different one. */
+  function score({ slug, role = 'cabin' }) {
     const E = ENGINES[state.risk] ?? ENGINES.balanced;
-    const bag = toEngineBag(bagOf(bagSlug));
+    const bag = toEngineBag(bagOf(slug));
     const rows = state.legs.map((leg, i) => {
       const rec = carrierOf(leg.iata).record;
       const carrier = toCarrier(rec, leg.fare);
-      return { i, leg, carrier, record: rec, result: E.evaluate(bag, carrier) };
+      return { i, leg, carrier, record: rec, result: E.evaluate(bag, carrier, { role }) };
     });
     /* Which leg binds is the ENGINE's call, not this page's.
 
@@ -315,13 +354,46 @@ const RISK = [
        reported a confident verdict from the other legs. bindingLeg() already
        returns early on an unknown or a no-cabin-bag leg, for exactly this
        reason. Same carrier objects go in, so identity finds the row again. */
-    const bound = E.bindingLeg(bag, rows.map((r) => r.carrier));
+    const bound = E.bindingLeg(bag, rows.map((r) => r.carrier), { role });
     const worst = rows.find((r) => r.carrier === bound?.carrier) ?? rows[0];
 
-    return { bag, rows, worst };
+    return { bag, rows, worst, role };
   }
 
   /* ---------- inputs ---------- */
+
+  /* WHICH BAG IS WHICH — one control per bag, and it is a CORRECTION, not a
+     question.
+
+     The role is already defaulted from the bag's own record, so a reader who
+     never touches this still gets a sensible answer. That matters more than it
+     sounds: a control that must be answered before the page will say anything
+     turns a lookup into an interview, and this page's entire pitch is that it
+     is not one.
+
+     Why it exists at all: the same object is a different question depending on
+     what you are carrying it as. A 40 × 30 × 20 packing cube is an overhead bag
+     by construction and a personal item on Ryanair Basic — and on Singapore the
+     under-seat slot is ten centimetres deep, so the two answers are not close.
+     Every competitor prints BOTH percentages side by side rather than asking,
+     which is a question no traveller has: nobody is undecided about which of
+     their two bags is going overhead.
+
+     Rendered only once a bag is chosen. On an empty slot it would be a control
+     for an object that does not exist yet. */
+  const roleControl = (slot, i) =>
+    `<div role="group" aria-label="What ${esc(bagOf(slot.slug)?.model ?? 'this bag')} is on this trip"
+       class="mt-2 inline-flex overflow-hidden rounded-chip border border-rule">
+      ${ROLES.map(
+        (r) => `<button type="button" data-role="${r}" data-slot="${i}"
+          aria-pressed="${slot.role === r}"
+          title="${esc(ROLE_COPY[r].where)}"
+          class="cursor-pointer border-0 bg-transparent px-2.5 py-[0.3125rem] text-[0.8125rem] leading-none text-muted
+                 hover:text-blue
+                 aria-pressed:bg-surface-2 aria-pressed:font-medium aria-pressed:text-ink
+                 aria-pressed:hover:text-blue">${esc(ROLE_COPY[r].label)}</button>`
+      ).join('')}
+    </div>`;
 
   function renderInputs() {
     /* THE BAG IS A CONTROL, NOT A CAPTION.
@@ -336,9 +408,9 @@ const RISK = [
        difference here is the label and which slot the answer lands in. */
     el('[data-bagbox]').innerHTML =
       state.bags
-        .map((slug, i) => {
-          const b = slug ? bagOf(slug) : null;
-          const { worst } = b ? score(slug) : { worst: null };
+        .map((slot, i) => {
+          const b = slot.slug ? bagOf(slot.slug) : null;
+          const { worst } = b ? score(slot) : { worst: null };
           const band = worst?.result.band;
           return `<div class="border-b border-rule py-3 last:border-b-0">
             <div class="flex items-start gap-2">
@@ -361,7 +433,8 @@ const RISK = [
               b
                 ? `<p class="mt-1 font-mono text-[0.84375rem] text-muted">${esc(U.dims(b.external_cm))}${
                     b.weight_kg ? ` · ${esc(U.mass(b.weight_kg))} ${esc(U.massLabel())} empty` : ''
-                  }</p>`
+                  }</p>
+                   ${roleControl(slot, i)}`
                 : ''
             }
           </div>`;
@@ -419,6 +492,12 @@ const RISK = [
     /* By INDEX, not by slug. Filtering on slug removed every copy of a bag, so
        picking the same model into two slots to compare fares — a perfectly
        reasonable thing to do — made one × delete both. */
+    for (const b of root.querySelectorAll('[data-role]')) {
+      b.addEventListener('click', () => {
+        state.bags[+b.dataset.slot].role = b.dataset.role;
+        draw();
+      });
+    }
     for (const b of root.querySelectorAll('[data-rmbag]')) {
       b.addEventListener('click', () => {
         state.bags.splice(+b.dataset.rmbag, 1);
@@ -434,7 +513,7 @@ const RISK = [
     root.querySelector('[data-addbag]').addEventListener('click', () => {
       /* An empty slot, not "the next bag we happen to have". Silently adding a
          product is the same accidental endorsement as preselecting one. */
-      state.bags.push('');
+      state.bags.push({ slug: '', role: 'cabin' });
       draw();
     });
     root.querySelector('[data-addleg]').addEventListener('click', () => {
@@ -462,7 +541,7 @@ const RISK = [
       render(
         h(Picker, {
           items: BAG_ITEMS,
-          value: state.bags[i],
+          value: state.bags[i].slug,
           label: state.bags.length > 1 ? `Bag ${i + 1}` : 'Your bag',
           kind: 'bag',
           index: i,
@@ -500,11 +579,35 @@ const RISK = [
     const band = worst.result.band;
     const wont = rows.filter((x) => x.result.band === 'wont').length;
     const name = esc(worst.carrier.name);
+    const personal = worst.result.role === 'personal';
+
+    /* NOBODY CAN ANSWER, AND WE CAN SAY WHY. Distinct from the gap below it.
+       Delta, Southwest, Qatar, Aegean, Air Serbia and three Chinese majors were
+       read and found to publish no under-seat dimensions at all — because the
+       real limit is the space beneath one seat on one aircraft, which varies.
+       Every competitor either invents a number or shows nothing. Saying what
+       the airline actually did is a better answer than both, and we only have
+       it because somebody recorded the absence instead of skipping the row. */
+    if (worst.result.unpublished) {
+      return `<b class="font-semibold text-ink">${name}</b> publishes no size for the personal item — it just has to fit under the seat in front of you, and that space varies by aircraft. Nobody can give you a number here honestly, so we will not invent one.`;
+    }
     if (band === null || worst.result.unknown) {
       return `We cannot answer for <b class="font-semibold text-ink">${name}</b> yet — nobody has read their baggage page. Until someone does, this trip has no honest answer.`;
     }
+    if (worst.result.no_personal_item) {
+      return `<b class="font-semibold text-ink">${name}</b> on leg ${worst.i + 1} includes no personal item on this fare, at any size.`;
+    }
     if (worst.result.no_cabin_bag) {
-      return `<b class="font-semibold text-ink">${name}</b> on leg ${worst.i + 1} includes no cabin bag at all on this fare, whatever its size.`;
+      /* THE FARE TRAP, and the reason roles exist. On Ryanair Basic every
+         suitcase ever made fails equally, so "Over" tells the reader nothing.
+         What they need is the other half: the fare still grants a personal
+         item, and something they own probably fits it. */
+      const p = worst.carrier.allowances?.personal;
+      return `<b class="font-semibold text-ink">${name}</b> on leg ${worst.i + 1} includes no cabin bag at all on this fare, whatever its size.${
+        p
+          ? ` You do still get a personal item — switch this bag to <b class="font-semibold text-ink">Personal item</b> above, or add the bag you would put under the seat.`
+          : ''
+      }`;
     }
     const over = `${esc(U.len(Math.abs(worst.result.delta_cm)))} ${esc(U.lenLabel())}`;
     if (band === 'wont') {
@@ -520,7 +623,7 @@ const RISK = [
     if (band === 'line') {
       return `It clears every flight, but only just — <b class="font-semibold text-ink">${over} to spare</b> on ${name}. Pack it thin.`;
     }
-    return `Clear on all ${rows.length} flight${rows.length > 1 ? 's' : ''}, with room on every one.`;
+    return `Clear ${personal ? 'under the seat ' : ''}on all ${rows.length} flight${rows.length > 1 ? 's' : ''}, with room on every one.`;
   }
 
   function legRow(x, worst) {
@@ -528,13 +631,21 @@ const RISK = [
     const bind = x === worst && (band === 'wont' || band === null);
     const delta = x.result.delta_cm;
     const detail =
-      band === null || x.result.unknown
-        ? 'not researched yet'
-        : x.result.no_cabin_bag
-          ? 'no cabin bag on this fare'
-          : delta > 0
-            ? `${esc(U.len(delta))} ${esc(U.lenLabel())} too ${esc(x.result.dimension)}`
-            : `${esc(U.lenText(Math.abs(delta)))} to spare`;
+      /* THREE WAYS TO HAVE NO ANSWER, and they are not interchangeable.
+         "they publish no size" is a fact about the airline; "not researched
+         yet" is a fact about us. Printing the same words for both would hide
+         our best work behind our worst. */
+      x.result.unpublished
+        ? 'no size published'
+        : band === null || x.result.unknown
+          ? 'not researched yet'
+          : x.result.no_cabin_bag
+            ? 'no cabin bag on this fare'
+            : x.result.no_personal_item
+              ? 'no personal item on this fare'
+              : delta > 0
+                ? `${esc(U.len(delta))} ${esc(U.lenLabel())} too ${esc(x.result.dimension)}`
+                : `${esc(U.lenText(Math.abs(delta)))} to spare`;
     const weight = x.result.advisories.find((a) => a.id === 'weight');
     return `<div class="grid grid-cols-[1.75rem_1fr_8.75rem_6.75rem] items-center gap-3 border-b border-rule px-4 py-3 last:border-b-0${
       bind ? ' bg-red-wash' : ''
@@ -588,7 +699,7 @@ const RISK = [
      the risk setting. riskEffect() used to carry that last sentence and named
      the airline and its behaviour a second time, three lines above a block
      that said it better. */
-  function strictnessCallout(iata, carrier) {
+  function strictnessCallout(iata, carrier, role) {
     const strictness = carrierOf(iata)?.record?.strictness;
     if (!strictness) return '';
     const n = enforcementScore(strictness.score);
@@ -603,7 +714,7 @@ const RISK = [
        control genuinely cannot move the answer, and a reader who just dragged
        it needs to know that is the airline, not a broken control. */
     const noMargin =
-      carrier?.allowance && DEFAULT.config.gambleCeiling(carrier.strictness) === 0
+      allowanceFor(carrier, role) && DEFAULT.config.gambleCeiling(carrier.strictness) === 0
         ? ' At this level the risk setting cannot change the answer — there is no margin to give.'
         : '';
 
@@ -664,11 +775,11 @@ const RISK = [
 
      So the answer now says what the setting did, including when it did
      nothing and why. */
-  function riskEffect(bag, carrier, band) {
-    if (!carrier?.allowance || band === null) return '';
+  function riskEffect(bag, carrier, band, role) {
+    if (!allowanceFor(carrier, role) || band === null) return '';
     const others = Object.entries(ENGINES)
       .filter(([id]) => id !== state.risk)
-      .map(([id, E]) => [id, E.evaluate(bag, carrier).band]);
+      .map(([id, E]) => [id, E.evaluate(bag, carrier, { role }).band]);
 
     const differing = others.filter(([, b]) => b !== band);
     const label = { strict: 'Strict', balanced: 'Balanced', chance: "I'll chance it" };
@@ -716,8 +827,14 @@ const RISK = [
         verdict, because it is the same subtraction. */
   const AXIS = ['Longest side', 'Second side', 'Shortest side'];
 
-  function comparator(bagRecord, engineBag, carrier, band) {
-    if (!carrier?.allowance) return '';
+  function comparator(bagRecord, engineBag, carrier, band, role) {
+    /* Drawn against the allowance for THIS ROLE. Reading carrier.allowance here
+       regardless of role would put a bag inside the overhead box under a
+       verdict computed from the ten-centimetre under-seat slot — a picture
+       contradicting the word beside it, which is the one failure mode a
+       comparator must never have. */
+    const limit = allowanceFor(carrier, role);
+    if (!limit) return '';
 
     /* NOTHING TO DRAW AGAINST. Singapore publishes no box at all — the rule is
        the sum of the three sides — so there is no rectangle to put the bag
@@ -725,8 +842,8 @@ const RISK = [
        thing on this page: a picture reads as a measurement.
        Say the rule in words instead, with the arithmetic shown, because that
        is the whole of what the airline published. */
-    if (!carrier.allowance.max_cm) {
-      const cap = carrier.allowance.linear_max_cm;
+    if (!limit.max_cm) {
+      const cap = limit.linear_max_cm;
       if (typeof cap !== 'number') return '';
       const sides3 = desc(bagRecord.external_cm);
       const sum = sides3.reduce((a, v) => a + v, 0);
@@ -741,7 +858,7 @@ const RISK = [
 
     const E = ENGINES[state.risk] ?? ENGINES.balanced;
     const bag = E.effective(engineBag);
-    const box = desc(carrier.allowance.max_cm);
+    const box = desc(limit.max_cm);
 
     /* Front elevation uses the two largest axes; the third gets its own bar,
        because a flat drawing that pretends to show depth is a lie with a
@@ -832,7 +949,9 @@ const RISK = [
     };
 
     return `<div class="mt-6 rounded-card border border-rule bg-surface-2 p-5">
-      <p class="text-[0.875rem] font-semibold text-ink">Your bag against ${esc(carrier.name)}'s limit</p>
+      <p class="text-[0.875rem] font-semibold text-ink">Your bag against ${esc(carrier.name)}'s ${
+        role === 'personal' ? 'under-seat' : 'cabin'
+      } limit</p>
       <p class="mt-0.5 text-[0.8125rem]">${source(carrier.iata)}</p>
       <div class="mt-3 flex flex-wrap items-center gap-6">
         <svg viewBox="0 0 ${W} ${H}" class="h-[250px] w-full max-w-[460px] shrink-0" role="img"
@@ -884,7 +1003,7 @@ const RISK = [
   }
 
   function renderAnswer() {
-    const primary = state.bags.find(Boolean);
+    const primary = state.bags.find((x) => x.slug);
 
     /* Nothing chosen yet. Say what the page will do rather than showing an
        empty panel — and say it in terms of the thing that makes this tool
@@ -901,24 +1020,35 @@ const RISK = [
         </div>`;
       return;
     }
-    const { rows, worst, bag: bagOfEngine } = score(primary);
-    const b = bagOf(primary);
+    const { rows, worst, bag: bagOfEngine, role } = score(primary);
+    const b = bagOf(primary.slug);
     const band = worst.result.band;
+    const personal = role === 'personal';
 
     /* The envelope is what this page has that a per-airline lookup never will:
        one box that survives the entire itinerary. Legs we cannot answer for are
        excluded from it rather than treated as unlimited — an envelope built on
-       a guess is worse than no envelope. */
-    const scorable = rows.filter((x) => !x.result.unknown && x.carrier.allowance);
-    const env = DEFAULT.envelope(scorable.map((x) => x.carrier));
+       a guess is worse than no envelope.
+
+       PER ROLE, and across the catalogue the under-seat one comes to
+       40 × 25 × 10 — dramatically smaller than the [40, 30, 20] this codebase
+       used to assume was a floor. Showing the cabin envelope while answering
+       the under-seat question would hand the reader a box 8 litres too
+       generous under a verdict computed from the real one. */
+    const scorable = rows.filter((x) => !x.result.unknown && allowanceFor(x.carrier, role));
+    const env = personal
+      ? DEFAULT.personalEnvelope(scorable.map((x) => x.carrier))
+      : DEFAULT.envelope(scorable.map((x) => x.carrier));
     /* Carried as {name, iata} rather than a bare name, because every airline
        named as the reason for a number now has to be linkable back to the page
        that number came from. A Set of strings cannot do that. */
     const setters = env
       ? dedupeBy(
           scorable
-            .filter((x) => x.carrier.allowance?.max_cm)
-            .filter((x) => desc(x.carrier.allowance.max_cm).some((v, i) => v === env[i]))
+            .filter((x) => allowanceFor(x.carrier, role)?.max_cm)
+            .filter((x) =>
+              desc(allowanceFor(x.carrier, role).max_cm).some((v, i) => v === env[i])
+            )
             .map((x) => ({ name: x.carrier.name, iata: x.leg.iata })),
           (x) => x.iata
         )
@@ -935,19 +1065,19 @@ const RISK = [
       <div class="rounded-card border border-rule border-l-[6px] bg-surface p-[1.625rem] shadow-panel ${
         band ? EDGE[band] : 'border-l-rule-strong'
       }">
-        <p class="text-[0.875rem] text-muted">${esc(b.brand)} ${esc(b.model)} · ${esc(U.dims(b.external_cm))} · ${rows.length} flight${rows.length > 1 ? 's' : ''}</p>
+        <p class="text-[0.875rem] text-muted">${esc(b.brand)} ${esc(b.model)} · <b class="font-semibold text-ink-2">${esc(roleLabel(role))}</b> · ${esc(U.dims(b.external_cm))} · ${rows.length} flight${rows.length > 1 ? 's' : ''}</p>
         <p class="mt-1 text-[clamp(2rem,5vw,3rem)] font-bold leading-none tracking-tight ${
           band ? WORD[band] : 'text-muted'
         }">${esc(resultLabel(worst.result))}</p>
         <p class="mt-3 max-w-[56ch] text-lg text-ink-2">${explain(worst, rows)}</p>
         <p class="mt-2 max-w-[56ch] text-[0.9375rem] text-muted">
           Answered on <b class="font-semibold text-ink">${esc(RISK_LABEL[state.risk])}</b>.
-          ${riskEffect(bagOfEngine, worst.carrier, band)}
+          ${riskEffect(bagOfEngine, worst.carrier, band, role)}
         </p>
 
-        ${strictnessCallout(worst.leg.iata, worst.carrier)}
+        ${strictnessCallout(worst.leg.iata, worst.carrier, role)}
 
-        ${comparator(b, bagOfEngine, worst.carrier, band)}
+        ${comparator(b, bagOfEngine, worst.carrier, band, role)}
 
         <div class="mt-6 overflow-hidden rounded-card border border-rule">
           ${rows.map((x) => legRow(x, worst)).join('')}
@@ -965,7 +1095,9 @@ const RISK = [
         }
 
         <div class="mt-6 rounded-card bg-blue-wash px-6 py-[1.375rem]">
-          <p class="text-[0.875rem] font-semibold text-blue">The biggest bag that works on this whole trip</p>
+          <p class="text-[0.875rem] font-semibold text-blue">The biggest ${
+            personal ? 'personal item' : 'bag'
+          } that works on this whole trip</p>
           ${
             env
               ? `<p class="mt-1.5 text-[clamp(1.9rem,4.6vw,2.7rem)] font-bold leading-none tracking-tight tabular-nums">${env
@@ -983,9 +1115,15 @@ const RISK = [
                            </div>`
                          )
                          .join('')}</div>`
-                     : `<p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-red">No bag in our catalogue fits this envelope on its published dimensions. On a trip this tight you are looking at an under-seat bag, or checking one.</p>`
+                     : `<p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-red">No bag in our catalogue fits this envelope on its published dimensions.${
+                         personal
+                           ? ' Under-seat space is the tightest allowance any airline sells, and we hold few bags built for it — a soft tote or a laptop sleeve is what clears this.'
+                           : ' On a trip this tight you are looking at an under-seat bag, or checking one.'
+                       }</p>`
                  }`
-              : `<p class="mt-1.5 max-w-[58ch] text-[1.03125rem] text-ink-2">We cannot draw one yet — no leg on this trip has an allowance we have read.</p>`
+              : `<p class="mt-1.5 max-w-[58ch] text-[1.03125rem] text-ink-2">We cannot draw one yet — no leg on this trip has ${
+                  personal ? 'a published under-seat size' : 'an allowance we have read'
+                }.</p>`
           }
         </div>
 
