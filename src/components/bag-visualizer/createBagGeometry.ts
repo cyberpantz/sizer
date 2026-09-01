@@ -22,14 +22,27 @@ const CORNER_SCALE = { small: 0.1, medium: 0.15, large: 0.2 };
  * over, and the bag sat floating above the deck by the difference. */
 const WHEEL_DROP = 1.55;
 
-/** Wheel puck plus a corner leg using the body material so it reads as one piece. */
+/* WHICH WAY A WHEEL POINTS DEPENDS ON WHAT KIND OF WHEEL IT IS.
+ *
+ * A CylinderGeometry's axis starts along Y, so the rotation chosen here IS the
+ * axle direction, and the two bag types need different ones:
+ *
+ *   2-wheel roller   you tilt it and pull it behind you, so it rolls fore-aft
+ *                    and the axle runs across the bag's WIDTH — along X.
+ *   4-wheel spinner  castors that swivel, mounted under the corners and read
+ *                    from below as discs; their axle is drawn along Z.
+ *
+ * Everything used `rotation.x = PI / 2`, which puts the axle along Z. Right for
+ * a castor and wrong for a roller: the inline wheels were drawn rolling
+ * SIDEWAYS, which is the one direction that bag cannot go. */
 function addWheelPod(
   body: THREE.Mesh,
   x: number,
   z: number,
   radius: number,
   bodyBottomLocalY: number,
-  materials: MaterialSet
+  materials: MaterialSet,
+  axle: 'x' | 'z'
 ) {
   const centerLocalY = bodyBottomLocalY - radius;
 
@@ -43,11 +56,15 @@ function addWheelPod(
   leg.position.set(x, bodyBottomLocalY - legH / 2, z);
   body.add(leg);
 
+  /* An inline wheel is wider than a castor — it carries the whole bag on two
+     of them — and recessed rather than hung below. */
+  const thickness = axle === 'x' ? radius * 0.62 : radius * 0.4;
   const wheel = new THREE.Mesh(
-    new THREE.CylinderGeometry(radius, radius * 0.92, radius * 0.4, 16),
+    new THREE.CylinderGeometry(radius, radius * 0.92, thickness, 16),
     materials.wheel
   );
-  wheel.rotation.x = Math.PI / 2;
+  if (axle === 'x') wheel.rotation.z = Math.PI / 2;
+  else wheel.rotation.x = Math.PI / 2;
   wheel.position.set(x, centerLocalY, z);
   wheel.name = 'wheel';
   body.add(wheel);
@@ -95,8 +112,10 @@ function addWheels(
           [w * 0.24, -d * 0.38],
         ];
 
+  /* Two wheels means an inline roller; four means castors. */
+  const axle = count === 2 ? 'x' : 'z';
   for (const [x, z] of corners) {
-    addWheelPod(body, x, z, r, bodyBottomLocalY, materials);
+    addWheelPod(body, x, z, r, bodyBottomLocalY, materials, axle);
   }
 }
 

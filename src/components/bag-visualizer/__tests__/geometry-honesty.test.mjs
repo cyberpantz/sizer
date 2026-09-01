@@ -679,3 +679,27 @@ describe('Outline is a mode, not an overlay', () => {
     assert.match(reset, /aria-pressed', 'false'/, 'the button still reads as pressed');
   });
 });
+
+describe('wheels point the way the bag rolls', () => {
+  const src = code(geometry);
+
+  test('a two-wheel roller has its axle across the width', () => {
+    /* You tilt a roller and pull it behind you, so it rolls fore-aft and the
+       axle runs left-to-right. Everything used `rotation.x = PI / 2`, which
+       puts a CylinderGeometry's axis along Z — right for a swivelling castor,
+       and wrong for an inline wheel, which was drawn rolling SIDEWAYS: the one
+       direction that bag cannot go. */
+    assert.match(src, /const axle = count === 2 \? 'x' : 'z'/, 'wheel type no longer picks an axle');
+    assert.match(src, /if \(axle === 'x'\) wheel\.rotation\.z = Math\.PI \/ 2/);
+  });
+
+  test('a spinner keeps castors', () => {
+    assert.match(src, /else wheel\.rotation\.x = Math\.PI \/ 2/, 'the castor orientation has gone');
+  });
+
+  test('the pod is told which, rather than guessing', () => {
+    /* Passed in, so the decision lives with the thing that knows the wheel
+       count instead of being re-derived at the bottom of the call stack. */
+    assert.match(src, /axle: 'x' \| 'z'/, 'addWheelPod no longer takes an axle');
+  });
+});
