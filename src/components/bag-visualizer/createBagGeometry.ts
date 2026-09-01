@@ -166,32 +166,21 @@ function addHandle(body: THREE.Mesh, width: number, materials: MaterialSet) {
   body.add(pole);
 }
 
-function addRibs(
-  body: THREE.Mesh,
-  dims: BagDimensions,
-  profile: BagVisualProfile,
-  materials: MaterialSet
-) {
-  if (profile.ribbing === 'none') return;
-  const { widthCm: w, depthCm: d } = dims;
-  const { min, height } = meshBoundsLocalY(body);
-  const count = 4;
-  for (let i = 1; i <= count; i++) {
-    const t = i / (count + 1);
-    const rib = new THREE.Mesh(
-      profile.ribbing === 'horizontal'
-        ? new THREE.BoxGeometry(w * 0.96, height * 0.012, d * 0.02)
-        : new THREE.BoxGeometry(w * 0.02, height * 0.96, d * 0.96),
-      materials.accent
-    );
-    if (profile.ribbing === 'horizontal') {
-      rib.position.set(0, min + height * t, d * 0.48);
-    } else {
-      rib.position.set(-w * 0.48 + w * t, min + height * 0.5, 0);
-    }
-    body.add(rib);
-  }
-}
+/* THE RIBS ARE GONE, and this is the note explaining why rather than a
+ * commented-out block.
+ *
+ * Four accent bars across the shell were meant to read as construction detail
+ * and read as noise: horizontal lines stacked inside a rectangle, in a drawing
+ * whose entire job is to let a reader compare one rectangle against another.
+ * Every one of them competed with the dimension leaders and the frame rails
+ * for the same glance, and none of them carried information.
+ *
+ * docs/25 asks for "at least one construction detail that catches the eye
+ * without competing with the measurements". The wheels and the retracted
+ * handle already do that, and both are load-bearing: they are the parts the
+ * airline measures over, which is the argument the site exists to make.
+ *
+ * Detail is only free when the surface has nothing to say. This one does. */
 
 function buildSpinner(
   dims: BagDimensions,
@@ -214,7 +203,6 @@ function buildSpinner(
   group.add(body);
 
   if (wheels > 0) addWheels(body, dims, wheels, materials);
-  addRibs(body, dims, profile, materials);
   addHandle(body, w, materials);
   return group;
 }
@@ -395,7 +383,6 @@ function buildUnderseat(
   handle.position.set(0, max - handleH * 0.5, -d * 0.1);
   body.add(handle);
 
-  addRibs(body, dims, profile, materials);
   return group;
 }
 

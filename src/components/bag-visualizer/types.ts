@@ -22,7 +22,6 @@ export type MaterialPreset =
 export type BagVisualProfile = {
   material: MaterialPreset;
   cornerRadius?: 'small' | 'medium' | 'large';
-  ribbing?: 'none' | 'horizontal' | 'vertical';
   frontPocket?: boolean;
   wheelStyle?: 'single' | 'double';
 };

@@ -166,3 +166,30 @@ describe('the shake says "rejected", and only when something was rejected', () =
     assert.match(body, /bagRig\.position\.z = z;/, 'the slide has moved off Z');
   });
 });
+
+describe('surface detail earns its place or is not drawn', () => {
+  test('no decorative banding across the shell', () => {
+    /* Four accent bars were meant to read as construction detail and read as
+       noise — horizontal lines stacked inside a rectangle, in a drawing whose
+       whole job is comparing one rectangle to another. They competed with the
+       dimension leaders and the frame rails for the same glance and carried no
+       information.
+
+       The wheels and the retracted handle stay, and they are the exception
+       that proves the rule: both are load-bearing. They are the parts the
+       airline measures OVER, which is the argument this site exists to make. */
+    const body = src.replace(/\/\*[\s\S]*?\*\//g, '');
+    assert.doesNotMatch(body, /addRibs/, 'the ribs are back');
+    assert.doesNotMatch(body, /ribbing/, 'the ribbing profile field is back');
+  });
+
+  test('the removed option is gone from the profile too, not left dangling', () => {
+    /* An unused config field is an invitation to set it and wonder why nothing
+       happens — the same shape as the Under-seat pill that was declared and
+       rendered nothing for weeks. */
+    for (const f of ['visualProfile.ts', 'types.ts']) {
+      const other = readFileSync(`src/components/bag-visualizer/${f}`, 'utf8');
+      assert.doesNotMatch(other, /ribbing/, `${f} still carries the dead option`);
+    }
+  });
+});

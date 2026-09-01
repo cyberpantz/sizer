@@ -8,7 +8,7 @@ const CORNER: Record<string, BagVisualProfile['cornerRadius']> = {
 
 /** Visual-only overrides where catalogue classification is wrong for rendering. */
 const PROFILE_OVERRIDES: Record<string, Partial<BagVisualProfile>> = {
-  'away-aluminum': { material: 'aluminum', ribbing: 'vertical' },
+  'away-aluminum': { material: 'aluminum' },
   'rimowa-cabin': { material: 'aluminum' },
   'carl-friedrik-carryon-x': { material: 'aluminum' },
   'briggs-riley-sympatico-global-spinner': { material: 'aluminum' },
@@ -34,13 +34,9 @@ export function deriveVisualProfile(props: BagVisualizerProps): BagVisualProfile
   else if (type === 'underseat') material = soft ? 'soft_side' : 'hard_shell';
   else if (soft) material = 'soft_side';
 
-  const ribbing =
-    material === 'hard_shell' || material === 'aluminum' ? 'horizontal' : 'none';
-
   return {
     material,
     cornerRadius: CORNER[type] ?? (soft ? 'large' : 'medium'),
-    ribbing,
     frontPocket: type === 'backpack' || (soft && type !== 'duffel'),
     wheelStyle: wheelCount === 4 ? 'double' : 'single',
     ...override,
