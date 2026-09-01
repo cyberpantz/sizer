@@ -1,12 +1,32 @@
 ---
 import UnitToggle from './UnitToggle.astro';
 
-/* Three nav items. No Airlines index at launch — docs/15-sitemap.md. */
+/* Three nav items. No Airlines index at launch — docs/15-sitemap.md.
+ *
+ * "CHECK A BAG" NAMED THE THING THIS SITE EXISTS TO PREVENT.
+ *
+ * Frank: "maybe there is a better name that describes what the page actually
+ * does." It does — and the old label was worse than vague, because at an
+ * airport "check a bag" means handing it over at the counter for the hold.
+ * That is the outcome every page here is trying to help someone avoid, and it
+ * was the most prominent link in the header.
+ *
+ * It also undersold the page and disagreed with it. The page is titled "Check
+ * your whole trip" and its whole argument is that one leg being fine does not
+ * mean the trip is — it takes an itinerary, names the leg that decides, and
+ * draws the biggest bag that survives all of them. "Check a bag" describes a
+ * single lookup against a single airline, which is the thing every competitor
+ * does and the thing this page deliberately is not.
+ *
+ * "Check your trip" fixes all three: it cannot be misread as the hold, it
+ * names the actual unit of work, and it is the page's own H1 shortened rather
+ * than a second name for the same thing. A door and the room behind it should
+ * say the same thing. */
 const path = Astro.url.pathname;
 const nav = [
   { href: '/bags/', label: 'Bags' },
   { href: '/guide/', label: 'Guide' },
-  { href: '/check/', label: 'Check a bag' },
+  { href: '/check/', label: 'Check your trip' },
 ];
 ---
 <header class="border-b border-rule bg-surface">

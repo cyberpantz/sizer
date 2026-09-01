@@ -81,6 +81,13 @@ The strongest asset we have is the one thing no competitor can show: **the gap b
 
 ### Sketch
 
+> Drawn before the nav was settled, and left as drawn. It still shows an
+> **Airlines** item that [15](15-sitemap.md#airlines-is-deliberately-absent-at-launch)
+> later cut, and labels the tool **Check a bag**, which was renamed on
+> 2026-08-31 because it names the thing this site helps you avoid. The sketch is
+> here for the LAYOUT argument above it; [15](15-sitemap.md#navigation) is
+> canonical for what the nav says.
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │  SIZER              Bags  Airlines  Guide  [ Check a bag ]   │

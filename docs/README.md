@@ -46,7 +46,7 @@ Airlines measure the *external* size — wheels and handle included. That figure
 | **Fare-class carriers** | The 12 where fare changes the answer | [04](04-data-sources.md) |
 | **Launch bags** | 60–80 measured | [04](04-data-sources.md) |
 | **Units** | Inches for US locale, cm elsewhere. Always-visible header toggle, remembered. Dual display only on the hero envelope. **SSR never infers a locale — static HTML ships metric, the client corrects.** | [01](01-mvp.md#units) |
-| **Nav** | Three items: Bags · Guide · Check a bag. No Airlines index at launch. | [15](15-sitemap.md#airlines-is-deliberately-absent-at-launch) |
+| **Nav** | Three items: Bags · Guide · Check your trip. No Airlines index at launch. | [15](15-sitemap.md#airlines-is-deliberately-absent-at-launch) |
 | **Checked bags** | Data collected week one; shown in the failed-carry-on flow. Dedicated pages are queue item 5. | [01](01-mvp.md#checked-bags-specifically) |
 | **Architecture** | Read path = version-controlled JSON, server-rendered. Write path = thin serverless + store, for email, click tracking and corrections only. | [01](01-mvp.md#architecture) |
 | **Typeface** | Figtree + IBM Plex Mono. Barlow is gone. | [02](02-design-system.md#the-stack) |

@@ -185,3 +185,61 @@ describe('a link and the page it opens agree', () => {
     assert.match(card, new RegExp(claim, 'i'), 'the home page card promises something else');
   });
 });
+
+/* THE NAV MUST NOT NAME THE THING WE HELP PEOPLE AVOID.
+ *
+ * Frank, on the nav item pointing at /check: "maybe there is a better name that
+ * describes what the page actually does."
+ *
+ * It said "Check a bag", and that is worse than vague. At an airport, checking
+ * a bag means handing it over at the counter for the hold — the outcome every
+ * page on this site is trying to help someone avoid. It was the most prominent
+ * link in the header, and it named the failure state.
+ *
+ * "check" is a fine word here in every other use: check it AGAINST an airline,
+ * check your trip, we check the limit. What collides is the bare verb-plus-bag
+ * form, which the industry has already claimed. So the guard is narrow — it
+ * forbids that phrase as a LABEL, and leaves the verb alone everywhere else.
+ *
+ * The second rule is the one that generalises: a nav item and the page it opens
+ * have to describe themselves compatibly. "Check a bag" pointed at a page
+ * titled "Check your whole trip" — two names for one thing, neither confirming
+ * the other, which is the same failure the /bags headline had.
+ */
+describe('the nav says what the page does', () => {
+  const header = readFileSync('src/components/Header.astro', 'utf8');
+  const labels = [...header.matchAll(/label:\s*'([^']+)'/g)].map((m) => m[1]);
+  const hrefs = [...header.matchAll(/href:\s*'([^']+)'/g)].map((m) => m[1]);
+
+  test('the nav is still three items', () => {
+    assert.equal(labels.length, 3, `expected three nav items, found ${labels.length}`);
+    assert.equal(hrefs.length, labels.length, 'every nav item needs a destination');
+  });
+
+  test('no label uses the airline’s phrase for the hold', () => {
+    /* Deliberately narrow: "check a bag" and "check your bag" as a whole
+       label. The verb is welcome everywhere else on the site. */
+    for (const label of labels) {
+      assert.doesNotMatch(
+        label,
+        /check\s+(a|your|the)\s+bags?\b/i,
+        `"${label}" is what an airport calls putting a bag in the hold`
+      );
+    }
+  });
+
+  test('the tool’s label and its page agree', () => {
+    /* Not a demand that they be identical — a nav item is allowed to be shorter
+       than an h1. It must not be a DIFFERENT name for the same page. */
+    const i = hrefs.indexOf('/check/');
+    assert.ok(i > -1, 'nothing in the nav points at the tool');
+    const label = labels[i].toLowerCase();
+    const h1 = headlines.find((h) => h.file.endsWith('check.astro'))?.text.toLowerCase() ?? '';
+    assert.ok(h1, '/check has no headline');
+    const shared = label.split(/\s+/).filter((w) => w.length > 2 && h1.includes(w));
+    assert.ok(
+      shared.length >= 2,
+      `the nav says "${labels[i]}" and the page says "${h1}" — pick one name`
+    );
+  });
+});

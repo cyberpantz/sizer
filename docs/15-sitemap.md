@@ -5,14 +5,24 @@
 **Three items at launch.** The nav's only real jobs are getting someone from a deep page into the tool, and signalling that we're a site rather than a widget.
 
 ```
-[wordmark]        Bags   Guide        [ Check a bag ]
+[wordmark]        Bags   Guide        [ Check your trip ]
 ```
 
 | Item | Route | Why it's here |
 |---|---|---|
 | **Bags** | `/bags` | The catalogue. Commercial surface, and where measured dimensions live. |
 | **Guide** | `/guide` | The link-earning hub |
-| **Check a bag** | `/check` | The tool. Button-styled, visually distinct, always the rightmost thing. |
+| **Check your trip** | `/check` | The tool. Button-styled, visually distinct, always the rightmost thing. |
+
+### Why not "Check a bag"
+
+That was the label until 2026-08-31, and it was wrong three ways.
+
+**It named the outcome we exist to prevent.** At an airport, "check a bag" means handing it over at the counter for the hold. That is what every page here is trying to help someone avoid, and it was the most prominent link in the header.
+
+**It undersold the page.** `/check` takes an entire itinerary, names the leg that decides it, and draws the biggest bag that survives all of them. "Check a bag" describes a single lookup against a single airline — which is what every competitor does and what this page deliberately is not.
+
+**It disagreed with the page.** The page's own title and H1 are "Check your whole trip". A nav item and its destination describing themselves differently is the same failure the `/bags` headline had: when a page cannot be described the same way twice, one of the two descriptions is doing something other than describing it.
 
 ### Airlines is deliberately absent at launch
 
@@ -38,7 +48,7 @@ Sixty measured bags is more than anyone in this category has. Fifty airlines aga
 
 ### Mobile
 
-Logo, then **Check a bag** always visible, then a menu for the other three. A hamburger over four items adds a tap for no reason, but the primary action shouldn't ever be behind one. Phone is likely the majority case.
+Logo, then **Check your trip** always visible, then a menu for the other three. A hamburger over four items adds a tap for no reason, but the primary action shouldn't ever be behind one. Phone is likely the majority case.
 
 ---
 
@@ -81,7 +91,7 @@ Three columns, plus the required strings.
 
 | Find luggage | How we know | About |
 |---|---|---|
-| Check a bag | How we measure | About |
+| Check your trip | How we measure | About |
 | All bags | Our sources | Contribute a correction |
 | By airline | Changelog | Privacy · Terms |
 | By size | Report an error | Affiliate disclosure |

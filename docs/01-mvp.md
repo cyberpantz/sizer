@@ -11,7 +11,7 @@ These docs specify more than v1 should build. That's fine — the thinking is ba
 - Weight compared alongside dimensions
 - The four-band engine
 - One results screen, three doors
-- **Nav is three items: Bags, Guide, Check a bag.** No Airlines index — see [15](15-sitemap.md#airlines-is-deliberately-absent-at-launch). Per-carrier `/luggage-for/` pages still ship; only the directory waits.
+- **Nav is three items: Bags, Guide, Check your trip.** No Airlines index — see [15](15-sitemap.md#airlines-is-deliberately-absent-at-launch). Per-carrier `/luggage-for/` pages still ship; only the directory waits.
 - Affiliate links, DTC-first
 - Strictness score with 2–3 cited sources per carrier
 
