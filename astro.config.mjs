@@ -18,7 +18,20 @@ import tailwind from '@tailwindcss/vite';
 
    Add it back in the same commit as the first `export const prerender = false`
    route, not before. A static build deploys to Cloudflare Pages perfectly well
-   without an adapter. */
+   without an adapter.
+
+   AND THE PACKAGE IS GONE FROM package.json TOO, which took a failed deploy to
+   learn. Leaving an unused adapter installed is not neutral: wrangler's
+   auto-config looks for it, finds it, and rewrites the build to SSR without
+   being asked. The first Cloudflare build printed "Rearranging server assets"
+   — a line a static build never emits — then died generating static routes,
+   because in server mode `getStaticPaths()` is ignored and the 57 bag pages
+   stop being prerendered.
+
+   Reproduced locally by installing the adapter and watching the same line
+   appear. So: an unused dependency that a build host treats as configuration
+   is a trap, and `pnpm add @astrojs/cloudflare` belongs in that same future
+   commit rather than sitting here in advance. */
 export default defineConfig({
   /* Preact, for exactly one component: the airline picker.
 

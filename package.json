@@ -33,7 +33,6 @@
     "build:client-data": "node scripts/build-client-data.mjs"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^14.2.5",
     "@astrojs/internal-helpers": "^0.10.4",
     "@astrojs/preact": "^6.0.4",
     "@tailwindcss/vite": "^4.3.3",
