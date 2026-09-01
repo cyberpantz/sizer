@@ -149,3 +149,52 @@ describe('the toggle', () => {
     assert.equal(n, 1);
   });
 });
+
+describe('lenPair — a table may not contradict the verdict beside it', () => {
+  /* THE BUG. A bag 0.2 cm over Air China's limit rendered as `21.7 in` in the
+     YOUR BAG column and `21.7 in` in the AIRLINE LIMIT column, directly above
+     a line reading "0.2 cm too long on Air China economy". Both were correct:
+     one decimal of an inch is 2.5 mm, so a real overage disappeared into the
+     rounding.
+
+     That is worse than either half being wrong on its own, because the reader
+     cannot tell which to believe — and the table is the one that looks like
+     data. */
+  const inches = () => {
+    const u = createUnits({ storage: undefined, server: true });
+    u.set('in');
+    return u;
+  };
+
+  test('a difference too small for one decimal is still shown', () => {
+    const [bag, limit] = inches().lenPair(55.1, 54.9);
+    assert.notEqual(bag, limit, '55.1 cm and 54.9 cm both rendered as 21.7 in');
+    assert.deepEqual([bag, limit], [21.7, 21.6]);
+  });
+
+  test('equal values stay equal — precision appears only where it means something', () => {
+    assert.deepEqual(inches().lenPair(55, 55), [21.7, 21.7]);
+  });
+
+  test('figures that are plainly apart keep one decimal', () => {
+    assert.deepEqual(inches().lenPair(55, 40), [21.7, 15.7]);
+  });
+
+  test('metric behaves the same way', () => {
+    const u = createUnits({ storage: undefined, server: true });
+    u.set('cm');
+    assert.deepEqual(u.lenPair(55.14, 55.11), [55.14, 55.11]);
+    assert.deepEqual(u.lenPair(55.1, 54.9), [55.1, 54.9]);
+  });
+
+  test('it never runs away to silly precision', () => {
+    /* Capped at three decimals. Two figures a ten-thousandth apart are equal
+       for a traveller's purposes, and a table reading 21.6536 would be
+       claiming a precision no tape measure in an airport has. The cap losing
+       the distinction is the correct trade. */
+    const decimals = (n) => String(n).split('.')[1]?.length ?? 0;
+    const [a, b] = inches().lenPair(55.0001, 55.0002);
+    assert.ok(decimals(a) <= 3, `${a} carries more than three decimals`);
+    assert.ok(decimals(b) <= 3, `${b} carries more than three decimals`);
+  });
+});

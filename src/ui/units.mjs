@@ -99,6 +99,27 @@ export function createUnits({ storage, navigator: nav, server = !isBrowser() } =
       return unit === CM ? 'kg' : 'lb';
     },
 
+    /** TWO FIGURES THAT MUST NOT LOOK EQUAL WHEN THEY ARE NOT.
+     *
+     * A bag 0.2 cm over Air China's limit rendered as `21.7 in` against
+     * `21.7 in` — the comparison table said it fitted while the verdict line
+     * beneath it said "0.2 cm too long". Both were right; one decimal of an
+     * inch is 2.5 mm, so a real overage vanished into the rounding.
+     *
+     * A table that contradicts the verdict beside it is worse than either
+     * being wrong on its own, because the reader cannot tell which to believe.
+     * So: render at the COARSEST precision that still tells them apart, and
+     * only where they actually collide. Equal values stay equal. */
+    lenPair(aCm, bCm) {
+      const conv = (v) => (unit === CM ? v : v / 2.54);
+      const a = conv(aCm);
+      const b = conv(bCm);
+      for (let d = 1; d <= 3; d++) {
+        if (a === b || round(a, d) !== round(b, d)) return [round(a, d), round(b, d)];
+      }
+      return [round(a, 3), round(b, 3)];
+    },
+
     dims(cmArr, sep = ' × ') {
       return `${cmArr.map((v) => this.len(v)).join(sep)} ${this.lenLabel()}`;
     },

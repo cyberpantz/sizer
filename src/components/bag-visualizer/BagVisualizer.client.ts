@@ -284,8 +284,17 @@ export function initFitVisualizer(opts: InitOptions): () => void {
         rowsEl.innerHTML = data.rows
           .map((row) => {
             const limit =
-              row.limitCm == null ? '—' : `<span data-cm="${row.limitCm}">${fmtCm(row.limitCm)} cm</span>`;
-            const bag = `<span data-cm="${row.bagCm}">${fmtCm(row.bagCm)} cm</span>`;
+              row.limitCm == null
+                ? '—'
+                : `<span data-cm="${row.limitCm}" data-cm-vs="${row.bagCm}">${fmtCm(row.limitCm)} cm</span>`;
+            /* data-cm-vs names the figure this one is being READ AGAINST, so
+               the refresh below can render the pair at a precision that keeps
+               them apart. Without it a bag 0.2 cm over showed 21.7 in against
+               21.7 in while the verdict underneath said "too long". */
+            const bag =
+              row.limitCm == null
+                ? `<span data-cm="${row.bagCm}">${fmtCm(row.bagCm)} cm</span>`
+                : `<span data-cm="${row.bagCm}" data-cm-vs="${row.limitCm}">${fmtCm(row.bagCm)} cm</span>`;
             const binding = row.binding ? ' bg-amber-wash text-amber' : '';
             return `<div class="grid grid-cols-[4.75rem_1fr_1fr] gap-x-2 px-3 py-2.5 text-[0.8125rem]${binding}">
               <span class="font-semibold text-muted">${row.label}</span>
@@ -337,7 +346,11 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     }
 
     for (const el of panel.querySelectorAll('[data-cm]')) {
-      el.textContent = `${units.len(+el.dataset.cm!)} ${units.lenLabel()}`;
+      const value = +(el as HTMLElement).dataset.cm!;
+      const against = (el as HTMLElement).dataset.cmVs;
+      const shown =
+        against == null ? units.len(value) : units.lenPair(value, +against)[0];
+      el.textContent = `${shown} ${units.lenLabel()}`;
     }
     for (const el of panel.querySelectorAll('[data-kg]')) {
       el.textContent = `${units.mass(+el.dataset.kg!)} ${units.massLabel()}`;
@@ -363,10 +376,10 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       return;
     }
     if (result.delta_cm > 0) {
-      verdictEl.textContent = `${Math.abs(result.delta_cm)} cm too ${result.dimension} on ${session.carrierName} ${session.fare}.`;
+      verdictEl.textContent = `${units.len(Math.abs(result.delta_cm))} ${units.lenLabel()} too ${result.dimension} on ${session.carrierName} ${session.fare}.`;
       return;
     }
-    verdictEl.textContent = `Fits ${session.carrierName} ${session.fare} with ${Math.abs(result.delta_cm)} cm to spare.`;
+    verdictEl.textContent = `Fits ${session.carrierName} ${session.fare} with ${units.len(Math.abs(result.delta_cm))} ${units.lenLabel()} to spare.`;
   }
 
   function updateOverlay() {

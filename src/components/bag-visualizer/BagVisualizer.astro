@@ -59,15 +59,25 @@ const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
 const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensions.widthCm)} by ${fmt(dimensions.depthCm)} centimetres on the outside.`;
 ---
 
+{/* THE ROOT IS `contents`, NOT A CARD.
+    The picker and the size comparison belong beside the reader's other
+    numbers, and the 3D stage belongs in the wide column — but the client
+    script addresses everything through `root.querySelector`, so they have to
+    stay inside one element. `display: contents` resolves that: the DOM keeps
+    one root, and the three parts below become grid items of the PAGE grid,
+    each carrying its own card. */}
 <aside
-  class="bag-visualizer rounded-card border border-rule bg-surface shadow-panel lg:sticky lg:top-6 lg:self-start"
+  class="bag-visualizer contents"
   data-bag-visualizer
   data-base-props={baseProps}
   data-airlines={airlinesJson}
   data-bag-for-fit={bagForFitJson}
   data-fare-labels={fareLabelsJson}
 >
-  <div class="border-b border-rule px-3 py-3">
+  <div
+    data-viz-picker
+    class="order-1 rounded-card border border-rule bg-surface px-3 py-3 shadow-panel lg:col-start-1"
+  >
     <p class="text-[0.6875rem] font-semibold uppercase tracking-wide text-muted">Check against an airline</p>
     <div class="mt-2 grid gap-2 sm:grid-cols-2">
       <label class="block">
@@ -95,7 +105,11 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
     </div>
   </div>
 
-  <div data-viz-shell class="border-b border-rule bg-surface-2 px-3 py-4">
+  <div
+    data-viz-stage-col
+    class="order-2 overflow-hidden rounded-card border border-rule bg-surface shadow-panel lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:sticky lg:top-6 lg:self-start"
+  >
+  <div data-viz-shell class="bg-surface-2 px-3 py-4">
   {/* A HEIGHT, NOT AN ASPECT RATIO.
       This was `aspect-[4/5] w-full` with a min-height, a breakpoint min-height
       and a max-height on top. aspect-ratio derives height from WIDTH, so on a
@@ -204,7 +218,7 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
   </p>
   </div>
 
-  <div data-view-controls hidden class="flex flex-wrap gap-2 border-b border-rule bg-surface px-3 pb-3 pt-2">
+  <div data-view-controls hidden class="flex flex-wrap gap-2 border-t border-rule bg-surface px-3 pb-3 pt-3">
     <button type="button" data-view="front" aria-pressed="false"
       class="min-h-9 rounded-chip border border-rule px-2.5 py-1.5 text-[0.8125rem] font-semibold text-ink-2 aria-pressed:border-blue aria-pressed:bg-blue-wash aria-pressed:text-blue">
       Front
@@ -222,11 +236,16 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
       Outline
     </button>
   </div>
+  </div>
 
+  <div
+    data-viz-results
+    class="order-3 overflow-hidden rounded-card border border-rule bg-surface shadow-panel lg:col-start-1"
+  >
   <div
     data-limits-compare
     hidden
-    class="border-t border-rule px-4 py-4"
+    class="px-4 py-4"
   >
     <p class="text-[0.8125rem] font-semibold uppercase tracking-wide text-muted">Compare sizes</p>
     <p data-limits-heading class="mt-1 text-[0.9375rem] font-semibold text-ink"></p>
@@ -265,7 +284,7 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
     </p>
   )}
 
-  <div class="border-t border-rule px-4 py-4">
+  <div class="border-t border-rule px-4 py-4 [&:first-child]:border-t-0">
     <div class="flex items-end justify-between gap-4">
       <div>
         <p class="text-[1.75rem] font-bold leading-none tracking-tight tabular-nums">
@@ -293,6 +312,7 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
       href="/check/"
       class="mt-3 block rounded-chip bg-blue px-4 py-2.5 text-center text-[0.9375rem] font-semibold text-on-blue no-underline hover:bg-blue-hover"
     >Check it against your trip</a>
+  </div>
   </div>
 
   <span data-dims={dimsJson} class="sr-only" aria-hidden="true"></span>
