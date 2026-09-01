@@ -21,7 +21,13 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { describe, test } from 'node:test';
-import { BAND_COPY, BAND_ORDER, bandHex, UNANSWERED_HEX } from '../verdict.mjs';
+import {
+  BAND_COPY,
+  BAND_ORDER,
+  bandHex,
+  fitsWithinLimit,
+  UNANSWERED_HEX,
+} from '../verdict.mjs';
 
 const css = readFileSync('src/styles/app.css', 'utf8');
 
@@ -138,56 +144,69 @@ describe('the ladder reaches every surface that states a verdict', () => {
   });
 });
 
-describe('the bag itself reads good or alarm', () => {
-  const materials = readFileSync(
+describe('the bag itself reads good or bad', () => {
+  const code = readFileSync(
     'src/components/bag-visualizer/createMaterials.ts',
     'utf8'
-  );
-  const code = materials.replace(/\/\*[\s\S]*?\*\//g, '');
+  ).replace(/\/\*[\s\S]*?\*\//g, '');
 
-  test('the body colour is pulled toward the band, not left fixed', () => {
-    /* Frank: "we need good vs alarm styling and decision for the bag." The
-       verdict reached the dimension lines, the chips and the envelope, then
-       stopped at the object all three describe — so the bag looked identical
-       whether it sailed through or was refused. */
+  test('the body colour is pulled toward the verdict, not left fixed', () => {
+    /* The verdict reached the dimension lines, the chips and the envelope,
+       then stopped at the object all three describe — so the bag looked
+       identical whether it sailed through or was refused. */
     assert.match(code, /body\.color\.lerp/, 'the bag body no longer takes the verdict');
   });
 
-  test('the pull is a blend, never a repaint', () => {
-    /* A fully green suitcase is a toy, and docs/23 ruled out anything reading
-       as the manufacturer's own presentation. Every weight stays well under
-       half so the shell still reads as a shell. */
-    const block = code.match(/BAND_PULL[^=]*=\s*\{([\s\S]*?)\};/)?.[1] ?? '';
-    assert.ok(block, 'BAND_PULL has moved; this guard needs rewriting');
-    const weights = [...block.matchAll(/(\w+):\s*([\d.]+)/g)].map(([, b, v]) => [b, +v]);
-    assert.equal(weights.length, 5, 'every band needs a weight');
-    for (const [band, v] of weights) {
-      assert.ok(v > 0.2, `${band} at ${v} is too faint to read as a verdict`);
-      assert.ok(v <= 0.5, `${band} at ${v} repaints the bag instead of tinting it`);
-    }
+  test('the bag is binary — good or bad, not five-way', () => {
+    /* Frank: "fits === good, does not fit === bad." The ladder has five steps
+       because the ADVICE has five shades; the object does not. Five tints on a
+       curved, rendered shell is mush — nobody tells lime from green from amber
+       at a glance. The nuance stays where there is room for it: the badge, the
+       axis chip, the sentence. */
+    assert.doesNotMatch(
+      code,
+      /BAND_PULL/,
+      'the five-way tint is back on the bag; it belongs on the labels'
+    );
+    assert.match(code, /GOOD_HEX/, 'no good colour');
+    assert.match(code, /BAD_HEX/, 'no bad colour');
   });
 
-  test('alarm pulls harder than reassurance', () => {
+  test('bad pulls harder than good', () => {
     /* The two errors are not equal. Telling someone their bag is fine when it
-       is not costs them a gate fee and their bag; a green that is slightly too
-       subtle costs nobody anything. Same asymmetry as gambleCeiling() and the
-       evidence gate on `likely`. */
-    const block = code.match(/BAND_PULL[^=]*=\s*\{([\s\S]*?)\};/)[1];
-    const w = Object.fromEntries(
-      [...block.matchAll(/(\w+):\s*([\d.]+)/g)].map(([, b, v]) => [b, +v])
-    );
-    assert.ok(w.wont > w.clears, 'refusal must not be quieter than approval');
-    assert.ok(w.gamble > w.line, 'over-the-limit must not be quieter than tight-but-legal');
-    assert.deepEqual(
-      [w.clears, w.line, w.likely, w.gamble, w.wont],
-      [w.clears, w.line, w.likely, w.gamble, w.wont].sort((a, b) => a - b),
-      'the weights must ascend from clears to wont — worse is louder'
-    );
+       is not costs them a gate fee and their bag; a green slightly too subtle
+       costs nobody anything. Same asymmetry as gambleCeiling(). */
+    const good = Number(code.match(/GOOD_PULL\s*=\s*([\d.]+)/)?.[1]);
+    const bad = Number(code.match(/BAD_PULL\s*=\s*([\d.]+)/)?.[1]);
+    assert.ok(good > 0 && bad > 0, 'both pulls must exist');
+    assert.ok(bad > good, `refusal (${bad}) must not be quieter than approval (${good})`);
+    assert.ok(bad <= 0.5, `${bad} repaints the bag instead of tinting it`);
   });
 
   test('an unanswered verdict leaves the bag alone', () => {
-    /* Not knowing is not a mild version of fitting, so it gets no tint at
-       all rather than a washed-out one. */
-    assert.match(code, /opts\?\.band \?/, 'a missing band no longer skips the tint');
+    /* Not knowing is neither good nor bad, and must never render as either. */
+    assert.equal(fitsWithinLimit(null), null);
+    assert.equal(fitsWithinLimit('nonsense'), null);
+    assert.match(code, /opts\?\.fits === true/, 'the tint no longer distinguishes null from false');
+  });
+});
+
+describe('where fits stops and over begins', () => {
+  test('the boundary is the airline\'s published limit, not a design choice', () => {
+    /* `line` (Tight) is INSIDE the published box with no margin. `likely`
+       (Probably fine) is OVER it, and forgiven only because the airline rarely
+       measures. docs/24 argues this ordering at length; the drawing must not
+       quietly move the line somewhere more flattering. */
+    assert.equal(fitsWithinLimit('clears'), true);
+    assert.equal(fitsWithinLimit('line'), true, 'Tight is legal — it is inside the limit');
+    assert.equal(fitsWithinLimit('likely'), false, 'Probably fine is already OVER the limit');
+    assert.equal(fitsWithinLimit('gamble'), false);
+    assert.equal(fitsWithinLimit('wont'), false);
+  });
+
+  test('every band lands on one side or the other', () => {
+    for (const band of BAND_ORDER) {
+      assert.notEqual(fitsWithinLimit(band), null, `${band} is neither fitting nor over`);
+    }
   });
 });

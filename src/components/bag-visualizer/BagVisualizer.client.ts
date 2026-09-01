@@ -9,7 +9,7 @@ import { bindingPhysicalAxis, bandHex, evaluateFit } from './fitVisual';
 import { projectMeasurements } from './projectMeasurements';
 import { deriveVisualProfile } from './visualProfile';
 import { createUnits } from '../../ui/units.mjs';
-import { ALL_BAND_CHIP_CLASSES, BAND_CHIP } from '../../ui/verdict.mjs';
+import { ALL_BAND_CHIP_CLASSES, BAND_CHIP, fitsWithinLimit } from '../../ui/verdict.mjs';
 import type { BagVisualizerProps, ViewPreset } from './types';
 
 const units = createUnits();
@@ -114,8 +114,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   const materials = createMaterials(profile.material, {
     bodyOpacity: 0.78,
     fitVisual: true,
-    band: result.band,
-    bandHex: bandHex(result.band),
+    fits: fitsWithinLimit(result.band),
   });
   const bagScene = createBagGeometry(session, profile, materials);
   bagScene.envelope.visible = false;

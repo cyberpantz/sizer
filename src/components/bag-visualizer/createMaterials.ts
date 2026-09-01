@@ -85,47 +85,49 @@ export type MaterialSet = {
   dispose: () => void;
 };
 
-/* GOOD VERSUS ALARM, ON THE BAG ITSELF.
+/* GOOD VERSUS BAD, ON THE BAG ITSELF.
  *
  * The verdict reached the dimension lines, the axis chips and the measured
  * envelope — and stopped at the object they all describe. So the bag looked
- * identical whether it sailed through or was refused, and every part of the
- * answer sat in the furniture around it.
+ * identical whether it sailed through or was refused.
  *
- * The bag is not repainted. It is PULLED toward the band: a weighted blend of
- * its own material colour and the verdict, which keeps the shell reading as a
- * shell — roughness, metalness and the grain normal are untouched — while the
- * cast of it says pass or stop from across the room. A fully green suitcase
- * would be a toy, and docs/23 already ruled out anything that reads as the
- * manufacturer's own presentation.
+ * BINARY, NOT FIVE-WAY. The ladder has five steps because the ADVICE has five
+ * shades; the object does not. A reader glancing at a drawn bag is asking one
+ * question, and five tints on a rendered shell is mush — nobody tells lime
+ * from green from amber at a glance on a curved surface. The nuance stays
+ * where there is room for it: the badge, the axis chip, the sentence.
  *
- * Asymmetric on purpose, because the two errors are not equal. `wont` and
- * `gamble` pull harder: telling someone their bag is fine when it is not costs
- * them a gate fee and their bag, while a green that is slightly too subtle
- * costs nobody anything. Same asymmetry as gambleCeiling() and the evidence
- * gate on `likely`. */
-const BAND_PULL: Record<string, number> = {
-  clears: 0.3,
-  line: 0.34,
-  likely: 0.36,
-  gamble: 0.44,
-  wont: 0.5,
-};
+ * The split is the airline's own published box — see fitsWithinLimit() in
+ * ui/verdict.mjs. `line` is inside it, `likely` is already over it.
+ *
+ * The bag is not repainted. It is PULLED toward good or bad: a weighted blend
+ * with its own material colour, leaving roughness, metalness and the grain
+ * normal untouched, so the shell still reads as a shell while its cast says
+ * pass or stop across the room. A fully green suitcase would be a toy, and
+ * docs/23 already ruled out anything reading as the manufacturer's own
+ * presentation.
+ *
+ * ASYMMETRIC ON PURPOSE. Bad pulls harder than good: telling someone their bag
+ * is fine when it is not costs them a gate fee and their bag, while a green
+ * slightly too subtle costs nobody anything. The same asymmetry gambleCeiling()
+ * and the evidence gate on `likely` are built around. */
+const GOOD_HEX = 0x14713d; // --color-green
+const BAD_HEX = 0xb3261e; // --color-red
+const GOOD_PULL = 0.3;
+const BAD_PULL = 0.5;
 
 export function createMaterials(
   preset: MaterialPreset,
-  opts?: { bodyOpacity?: number; fitVisual?: boolean; band?: string | null; bandHex?: number }
+  opts?: { bodyOpacity?: number; fitVisual?: boolean; fits?: boolean | null }
 ): MaterialSet {
   const bodyParams = { ...BODY[preset] };
   if (opts?.fitVisual) Object.assign(bodyParams, FIT_BODY_TINT);
   const body = new THREE.MeshStandardMaterial(bodyParams);
 
-  /* No band means the engine declined to answer, and the bag stays its own
-     colour. Grey is not a mild version of a verdict. */
-  const pull = opts?.band ? (BAND_PULL[opts.band] ?? 0) : 0;
-  if (pull > 0 && opts?.bandHex != null) {
-    body.color.lerp(new THREE.Color(opts.bandHex), pull);
-  }
+  /* null means the engine declined to answer, and the bag stays its own
+     colour. Not knowing is neither good nor bad. */
+  if (opts?.fits === true) body.color.lerp(new THREE.Color(GOOD_HEX), GOOD_PULL);
+  else if (opts?.fits === false) body.color.lerp(new THREE.Color(BAD_HEX), BAD_PULL);
 
   if (preset === 'soft_side' || preset === 'backpack' || preset === 'duffel') {
     body.normalMap = weaveNormal();

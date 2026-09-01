@@ -85,6 +85,26 @@ export const BAND_CHIP = {
   wont: ['border-red', 'bg-red-wash', 'text-red'],
 };
 
+/* FITS OR DOES NOT FIT — the binary underneath the five bands.
+ *
+ * The ladder has five steps because the ADVICE has five shades. The object
+ * itself does not: a reader glancing at a drawn bag is asking one question,
+ * and five tints on a tinted shell is mush — nobody distinguishes lime from
+ * green from amber on a rendered surface.
+ *
+ * The split is not a design preference. It is where the engine already puts
+ * it: `line` (Tight) is INSIDE the published limit with no margin, and
+ * `likely` (Probably fine) is OVER it and forgiven only because the airline
+ * rarely measures. So the boundary is the airline's own published box, which
+ * is the only line this site is willing to draw.
+ *
+ * `null` for an unanswered leg. Not knowing is neither good nor bad, and must
+ * never be rendered as either. */
+export const FITTING_BANDS = new Set(['clears', 'line']);
+export const OVER_BANDS = new Set(['likely', 'gamble', 'wont']);
+export const fitsWithinLimit = (band) =>
+  FITTING_BANDS.has(band) ? true : OVER_BANDS.has(band) ? false : null;
+
 /** Every class the ladder can apply, so a caller can clear before it sets. */
 export const ALL_BAND_CHIP_CLASSES = Object.values(BAND_CHIP).flat();
 
