@@ -30,7 +30,8 @@
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "verify:spacing": "node scripts/verify-spacing.mjs",
-    "build:client-data": "node scripts/build-client-data.mjs"
+    "build:client-data": "node scripts/build-client-data.mjs",
+    "shots": "node scripts/shots.mjs"
   },
   "dependencies": {
     "@astrojs/internal-helpers": "^0.10.4",

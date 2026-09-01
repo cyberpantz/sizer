@@ -16,3 +16,4 @@ icon-preview.html
 # GitHub refuses outright. Nothing in the repo configures a store-dir here; it
 # is just the cache, and it is reproducible from the lockfile.
 .pnpm-store/
+shots/
