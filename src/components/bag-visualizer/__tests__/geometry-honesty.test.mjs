@@ -373,3 +373,43 @@ describe('the legend describes what is actually drawn', () => {
     );
   });
 });
+
+describe('the empty states are drawn, not decorated', () => {
+  test('each of the three cases has its own icon', () => {
+    for (const which of ['no_cabin_bag', 'linear', 'unknown']) {
+      assert.match(stage, new RegExp(`data-icon="${which}"`), `${which} has no icon`);
+    }
+  });
+
+  test('the icon is chosen by the same branch as the words', () => {
+    /* One switch, so the picture and the sentence cannot drift apart — the
+       failure mode that let a red bag sit under a "No cabin bag" label. */
+    const src = code(client);
+    for (const which of ['no_cabin_bag', 'linear', 'unknown']) {
+      assert.match(src, new RegExp(`showIcon\\('${which}'\\)`), `${which} sets no icon`);
+    }
+  });
+
+  test('they are line drawings in the same hand as the visualiser', () => {
+    /* docs/25: an architect's model, not a photograph — matte, thin-stroked,
+       honest about being a diagram. An empty state in a different visual
+       language reads as an error card bolted onto an instrument. */
+    const icons = [...stage.matchAll(/<svg[^>]*data-icon="[^"]+"[\s\S]*?<\/svg>/g)].map((m) => m[0]);
+    assert.equal(icons.length, 3);
+    for (const svg of icons) {
+      assert.match(svg, /fill="none"/, 'a filled icon breaks the drawing language');
+      assert.match(svg, /stroke="currentColor"/, 'the icon does not inherit its colour');
+      assert.match(svg, /stroke-width="1\.5"/, 'stroke weight is off the drafting scale');
+      assert.doesNotMatch(svg, /text-red|text-amber|text-green/, 'an icon is wearing a status colour');
+    }
+  });
+
+  test('none of them is a warning triangle', () => {
+    /* Two of these three are FINDINGS we are proud of — "this airline
+       publishes no size" is a better answer than a number, and it is only
+       sayable because somebody recorded the absence. Dressing them as errors
+       would apologise for the most valuable thing on the page. */
+    const icons = stage.match(/<svg[^>]*data-icon="[^"]+"[\s\S]*?<\/svg>/g).join('');
+    assert.doesNotMatch(icons, /M12 9v2m0 4h\.01|exclamation|warning/i);
+  });
+});

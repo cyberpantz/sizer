@@ -717,8 +717,16 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     const title = root.querySelector('[data-no-compare-title]') as HTMLElement | null;
     const body = root.querySelector('[data-no-compare-body]') as HTMLElement | null;
     const note = root.querySelector('[data-no-compare-note]') as HTMLElement | null;
+    /* Exactly one icon, chosen by the same branch that chooses the words, so
+       the picture and the sentence cannot drift apart. */
+    const showIcon = (which: 'no_cabin_bag' | 'linear' | 'unknown') => {
+      for (const el of root.querySelectorAll('[data-icon]')) {
+        el.toggleAttribute('hidden', el.getAttribute('data-icon') !== which);
+      }
+    };
     if (panel && title && body) {
       if (result.no_cabin_bag) {
+        showIcon('no_cabin_bag');
         title.textContent = `${session.carrierName} includes no cabin bag on this fare.`;
         body.textContent =
           'Not "too big" — nothing is allowed in the overhead locker at any size, so your ' +
@@ -729,12 +737,14 @@ export function initFitVisualizer(opts: InitOptions): () => void {
             : '';
         }
       } else if (result.basis === 'linear' || carrier.allowance?.linear_max_cm) {
+        showIcon('linear');
         title.textContent = `${session.carrierName} publishes a total, not a box.`;
         body.textContent =
           'Their rule is the three sides added together, so there is no frame to draw. ' +
           'The comparison beside this says whether your bag is under it.';
         if (note) note.textContent = '';
       } else {
+        showIcon('unknown');
         title.textContent = `We have not researched ${session.carrierName} ${session.fare} yet.`;
         body.textContent =
           'Rather than draw a limit we cannot cite, we are saying so. Nothing here is a ' +
