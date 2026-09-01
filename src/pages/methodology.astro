@@ -1,14 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
 import { loadBags, loadCarriers, coverageStats } from '../lib/data.mjs';
-import { EPS_CM, gambleCeiling } from '../engine/constants.mjs';
-import { DIM_SOURCE } from '../engine/normalize.mjs';
+import { EPS_CM, SOFT_COMPRESS_CM, gambleCeiling } from '../engine/constants.mjs';
+import { DIM_SOURCE, isPromotable } from '../engine/normalize.mjs';
+import { createEngine } from '../engine/fit.mjs';
 import { BAND_COPY } from '../ui/verdict.mjs';
 
 const bags = await loadBags();
 const carriers = await loadCarriers();
 const stats = await coverageStats();
-const answerable = carriers.filter((c) => !c.cabin_unknown).length;
+
+/* THE DENOMINATOR, TAKEN FROM THE ENGINE RATHER THAN RECOMPUTED.
+ *
+ * This page used to count `!c.cabin_unknown` and call the result "answerable".
+ * That came to 75 — all of them — so the page told readers that NO airline was
+ * excluded, while every bag page beside it said "clears 35 of 70". The page
+ * explaining the numbers disagreed with the numbers.
+ *
+ * The cause is the recurring one: a second implementation of something the
+ * engine already exports. coverage() excludes three different things, and
+ * cabin_unknown is only one of them — and, as it turns out, currently the
+ * empty one. Asking the engine also means this moves when the rule moves.
+ *
+ * Any bag works as the probe; the denominator is a property of the carrier
+ * set, not of the bag. */
+const engine = createEngine();
+const cov = engine.coverage(bags[0], carriers);
+
+/* The release gate, over the bags a reader can actually reach. */
+const promotable = bags.filter(isPromotable).length;
+
+/* Rules that only some airlines exercise. Stated with their counts, because
+   "we honour linear limits" is a much weaker claim than "nine airlines publish
+   one and here is what we do about it" — and because a rule that applies to
+   zero carriers should stop being advertised. */
+const withLinear = carriers.filter((c) => c.allowance?.linear_max_cm).length;
+const withWeight = carriers.filter((c) => c.allowance?.max_kg).length;
+const withPersonal = carriers.filter((c) => c.allowances?.personal).length;
 
 /* Every number on this page is computed, not typed. A methodology page with
    hand-written figures goes stale the first time the data changes, and a stale
@@ -47,6 +75,13 @@ const BAND_MEANING = {
   wont: 'Over the limit at an airline that does check.',
 };
 const BANDS = Object.entries(BAND_COPY).map(([id, c]) => [c.label, BAND_MEANING[id]]);
+
+/* KEYED BY THE NUMBER, not offset into a list. My first version of this was
+   `['Two','Three','Four',…][BANDS.length - 1]`, which rendered "Six answers"
+   for five bands — I replaced a hard-coded wrong word with a computed wrong
+   word, which is worse, because it looks like it cannot drift. Found by
+   reading the BUILT page rather than the source; the source looked right. */
+const NUMBER_WORD = { 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five', 6: 'Six', 7: 'Seven' };
 
 const CEILINGS = [
   [1, 3, 'Effectively never measured'],
@@ -106,15 +141,31 @@ const CEILINGS = [
         </table>
       </div>
 
+      {/* COUNTED OVER THE PUBLISHED CATALOGUE, not over coverageStats().
+          coverageStats counts every record on disk, including bags in roles
+          this page does not list — so it said "38 of 59" while a reader could
+          only reach 57 bags, 37 of them promotable. Two bags nobody can see
+          were being counted in a transparency figure. The table above is
+          already computed from the same `bags` array, so this now agrees with
+          the column beside it. */}
       <p class="mt-4 max-w-3xl text-[0.9375rem] text-ink-2">
-        <strong>{stats.bags_promotable} of {stats.bags_sized}</strong> bags
+        <strong>{promotable} of {bags.length}</strong> bags on this site
         currently meet that bar. The rest are shown with their source named
         while we replace them at the manufacturer.
       </p>
     </section>
 
     <section class="border-t border-rule py-10">
-      <h2 class="text-2xl font-semibold tracking-tight">Four answers, not two</h2>
+      {/* COUNTED, NOT TYPED. This read "Four answers, not two" for as long as
+          there were four. "Probably fine" was added to the engine and to
+          BAND_COPY, and the heading on the page that EXPLAINS the bands went
+          on saying four — while the grid below it, which maps BAND_COPY,
+          correctly rendered five. The page contradicted itself in adjacent
+          elements. Deriving the word removes the only way for that to
+          happen. */}
+      <h2 class="text-2xl font-semibold tracking-tight">
+        {NUMBER_WORD[BANDS.length] ?? BANDS.length} answers, not two
+      </h2>
       <p class="mt-3 max-w-3xl text-ink-2">
         Yes or no is the wrong shape for this question, because airlines differ
         in how hard they check. A bag a centimetre over is a non-event at one
@@ -171,6 +222,78 @@ const CEILINGS = [
       </p>
     </section>
 
+    {/* THE RULES THAT ARE NOT JUST THREE NUMBERS.
+        None of this existed when the page was written, and all of it changes
+        verdicts. A methodology page that omits the rules it applies is not a
+        methodology page. */}
+    <section class="border-t border-rule py-10">
+      <h2 class="text-2xl font-semibold tracking-tight">The rules beyond length × width × depth</h2>
+
+      <div class="mt-6 max-w-3xl space-y-6">
+        <div>
+          <h3 class="font-semibold text-ink">Soft bags give, hard shells don't</h3>
+          <p class="mt-1 text-[0.9375rem] text-ink-2">
+            A soft-sided bag squashes into a gate sizer in a way a polycarbonate
+            shell never will. We allow {SOFT_COMPRESS_CM} cm off the shortest
+            side of a soft bag, and nothing off a hard one. It is a modest
+            allowance on purpose — enough to stop us calling a duffel a failure
+            over a centimetre, not enough to pretend a bag is smaller than it is.
+          </p>
+        </div>
+
+        {withLinear > 0 && (
+          <div>
+            <h3 class="font-semibold text-ink">Sum-of-sides limits</h3>
+            <p class="mt-1 text-[0.9375rem] text-ink-2">
+              {withLinear} of the {carriers.length} airlines here publish a
+              linear limit — length plus width plus depth — as well as, or
+              instead of, three separate maximums. A bag can pass all three
+              individual limits and fail the total, so we check both and report
+              whichever it fails.
+            </p>
+          </div>
+        )}
+
+        {withPersonal > 0 && (
+          <div>
+            <h3 class="font-semibold text-ink">Personal items are a separate box</h3>
+            <p class="mt-1 text-[0.9375rem] text-ink-2">
+              {withPersonal} airlines publish an under-seat size as well as an
+              overhead one, and the two are not related. We check a bag against
+              the box for the job you say it is doing, and we never substitute a
+              generic "personal item size" for an airline that has not published
+              one — an invented box produces confident wrong answers, which is
+              worse than saying we do not know.
+            </p>
+          </div>
+        )}
+
+        {withWeight > 0 && (
+          <div>
+            <h3 class="font-semibold text-ink">Weight, where it is published</h3>
+            <p class="mt-1 text-[0.9375rem] text-ink-2">
+              {withWeight} airlines cap the weight of a cabin bag. We can only
+              compare that against the bag's <em>empty</em> weight, because what
+              you pack is yours to know — so we flag when the bag alone uses up
+              a large share of the allowance, and leave the rest to you.
+            </p>
+          </div>
+        )}
+
+        <div>
+          <h3 class="font-semibold text-ink">The fare, not just the airline</h3>
+          <p class="mt-1 text-[0.9375rem] text-ink-2">
+            Cabin allowance is a property of the ticket. The same airline on the
+            same aircraft grants a different bag on a basic fare than on a
+            flexible one, and five of the airlines here grant no cabin bag at
+            all on their cheapest. Unless you tell us the fare, we answer for the
+            cheapest economy ticket that airline sells — the least generous
+            honest assumption.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <section class="border-t border-rule py-10">
       <h2 class="text-2xl font-semibold tracking-tight">What we don't know</h2>
       <ul class="mt-4 max-w-3xl space-y-3 text-ink-2">
@@ -179,14 +302,36 @@ const CEILINGS = [
           the manufacturer's published overall figure. If they are wrong, so are
           we — which is why we say where every number came from.
         </li>
+        {/* SPLIT, because the old bullet collapsed two different things and
+            got both wrong. It counted only cabin_unknown, which is currently
+            zero, and so announced that nothing was excluded — while every bag
+            page beside it said "of 70". The five missing airlines are not a
+            gap in our research at all; they are a FINDING about their cheapest
+            fare, which is a much more interesting thing to say. */}
+        {cov.no_cabin_bag > 0 && (
+          <li>
+            <strong class="text-ink">
+              {cov.no_cabin_bag} of {carriers.length} airlines are left out of
+              the fraction because their cheapest fare includes no cabin bag at
+              any size.
+            </strong>{' '}
+            {carriers
+              .filter((c) => c.no_cabin_bag && c.flying !== false)
+              .map((c) => c.name)
+              .join(', ')} sell you a seat and a bag separately. Counting them
+            as failures would blame the bag for a fare, so a coverage figure
+            here reads "of {cov.of}" rather than "of {carriers.length}".
+          </li>
+        )}
         <li>
           <strong class="text-ink">
-            {carriers.length - answerable} of {carriers.length} airlines we list
-            cannot be answered for yet.
+            {cov.unknown === 0
+              ? `We have read all ${carriers.length} airlines' published cabin limits.`
+              : `${cov.unknown} of ${carriers.length} airlines have not been researched yet.`}
           </strong>{' '}
-          They are excluded from every count on this site rather than guessed
-          at. "Fits 40 of {answerable}" never quietly includes airlines we
-          haven't read.
+          {cov.unknown === 0
+            ? 'There is no airline on this site whose limit we are guessing at. Where one is added and not yet read, it is excluded from every count rather than assumed — an unread airline must never render as a lenient one.'
+            : 'They are excluded from every count rather than guessed at, because an absent fact must not produce a confident answer.'}
         </li>
         <li>
           <strong class="text-ink">Some airlines contradict themselves.</strong>{' '}

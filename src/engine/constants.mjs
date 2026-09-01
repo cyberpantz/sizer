@@ -87,4 +87,12 @@ export const WEIGHT_TIGHT_RATIO = 0.4;
  * personalEnvelope() in fit.mjs, which comes to 40 x 25 x 10. Deriving it means
  * it moves when the data moves, and can name the carriers that bind it. */
 
-export const BANDS = ['clears', 'line', 'gamble', 'wont'];
+/* EVERY BAND, IN INCREASING ORDER OF RISK. Two test files iterate this — one
+   to check each band has display copy, one to check the engine's ordering is
+   monotonic — so a band missing here is a band nothing verifies.
+   'likely' ("Probably fine") was added to the engine and to BAND_COPY and
+   never added here, which is exactly how it went unchecked in both. It sits
+   between 'line' and 'gamble': over the limit, but less risky than a gamble,
+   because it is only ever offered where we have read how staff actually
+   behave. */
+export const BANDS = ['clears', 'line', 'likely', 'gamble', 'wont'];

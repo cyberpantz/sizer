@@ -1,0 +1,122 @@
+---
+/* THE LIMIT OF WHAT WE ARE CLAIMING.
+ *
+ * This site tells people their bag will or will not be refused. Some of them
+ * will act on that — buy a bag, skip paying for a cabin allowance, turn up at
+ * a gate confident. So the honest terms are mostly about the boundary of the
+ * claim, and that boundary is real rather than defensive boilerplate:
+ *
+ *   - we read the airline's published policy, we do not observe gates;
+ *   - airlines change limits without notice and enforce unevenly, which is
+ *     why the engine has a strictness axis at all;
+ *   - most dimensions are the manufacturer's, not ours — we have measured
+ *     zero bags, and the release gate exists precisely because we know the
+ *     difference matters.
+ *
+ * The disclaimer here is therefore an extension of /methodology rather than a
+ * legal fig leaf, and it should read like one. If it ever starts sounding like
+ * a generator wrote it, that is the signal it has stopped being true.
+ *
+ * NOT WRITTEN BY A LAWYER, said at the foot. Frank: "They can be imperfect for
+ * the moment but please stub them out."
+ */
+import Base from '../layouts/Base.astro';
+
+const UPDATED = 'September 2026';
+---
+<Base
+  title="Terms — Sizer"
+  description="What Sizer is claiming when it tells you a bag fits, and what it is not."
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <section class="pt-12 pb-8">
+      <h1 class="text-4xl font-bold tracking-tight">Terms of use</h1>
+      <p class="mt-3 max-w-3xl text-lg text-ink-2">
+        The short version: this is information, carefully sourced, and it is
+        not a guarantee about what will happen at a gate.
+      </p>
+      <p class="mt-2 text-sm text-muted">Last updated {UPDATED}.</p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">What a verdict means</h2>
+      <p class="mt-3 text-ink-2">
+        When we say a bag fits, we mean its published outside dimensions fall
+        within the limit that airline publishes for that fare, as we read it on
+        the date shown beside the source.
+      </p>
+      <p class="mt-3 text-ink-2">
+        We do not observe gates. We have not tested your bag against that
+        airline's sizer. Airlines change their limits without notice, run
+        different rules on different aircraft and routes, and enforce the same
+        published policy very unevenly — which is why the tool asks how much
+        risk you want to take rather than pretending there is one answer.
+      </p>
+      <p class="mt-3 text-ink-2">
+        A verdict is our best reading of the published rule. The gate agent is
+        the one who decides.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Where the numbers come from</h2>
+      <p class="mt-3 text-ink-2">
+        Airline limits are read from the airline's own baggage pages. Bag
+        dimensions are, in almost every case, the manufacturer's published
+        figures — we have measured no bags ourselves, and we say so on every
+        page rather than implying otherwise.
+      </p>
+      <p class="mt-3 text-ink-2">
+        Manufacturers are not consistent about whether wheels and handles are
+        included, and some publish only the packing space inside. Where a
+        figure does not meet our standard, the bag is shown but never put
+        forward as a recommendation.
+        <a href="/methodology/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">How we work it out</a>
+        sets out the whole ladder.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Your decisions are yours</h2>
+      <p class="mt-3 text-ink-2">
+        Use this site as one input, not as the only one — and check the
+        airline's own page before you fly, especially if you are relying on a
+        tight margin. We are not liable for gate fees, refused bags, missed
+        flights or purchases made on the strength of what you read here.
+      </p>
+      <p class="mt-3 text-ink-2">
+        The site is provided as it is, without warranty. We try hard to be
+        accurate and we will correct errors when we find them, but we cannot
+        promise the site is complete, current or uninterrupted.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Content and trade marks</h2>
+      <p class="mt-3 text-ink-2">
+        Airline and manufacturer names, logos and product names belong to their
+        owners and are used here to identify what we are describing. No
+        affiliation with or endorsement by any of them is claimed or implied.
+      </p>
+      <p class="mt-3 text-ink-2">
+        The writing, design and analysis on this site are ours. Quoting us with
+        a link is welcome; wholesale republication is not.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Changes</h2>
+      <p class="mt-3 text-ink-2">
+        These terms may change as the site grows. The date at the top says when
+        they last did.
+      </p>
+    </section>
+
+    <p class="max-w-3xl border-t border-rule py-8 text-sm text-muted">
+      This is an early draft written by the site's author, not by a lawyer, and
+      it is not legal advice.
+    </p>
+
+  </div>
+</Base>

@@ -14,15 +14,37 @@
 import { disclosure } from '../lib/affiliate.mjs';
 
 const text = disclosure();
+
+/* ORDERED BY WHO WANTS THEM, not by convention.
+ *
+ * The first two answer "should I believe this?", which is the question a
+ * reader of THIS site actually has, and they were the whole footer until now.
+ * About, privacy and terms are what a reader looks for once they have decided
+ * the site might be worth trusting, so they follow rather than lead.
+ *
+ * One list rather than two rows: five links is not enough to need a hierarchy,
+ * and inventing one would make the legal pages look more prominent than the
+ * methodology, which would be exactly backwards. */
+const LINKS = [
+  { href: '/methodology/', label: 'How we work it out' },
+  { href: '/sources/', label: 'Sources' },
+  { href: '/about/', label: 'About' },
+  { href: '/privacy/', label: 'Privacy' },
+  { href: '/terms/', label: 'Terms' },
+];
 ---
 <footer class="border-t border-rule mt-20 py-8 pb-16">
   <div class="mx-auto max-w-page px-6">
     {text && (
       <p class="text-muted text-[0.8125rem] max-w-2xl leading-relaxed">{text}</p>
     )}
-    <nav class:list={['flex gap-6', text && 'mt-4']}>
-      <a href="/methodology/" class="text-ink-2 text-[0.8125rem] hover:text-ink hover:underline underline-offset-2">How we work it out</a>
-      <a href="/sources/" class="text-ink-2 text-[0.8125rem] hover:text-ink hover:underline underline-offset-2">Sources</a>
+    {/* Wraps rather than scrolls: five links no longer fit one narrow-phone
+        line, and a footer that overflows horizontally drags the whole page
+        with it. */}
+    <nav class:list={['flex flex-wrap gap-x-6 gap-y-2', text && 'mt-4']}>
+      {LINKS.map((l) => (
+        <a href={l.href} class="text-ink-2 text-[0.8125rem] hover:text-ink hover:underline underline-offset-2">{l.label}</a>
+      ))}
     </nav>
   </div>
 </footer>

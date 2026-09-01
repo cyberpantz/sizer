@@ -51,6 +51,27 @@ const sourceOf = new Map(carrierSources.map((c) => [c.iata, c]));
 
 const cov = coverage(bag, carriers);
 
+/* THE RELEASE GATE, ASKED ONCE.
+ *
+ * `bag` is an ENGINE bag from toBag(), and toBag() does not carry a
+ * `promotable` field — it is a question you ask, not a property you read. Two
+ * places on this page read `bag.promotable` anyway. Both got `undefined`, so
+ * `!bag.promotable` was permanently true and the amber "Shown, not
+ * recommended" notice rendered on ALL 57 bag pages, including the 37 whose
+ * figures are the manufacturer's own.
+ *
+ * That is the worst direction for this particular error. The notice is a
+ * confession about sourcing, and printing it under a correctly sourced bag
+ * tells the reader our best evidence is untrustworthy — on a site whose entire
+ * claim is that we are careful about exactly this.
+ *
+ * The identical bug was already found and fixed nine lines below, in `better`,
+ * with a comment explaining it. It was fixed at ONE of its three call sites.
+ * Hence one binding here rather than three reads: the gate is asked once and
+ * the answer is passed around.
+ */
+const promotable = isPromotable(bag);
+
 /* Every airline, grouped the way a traveller thinks about a trip rather than
    the way the dataset is keyed. */
 const REGIONS = [
@@ -248,7 +269,7 @@ const vizProps = showVisualizer
       airlines: vizAirlines,
       bagForFit,
       coverage: cov,
-      promotable: bag.promotable,
+      promotable,
       tone,
       pct,
     }
@@ -421,7 +442,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
               that fraction rather than counted as passes.
             </p>
           )}
-          {!bag.promotable && (
+          {!promotable && (
             <p class="mt-3 rounded-chip bg-amber-wash p-3 text-[0.8125rem] text-amber">
               Shown, not recommended — the dimension above is not the
               manufacturer's own figure for the outside of the bag.

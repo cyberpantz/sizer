@@ -1,0 +1,117 @@
+---
+/* WHO IS ASKING YOU TO TRUST THEM.
+ *
+ * A site that tells people their luggage will be refused is asking to be
+ * believed, and "who made this and why" is a fair question to put to it. That
+ * is what this page is for — not a mission statement.
+ *
+ * THE NUMBERS ARE DERIVED, NEVER TYPED. Every count comes from
+ * coverageStats(), the same function /methodology uses. A hand-written "we
+ * cover 75 airlines" is true on the day it is written and quietly false a
+ * month later, and being quietly false about our own coverage is precisely the
+ * failure this site exists to complain about in other people.
+ *
+ * STUB, and honestly labelled as one at the foot. Frank: "They can be
+ * imperfect for the moment but please stub them out."
+ */
+import Base from '../layouts/Base.astro';
+import { coverageStats } from '../lib/data.mjs';
+
+const s = await coverageStats();
+---
+<Base
+  title="About — Sizer"
+  description="Who makes Sizer, what it measures, and the things it deliberately does not tell you."
+>
+  <div class="mx-auto max-w-page px-6">
+
+    <section class="pt-12 pb-8">
+      <h1 class="text-4xl font-bold tracking-tight">About</h1>
+      <p class="mt-3 max-w-3xl text-lg text-ink-2">
+        Sizer answers one question: will this bag get past that airline's gate,
+        on the fare you actually booked?
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Why it exists</h2>
+      <p class="mt-3 text-ink-2">
+        Luggage is sold on the packing space inside it. Airlines measure the
+        outside. Wheels, handles and feet live in the gap between those two
+        numbers, and that gap is why a bag sold as "carry-on size" gets stopped
+        at the gate.
+      </p>
+      <p class="mt-3 text-ink-2">
+        Almost every source for this is trying to sell you something. We are
+        trying to answer the question.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">What we hold</h2>
+      <p class="mt-3 text-ink-2">
+        {s.carriers_researched} airlines, each read from the airline's own
+        baggage page, and {s.bags_total} bags, of which {s.bags_sized} carry a
+        dimension we are willing to publish.
+      </p>
+      <p class="mt-3 text-ink-2">
+        Only {s.bags_promotable} of those may be put forward as a
+        recommendation. The rest are shown but never suggested, because their
+        figures come from a review or from a manufacturer who never said
+        whether wheels were counted. That distinction is the whole of
+        <a href="/methodology/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">how we work it out</a>,
+        and every figure is traceable from
+        <a href="/sources/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">sources</a>.
+      </p>
+      <p class="mt-3 text-ink-2">
+        We have measured exactly {s.bags_measured} bags ourselves. We say so
+        rather than implying otherwise.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">What we don't do</h2>
+      <p class="mt-3 text-ink-2">
+        We don't review luggage. Whether a bag lasts five years, whether the
+        wheels survive cobblestones, whether the warranty gets honoured — none
+        of that shows up in a dimension, and we have nothing useful to say
+        about any of it.
+      </p>
+      <p class="mt-3 text-ink-2">
+        We also can't promise a gate agent will behave the way a published
+        policy says. Airlines enforce unevenly and change limits without
+        notice. Our verdicts describe the published rule and how strictly that
+        airline is known to apply it. They are not a guarantee.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Money</h2>
+      <p class="mt-3 text-ink-2">
+        There is currently no advertising, no sponsorship and no affiliate
+        programme on this site, and nobody pays to appear in it. If that
+        changes, a disclosure will appear in the footer of every page — and it
+        will appear because a programme is live, not because someone remembered
+        to write it.
+      </p>
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Corrections</h2>
+      <p class="mt-3 text-ink-2">
+        If a figure here is wrong, we would rather know. An airline changing
+        its limit, a manufacturer publishing a different number, a bag we have
+        filed under the wrong measurement — all of it is worth reporting.
+      </p>
+      <p class="mt-3 text-sm text-muted">
+        A contact address is not published yet. It is the next thing to fix on
+        this page.
+      </p>
+    </section>
+
+    <p class="max-w-3xl border-t border-rule py-8 text-sm text-muted">
+      This page is an early draft and deliberately incomplete.
+    </p>
+
+  </div>
+</Base>
