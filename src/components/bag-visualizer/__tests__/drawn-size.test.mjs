@@ -104,3 +104,65 @@ describe('the space carved out equals the space filled', () => {
     );
   });
 });
+
+describe('the shake says "rejected", and only when something was rejected', () => {
+  /* The invalid-input convention, borrowed deliberately: a form field that
+     jerks sideways when you submit something wrong is a gesture almost every
+     reader already owns, and it reads as REJECTED faster than a colour can.
+     It fires at the same instant as the red pulse — the bag reaches the frame,
+     the frame says no, the bag refuses to settle. */
+  const anim = readFileSync('src/components/bag-visualizer/fitAnimation.ts', 'utf8');
+  const body = anim.replace(/\/\*[\s\S]*?\*\//g, '');
+  const n = (name) => Number(body.match(new RegExp(`${name} = ([\\d.]+)`))?.[1]);
+
+  test('it is gated on the bag actually being over', () => {
+    /* A bag that fits arrives and settles. Shaking every bag is the same lie
+       as a frame that flashes for every bag, and it teaches the reader to stop
+       seeing it. */
+    assert.match(body, /rejects && t >= SEAT_T/, 'the shake no longer checks the verdict');
+    const client = readFileSync('src/components/bag-visualizer/BagVisualizer.client.ts', 'utf8');
+    assert.match(
+      client,
+      /rejects: sizeVerdict\(result\) === false/,
+      'the shake is driven by something other than a size finding — "no cabin bag" ' +
+        'is a fact about the fare and must not shake a bag nobody measured'
+    );
+  });
+
+  test('it starts exactly when the frame reddens', () => {
+    /* Two signals at one instant read as one event. Staggered, they read as a
+       glitch followed by a reaction. */
+    assert.match(body, /shake = SHAKE_AMP/, 'the shake has moved');
+    const seat = n('SEAT_T');
+    assert.ok(seat > 0, 'SEAT_T has moved');
+    assert.match(body, /rejects && t >= SEAT_T && t < SEAT_T \+ SHAKE_LEN/);
+  });
+
+  test('it decays to nothing rather than looping', () => {
+    /* A shake that keeps going stops reading as a reaction and starts reading
+       as a broken animation. */
+    assert.match(body, /\(1 - since\) \*\* 2/, 'the damping term is gone');
+    const len = n('SHAKE_LEN');
+    const hz = n('SHAKE_HZ');
+    const seconds = len * 5.2;
+    assert.ok(seconds < 0.6, `${seconds.toFixed(2)}s is long enough to feel broken`);
+    const cycles = hz * seconds;
+    assert.ok(cycles >= 2 && cycles <= 4, `${cycles.toFixed(1)} oscillations reads wrong`);
+  });
+
+  test('it is a nudge, not a throw', () => {
+    /* Amplitude is a fraction of the smaller of bag and slot, so it scales with
+       the drawing and never looks like the bag left the frame. */
+    assert.match(body, /SHAKE_AMP = Math\.min\(bd, sd\) \* ([\d.]+)/);
+    const amp = Number(body.match(/SHAKE_AMP = Math\.min\(bd, sd\) \* ([\d.]+)/)[1]);
+    assert.ok(amp > 0.02 && amp < 0.12, `${amp} of the slot is the wrong size for a nudge`);
+  });
+
+  test('it never fights the slide', () => {
+    /* Zero outside its window, and on a different axis from the travel, so the
+       two motions cannot interfere. */
+    assert.match(body, /let shake = 0;/, 'the shake no longer rests at zero');
+    assert.match(body, /bagRig\.position\.x = shake;/, 'the shake is on the travel axis');
+    assert.match(body, /bagRig\.position\.z = z;/, 'the slide has moved off Z');
+  });
+});

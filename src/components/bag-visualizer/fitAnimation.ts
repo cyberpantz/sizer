@@ -3,11 +3,13 @@ import type * as THREE from 'three';
 export type FitAnimationOptions = {
   bagDepthCm: number;
   sizerDepthCm: number;
+  /** True only when the bag is over the airline's published limit. */
+  rejects?: boolean;
 };
 
 /** Slide the bag fully into the gate sizer, then roll back out. */
 export function createFitAnimation(opts: FitAnimationOptions) {
-  const { bagDepthCm: bd, sizerDepthCm: sd } = opts;
+  const { bagDepthCm: bd, sizerDepthCm: sd, rejects = false } = opts;
   const sizerHd = sd / 2;
   const bagBd = bd / 2;
   const gap = Math.max(bd, sd) * 0.28;
@@ -44,6 +46,24 @@ export function createFitAnimation(opts: FitAnimationOptions) {
    * bag is seated so a reader glancing over mid-cycle still sees the verdict. */
   const SEAT_T = 0.38; // the slide-in completes
   const LIFT_T = 0.58; // the slide-out begins
+  /* THE SHAKE — the "invalid input" convention, borrowed deliberately.
+   *
+   * A form field that jerks sideways when you submit something wrong is a
+   * gesture almost every reader already knows, and it says REJECTED faster
+   * than any colour can. It belongs at the same instant as the red pulse:
+   * the bag reaches the frame, the frame says no, the bag refuses to settle.
+   *
+   * Damped, not a loop — three oscillations decaying to nothing over ~0.42s.
+   * A shake that keeps going stops reading as a reaction and starts reading as
+   * a broken animation, and it is the difference between a control telling you
+   * something and a control being annoying about it.
+   *
+   * Only when the bag is actually over. A bag that fits arrives and settles;
+   * shaking it would be the same lie as a frame that flashes on every bag. */
+  const SHAKE_LEN = 0.081; // ~0.42s of the 5.2s cycle
+  const SHAKE_HZ = 7; // three oscillations across that window
+  const SHAKE_AMP = Math.min(bd, sd) * 0.07;
+
   const PULSE_LEN = 0.2; // ~1.04s of the 5.2s cycle — 1.5 beats, about 1.4 Hz
   const HOLD = 0.72; // what it settles to, so the verdict stays stated
   const ALARM_OUT = 0.03; // ~160ms — the reset is quicker than the pulse
@@ -69,6 +89,16 @@ export function createFitAnimation(opts: FitAnimationOptions) {
       z = startZ;
     }
 
+    /* Sideways, across the frame's opening — the axis a bag would rattle in if
+       it were being forced. Applied on top of the resting position, and zero
+       everywhere outside the shake window so it never fights the slide. */
+    let shake = 0;
+    if (rejects && t >= SEAT_T && t < SEAT_T + SHAKE_LEN) {
+      const since = (t - SEAT_T) / SHAKE_LEN;
+      shake = SHAKE_AMP * Math.sin(since * Math.PI * 2 * SHAKE_HZ) * (1 - since) ** 2;
+    }
+
+    bagRig.position.x = shake;
     bagRig.position.z = z;
     bagRig.rotation.x = tilt;
 
@@ -97,7 +127,7 @@ export function createFitAnimation(opts: FitAnimationOptions) {
     } else if (t >= LIFT_T && t < LIFT_T + ALARM_OUT) {
       seated = HOLD * (1 - (t - LIFT_T) / ALARM_OUT);
     }
-    return { seated };
+    return { seated, shake };
   }
 
   return {

@@ -180,6 +180,10 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     fitAnim = createFitAnimation({
       bagDepthCm: session.dimensions.depthCm,
       sizerDepthCm: allowance.depthCm,
+      /* Only an over-limit bag refuses to settle. sizeVerdict() rather than the
+         band, so "no cabin bag" — a fact about the fare — never shakes a bag
+         that was never measured. */
+      rejects: sizeVerdict(result) === false,
     });
   }
 
