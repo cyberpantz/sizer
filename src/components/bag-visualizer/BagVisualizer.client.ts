@@ -40,11 +40,30 @@ function visibleBox(object: THREE.Object3D): THREE.Box3 {
   return box;
 }
 
-const PRESETS: Record<Exclude<ViewPreset, 'default'>, { yaw: number; pitch: number }> = {
-  front: { yaw: 0, pitch: 0 },
-  side: { yaw: Math.PI / 2, pitch: 0 },
-  top: { yaw: 0, pitch: Math.PI / 2 - 0.02 },
-};
+/* THE OPENING VIEW IS THREE-QUARTER, AND THAT IS WHY THE ANIMATION EXISTS.
+ *
+ * The bag slides into the sizer along Z. The camera is ORTHOGRAPHIC and looks
+ * straight down -Z, so from a dead-on front view that motion produces NO
+ * change on screen whatsoever — no parallax, no scale, nothing. The animation
+ * has been running perfectly and has been invisible from the view the page
+ * opens in. Only the 3.4-degree tilt gave any hint that something moved.
+ *
+ * `front` stays dead-on: it is a drafting elevation, it is what the button
+ * promises, and squaring up to a face is exactly what you want when reading a
+ * height off it. What was missing is that the OPENING view should never have
+ * been the same thing. docs/25 called for "the default three-quarter view" and
+ * the presets only ever had the three orthogonal ones.
+ *
+ * So `default` is its own angle — enough yaw to give the depth axis a screen
+ * direction to move along, enough pitch to read the top as a surface rather
+ * than an edge. It is not reachable from the buttons; it is where you start. */
+const PRESETS: Record<Exclude<ViewPreset, 'default'> | 'default', { yaw: number; pitch: number }> =
+  {
+    default: { yaw: -0.42, pitch: 0.24 },
+    front: { yaw: 0, pitch: 0 },
+    side: { yaw: Math.PI / 2, pitch: 0 },
+    top: { yaw: 0, pitch: Math.PI / 2 - 0.02 },
+  };
 
 export type FitSession = BagVisualizerProps & {
   bag: Record<string, unknown>;
@@ -81,9 +100,9 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   let visible = true;
   let animStart = performance.now();
   let settled = true;
-  let activePreset: Exclude<ViewPreset, 'default'> = 'front';
-  let targetYaw = PRESETS.front.yaw;
-  let targetPitch = PRESETS.front.pitch;
+  let activePreset: ViewPreset = 'default';
+  let targetYaw = PRESETS.default.yaw;
+  let targetPitch = PRESETS.default.pitch;
   let yaw = targetYaw;
   let pitch = targetPitch;
 
@@ -233,7 +252,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
      * where Z maps to screen X.
      *
      * Sized per view, so fitCamera() now has to run when the view changes. */
-    const travel = activePreset === 'front' ? 0 : (fitAnim?.travelCm ?? 0);
+    const travel = activePreset === 'front' ? 0 : (fitAnim?.travelCm ?? 0) * 0.6;
     /* Headroom for the overlay furniture. The width leader sits 8% of the
        height ABOVE the bag and carries a label chip, so a pad that only
        cleared the geometry clipped it off the top of the stage. */
@@ -471,15 +490,19 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   }
 
   function setView(name: ViewPreset) {
-    const preset = name === 'default' ? 'front' : name;
-    activePreset = preset;
+    activePreset = name;
     fitCamera();
-    targetYaw = PRESETS[preset].yaw;
-    targetPitch = PRESETS[preset].pitch;
+    targetYaw = PRESETS[name].yaw;
+    targetPitch = PRESETS[name].pitch;
+    /* No button is pressed in the opening view, because none of them describes
+       it — claiming "Front" while showing a three-quarter angle would make the
+       control lie about what you are looking at. */
     for (const btn of root.querySelectorAll('[data-view]')) {
-      (btn as HTMLButtonElement).setAttribute('aria-pressed', String(btn.getAttribute('data-view') === preset));
+      (btn as HTMLButtonElement).setAttribute('aria-pressed', String(btn.getAttribute('data-view') === name));
     }
-    if (statusEl) statusEl.textContent = `${preset.charAt(0).toUpperCase()}${preset.slice(1)} view`;
+    if (statusEl && name !== 'default') {
+      statusEl.textContent = `${name.charAt(0).toUpperCase()}${name.slice(1)} view`;
+    }
     scheduleRender();
   }
 
@@ -599,7 +622,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     const overlayWrap = root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null;
     if (overlayWrap) overlayWrap.style.opacity = '1';
   }
-  setView('front');
+  setView('default');
   canvas.style.opacity = '1';
   root.dataset.ready = 'true';
   if (fitAnim) animStart = performance.now();

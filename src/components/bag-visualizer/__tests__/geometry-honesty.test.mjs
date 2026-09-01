@@ -162,3 +162,45 @@ describe('a box-less element is never observed', () => {
     );
   });
 });
+
+describe('the slide animation is visible from the view it opens in', () => {
+  test('the opening view is not the dead-on front elevation', () => {
+    /* THE BUG THIS EXISTS FOR. The bag slides into the sizer along Z. The
+       camera is ORTHOGRAPHIC and looks straight down -Z, so from a dead-on
+       front view that motion produces no change on screen at all — no
+       parallax, no scale, nothing. The animation ran perfectly and could not
+       be seen from the view the page opened in.
+
+       `front` stays dead-on, because a drafting elevation is exactly what you
+       want when reading a height off a face. The OPENING view is the one that
+       has to be angled. */
+    const src = code(client);
+    const presets = src.match(/const PRESETS[\s\S]*?\};/)?.[0] ?? '';
+    assert.ok(presets, 'PRESETS has moved; this guard needs rewriting');
+
+    const d = presets.match(/default:\s*\{\s*yaw:\s*(-?[\d.]+),\s*pitch:\s*(-?[\d.]+)/);
+    assert.ok(d, 'there is no `default` preset — the opening view is an orthogonal one again');
+    assert.ok(
+      Math.abs(+d[1]) > 0.15,
+      `opening yaw ${d[1]} is too square: the depth axis has no screen direction to move along`
+    );
+    assert.ok(Math.abs(+d[2]) > 0.1, `opening pitch ${d[2]} reads the top as an edge, not a face`);
+
+    assert.match(presets, /front:\s*\{\s*yaw:\s*0,\s*pitch:\s*0/, 'Front must stay a true elevation');
+  });
+
+  test('the component opens on that view, not on front', () => {
+    assert.match(code(client), /setView\('default'\)/, 'mount no longer opens on the default view');
+  });
+
+  test('no button claims to be the opening view', () => {
+    /* Pressing "Front" while showing a three-quarter angle would make the
+       control lie about what you are looking at — the same rule as a hover
+       state that imitates pressed. */
+    assert.doesNotMatch(
+      stage,
+      /data-view="default"/,
+      'the opening angle is exposed as a button; it is a starting point, not a preset'
+    );
+  });
+});
