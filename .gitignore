@@ -5,3 +5,8 @@ node_modules/
 *.log
 public/catalogue.json
 icon-preview.html
+
+# The dev server's own PID and start time, rewritten every time it boots. It was
+# tracked, so every run showed up as a modified file and every commit either
+# carried someone's process id or had to skip it deliberately.
+.astro/dev.json
