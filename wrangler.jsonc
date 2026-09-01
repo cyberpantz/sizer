@@ -1,0 +1,55 @@
+/* WHY THIS FILE EXISTS: TO STOP CLOUDFLARE GUESSING.
+ *
+ * This site is `output: 'static'` — 63 prerendered HTML pages and no server.
+ * There is nothing to run at a request. So the deploy is an upload, and this
+ * file says exactly that: serve ./dist, and nothing else.
+ *
+ * THE FAILURE IT FIXES. Without a wrangler config, `wrangler deploy` runs
+ * AUTOCONFIG: it detects the framework and, for Astro, installs
+ * `@astrojs/cloudflare` and rewrites the build to on-demand rendering. Astro
+ * then boots a miniflare worker to run getStaticPaths for /bags/[slug], that
+ * worker 500s, and the build dies:
+ *
+ *     [build] Rearranging server assets...
+ *      generating static routes
+ *     Failed to get static paths from the Cloudflare prerender server (500)
+ *     TypeError: Invalid URL string.
+ *       at async Object.fetch (node_modules/miniflare/.../entry.worker.js)
+ *
+ * A build that succeeds locally and on a clean clone, failing only on the host,
+ * because the host quietly changed the rendering mode.
+ *
+ * I FIRST BLAMED THE WRONG THING. `@astrojs/cloudflare` was sitting unused in
+ * package.json, so I removed it and expected that to be the end of it. The next
+ * build printed the identical error — autoconfig had reinstalled it. Removing
+ * the dependency was right for tidiness and irrelevant to the bug: the trigger
+ * is the ABSENCE OF THIS FILE, not the presence of that package.
+ *
+ * So the load-bearing line here is the one that is missing. There is no `main`.
+ * A Worker with assets and no entrypoint cannot execute anything, which is a
+ * true description of this site and the reason autoconfig has nothing left to
+ * infer.
+ *
+ * Astro's own docs carry this exact shape under "Static":
+ * https://docs.astro.build/en/guides/deploy/cloudflare/
+ */
+{
+  /* Must match the Worker in the dashboard — sizer.phranque-y.workers.dev. */
+  "name": "sizer",
+
+  /* Pin the runtime the day we deploy, so a future Cloudflare release cannot
+     change behaviour under a site nobody is watching. Bump it deliberately. */
+  "compatibility_date": "2026-09-01",
+
+  "assets": {
+    "directory": "./dist"
+
+    /* NO not_found_handling YET, and that is a real gap rather than a default
+       we are happy with. Astro only emits dist/404.html if src/pages/404.astro
+       exists, and it does not, so pointing at a 404 page would point at
+       nothing. Add the page first, then add:
+           "not_found_handling": "404-page"
+       Until then a bad URL gets Cloudflare's own 404, which is unbranded but
+       honest. */
+  }
+}
