@@ -305,6 +305,57 @@ export const CABIN_ABSENCE = {
   ROUTE_DEPENDENT: 'route_dependent',
 };
 
+/**
+ * EVERY ALLOWANCE FIELD THIS MODULE READS. Declared here because this is the
+ * only file that knows.
+ *
+ * /check ships a trimmed catalogue to the browser and runs this same engine on
+ * it, which is the whole payoff of the engine being pure — a verdict computed
+ * in a reader's browser is byte-identical to one computed at build time. That
+ * only holds if the browser gets the same INPUT, and the trim was a hand-kept
+ * list in scripts/build-client-data.mjs. It had drifted:
+ *
+ *   linear_max_cm  never shipped, so `/check` THREW on Singapore and Xiamen —
+ *                  a linear-only carrier reached assertDims with nothing to
+ *                  assert. Two of 58 airlines crashed the page outright, and
+ *                  the comparator's whole "this airline sets no box" branch
+ *                  was unreachable code.
+ *   absence        never shipped, so Delta's researched "publishes no
+ *                  under-seat size" degraded to "nobody looked" client-side —
+ *                  a finding silently downgraded to a gap, which is precisely
+ *                  the distinction the taxonomy exists to keep.
+ *   fare_brand     never shipped; nothing uses it yet, and that is luck.
+ *
+ * A hand-kept list of fields cannot be right for long: the engine grows a
+ * reader, the build does not grow a writer, and the failure is silent on every
+ * carrier except the one that needed the field. So the build projects through
+ * THIS array, and a test round-trips every carrier and fare through both
+ * shapes to prove the browser sees what the build saw.
+ */
+export const ALLOWANCE_FIELDS = [
+  'type',
+  'fare_class',
+  'fare_brand',
+  'cabin_class',
+  'addon',
+  'max_cm',
+  'max_in',
+  'max_kg',
+  /* Sum of the three sides. For Singapore it is the ENTIRE cabin rule. */
+  'linear_max_cm',
+  'allowance_group',
+  'applies_to',
+  'cabin_absence',
+  /* Why a PERSONAL row has no size — the finding/gap distinction. */
+  'absence',
+];
+
+/** One allowance row, trimmed to what the engine reads. Undefined fields are
+ *  dropped rather than serialised as null, so the payload stays small and a
+ *  missing key still means missing. */
+export const projectAllowance = (row) =>
+  Object.fromEntries(ALLOWANCE_FIELDS.filter((k) => row?.[k] !== undefined).map((k) => [k, row[k]]));
+
 const SHELLS = new Set(['aluminium', 'hardside', 'softside', 'backpack', 'duffel']);
 
 /** Infer construction when the record doesn't state it. The regex on model name

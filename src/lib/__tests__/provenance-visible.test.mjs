@@ -23,10 +23,16 @@
  * Collapsing an explanation is editing. Collapsing a citation is hiding. The
  * distinction is unchanged; only the shortest honest form of the citation is. */
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, test } from 'node:test';
 
 const page = readFileSync('src/pages/bags/[slug].astro', 'utf8');
+
+const walk = (d) =>
+  readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory() ? (e.name === '__tests__' ? [] : walk(join(d, e.name))) : [join(d, e.name)]
+  );
 
 /** The body of every <details> on the page, comments stripped. */
 const disclosures = () =>
@@ -94,6 +100,116 @@ describe('what folds is explanation', () => {
       visible(),
       /Where this number comes from/,
       'the singular heading is still rendered'
+    );
+  });
+});
+
+/* NO BADGE MAY REQUIRE A GLOSSARY.
+ *
+ * Frank, reading the top rung of the ladder: "What does 'Maker's overall
+ * figure' mean?"
+ *
+ * It meant nothing unless you already knew the trade's vocabulary. "Overall"
+ * is a term of art for the outside of the bag with wheels and handle counted,
+ * as against the packing body — and knowing that distinction exists is the
+ * whole premise of this site, which is exactly why the badge cannot assume it.
+ *
+ * The lower rungs were fine because each names its contrast. This guard holds
+ * the top ones to the same standard: a badge that claims a figure is
+ * trustworthy has to say what makes it trustworthy, in words, not in an
+ * adjective the reader has to already understand. */
+describe('the source badge explains itself', () => {
+  /* Scoped to the SOURCE_BADGE object. SOURCE_LINE below it is keyed the same
+     way and is the FOLDED prose — held to a different standard, since it has
+     room to explain and this does not. */
+  const block = page.match(/const SOURCE_BADGE = \{([\s\S]*?)\n\};/)?.[1] ?? '';
+  const badges = [...block.matchAll(/\[DIM_SOURCE\.([A-Z_]+)\]:\s*(['"`])(.*?)\2,/g)].map((m) => [
+    m[1],
+    m[3],
+  ]);
+
+  test('all six rungs carry a badge', () => {
+    assert.equal(badges.length, 6, `expected six source badges, found ${badges.length}`);
+  });
+
+  test('the trusted rungs say the wheels are in the number', () => {
+    /* These two are the ones that let a bag be RECOMMENDED. A reader deciding
+       whether to trust the figure needs to know what it measures, and "wheels
+       and handle" is the only phrase that settles it — it is what an airline
+       puts against the gauge. */
+    for (const rung of ['MEASURED', 'MAKER_OVERALL']) {
+      const copy = badges.find(([k]) => k === rung)?.[1] ?? '';
+      assert.match(copy, /wheels/i, `${rung} does not say whether wheels are included: "${copy}"`);
+    }
+  });
+
+  test('no badge relies on "overall" to carry the meaning', () => {
+    /* The word may appear, but never as the only thing distinguishing this
+       rung from the ones below it. */
+    for (const [rung, copy] of badges) {
+      if (!/overall/i.test(copy)) continue;
+      assert.match(
+        copy,
+        /wheels|handle|outside/i,
+        `${rung} uses "overall" as a term of art with nothing to unpack it: "${copy}"`
+      );
+    }
+  });
+
+  test('every badge says whose number it is, or that we took it ourselves', () => {
+    /* "Retail listing" did not, and a reader had no way to tell it apart from
+       a manufacturer figure without opening the panel. */
+    for (const [rung, copy] of badges) {
+      assert.match(
+        copy,
+        /manufacturer|we measured|packing size/i,
+        `${rung} does not say who the figure came from: "${copy}"`
+      );
+    }
+  });
+});
+
+/* ONE WORD FOR THE PARTY WHOSE NUMBER DECIDES THE VERDICT.
+ *
+ * Frank: "Maker might be unexpected language to use in the US market — people
+ * are more familiar with manufacturer."
+ *
+ * The site had in fact already chosen. /methodology, /sources, /guide and the
+ * folded provenance prose all said "manufacturer"; the badges and a scattering
+ * of body copy said "maker". /bags did both inside one paragraph — "each
+ * manufacturer's own product page", and two lines later "where a maker
+ * publishes both" — which is what an unenforced house style always converges
+ * on, since each sentence is written on a different day.
+ *
+ * This is not pedantry about a synonym. Provenance is the product: the whole
+ * claim is that we can tell you WHO said a number and what it measures. A
+ * reader who cannot tell whether "the maker" and "the manufacturer" are the
+ * same party has been handed a distinction we did not mean to draw.
+ *
+ * Comments are exempt. This is about what a reader sees. */
+describe('house vocabulary', () => {
+  const pages = walk('src').filter((f) => /\.(astro|jsx)$/.test(f));
+
+  test('no rendered copy says "maker"', () => {
+    const offenders = [];
+    for (const file of pages) {
+      const src = readFileSync(file, 'utf8')
+        .replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+        .replace(/\/\*[\s\S]*?\*\//g, '');
+      for (const m of src.matchAll(/\bmakers?('s)?\b/gi)) {
+        /* `makers` is also the variable holding the manufacturer list on
+           /sources, and DIM_SOURCE.MAKER_* are schema keys. Neither is copy. */
+        const around = src.slice(Math.max(0, m.index - 24), m.index + 24);
+        if (/DIM_SOURCE|maker_|makers\.map|const makers|bags_maker/i.test(around)) continue;
+        const line = src.slice(0, m.index).split('\n').length;
+        offenders.push(`${file}:${line}  …${around.replace(/\s+/g, ' ').trim()}…`);
+      }
+    }
+    assert.deepEqual(
+      offenders,
+      [],
+      'rendered copy says "maker" where the rest of the site says "manufacturer":\n  ' +
+        offenders.join('\n  ')
     );
   });
 });

@@ -80,9 +80,9 @@ const lastUpdated = dates.length
       <p class="mt-5 max-w-2xl text-lg text-ink-2">
         Dimensions come from each manufacturer's own product page — never a
         marketplace listing, where the same bag turns up with different numbers
-        from different sellers. Where a maker publishes both the packing size and
-        the <strong class="text-ink">overall</strong> size, we use the overall
-        one, because that is what an airline measures: wheels, handle and all.
+        from different sellers. Where a manufacturer publishes both the packing
+        size and the <strong class="text-ink">outside</strong> size, we use the
+        outside one, because that is what an airline measures: wheels, handle and all.
       </p>
       <p class="mt-3 max-w-2xl text-ink-2">
         Where they publish both, we show you both — the gap between them is
@@ -137,8 +137,8 @@ const lastUpdated = dates.length
     {stats.bags_promotable < stats.bags_sized && (
       <p class="py-8 text-[0.875rem] text-muted">
         {stats.bags_maker_sourced} of these use the manufacturer's own published
-        figures; for {stats.bags_promotable} the maker states it is the outside of
-        the bag, and only those are recommended.{' '}
+        figures; for {stats.bags_promotable} the manufacturer states it is the
+        outside of the bag, and only those are recommended.{' '}
         {stats.bags_review_only > 0 && (
           <>{stats.bags_review_only} rest on a review publication's measurement,
           named on the card.{' '}</>

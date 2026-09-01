@@ -116,20 +116,46 @@ const better = (await loadBags())
   .sort((a, b) => b.cov.pass - a.cov.pass)
   .slice(0, 3);
 
-/* THE RUNG IN TWO OR THREE WORDS.
+/* THE RUNG IN A HANDFUL OF WORDS.
  *
- * The long sentence folds away now, so this is what a reader sees at a glance —
- * and it has to carry the QUALIFICATION, not just the provenance. "Review
- * figure" and "the maker's own" are different claims about how much the number
- * beside them can be trusted, and a reader who never opens the panel must
- * still get that difference. */
+ * The long sentence folds away, so this is what a reader sees at a glance, and
+ * it has to carry the QUALIFICATION rather than just the provenance. A review
+ * figure and the manufacturer's own are different claims about how far the
+ * number beside them can be trusted, and a reader who never opens the panel
+ * must still get that difference.
+ *
+ * TWO THINGS WERE WRONG WITH THE OLD LABELS, and Frank found both.
+ *
+ * 1. "What does 'Maker's overall figure' mean?"
+ *
+ *    It meant nothing unless you already knew the trade's vocabulary. "Overall"
+ *    is a term of art for the outside of the bag with wheels and handle
+ *    counted, as against the packing body — and knowing that distinction exists
+ *    is the ENTIRE premise of this site. Which is exactly why the badge cannot
+ *    assume it: the reader who most needs this label is the one who has never
+ *    heard of the distinction. The lower rungs never had the problem, because
+ *    each names its contrast — "not the maker", "not the outside". The top rung
+ *    named neither party nor measurement and leaned on one adjective.
+ *
+ * 2. "Maker might be unexpected language in the US market — people are more
+ *    familiar with manufacturer."
+ *
+ *    And the site had already decided: /methodology, /sources, /guide and the
+ *    folded prose two lines below all say "manufacturer". /bags managed both in
+ *    one paragraph — "each manufacturer's own product page", then "where a
+ *    maker publishes both". "Maker" reads British, or artisanal, and neither is
+ *    what a reader wants from the party whose number decides their verdict.
+ *
+ * So every rung now answers the two questions actually being asked — WHO said
+ * this, and DOES IT INCLUDE THE WHEELS — in the word the rest of the site uses.
+ * That is what makes the ladder read as a ladder rather than six labels. */
 const SOURCE_BADGE = {
-  [DIM_SOURCE.MEASURED]: 'We measured it',
-  [DIM_SOURCE.MAKER_OVERALL]: "Maker's overall figure",
-  [DIM_SOURCE.REVIEW]: 'Review figure, not the maker',
-  [DIM_SOURCE.MAKER_UNSPECIFIED]: 'Maker figure, wheels unstated',
-  [DIM_SOURCE.MAKER_PACKING]: 'Packing size, not the outside',
-  [DIM_SOURCE.RESELLER]: 'Retail listing',
+  [DIM_SOURCE.MEASURED]: 'We measured it, wheels and handle included',
+  [DIM_SOURCE.MAKER_OVERALL]: "Manufacturer's figure, wheels and handle included",
+  [DIM_SOURCE.REVIEW]: 'Review figure, not the manufacturer',
+  [DIM_SOURCE.MAKER_UNSPECIFIED]: "Manufacturer's figure, wheels not stated",
+  [DIM_SOURCE.MAKER_PACKING]: 'Packing size, not the outside of the bag',
+  [DIM_SOURCE.RESELLER]: 'Retail listing, not the manufacturer',
 };
 
 /** Anything below maker_overall qualifies the number rather than backing it. */
@@ -139,7 +165,7 @@ const SOURCE_IS_WEAK = (rung) =>
 const SOURCE_LINE = {
   [DIM_SOURCE.MEASURED]: 'We measured this one ourselves.',
   [DIM_SOURCE.MAKER_OVERALL]:
-    "This is the manufacturer's own overall figure — the outside of the bag, wheels and handle included, which is what an airline measures.",
+    "This is the manufacturer's own figure for the outside of the bag — wheels and handle included, which is what an airline measures.",
   [DIM_SOURCE.REVIEW]:
     'This figure comes from a review publication, not the manufacturer. We attribute it and are replacing it at source; until then this bag is shown rather than recommended.',
   [DIM_SOURCE.MAKER_UNSPECIFIED]:
@@ -308,7 +334,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
               citation is hiding. That still holds — so the collapse keeps the
               part that QUALIFIES the number:
 
-                Review figure, not the maker  ·  Travel + Leisure ↗
+                Review figure, not the manufacturer  ·  Travel + Leisure ↗
 
               Two or three words and a link. A reader who never opens the panel
               still learns that the figure above is not the manufacturer's, and
@@ -397,8 +423,8 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
           )}
           {!bag.promotable && (
             <p class="mt-3 rounded-chip bg-amber-wash p-3 text-[0.8125rem] text-amber">
-              Shown, not recommended — the dimension above is not the maker's own
-              overall figure.
+              Shown, not recommended — the dimension above is not the
+              manufacturer's own figure for the outside of the bag.
             </p>
           )}
           <a
@@ -477,7 +503,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
       <section class="border-t border-rule py-10">
         <h2 class="text-2xl font-semibold tracking-tight">The other sizes in this line</h2>
         <p class="mt-2 max-w-[64ch] text-ink-2">
-          Same bag, same maker, different dimensions — and often a different
+          Same bag, same manufacturer, different dimensions — and often a different
           answer. This is the comparison a product page never shows you.
         </p>
         <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
