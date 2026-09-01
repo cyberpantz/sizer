@@ -13,6 +13,32 @@ import type { BagVisualizerProps, ViewPreset } from './types';
 
 const units = createUnits();
 
+/* Box3.setFromObject() traverses EVERY child, visible or not. bagScene.envelope
+ * is a wireframe at the bag's nominal dimensions and is switched off by
+ * default — so it silently joined every layout and framing measurement and
+ * padded the scene with margin nobody could see. Same family as the hidden
+ * filter pill and the data-kg loop with no emitters: something present in the
+ * structure but absent from the picture, quietly changing the answer. */
+function visibleBox(object: THREE.Object3D): THREE.Box3 {
+  const box = new THREE.Box3();
+  const scratch = new THREE.Box3();
+  object.updateMatrixWorld(true);
+  /* traverseVisible skips a whole subtree whose root is hidden, which is what
+     we want. But expandByObject() would then traverse that mesh's OWN children
+     again without the visibility filter, quietly undoing it — so union the
+     geometry's bounding box directly instead. */
+  object.traverseVisible((child) => {
+    const mesh = child as THREE.Mesh;
+    const geom = mesh.geometry;
+    if (!geom) return;
+    if (!geom.boundingBox) geom.computeBoundingBox();
+    if (!geom.boundingBox) return;
+    scratch.copy(geom.boundingBox).applyMatrix4(mesh.matrixWorld);
+    box.union(scratch);
+  });
+  return box;
+}
+
 const PRESETS: Record<Exclude<ViewPreset, 'default'>, { yaw: number; pitch: number }> = {
   front: { yaw: 0, pitch: 0 },
   side: { yaw: Math.PI / 2, pitch: 0 },
@@ -53,6 +79,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   let renderId = 0;
   let visible = true;
   let animStart = performance.now();
+  let settled = true;
   let activePreset: Exclude<ViewPreset, 'default'> = 'front';
   let targetYaw = PRESETS.front.yaw;
   let targetPitch = PRESETS.front.pitch;
@@ -115,7 +142,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   }
 
   content.updateMatrixWorld(true);
-  const bagBox = new THREE.Box3().setFromObject(bagScene.exterior);
+  const bagBox = visibleBox(bagScene.exterior);
   bagRig.position.y = -bagBox.min.y;
 
   /* The bag's real bounds, expressed in bagRig's own frame — captured after the
@@ -125,15 +152,15 @@ export function initFitVisualizer(opts: InitOptions): () => void {
      and the lift above would then be applied to the guide a second time. That
      is what drew a height leader several times the height of the bag. */
   content.updateMatrixWorld(true);
-  const measureBox = new THREE.Box3().setFromObject(bagScene.exterior);
+  const measureBox = visibleBox(bagScene.exterior);
   bagRig.worldToLocal(measureBox.min);
   bagRig.worldToLocal(measureBox.max);
 
   content.updateMatrixWorld(true);
   const layoutBox = new THREE.Box3();
-  if (sizer) layoutBox.union(new THREE.Box3().setFromObject(sizer));
-  layoutBox.union(new THREE.Box3().setFromObject(bagRig));
-  if (bindingMarkers) layoutBox.union(new THREE.Box3().setFromObject(bindingMarkers));
+  if (sizer) layoutBox.union(visibleBox(sizer));
+  layoutBox.union(visibleBox(bagRig));
+  if (bindingMarkers) layoutBox.union(visibleBox(bindingMarkers));
   /* CENTRE ALL THREE AXES, INCLUDING Y.
    *
    * Y was pinned to 0 — which reads as "leave the bag standing on the ground"
@@ -170,7 +197,16 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     renderer.setSize(width, height, false);
 
     content.updateMatrixWorld(true);
-    const size = new THREE.Box3().setFromObject(content).getSize(new THREE.Vector3());
+    /* AIM AT WHAT IS ACTUALLY THERE, rather than trusting that it was moved to
+       the origin. content.position centres the model in its OWN frame, but the
+       box measured here is a world box: it changes as the rig rotates, and any
+       asymmetry — a sizer deck, a binding marker, the invisible envelope before
+       visibleBox() excluded it — leaves the drawn centre somewhere other than
+       (0, 0, 0), while the frustum stays symmetric about it. That is a residual
+       vertical drift you cannot fix by padding. Centre the camera on the box. */
+    const bounds = visibleBox(content);
+    const size = bounds.getSize(new THREE.Vector3());
+    const focus = bounds.getCenter(new THREE.Vector3());
 
     /* THE SLIDE ALLOWANCE IS ONLY NEEDED WHERE THE SLIDE IS VISIBLE.
      *
@@ -204,8 +240,9 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       camera.bottom = -halfW / aspect;
     }
 
-    camera.position.set(0, 0, Math.max(size.x, size.y, size.z) * 2.4);
-    camera.lookAt(0, 0, 0);
+    const dist = Math.max(size.x, size.y, size.z) * 2.4;
+    camera.position.set(focus.x, focus.y, focus.z + dist);
+    camera.lookAt(focus);
     camera.updateProjectionMatrix();
   }
 
@@ -358,8 +395,18 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     for (const m of projected) {
       const chip = labels.querySelector(`[data-axis-label="${m.axis}"]`) as HTMLElement | null;
       if (chip) {
-        chip.style.left = `${m.label.x}px`;
-        chip.style.top = `${m.label.y}px`;
+        /* CLAMPED TO THE STAGE. The chips are positioned from a projected point
+           and translated -50%/-50%, so a leader near an edge put half a label
+           outside the box — which is what clipped "WIDTH" off the top, since
+           the width guide sits above the bag by design. Nudging the label in is
+           the right trade: the leader line still lands on the true point, and a
+           label you can read beats a label in the exactly correct place. */
+        const half = { w: chip.offsetWidth / 2, h: chip.offsetHeight / 2 };
+        const m8 = 6;
+        const cx = Math.min(Math.max(m.label.x, half.w + m8), width - half.w - m8);
+        const cy = Math.min(Math.max(m.label.y, half.h + m8), height - half.h - m8);
+        chip.style.left = `${cx}px`;
+        chip.style.top = `${cy}px`;
         const isBinding = bindingAxis != null && m.axis === bindingAxis && overflowCm > 0;
         chip.classList.toggle('border-red', isBinding);
         chip.classList.toggle('bg-red-wash', isBinding);
@@ -410,6 +457,14 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       yaw += (targetYaw - yaw) * 0.2;
       pitch += (targetPitch - pitch) * 0.2;
       applyView();
+      settled = false;
+    } else if (!settled) {
+      /* fitCamera() measures a WORLD box, and setView() calls it before the rig
+         has actually turned — so the framing it computes belongs to the OLD
+         orientation. Re-fit once, on the frame the rotation comes to rest, or
+         side and top stay framed for the front view. */
+      settled = true;
+      fitCamera();
     }
 
     if (!visible) return;
