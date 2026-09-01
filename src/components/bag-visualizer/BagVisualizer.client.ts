@@ -388,14 +388,30 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     if (!lines || !labels) return;
 
     const projected = projectMeasurements(session.dimensions, camera, width, height, bagRig, measureBox);
-    const bindingHex =
-      overflowCm > 0 && bindingAxis ? `#${bandHex(result.band).toString(16).padStart(6, '0')}` : null;
+    /* THE VERDICT COLOURS THE WHOLE DRAWING, not only the failures.
+     *
+     * The band tint used to appear ONLY when a bag was over — everything else
+     * drew in ink, so "Fits" and "Tight" looked identical to "we have not
+     * answered". /check has carried the full five-step language for months:
+     * green clears, lime tight, amber probably fine, orange risky, red over.
+     * A reader moving between the two pages was being shown two different
+     * systems for the same fact.
+     *
+     * A verdict is worth stating in its own colour when it is GOOD, too — and
+     * `line` (Tight) is exactly the case that needs its own: legal, inside the
+     * limit, with no margin at all. */
+    const hex = (n: number) => `#${n.toString(16).padStart(6, '0')}`;
+    const bandColor = result.band ? hex(bandHex(result.band)) : null;
+    const bindingHex = bandColor;
 
     lines.innerHTML = projected
       .map((m) => {
         const isBinding = bindingAxis != null && m.axis === bindingAxis && overflowCm > 0;
         const opacity = isBinding ? 1 : m.occluded ? 0.35 : 0.75;
-        const stroke = isBinding ? bindingHex : 'currentColor';
+        /* The binding axis is the loud one; the other two carry the same
+           verdict quietly. An unanswerable leg stays in ink — grey is not a
+           mild version of a verdict, it is the absence of one. */
+        const stroke = isBinding ? bindingHex : (bandColor ?? 'currentColor');
         const sw = isBinding ? 2.25 : 1;
         return `<g data-axis="${m.axis}" opacity="${opacity}">
           <line x1="${m.ext1.x1}" y1="${m.ext1.y1}" x2="${m.ext1.x2}" y2="${m.ext1.y2}" stroke="${stroke}" stroke-width="${sw}"/>

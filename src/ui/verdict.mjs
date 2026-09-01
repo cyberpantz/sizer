@@ -49,13 +49,26 @@
  * Tight moves up the colour ramp to lime and Probably fine takes amber: the
  * tint has to agree with the order or the wall of cards stops being readable
  * at a glance. */
+/* `var` NAMES THE REAL CUSTOM PROPERTY, and did not until now: these said
+   `var(--green)` while the stylesheet defines `--color-green`. Nothing read
+   `.token` yet, so it was a trap rather than a bug — the first surface to use
+   it would have got an undefined variable and silently painted nothing.
+   `hex` is the same colour as a number, for canvas and WebGL, which cannot
+   take a CSS variable. Two representations of ONE decision, side by side, so a
+   change to the palette cannot move the badge without moving the drawing. */
 export const BAND_COPY = {
-  clears: { label: 'Fits', tone: 'good', token: 'var(--green)' },
-  line: { label: 'Tight', tone: 'edge', token: 'var(--lime)' },
-  likely: { label: 'Probably fine', tone: 'caution', token: 'var(--amber)' },
-  gamble: { label: 'Risky', tone: 'warn', token: 'var(--orange)' },
-  wont: { label: 'Over', tone: 'bad', token: 'var(--red)' },
+  clears: { label: 'Fits', tone: 'good', token: 'var(--color-green)', hex: 0x14713d },
+  line: { label: 'Tight', tone: 'edge', token: 'var(--color-lime)', hex: 0x5c7000 },
+  likely: { label: 'Probably fine', tone: 'caution', token: 'var(--color-amber)', hex: 0x8a5d00 },
+  gamble: { label: 'Risky', tone: 'warn', token: 'var(--color-orange)', hex: 0xb4530f },
+  wont: { label: 'Over', tone: 'bad', token: 'var(--color-red)', hex: 0xb3261e },
 };
+
+/** The colour for a band, as a number. `null` — the engine declining to
+ *  answer — is grey, and must never borrow a verdict colour: "we do not know"
+ *  is not a mild version of "it fits". */
+export const UNANSWERED_HEX = 0x736c63;
+export const bandHex = (band) => BAND_COPY[band]?.hex ?? UNANSWERED_HEX;
 
 /** Worst-first, so any surface needing a ranking uses this one and not its own.
  *  A second ordering somewhere else is a second chance to disagree. */
