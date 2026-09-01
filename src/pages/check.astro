@@ -498,14 +498,36 @@ const RISK = [
      showing shapes rather than the catalogue, and without a way back a reader
      who clicked this by accident is stuck describing a bag they did not want to
      describe. Every door on this page opens both ways. */
-  const customToggle = (slot, i) =>
-    isCustom(slot.slug)
-      ? `<button type="button" data-uncustom="${i}"
-           class="mt-1.5 cursor-pointer rounded-chip bg-transparent px-0 py-0.5 text-[0.8125rem] text-blue hover:underline underline-offset-2">
-           Pick from our catalogue instead</button>`
-      : `<button type="button" data-customise="${i}"
-           class="mt-1.5 cursor-pointer rounded-chip bg-transparent px-0 py-0.5 text-[0.8125rem] text-blue hover:underline underline-offset-2">
-           ${slot.slug ? 'Describe a different bag' : 'Describe your own bag'}</button>`;
+  /* AN OR, DRAWN AS ONE.
+
+     Frank: "We need to make it clear that 'Describe your own bag' is an OR
+     operation."
+
+     It sat directly under the picker as a plain blue link, in the position a
+     form uses for a hint or a follow-up action — so it read as something ELSE
+     to do rather than something to do INSTEAD. The two are exclusive: choosing
+     a catalogue bag and describing your own are two answers to one question,
+     and only one control is rendered at a time.
+
+     The rule with a word in it is the settled idiom for exactly this — the
+     "sign in with Google / or / with an email" pattern — and it costs one line
+     to say what a paragraph would otherwise have to. Centred, because a centred
+     divider over a left-aligned link reads as a divider that lost its label.
+
+     "instead" comes OUT of the return-journey label. With an "or" above it,
+     "or … Pick from our catalogue instead" says the same thing twice. */
+  const customToggle = (slot, i) => {
+    const [attr, label] = isCustom(slot.slug)
+      ? ['data-uncustom', 'Pick from our catalogue']
+      : ['data-customise', slot.slug ? 'Describe a different bag' : 'Describe your own bag'];
+    return `<div class="mt-2 flex items-center gap-3" aria-hidden="true">
+        <span class="h-px flex-1 bg-rule"></span>
+        <span class="text-[0.6875rem] font-medium tracking-[0.08em] text-muted uppercase">or</span>
+        <span class="h-px flex-1 bg-rule"></span>
+      </div>
+      <button type="button" ${attr}="${i}"
+        class="mt-1.5 w-full cursor-pointer rounded-chip bg-transparent px-0 py-0.5 text-center text-[0.8125rem] text-blue hover:underline underline-offset-2">${label}</button>`;
+  };
 
   /** The label the picker would have shown in this slot. One definition, so
    *  the two modes cannot describe the same row differently. */

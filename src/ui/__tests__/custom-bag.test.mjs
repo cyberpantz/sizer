@@ -270,8 +270,14 @@ describe('the way in is a control, not a list item', () => {
 
   test('it is a button, visible without opening anything', () => {
     /* The page already has this idiom — "+ Add another flight". A verb belongs
-       in a control, not hidden among nouns. */
-    assert.match(code, /data-customise=/, 'nothing on the page starts a custom bag');
+       in a control, not hidden among nouns.
+
+       Matched on the attribute NAME rather than `data-customise=`, because the
+       two directions are now built from one template and the attribute is
+       interpolated. The first version of this assertion broke the moment the
+       markup was refactored, which is a guard pinned to a shape rather than to
+       a rule. */
+    assert.match(code, /'data-customise'/, 'nothing on the page starts a custom bag');
     assert.match(code, /Describe your own bag/, 'the button has lost its label');
   });
 
@@ -302,8 +308,31 @@ describe('the way in is a control, not a list item', () => {
     /* Once a slot is custom the picker shows shapes, not the catalogue. Without
        a way back, a reader who clicked by accident is stuck describing a bag
        they never wanted to describe. */
-    assert.match(code, /data-uncustom=/, 'a custom bag cannot be undone');
-    assert.match(code, /Pick from our catalogue instead/);
+    assert.match(code, /'data-uncustom'/, 'a custom bag cannot be undone');
+    assert.match(code, /Pick from our catalogue/);
+  });
+
+  test('the alternation is DRAWN, not left to be inferred', () => {
+    /* Frank: "We need to make it clear that 'Describe your own bag' is an OR
+       operation."
+
+       It sat under the picker as a plain link, in the position a form uses for
+       a hint or a follow-up action — so it read as something else to DO rather
+       than something to do INSTEAD. The two are exclusive: only one control is
+       rendered at a time, and choosing a catalogue bag and describing your own
+       are two answers to one question.
+
+       A rule with "or" in it is the settled idiom for this and costs one line.
+       aria-hidden because it is a visual separator; a screen reader hears two
+       controls in sequence, which is already the truth. */
+    assert.match(code, />or<\/span>/, 'the alternation is not drawn');
+    assert.match(code, /aria-hidden="true">\s*<span class="h-px/);
+  });
+
+  test('the return label does not say "or" twice', () => {
+    /* It read "Pick from our catalogue instead". With an "or" directly above
+       it, "instead" is the same word again. */
+    assert.doesNotMatch(code, /Pick from our catalogue instead/);
   });
 
   test('leaving a custom bag empties the slot rather than guessing', () => {
