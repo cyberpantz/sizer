@@ -297,16 +297,47 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                   <Fragment>{i > 0 && ', '}<span data-cm={v}>{v} cm</span></Fragment>
                 ))}
               </strong>{' '}
-              over the packing figure. That difference is the whole reason a bag
-              sold as carry-on size gets stopped.
+              over the packing figure.
             </p>
           )}
-          {(record.conflicts ?? []).length > 0 && (
-            <ul class="mt-3 space-y-2 border-t border-rule pt-3">
-              {record.conflicts.map((c) => (
-                <li class="text-[0.875rem] text-muted">{c.detail}</li>
-              ))}
-            </ul>
+
+          {/* WHY A <details>, AND WHY THE HEADLINE STAYS OUT OF IT.
+              This card grew until it pushed the airline picker below the fold —
+              and the picker is the thing a reader came to use. But the fix is
+              not to cut the explanation: "where did this number come from" is
+              the question the whole site answers, and a source you have to ask
+              for twice is a source we are quietly hiding.
+              So the CLAIM and the LINK stay visible — they are what make the
+              number checkable — and the reasoning folds away. Native <details>,
+              so it needs no JavaScript, is keyboard-operable for free, and its
+              content is in the DOM even while closed, which is what keeps the
+              [data-cm] hooks reachable by the units toggle and the text
+              findable by in-page search. */}
+          {(gap || (record.conflicts ?? []).length > 0) && (
+            <details class="group mt-2">
+              <summary
+                class="inline-flex cursor-pointer list-none items-center gap-1 text-[0.875rem] font-semibold text-blue [&::-webkit-details-marker]:hidden"
+              >
+                <span class="group-open:hidden">Why that matters</span>
+                <span class="hidden group-open:inline">Show less</span>
+                <span aria-hidden="true" class="transition-transform group-open:rotate-180">▾</span>
+              </summary>
+
+              {gap && (
+                <p class="mt-2 text-[0.875rem] text-muted">
+                  That difference is the whole reason a bag sold as carry-on size
+                  gets stopped: the brochure figure measures the packing space,
+                  and the gate measures the outside.
+                </p>
+              )}
+              {(record.conflicts ?? []).length > 0 && (
+                <ul class="mt-3 space-y-2 border-t border-rule pt-3">
+                  {record.conflicts.map((c) => (
+                    <li class="text-[0.875rem] text-muted">{c.detail}</li>
+                  ))}
+                </ul>
+              )}
+            </details>
           )}
         </div>
       </div>
