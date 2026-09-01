@@ -382,7 +382,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
           <span class="font-mono font-semibold text-ink">
             <span data-cm="${session.dimensions.heightCm}">${fmtCm(session.dimensions.heightCm)}</span> ×
             <span data-cm="${session.dimensions.widthCm}">${fmtCm(session.dimensions.widthCm)}</span> ×
-            <span data-cm="${session.dimensions.depthCm}">${fmtCm(session.dimensions.depthCm)}</span> cm
+            <span data-cm="${session.dimensions.depthCm}">${fmtCm(session.dimensions.depthCm)}</span>
           </span>
           <span class="text-muted"> · your bag</span>
         </div>`;
@@ -691,8 +691,25 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   if (badge) {
     badge.textContent = resultLabel(result);
     badge.classList.remove(...ALL_BAND_CHIP_CLASSES);
-    const bandable = !result.no_cabin_bag && !result.unknown && !result.not_flying;
-    if (bandable && result.band) badge.classList.add(...BAND_CHIP[result.band]);
+    /* RED FOR A FINDING THAT COSTS THE TRAVELLER; GREY FOR OUR OWN IGNORANCE.
+     *
+     * I first made no_cabin_bag neutral to stop red meaning two things — the
+     * ladder's red is "your bag is too big", and this is not that. But calm
+     * grey is wrong for the worst news the site delivers: your fare includes
+     * nothing to put in the locker, and you will be paying at the gate.
+     *
+     * The resolution is a division of labour. THE COLOUR carries urgency; THE
+     * WORDS carry the claim. "No cabin bag" cannot be misread as a size
+     * verdict, so red is free to do the one job colour is good at.
+     *
+     * `unknown` and `not_flying` stay grey, and that line is the principle: we
+     * do not raise an alarm about our own gap. Painting "nobody has researched
+     * this airline" red would be crying wolf with the reader's attention, and
+     * spend the credibility that makes the real red worth heeding. */
+    if (result.no_cabin_bag) badge.classList.add(...BAND_CHIP.wont);
+    else if (result.unknown || result.not_flying)
+      badge.classList.add('border-rule', 'bg-surface-2', 'text-ink-2');
+    else if (result.band) badge.classList.add(...BAND_CHIP[result.band]);
     else badge.classList.add('border-rule', 'bg-surface-2', 'text-ink-2');
   }
   if (badgeNote) {
@@ -727,6 +744,9 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     if (panel && title && body) {
       if (result.no_cabin_bag) {
         showIcon('no_cabin_bag');
+        /* The icon takes the alarm as well, so the eye lands on it before the
+           sentence. Only this case — the other two are not bad news. */
+        root.querySelector('[data-icon="no_cabin_bag"]')?.classList.replace('text-muted', 'text-red');
         title.textContent = `${session.carrierName} includes no cabin bag on this fare.`;
         body.textContent =
           'Not "too big" — nothing is allowed in the overhead locker at any size, so your ' +

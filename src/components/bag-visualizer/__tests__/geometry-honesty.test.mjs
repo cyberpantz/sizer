@@ -302,16 +302,25 @@ describe('the verdict is stated above the drawing, in words', () => {
     assert.match(code(client), /badge\.textContent = resultLabel\(result\)/);
   });
 
-  test('a finding about the FARE does not borrow a size colour', () => {
-    /* "This fare includes no cabin bag at any size" is a fact about the
-       ticket, not a measurement of the bag; "we have not researched this" is
-       not a mild version of anything. Both get the neutral chip, so red keeps
-       meaning "your bag is too big". */
+  test('the alarm is spent on findings, not on our own gaps', () => {
+    /* WHERE THIS LANDED, after arguing both sides.
+
+       no_cabin_bag takes RED. It is the worst news the site delivers — your
+       fare includes nothing to put in the locker, and you will be paying at
+       the gate — and calm grey was wrong for it. What makes red safe here is a
+       division of labour: the COLOUR carries urgency, the WORDS carry the
+       claim, and "No cabin bag" cannot be misread as "your bag is too big".
+
+       `unknown` and `not_flying` stay grey. That is the line: we do not raise
+       an alarm about our OWN gap. Painting "nobody has researched this
+       airline" red would cry wolf with the reader's attention and spend the
+       credibility that makes the real red worth heeding. */
     const src = code(client);
+    assert.match(src, /if \(result\.no_cabin_bag\) badge\.classList\.add\(\.\.\.BAND_CHIP\.wont\)/);
     assert.match(
       src,
-      /const bandable = !result\.no_cabin_bag && !result\.unknown && !result\.not_flying/,
-      'the badge is tinting non-size findings with a band colour'
+      /result\.unknown \|\| result\.not_flying[\s\S]{0,80}border-rule/,
+      'an unresearched carrier is being alarmed about as if it were a finding'
     );
   });
 });
@@ -390,17 +399,39 @@ describe('the empty states are drawn, not decorated', () => {
     }
   });
 
-  test('they are line drawings in the same hand as the visualiser', () => {
-    /* docs/25: an architect's model, not a photograph — matte, thin-stroked,
-       honest about being a diagram. An empty state in a different visual
-       language reads as an error card bolted onto an instrument. */
+  test('they follow the icon set the rest of the interface uses', () => {
+    /* Lucide's idiom: 24 grid, stroke 2, round caps and joins. The first pass
+       drew them on the VISUALISER's drafting scale — hairlines on a 64 grid —
+       which is right for a measured drawing and wrong for an icon. At 56px
+       that reads as spidery, and it sat oddly beside an interface that is
+       Lucide throughout. */
     const icons = [...stage.matchAll(/<svg[^>]*data-icon="[^"]+"[\s\S]*?<\/svg>/g)].map((m) => m[0]);
     assert.equal(icons.length, 3);
     for (const svg of icons) {
-      assert.match(svg, /fill="none"/, 'a filled icon breaks the drawing language');
+      assert.match(svg, /viewBox="0 0 24 24"/, 'off the 24 grid the rest of the set uses');
+      assert.match(svg, /stroke-width="2"/, 'stroke weight does not match the icon set');
+      assert.match(svg, /viewBox="0 0 24 24"/, 'off the 24 grid');
+      assert.match(svg, /stroke-linecap="round"/, 'square caps read as a different family');
+      assert.match(svg, /fill="none"/, 'a filled icon breaks the line-drawing language');
       assert.match(svg, /stroke="currentColor"/, 'the icon does not inherit its colour');
-      assert.match(svg, /stroke-width="1\.5"/, 'stroke weight is off the drafting scale');
       assert.doesNotMatch(svg, /text-red|text-amber|text-green/, 'an icon is wearing a status colour');
+    }
+  });
+
+  test('each leans on a convention the reader already owns', () => {
+    /* The first attempt drew the CONCEPT — an empty locker, three sides laid
+       end to end, an unbuilt frame — and Frank could not tell what any of them
+       were. An icon gets about a second and no caption, so it has to borrow a
+       convention: a slash means not allowed, a ruler means measured, a
+       question mark means unknown. The suitcase is the constant; the marker
+       carries the difference. */
+    const get = (n) =>
+      stage.match(new RegExp(`<svg[^>]*data-icon="${n}"[\\s\\S]*?</svg>`))[0];
+    assert.match(get('no_cabin_bag'), /M3 20 21 4/, 'the slash is gone');
+    assert.match(get('linear'), /<rect x="2" y="17"/, 'the ruler is gone');
+    assert.match(get('unknown'), /stroke-dasharray/, 'the dashed case is gone');
+    for (const n of ['no_cabin_bag', 'linear', 'unknown']) {
+      assert.match(get(n), /<rect /, 'the shared suitcase body has gone');
     }
   });
 

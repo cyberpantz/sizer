@@ -182,71 +182,72 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
       class="absolute inset-0 z-20 grid place-items-center bg-surface px-6 text-center"
     >
       <div class="max-w-[22rem]">
-        {/* ONE IDEA PER ICON, IN THE SAME HAND AS THE DRAWING IT REPLACES.
-            Thin strokes, currentColor, no fill — the architect's-model
-            language docs/25 argues for, so the empty state reads as part of
-            the instrument rather than a generic error card. No warning
-            triangles: none of these three is an error, and two of them are
-            findings we are proud of. Only one is shown at a time. */}
+        {/* ONE SUITCASE, THREE CONVENTIONAL MARKERS.
+            Lucide's idiom — 24 grid, stroke 2, round caps — because the rest
+            of the interface is Lucide and an icon in the visualiser's hairline
+            drafting scale read as spidery beside it.
+
+            The first attempt drew the CONCEPT (an empty locker, three sides
+            laid end to end, an unbuilt frame) and Frank could not tell what
+            any of them were. An icon has about a second and no caption, so it
+            has to lean on a convention the reader already owns: a slash means
+            not allowed, a ruler means measured, a question mark means unknown.
+            The suitcase stays constant so the three read as a family and the
+            marker carries the difference. */}
         <svg
           data-icon="no_cabin_bag"
           hidden
           class="mx-auto mb-4 h-14 w-14 text-muted"
-          viewBox="0 0 64 64"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
           aria-hidden="true"
         >
-          {/* An overhead locker, open and empty. Nothing goes in it at any
-              size, which is the whole finding. */}
-          <path d="M10 18h44a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V22a4 4 0 0 1 4-4Z" />
-          <path d="M6 29h52" opacity="0.45" />
-          <path d="M26 40v3h12v-3" opacity="0.45" />
-          <path d="M18 46 46 12" stroke-width="2" />
+          <rect x="4" y="7" width="13" height="12" rx="2" />
+          <path d="M8.5 7V5.5A1.5 1.5 0 0 1 10 4h1a1.5 1.5 0 0 1 1.5 1.5V7" />
+          <path d="M7.5 21h.01M13.5 21h.01" />
+          <path d="M3 20 21 4" />
         </svg>
 
         <svg
           data-icon="linear"
           hidden
           class="mx-auto mb-4 h-14 w-14 text-muted"
-          viewBox="0 0 64 64"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
           aria-hidden="true"
         >
-          {/* The three sides laid end to end — which is literally what a
-              linear limit measures, and why there is no box to draw. */}
-          <path d="M8 40V26M8 33h14M22 40V26" />
-          <path d="M22 33h20M42 40V26" />
-          <path d="M42 33h14M56 40V26" />
-          <path d="M8 50h48" opacity="0.4" />
-          <path d="M8 47v6M56 47v6" opacity="0.4" />
+          {/* A ruler under the case: this airline measures a total, not faces. */}
+          <rect x="6" y="3" width="12" height="11" rx="2" />
+          <path d="M10 3V2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1" />
+          <rect x="2" y="17" width="20" height="5" rx="1" />
+          <path d="M6 17v2M10 17v2M14 17v2M18 17v2" />
         </svg>
 
         <svg
           data-icon="unknown"
           hidden
           class="mx-auto mb-4 h-14 w-14 text-muted"
-          viewBox="0 0 64 64"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
           aria-hidden="true"
         >
-          {/* The gate sizer as an unfinished drawing: the frame nobody has
-              measured yet. Dashed because the shape is not established, not
-              because something went wrong. */}
-          <path d="M14 52V16h36v36" stroke-dasharray="5 5" />
-          <path d="M10 52h44" />
-          <path d="M14 16h36" opacity="0.4" />
+          {/* A question mark, because that is what this is. */}
+          <rect x="3" y="7" width="12" height="12" rx="2" stroke-dasharray="3 3" />
+          <path d="M7 7V5.5A1.5 1.5 0 0 1 8.5 4h1A1.5 1.5 0 0 1 11 5.5V7" />
+          <path d="M17.5 10.5a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1.2-1.5 2.2" />
+          <path d="M19.5 18.5h.01" />
         </svg>
 
         <p data-no-compare-title class="text-[1.0625rem] font-semibold text-ink"></p>
