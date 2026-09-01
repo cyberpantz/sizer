@@ -1,131 +1,243 @@
 ---
-/* WHAT THIS SITE ACTUALLY DOES, NOT WHAT A TEMPLATE SAYS SITES DO.
+/* RENDERED FROM lib/privacy.mjs, NOT WRITTEN OUT.
  *
- * Most privacy policies are copied from a generator and describe a site the
- * author never built: cookies nobody sets, analytics nobody installed, a
- * "data controller" for a service with no accounts. That is a false statement
- * about yourself, published on your own site, and it is exactly the genre of
- * error this project exists to object to elsewhere.
+ * See that file for why. The short version: a privacy policy is a factual
+ * claim about ourselves, it gets the same standard as a claim about a bag, and
+ * the specific failure to design against is not a bad policy today — it is a
+ * correct policy left standing after the facts change. Frank has told me both
+ * analytics and a backend are coming. So every sentence that depends on their
+ * absence asks the flag rather than asserting it.
  *
- * So every claim below was checked against the source before it was written:
+ * WHAT I GOT WRONG IN THE FIRST DRAFT, since it is the reason this page is
+ * built this way. It read: "That is not a policy decision we might quietly
+ * reverse — it is a consequence of the site being a set of static files with
+ * no server to receive anything." Frank quoted it back at me. It is false.
+ * Client-side analytics on a static site is the ordinary case and needs no
+ * backend of ours; being static prevents nothing. I had dressed a choice up as
+ * a law of physics, which is a more flattering claim than the truth and reads
+ * as more trustworthy — the exact move this site exists to object to when
+ * luggage brands do it with dimensions.
  *
- *   no analytics        no gtag/plausible/fathom/posthog/segment, and no
- *                       third-party <script src> anywhere in src/
- *   no cookies          document.cookie appears nowhere
- *   one storage key     src/ui/units.mjs, localStorage 'units', metric or
- *                       imperial, and nothing else
- *   no server           output: 'static'; 63 prerendered files on Cloudflare
- *                       Workers static assets, no request-time code at all
- *   no accounts         nothing to sign into, no form that posts anywhere
- *   trip data in URL    /check keeps state in the query string, read and
- *                       written in the browser; it is never sent to us,
- *                       because there is no us to send it to
- *
- * If any of those stops being true, this page is wrong the same day. The
- * honest ones to watch are analytics and the affiliate programme.
- *
- * NOT WRITTEN BY A LAWYER, and it says so at the foot rather than pretending
- * otherwise. Frank: "They can be imperfect for the moment."
+ * TWO THINGS ARE STILL MISSING and the page says so in place rather than
+ * omitting them: the controller's identity and a contact address. GDPR Art. 13
+ * requires both. They are one-line fills in lib/privacy.mjs.
  */
 import Base from '../layouts/Base.astro';
+import {
+  activeProcessors,
+  analyticsLive,
+  backendLive,
+  BROWSER_STORAGE,
+  CONTACT,
+  CONTROLLER,
+  weCollect,
+} from '../lib/privacy.mjs';
 
 const UPDATED = 'September 2026';
+const processors = activeProcessors();
+const analytics = analyticsLive();
+const backend = backendLive();
+
+const Missing = 'not published yet';
 ---
 <Base
   title="Privacy — Sizer"
-  description="What Sizer collects, which is almost nothing, and why that is a consequence of how it is built."
+  description="What Sizer collects, what our host receives, and what your browser keeps. Written from what the site actually does."
 >
   <div class="mx-auto max-w-page px-6">
 
     <section class="pt-12 pb-8">
       <h1 class="text-4xl font-bold tracking-tight">Privacy</h1>
       <p class="mt-3 max-w-3xl text-lg text-ink-2">
-        Sizer has no accounts, no analytics and no cookies. That is not a
-        policy decision we might quietly reverse — it is a consequence of the
-        site being a set of static files with no server to receive anything.
+        {weCollect()
+          ? 'What we collect, why, and how to tell us to stop.'
+          : 'We don’t collect anything about you. Our host still receives your IP address in order to serve the page, and this explains what happens to it.'}
       </p>
       <p class="mt-2 text-sm text-muted">Last updated {UPDATED}.</p>
     </section>
 
+    {/* THE THING A GENERATED POLICY ALWAYS HAS AND THIS ONE DOESN'T. Stated at
+        the top, where it is inconvenient, rather than buried — a reader who
+        needs to exercise a right needs it before anything else on the page. */}
+    {(!CONTROLLER || !CONTACT) && (
+      <aside class="mb-8 max-w-3xl rounded-card border border-rule bg-amber-wash p-4 text-[0.9375rem] text-amber">
+        <strong>Incomplete:</strong> this policy does not yet name who is
+        responsible for the site, or give you a way to contact them. Both are
+        required, and until they are here you have no practical way to exercise
+        the rights described below. That is a real gap, not a formality.
+      </aside>
+    )}
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Who is responsible</h2>
+      <dl class="mt-3 space-y-2 text-ink-2">
+        <div class="flex gap-3">
+          <dt class="w-32 shrink-0 text-muted">Controller</dt>
+          <dd class={CONTROLLER ? '' : 'text-amber'}>{CONTROLLER ?? Missing}</dd>
+        </div>
+        <div class="flex gap-3">
+          <dt class="w-32 shrink-0 text-muted">Contact</dt>
+          <dd class={CONTACT ? '' : 'text-amber'}>{CONTACT ?? Missing}</dd>
+        </div>
+      </dl>
+    </section>
+
     <section class="max-w-3xl border-t border-rule py-8">
       <h2 class="text-2xl font-bold tracking-tight">What we collect</h2>
-      <p class="mt-3 text-ink-2">
-        Nothing. There is no sign-up, no newsletter, no contact form, and no
-        code on this site that transmits anything about you anywhere.
-      </p>
+      {!weCollect() && (
+        <>
+          <p class="mt-3 text-ink-2">
+            Nothing. There is no sign-up, no newsletter, no contact form, and no
+            analytics. Nothing on this site sends information about you to us or
+            to anyone else.
+          </p>
+          {/* THE HONEST QUALIFIER, and the reason the first draft of this page
+              was rewritten. Saying "we collect nothing" and stopping implies a
+              guarantee the architecture does not give. */}
+          <p class="mt-3 text-ink-2">
+            This is a choice, not a technical impossibility. Plenty of sites
+            with no backend at all still track their visitors, using code that
+            runs in your browser and reports elsewhere. We have chosen not to.
+            We expect to add analytics at some point; when we do, this page will
+            say what it is and what it records <em>before</em> it goes live, and
+            the date at the top will change.
+          </p>
+        </>
+      )}
+      {weCollect() && (
+        <p class="mt-3 text-ink-2">
+          See the table below for everything that processes data about your
+          visit, what each one receives, and why.
+        </p>
+      )}
     </section>
 
     <section class="max-w-3xl border-t border-rule py-8">
       <h2 class="text-2xl font-bold tracking-tight">What your browser stores</h2>
+      {BROWSER_STORAGE.map((s) => (
+        <p class="mt-3 text-ink-2">
+          One value, under the key <code class="rounded bg-surface-2 px-1">{s.key}</code>{' '}
+          in {s.kind}: {s.holds.toLowerCase()} {s.why_no_consent} Clearing your
+          site data removes it.
+        </p>
+      ))}
       <p class="mt-3 text-ink-2">
-        One value, under the key <code class="rounded bg-surface-2 px-1">units</code>:
-        whether you chose metric or imperial. It stays in your browser, it is
-        never sent to us, and clearing your site data removes it.
-      </p>
-      <p class="mt-3 text-ink-2">
-        We set no cookies of any kind.
+        We set no cookies. There is no consent banner because there is nothing
+        to consent to — not because we decided you would not mind.
       </p>
     </section>
 
     <section class="max-w-3xl border-t border-rule py-8">
       <h2 class="text-2xl font-bold tracking-tight">The trip you type in</h2>
       <p class="mt-3 text-ink-2">
-        The trip checker runs entirely in your browser. Your flights, fares and
-        bags are kept in the page's own address so the "copy link" button
-        produces something that actually works — which means the answer you see
-        is computed on your machine, from data already downloaded, and never
-        reaches us.
+        The trip checker runs in your browser. Your flights, fares and bags are
+        held in the page's own address so that "copy link" produces something
+        that actually works, and the verdicts are computed on your machine from
+        data the page already downloaded.
       </p>
+      {!backend && (
+        <p class="mt-3 text-ink-2">
+          Today none of that reaches us, because there is no server of ours for
+          it to reach. We expect to add server-side features later; if any of
+          them receives what you typed, this section will say so and say what
+          happens to it.
+        </p>
+      )}
       <p class="mt-3 text-ink-2">
-        Worth knowing: because the trip lives in the URL, anyone you send that
-        link to can see the same flights and bags. That is the point of it, but
-        it is your call who gets the link.
+        Worth knowing either way: because the trip lives in the URL, anyone you
+        send that link to sees the same flights and bags. That is the point of
+        it — but it means a link is not private, and where you paste it is your
+        call.
       </p>
     </section>
 
     <section class="max-w-3xl border-t border-rule py-8">
-      <h2 class="text-2xl font-bold tracking-tight">What our host sees</h2>
+      <h2 class="text-2xl font-bold tracking-tight">Who processes your data</h2>
+      <div class="mt-4 overflow-x-auto rounded-card border border-rule">
+        <table class="w-full text-left text-[0.9375rem]">
+          <thead class="border-b border-rule text-[0.8125rem] text-muted">
+            <tr>
+              <th class="p-3 font-medium">Who</th>
+              <th class="p-3 font-medium">What they receive</th>
+              <th class="p-3 font-medium">Legal basis</th>
+            </tr>
+          </thead>
+          <tbody>
+            {processors.map((p) => (
+              <tr class="border-b border-rule last:border-0 align-top">
+                <td class="p-3">
+                  {p.link ? (
+                    <a href={p.link} target="_blank" rel="noopener noreferrer nofollow" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">{p.name} ↗</a>
+                  ) : p.name}
+                  <span class="block text-[0.8125rem] text-muted">{p.role}</span>
+                </td>
+                <td class="p-3 text-ink-2">{p.processes}</td>
+                <td class="p-3 text-ink-2">{p.basis}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-3 text-[0.9375rem] text-ink-2">
+        We do not add anything to those logs, do not read them to build a
+        picture of you, and do not sell or share data with anyone. There is no
+        advertising on this site and no advertising network embedded in it.
+      </p>
+      {!analytics && (
+        <p class="mt-3 text-[0.9375rem] text-muted">
+          No analytics provider appears in that table because none is running.
+          A test fails the build if one ever appears in the site without being
+          listed here.
+        </p>
+      )}
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Your rights</h2>
       <p class="mt-3 text-ink-2">
-        The site is served by Cloudflare, which handles the request and keeps
-        its own operational logs — typically including IP address, time, and
-        the page requested — for security and reliability. We do not add
-        anything to those logs, and we do not use them to build any profile of
-        you.
+        If you are in the UK or EU, data protection law gives you the right to
+        ask what personal data is held about you, to have it corrected or
+        erased, to object to processing based on legitimate interests, and to
+        complain to your data protection authority — in the UK, the ICO.
       </p>
       <p class="mt-3 text-ink-2">
-        That processing is Cloudflare's, under Cloudflare's terms, and is not
-        something this site controls.
+        In practice there is very little here to exercise those rights against:
+        {' '}{weCollect()
+          ? 'see the table above for what is held.'
+          : 'we hold no record of you at all, and could not identify you if you asked.'}{' '}
+        Requests about the host's own request logs go to that host, since they
+        are the ones holding them.
+      </p>
+      <p class="mt-3 text-ink-2">
+        We do not sell personal information, and do not share it for
+        cross-context behavioural advertising, under the CCPA or otherwise.
+      </p>
+      {!CONTACT && (
+        <p class="mt-3 text-[0.9375rem] text-amber">
+          You cannot currently make any of these requests, because no contact
+          address is published. Fixing that is the outstanding item on this
+          page.
+        </p>
+      )}
+    </section>
+
+    <section class="max-w-3xl border-t border-rule py-8">
+      <h2 class="text-2xl font-bold tracking-tight">Children</h2>
+      <p class="mt-3 text-ink-2">
+        This site is aimed at adults planning travel. It is not directed at
+        children, and it collects nothing from anyone, of any age.
       </p>
     </section>
 
     <section class="max-w-3xl border-t border-rule py-8">
-      <h2 class="text-2xl font-bold tracking-tight">Links out</h2>
+      <h2 class="text-2xl font-bold tracking-tight">Changes</h2>
       <p class="mt-3 text-ink-2">
-        We link to airline baggage pages, manufacturer product pages and the
-        occasional review, because a figure you cannot trace is not worth
-        printing. Once you follow one of those links you are on someone else's
-        site, under their privacy practices, not ours.
-      </p>
-      <p class="mt-3 text-ink-2">
-        There are currently no advertising, sponsorship or affiliate links on
-        this site.
+        This page is generated from a single file in the site's source that
+        records what is actually running. When analytics or server-side
+        features are switched on there, this page changes in the same commit —
+        it is not a reminder someone has to remember to act on.
       </p>
     </section>
-
-    <section class="max-w-3xl border-t border-rule py-8">
-      <h2 class="text-2xl font-bold tracking-tight">If this changes</h2>
-      <p class="mt-3 text-ink-2">
-        If analytics or an affiliate programme is ever added, this page changes
-        on the same day, and the date at the top changes with it. We would
-        rather say so plainly than let a stale page quietly become untrue.
-      </p>
-    </section>
-
-    <p class="max-w-3xl border-t border-rule py-8 text-sm text-muted">
-      This is an early draft written by the site's author, not by a lawyer, and
-      it is not legal advice. It describes what the site does today as
-      accurately as we can state it.
-    </p>
 
   </div>
 </Base>
