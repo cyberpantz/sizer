@@ -16,11 +16,16 @@
  *
  * ONE THING THIS GUARD DOES NOT CHECK, and it matters more than the rest: a
  * hover state on a segmented control must not imitate its PRESSED state, or
- * the control lies about which option is selected. The unit toggle and the
- * risk selector therefore wash on hover and keep the solid blue for pressed —
- * with aria-pressed:hover overrides so hovering the selected segment does not
- * knock it back to the unselected look. That is a judgement no regex can make;
- * it is written down here so the next person knows it was one. */
+ * the control lies about which option is selected. Both segmented controls
+ * therefore keep a FILL for pressed and put blue on the pointer, with
+ * aria-pressed:hover overrides so hovering the selected segment does not knock
+ * it back to the unselected look. The two controls spend different amounts of
+ * that fill on purpose — the risk selector is a decision the answer depends
+ * on, so it is solid blue; the unit toggle is a preference sitting in the
+ * header on every page, so it is the quietest fill that still reads as chosen.
+ * Loudness tracks how much the choice matters, not how easy it is to style.
+ * That is a judgement no regex can make; it is written down here so the next
+ * person knows it was one. */
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';

@@ -7,12 +7,25 @@
    (src/ui/units.mjs).
 
    The unresolved state is styled differently on purpose — until we know the
-   reader's locale we must not imply a choice was made. */
+   reader's locale we must not imply a choice was made.
+
+   QUIET ON PURPOSE. This was a solid blue pill, which made the loudest thing
+   in the header a preference control — louder than the wordmark beside it and
+   louder than the nav. Nobody comes to the site to change units; they come to
+   get an answer, and the answer is two clicks past this button.
+
+   So the selected segment is now a fill you notice only when you look for it,
+   and blue appears on POINTER alone. That keeps docs/02's rule — blue is the
+   only interactive colour — while spending none of it at rest. The rule says
+   nothing else may look clickable, not that everything clickable must shout.
+
+   Selected and hovered stay clearly different (a fill versus blue text), which
+   is the one thing a segmented control may never blur. */
 ---
 <div
   data-units-toggle
   data-resolved="false"
-  class="inline-flex overflow-hidden rounded-chip border border-rule-strong group"
+  class="inline-flex overflow-hidden rounded-chip border border-rule group"
 >
   {/* "Metric" and "Imperial", not "cm" and "in".
       The control switches LENGTH AND WEIGHT — centimetres to inches and
@@ -20,19 +33,21 @@
       of what it does. A reader who wants pounds had no reason to think this
       button was for them. */}
   <button type="button" data-unit="cm" aria-pressed="true" aria-label="Show metric units, centimetres and kilograms"
-    class="text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
-           hover:bg-surface-2 hover:text-ink
-           aria-pressed:bg-blue aria-pressed:text-on-blue aria-pressed:hover:bg-blue-hover
-           aria-pressed:hover:text-on-blue
-           group-data-[resolved=false]:aria-pressed:bg-surface-2
-           group-data-[resolved=false]:aria-pressed:text-ink-2">Metric</button>
+    class="text-[0.8125rem] leading-none px-2.5 py-[0.4375rem] bg-transparent text-muted cursor-pointer border-0
+           hover:text-blue
+           aria-pressed:bg-surface-2 aria-pressed:text-ink aria-pressed:font-medium
+           aria-pressed:hover:text-blue
+           group-data-[resolved=false]:aria-pressed:bg-transparent
+           group-data-[resolved=false]:aria-pressed:font-normal
+           group-data-[resolved=false]:aria-pressed:text-muted">Metric</button>
   <button type="button" data-unit="in" aria-pressed="false" aria-label="Show imperial units, inches and pounds"
-    class="text-[0.8125rem] leading-none px-3 py-2 bg-surface text-muted cursor-pointer border-0
-           hover:bg-surface-2 hover:text-ink
-           aria-pressed:bg-blue aria-pressed:text-on-blue aria-pressed:hover:bg-blue-hover
-           aria-pressed:hover:text-on-blue
-           group-data-[resolved=false]:aria-pressed:bg-surface-2
-           group-data-[resolved=false]:aria-pressed:text-ink-2">Imperial</button>
+    class="text-[0.8125rem] leading-none px-2.5 py-[0.4375rem] bg-transparent text-muted cursor-pointer border-0
+           hover:text-blue
+           aria-pressed:bg-surface-2 aria-pressed:text-ink aria-pressed:font-medium
+           aria-pressed:hover:text-blue
+           group-data-[resolved=false]:aria-pressed:bg-transparent
+           group-data-[resolved=false]:aria-pressed:font-normal
+           group-data-[resolved=false]:aria-pressed:text-muted">Imperial</button>
 </div>
 
 <script>
