@@ -4,3 +4,4 @@ node_modules/
 .DS_Store
 *.log
 public/catalogue.json
+icon-preview.html
