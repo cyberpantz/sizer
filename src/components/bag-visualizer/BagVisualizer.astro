@@ -109,6 +109,26 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
     data-viz-stage-col
     class="order-2 overflow-hidden rounded-card border border-rule bg-surface shadow-panel lg:col-start-2 lg:row-start-1 lg:row-span-3 lg:sticky lg:top-6 lg:self-start"
   >
+  {/* THE ANSWER IN WORDS, ABOVE THE PICTURE.
+      The verdict already existed as a sentence UNDER the stage, which is the
+      wrong order: a reader scanning the column met a 3D drawing before being
+      told what it was showing them, and 'No cabin bag' — the strongest claim
+      this site makes — arrived last.
+      Rendered by the client alongside the drawing it labels, so the two cannot
+      disagree; both read the same evaluate() result. Empty until an airline is
+      chosen, because there is no verdict before there is a flight. */}
+  <div
+    data-viz-badge
+    hidden
+    class="flex items-center gap-2 border-b border-rule bg-surface px-4 py-3"
+  >
+    <span
+      data-viz-badge-chip
+      class="rounded-chip border px-2.5 py-1 text-[0.8125rem] font-semibold"
+    ></span>
+    <span data-viz-badge-note class="text-[0.8125rem] text-muted"></span>
+  </div>
+
   <div data-viz-shell class="bg-surface-2 px-3 py-4">
   {/* A HEIGHT, NOT AN ASPECT RATIO.
       This was `aspect-[4/5] w-full` with a min-height, a breakpoint min-height
@@ -371,6 +391,7 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
     root.querySelector('[data-viz-focus]')?.setAttribute('hidden', '');
     root.querySelector('[data-limits-compare]')?.setAttribute('hidden', '');
     root.querySelector('[data-viz-verdict]')?.setAttribute('hidden', '');
+    root.querySelector('[data-viz-badge]')?.setAttribute('hidden', '');
     root.querySelector('[data-view-controls]')?.setAttribute('hidden', '');
     root.querySelector('[data-stage-caption]')?.setAttribute('hidden', '');
     root.dataset.ready = '';
@@ -381,6 +402,7 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
     root.querySelector('[data-viz-focus]')?.removeAttribute('hidden');
     root.querySelector('[data-limits-compare]')?.removeAttribute('hidden');
     root.querySelector('[data-viz-verdict]')?.removeAttribute('hidden');
+    root.querySelector('[data-viz-badge]')?.removeAttribute('hidden');
     root.querySelector('[data-view-controls]')?.removeAttribute('hidden');
     root.querySelector('[data-stage-caption]')?.removeAttribute('hidden');
   }

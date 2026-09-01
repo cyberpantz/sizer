@@ -9,7 +9,12 @@ import { bindingPhysicalAxis, bandHex, evaluateFit } from './fitVisual';
 import { projectMeasurements } from './projectMeasurements';
 import { deriveVisualProfile } from './visualProfile';
 import { createUnits } from '../../ui/units.mjs';
-import { ALL_BAND_CHIP_CLASSES, BAND_CHIP, fitsWithinLimit } from '../../ui/verdict.mjs';
+import {
+  ALL_BAND_CHIP_CLASSES,
+  BAND_CHIP,
+  fitsWithinLimit,
+  resultLabel,
+} from '../../ui/verdict.mjs';
 import type { BagVisualizerProps, ViewPreset } from './types';
 
 const units = createUnits();
@@ -654,6 +659,33 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     const overlayWrap = root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null;
     if (overlayWrap) overlayWrap.style.opacity = '1';
   }
+  /* THE BADGE, ABOVE THE DRAWING IT LABELS.
+   *
+   * resultLabel() is the same function the shelf and the check page use, so
+   * the four cases that are NOT a band — Ceased, No cabin bag, Unknown, No
+   * answer — come out worded identically here. A second copy of that ladder
+   * would be a second chance to disagree with itself.
+   *
+   * `no_cabin_bag` and `unknown` deliberately do not borrow a band colour.
+   * "This fare includes no cabin bag at any size" is a finding about the FARE,
+   * not a measurement of the bag, and "we have not researched this" is not a
+   * mild version of anything. Both wear the neutral chip. */
+  const badge = root.querySelector('[data-viz-badge-chip]') as HTMLElement | null;
+  const badgeNote = root.querySelector('[data-viz-badge-note]') as HTMLElement | null;
+  if (badge) {
+    badge.textContent = resultLabel(result);
+    badge.classList.remove(...ALL_BAND_CHIP_CLASSES);
+    const bandable = !result.no_cabin_bag && !result.unknown && !result.not_flying;
+    if (bandable && result.band) badge.classList.add(...BAND_CHIP[result.band]);
+    else badge.classList.add('border-rule', 'bg-surface-2', 'text-ink-2');
+  }
+  if (badgeNote) {
+    badgeNote.textContent = `${session.carrierName} · ${
+      root.querySelector('[data-fare-select]')?.selectedOptions?.[0]?.textContent?.trim() ??
+      session.fare.replace(/_/g, ' ')
+    }`;
+  }
+
   setView('default');
   canvas.style.opacity = '1';
   root.dataset.ready = 'true';

@@ -253,3 +253,36 @@ describe('the frame answers on arrival, not during the approach', () => {
     );
   });
 });
+
+describe('the verdict is stated above the drawing, in words', () => {
+  test('the badge sits before the stage in the DOM', () => {
+    /* The verdict existed only as a sentence UNDER the stage, which is the
+       wrong order: a reader scanning the column met a 3D drawing before being
+       told what it was showing, and "No cabin bag" — the strongest claim this
+       site makes — arrived last. */
+    const badge = stage.indexOf('data-viz-badge');
+    const shell = stage.indexOf('data-viz-shell');
+    assert.ok(badge > 0, 'there is no badge above the stage');
+    assert.ok(badge < shell, 'the badge is rendered after the canvas it labels');
+  });
+
+  test('the label comes from resultLabel(), not a second ladder', () => {
+    /* The four cases that are NOT a band — Ceased, No cabin bag, Unknown, No
+       answer — are worded by the same function the shelf and the check page
+       use. A private copy would be a second chance to disagree. */
+    assert.match(code(client), /badge\.textContent = resultLabel\(result\)/);
+  });
+
+  test('a finding about the FARE does not borrow a size colour', () => {
+    /* "This fare includes no cabin bag at any size" is a fact about the
+       ticket, not a measurement of the bag; "we have not researched this" is
+       not a mild version of anything. Both get the neutral chip, so red keeps
+       meaning "your bag is too big". */
+    const src = code(client);
+    assert.match(
+      src,
+      /const bandable = !result\.no_cabin_bag && !result\.unknown && !result\.not_flying/,
+      'the badge is tinting non-size findings with a band colour'
+    );
+  });
+});
