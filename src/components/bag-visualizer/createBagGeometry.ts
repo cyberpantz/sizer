@@ -205,18 +205,24 @@ function buildBackpack(
 ): THREE.Group {
   const { heightCm: h, widthCm: w, depthCm: d } = dims;
   const group = new THREE.Group();
+  /* roundedBox ALREADY spans 0..h — it translates by h/2 after rotating. The
+     extra `body.position.y = h / 2` pushed the backpack to h/2..3h/2, so every
+     accent placed at a fraction of `h` landed in the wrong half of it. The
+     spinner never had this because it offsets by wheelZone, which is what the
+     offset is actually for. */
   const body = new THREE.Mesh(
     roundedBox(w, h, d * 0.85, Math.min(w, d) * (CORNER_SCALE[profile.cornerRadius ?? 'medium'] ?? 0.15)),
     materials.body
   );
-  body.position.y = h / 2;
   group.add(body);
 
-  const top = new THREE.Mesh(
-    new THREE.BoxGeometry(w * 0.7, h * 0.08, d * 0.5),
-    materials.accent
-  );
-  top.position.set(0, h * 0.96, 0);
+  /* Anchored to the body's REAL bounds, never to a fraction of the stated box —
+     the same rule the telescoping handle follows, and the one the duffel broke
+     by floating its grab handle 6.7 cm above a barrel. */
+  const { min, max } = meshBoundsLocalY(body);
+  const lidH = h * 0.08;
+  const top = new THREE.Mesh(new THREE.BoxGeometry(w * 0.7, lidH, d * 0.5), materials.accent);
+  top.position.set(0, max - lidH * 0.5, 0);
   group.add(top);
 
   if (profile.frontPocket) {
@@ -224,34 +230,61 @@ function buildBackpack(
       new THREE.BoxGeometry(w * 0.55, h * 0.35, d * 0.08),
       materials.accent
     );
-    pocket.position.set(0, h * 0.45, d * 0.44);
+    pocket.position.set(0, min + h * 0.45, d * 0.44);
     group.add(pocket);
   }
 
   return group;
 }
 
-function buildDuffel(
-  dims: BagDimensions,
-  materials: MaterialSet
-): THREE.Group {
+/* THE DUFFEL IGNORED TWO OF ITS THREE DIMENSIONS.
+ *
+ * It was a CYLINDER: radius d/2, length w — so `heightCm` never reached the
+ * geometry at all, and the drawn bag was a barrel 21.6 cm across standing in
+ * for a 50 cm bag. A cylinder cannot fill a box with a rectangular
+ * cross-section anyway; there is no radius that is both 31.8 and 21.6.
+ *
+ * And the handle sat at `h * 0.85` — an absolute fraction of the STATED box
+ * rather than a position on the body. With the barrel topping out at 35.8 and
+ * the handle placed at 42.5, the arc floated in mid-air beside a sphere. That
+ * is the same bug as the spinner's grip, in the form the guard did not catch:
+ * `max + ...` is easy to spot, `h * 0.85` looks like a layout constant.
+ *
+ * A rounded box fills the dimensions exactly — which is the rule this whole
+ * file exists for — and a generous corner radius reads as soft-sided without
+ * pretending to a shape the numbers do not describe. */
+function buildDuffel(dims: BagDimensions, materials: MaterialSet): THREE.Group {
   const { heightCm: h, widthCm: w, depthCm: d } = dims;
   const group = new THREE.Group();
-  const barrel = new THREE.Mesh(
-    new THREE.CylinderGeometry(d / 2, d / 2, w, 24, 1, false),
-    materials.body
-  );
-  barrel.rotation.z = Math.PI / 2;
-  barrel.position.y = h / 2;
-  group.add(barrel);
 
+  /* roundedBox clamps the radius to just under half the smaller face, so
+     asking for half gives the roundest honest shape. */
+  const body = new THREE.Mesh(roundedBox(w, h, d, Math.min(w, d) * 0.5, 8), materials.body);
+  group.add(body);
+
+  const { max } = meshBoundsLocalY(body);
+
+  /* Grab handles, anchored to the body's ACTUAL top and lying flush with it —
+     external_cm already includes them, so nothing may stand proud. */
+  const strapR = Math.min(w, d) * 0.32;
   const handle = new THREE.Mesh(
-    new THREE.TorusGeometry(w * 0.12, w * 0.015, 8, 16, Math.PI),
+    new THREE.TorusGeometry(strapR, Math.min(w, d) * 0.035, 8, 20, Math.PI),
     materials.accent
   );
   handle.rotation.y = Math.PI / 2;
-  handle.position.set(0, h * 0.85, 0);
+  handle.position.set(0, max - strapR, 0);
   group.add(handle);
+
+  /* A seam down each end, so the soft shape still reads as a bag rather than a
+     lozenge. Inside the silhouette, never outside it. */
+  for (const x of [-w * 0.34, w * 0.34]) {
+    const seam = new THREE.Mesh(
+      new THREE.BoxGeometry(Math.min(w, d) * 0.02, h * 0.9, d * 0.02),
+      materials.accent
+    );
+    seam.position.set(x, max - h * 0.5, d * 0.48);
+    group.add(seam);
+  }
 
   return group;
 }

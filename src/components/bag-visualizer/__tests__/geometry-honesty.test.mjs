@@ -499,3 +499,50 @@ describe('the verdict line alerts, and only where there is an alert', () => {
     assert.match(alert, /shrink-0/, 'a flexed icon beside wrapping text will squash without it');
   });
 });
+
+describe('every shape fills the box it claims, and every part hangs off it', () => {
+  const src = code(geometry);
+
+  test('no builder ignores one of its three dimensions', () => {
+    /* THE DUFFEL WAS A CYLINDER: radius d/2, length w — `heightCm` never
+       reached the geometry at all, so a 50 cm bag drew as a 21.6 cm barrel. A
+       cylinder cannot fill a rectangular cross-section anyway; there is no
+       radius that is both 31.8 and 21.6. Every builder destructures all three
+       dimensions, so every builder has to USE all three. */
+    for (const m of src.matchAll(/function build(\w+)\(([\s\S]*?)\n\}/g)) {
+      const [, name, body] = m;
+      for (const axis of ['h', 'w', 'd']) {
+        assert.ok(
+          new RegExp(`\\b${axis}\\b`).test(body.replace(/const \{[^}]*\}/, '')),
+          `build${name} never uses ${axis} — the drawn bag will not be the stated size`
+        );
+      }
+    }
+  });
+
+  test('accents are placed against the body, not against a fraction of the box', () => {
+    /* `h * 0.85` looks like a layout constant and is really an assumption about
+       where the body ended. The duffel's grab handle floated 6.7 cm above a
+       barrel that stopped short; the backpack's lid sat in the wrong half of a
+       body that had been pushed to h/2..3h/2 by a double offset.
+       Anything attached to a body reads meshBoundsLocalY() first. */
+    for (const m of src.matchAll(/(top|handle|grip|pole|pocket|seam)\.position\.set\(([^)]*)\)/g)) {
+      const [whole, part, args] = m;
+      const y = args.split(',')[1] ?? '';
+      assert.ok(
+        /\b(min|max)\b/.test(y),
+        `${part} is positioned at "${y.trim()}" — anchor it to the body's bounds:\n    ${whole}`
+      );
+    }
+  });
+
+  test('roundedBox is not double-offset', () => {
+    /* It already translates to 0..h. Adding position.y = h / 2 on top is the
+       bug that moved the backpack into the upper half of its own frame. */
+    assert.doesNotMatch(
+      src,
+      /body\.position\.y = h \/ 2/,
+      'a body is being offset by half its height on top of a box that already spans 0..h'
+    );
+  });
+});
