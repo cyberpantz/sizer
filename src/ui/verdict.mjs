@@ -70,6 +70,24 @@ export const BAND_COPY = {
 export const UNANSWERED_HEX = 0x736c63;
 export const bandHex = (band) => BAND_COPY[band]?.hex ?? UNANSWERED_HEX;
 
+/* The same five steps as Tailwind classes, for anything the DOM tints.
+ *
+ * Written out in full rather than built from `${tone}-wash` — Tailwind scans
+ * source text for literal class names, and a template string produces none of
+ * them. A generated class is a class that silently does not exist, which on a
+ * status colour means the element renders untinted and looks exactly like a
+ * verdict we have not answered. */
+export const BAND_CHIP = {
+  clears: ['border-green', 'bg-green-wash', 'text-green'],
+  line: ['border-lime', 'bg-lime-wash', 'text-lime'],
+  likely: ['border-amber', 'bg-amber-wash', 'text-amber'],
+  gamble: ['border-orange', 'bg-orange-wash', 'text-orange'],
+  wont: ['border-red', 'bg-red-wash', 'text-red'],
+};
+
+/** Every class the ladder can apply, so a caller can clear before it sets. */
+export const ALL_BAND_CHIP_CLASSES = Object.values(BAND_CHIP).flat();
+
 /** Worst-first, so any surface needing a ranking uses this one and not its own.
  *  A second ordering somewhere else is a second chance to disagree. */
 export const BAND_ORDER = ['wont', 'gamble', 'likely', 'line', 'clears'];

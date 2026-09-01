@@ -9,6 +9,7 @@ import { bindingPhysicalAxis, bandHex, evaluateFit } from './fitVisual';
 import { projectMeasurements } from './projectMeasurements';
 import { deriveVisualProfile } from './visualProfile';
 import { createUnits } from '../../ui/units.mjs';
+import { ALL_BAND_CHIP_CLASSES, BAND_CHIP } from '../../ui/verdict.mjs';
 import type { BagVisualizerProps, ViewPreset } from './types';
 
 const units = createUnits();
@@ -110,10 +111,24 @@ export function initFitVisualizer(opts: InitOptions): () => void {
 
   const bagRig = new THREE.Group();
   const profile = deriveVisualProfile(session);
-  const materials = createMaterials(profile.material, { bodyOpacity: 0.78, fitVisual: true });
+  const materials = createMaterials(profile.material, {
+    bodyOpacity: 0.78,
+    fitVisual: true,
+    band: result.band,
+    bandHex: bandHex(result.band),
+  });
   const bagScene = createBagGeometry(session, profile, materials);
   bagScene.envelope.visible = false;
-  (bagScene.envelope.material as THREE.LineBasicMaterial).color.setHex(0x5a7088);
+  /* THE MEASURED BOX WEARS THE VERDICT.
+   *
+   * This was a fixed slate blue. The envelope is the bag's exterior dimensions
+   * drawn as a box — it IS the thing being judged — so tinting it anything
+   * else made the Outline view the one place that told you nothing about the
+   * answer. Blue was also the wrong choice twice over: docs/02 reserves blue
+   * for interactive, and this is not interactive.
+   *
+   * Grey when the engine declined to answer, which is not a mild green. */
+  (bagScene.envelope.material as THREE.LineBasicMaterial).color.setHex(bandHex(result.band));
   (bagScene.envelope.material as THREE.LineBasicMaterial).opacity = 1;
   bagRig.add(bagScene.root);
   content.add(bagRig);
@@ -406,7 +421,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
 
     lines.innerHTML = projected
       .map((m) => {
-        const isBinding = bindingAxis != null && m.axis === bindingAxis && overflowCm > 0;
+        const isBinding = bindingAxis != null && m.axis === bindingAxis;
         const opacity = isBinding ? 1 : m.occluded ? 0.35 : 0.75;
         /* The binding axis is the loud one; the other two carry the same
            verdict quietly. An unanswerable leg stays in ink — grey is not a
@@ -436,10 +451,22 @@ export function initFitVisualizer(opts: InitOptions): () => void {
         const cy = Math.min(Math.max(m.label.y, half.h + m8), height - half.h - m8);
         chip.style.left = `${cx}px`;
         chip.style.top = `${cy}px`;
-        const isBinding = bindingAxis != null && m.axis === bindingAxis && overflowCm > 0;
-        chip.classList.toggle('border-red', isBinding);
-        chip.classList.toggle('bg-red-wash', isBinding);
-        chip.classList.toggle('text-red', isBinding);
+        /* THE CHIP CARRIES THE VERDICT, ACROSS ALL FIVE BANDS.
+         *
+         * This was hard-coded red and gated on overflowCm > 0, so the axis
+         * label had exactly two states: ink, or red. A bag that was TIGHT on
+         * its depth — legal, inside the published limit, no margin — got the
+         * same red as a bag 5 cm over, and a bag that cleared comfortably got
+         * no colour at all. The one number a reader looks at hardest was the
+         * one place the ladder did not reach.
+         *
+         * The BINDING axis is the one the verdict is about, so it is the one
+         * that gets tinted; the other two stay quiet rather than painting the
+         * whole overlay. Binding is now "the axis that decides", not "the axis
+         * that failed" — a bag can be decided by an axis it passes on. */
+        const isBinding = bindingAxis != null && m.axis === bindingAxis;
+        chip.classList.remove(...ALL_BAND_CHIP_CLASSES);
+        if (isBinding && result.band) chip.classList.add(...BAND_CHIP[result.band]);
       }
     }
   }
