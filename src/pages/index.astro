@@ -21,34 +21,80 @@ const answerable = carriers.filter((c) => !c.cabin_unknown).length;
 >
   <div class="mx-auto max-w-page px-6">
 
+    {/* SAY WHAT THIS IS BEFORE SAYING WHY IT IS GOOD.
+        The headline used to be "The same bag, three different sets of
+        dimensions" — a true and interesting thesis, and the wrong first
+        sentence. A visitor landing here has one question, "am I in the right
+        place", and that headline made them read four more lines to answer it.
+        An insight is what you EARN attention with; a service statement is what
+        you spend it on.
+
+        So the thesis moves down to the section that argues it, and the top of
+        the page names the job: does a specific bag pass a specific airline's
+        gate. Everything that qualifies the answer — the maker's own figure,
+        fare by fare, the airline count — belongs in the sentence UNDER it,
+        where a reader who has already decided they are in the right place will
+        look for a reason to trust us. */}
     <section class="pt-16 pb-12">
-      {/* Names the behaviour, not an actor — see docs/16. An earlier version
-          read "Manufacturers publish the inside", which is false of Travelpro
-          and Rick Steves: both publish packing AND overall, and Travelpro says
-          outright which one to compare against an airline limit. The real
-          problem is that the figure is reported inconsistently across the
-          places people shop. */}
       <h1 class="max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-        The same bag, three different{' '}
-        <span class="text-muted">sets of dimensions.</span>
+        Will your carry-on{' '}
+        <span class="text-muted">actually fit?</span>
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-ink-2">
-        Airlines measure the outside — wheels and handle included. Resellers
-        and marketplaces quote whichever figure they happened to get. We take
-        the manufacturer's own overall dimensions and check them against{' '}
-        {answerable} airlines, fare by fare.
+        Check any bag against {answerable} airlines, fare by fare — measured the
+        way a gate measures it, wheels and handle included.
       </p>
 
-      <div class="mt-8 flex flex-wrap gap-3">
+      {/* THREE DOORS, because there are three ways in and the reader arrives
+          already inside one of them: they own a bag, they are buying one, or
+          they have a trip booked. Naming all three is how someone recognises
+          themselves without reading a paragraph first. */}
+      <div class="mt-8 grid gap-3 sm:grid-cols-3">
         <a
           href="/check/"
-          class="rounded-chip bg-blue px-5 py-3 font-semibold text-on-blue no-underline hover:bg-blue-hover"
-        >Check a bag you own</a>
+          class="group rounded-card border border-rule bg-surface p-4 no-underline shadow-panel hover:border-blue"
+        >
+          <span class="block font-semibold text-ink group-hover:text-blue">I have a bag</span>
+          <span class="mt-1 block text-[0.875rem] leading-snug text-muted">
+            Type its size in and check it against your flights.
+          </span>
+        </a>
         <a
           href="/bags/"
-          class="rounded-chip border border-rule-strong px-5 py-3 font-semibold text-ink no-underline hover:border-blue hover:text-blue"
-        >Browse bags that fit</a>
+          class="group rounded-card border border-rule bg-surface p-4 no-underline shadow-panel hover:border-blue"
+        >
+          <span class="block font-semibold text-ink group-hover:text-blue">I am buying one</span>
+          <span class="mt-1 block text-[0.875rem] leading-snug text-muted">
+            Browse {stats.bags_sized} bags, ranked by how many airlines they clear.
+          </span>
+        </a>
+        <a
+          href="/guide/"
+          class="group rounded-card border border-rule bg-surface p-4 no-underline shadow-panel hover:border-blue"
+        >
+          <span class="block font-semibold text-ink group-hover:text-blue">I am flying somewhere</span>
+          <span class="mt-1 block text-[0.875rem] leading-snug text-muted">
+            Look up one airline's limits and how strictly it enforces them.
+          </span>
+        </a>
       </div>
+    </section>
+
+    {/* THE THESIS, DEMOTED TO WHERE IT BELONGS. This is the reason to use
+        Sizer rather than the first thing a stranger should read. */}
+    <section class="border-t border-rule py-10">
+      <h2 class="max-w-3xl text-2xl font-semibold tracking-tight">
+        The same bag, three different sets of dimensions.
+      </h2>
+      <p class="mt-2 max-w-2xl text-ink-2">
+        Airlines measure the outside — wheels and handle included. Resellers and
+        marketplaces quote whichever figure they happened to get. We use the
+        manufacturer's own overall dimensions, say so on every bag when we
+        cannot, and check them against {answerable} airlines fare by fare.
+      </p>
+      <p class="mt-3">
+        <a href="/methodology/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">How we work it out →</a>
+      </p>
     </section>
 
     {shelves.map((shelf) => shelf.bags.length > 0 && (
