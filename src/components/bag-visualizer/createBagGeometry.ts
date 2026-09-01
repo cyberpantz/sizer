@@ -1,44 +1,11 @@
 import * as THREE from 'three';
 import type { BagDimensions, BagVisualProfile, BagVisualizerProps } from './types';
 import type { MaterialSet } from './createMaterials';
+import { roundedBox } from './roundedBox';
 import { resolveWheelCount } from './visualProfile';
 
 const CORNER_SCALE = { small: 0.1, medium: 0.15, large: 0.2 };
 
-
-function roundedBox(
-  w: number,
-  h: number,
-  d: number,
-  radius: number,
-  segments = 6
-): THREE.BufferGeometry {
-  const shape = new THREE.Shape();
-  const hw = w / 2;
-  const hd = d / 2;
-  const r = Math.min(radius, hw * 0.48, hd * 0.48);
-  shape.moveTo(-hw + r, -hd);
-  shape.lineTo(hw - r, -hd);
-  shape.quadraticCurveTo(hw, -hd, hw, -hd + r);
-  shape.lineTo(hw, hd - r);
-  shape.quadraticCurveTo(hw, hd, hw - r, hd);
-  shape.lineTo(-hw + r, hd);
-  shape.quadraticCurveTo(-hw, hd, -hw, hd - r);
-  shape.lineTo(-hw, -hd + r);
-  shape.quadraticCurveTo(-hw, -hd, -hw + r, -hd);
-
-  const geom = new THREE.ExtrudeGeometry(shape, {
-    depth: h,
-    bevelEnabled: true,
-    bevelThickness: r * 0.48,
-    bevelSize: r * 0.48,
-    bevelSegments: segments,
-    steps: 1,
-  });
-  geom.rotateX(-Math.PI / 2);
-  geom.translate(0, h / 2, 0);
-  return geom;
-}
 
 /* HOW FAR THE RUNNING GEAR DROPS BELOW THE BODY, as a multiple of the wheel
  * radius. ONE constant, used by both the builder that carves the space and the
