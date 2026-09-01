@@ -29,6 +29,8 @@ import {
   weightFacet,
 } from '../bag-facets.mjs';
 
+import { GROUPS } from '../bag-shapes.mjs';
+
 const page = readFileSync('src/pages/bags/index.astro', 'utf8');
 const filters = readFileSync('src/components/BagFilters.astro', 'utf8');
 const panel = readFileSync('src/components/BagFacetPanel.astro', 'utf8');
@@ -41,7 +43,7 @@ const entries = async () => {
 
 describe('the page, the panel and the script agree', () => {
   test('every data-attribute the script reads is stamped by the page', () => {
-    const map = filters.match(/const key = \{([^}]*)\}/);
+    const map = filters.match(/const AXIS_KEY = \{([^}]*)\}/);
     assert.ok(map, 'the axis→dataset map has moved; this test needs rewriting');
     const keys = [...map[1].matchAll(/'(\w+)'/g)].map((m) => m[1]);
     assert.ok(keys.length >= 4, `expected one dataset key per axis, found ${keys.length}`);
@@ -189,10 +191,18 @@ describe('shell', () => {
     /* GROUPS merges "hardside spinner" and "softside spinner" into one
        "Spinners" pill, so without this axis a reader cannot ask for a soft
        bag at all. If that ever stops being true, this facet is redundant. */
-    const spinner = filters.match(/id: 'spinner'[^}]*types: \[([^\]]*)\]/);
-    assert.ok(spinner, 'the spinner group has moved');
-    assert.match(spinner[1], /hardside/, 'the spinner pill no longer merges shells');
-    assert.match(spinner[1], /softside/, 'the spinner pill no longer merges shells');
+    /* Asserted against the DATA, not a regex over the component. GROUPS moved
+       to lib/bag-shapes.mjs when BagFilters stopped using define:vars, and a
+       source-scraping version of this test failed for that move alone —
+       reporting a shell-facet problem when nothing about the shells had
+       changed. A guard that breaks on a file move is a guard that will be
+       edited to shut it up. */
+    const spinner = GROUPS.find((g) => g.id === 'spinner');
+    assert.ok(spinner, 'the spinner group has gone');
+    assert.ok(
+      spinner.types.includes('hardside spinner') && spinner.types.includes('softside spinner'),
+      'the spinner pill no longer merges the two shells, so this facet is redundant'
+    );
     assert.equal(SHELL_FACETS.length, 2);
   });
 });

@@ -6,6 +6,7 @@ import {
   ROLE_FACETS,
   SHELL_FACETS,
   WEIGHT_FACETS,
+  brandFacets,
   facetsFor,
   optionCount,
 } from '../../lib/bag-facets.mjs';
@@ -36,11 +37,16 @@ const facets = facetsFor(entries);
    cumulative — "under 3.5 kg" has to include every bag under 2.5 kg too.
    Counting the raw buckets would print a number beside a checkbox that is not
    the number of cards ticking it leaves on screen. */
+/* Brands are DERIVED from the catalogue, not listed. A typed list goes stale
+   the first time a bag is added, and silently — a brand nobody declared simply
+   never appears in the panel, which reads as "they do not stock it". */
+const brands = brandFacets(entries);
 const AXES = {
   weight: WEIGHT_FACETS.map((f) => f.id),
   shell: SHELL_FACETS.map((f) => f.id),
   price: BAND_IDS,
   role: ROLE_FACETS.map((f) => f.id),
+  brand: brands.map((b) => b.id),
 };
 const optionCounts = Object.fromEntries(
   Object.entries(AXES).map(([axis, ids]) => [
@@ -93,7 +99,7 @@ const lastUpdated = dates.length
       </p>
     </section>
 
-    <BagFilters counts={counts} optionCounts={optionCounts} total={bagTotal} />
+    <BagFilters counts={counts} optionCounts={optionCounts} total={bagTotal} brands={brands} />
 
     {shelves.map((shelf) => shelf.bags.length > 0 && (
       <section data-shelf class="border-b border-rule py-10">
@@ -114,6 +120,7 @@ const lastUpdated = dates.length
               data-bag-shell={facets.get(bag.slug)?.shell ?? ''}
               data-bag-price={facets.get(bag.slug)?.price ?? ''}
               data-bag-role={facets.get(bag.slug)?.role ?? ''}
+              data-bag-brand={facets.get(bag.slug)?.brand ?? ''}
             >
               <BagCard bag={bag} coverage={coverage} />
             </div>

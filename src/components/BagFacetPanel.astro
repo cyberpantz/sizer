@@ -25,13 +25,18 @@ import {
   WEIGHT_FACETS,
   axisLive,
 } from '../lib/bag-facets.mjs';
+/* A brand matching one bag is NOT a wasted click, unlike a one-bag option on
+   any other axis. 20 of the 32 brands hold exactly one bag, and "we have one
+   Rimowa" is a complete answer to the question being asked. The `n > 0` and
+   `n < total` filters below still apply and are still right; nothing further
+   prunes this axis. */
 import { BANDS } from '../lib/price-band.mjs';
 
 /* `optionCounts` is keyed by OPTION, not by stamped value — the coverage
    options are cumulative, so "80% or more" counts the bags above it too. The
    number beside a checkbox has to be the number of cards ticking it leaves on
    screen, or the panel is lying in the most checkable way possible. */
-const { optionCounts, total } = Astro.props;
+const { optionCounts, total, brands = [] } = Astro.props;
 
 const SECTIONS = [
   {
@@ -70,6 +75,20 @@ const SECTIONS = [
     axis: 'role',
     legend: 'Where it goes',
     options: ROLE_FACETS.map((f) => ({ ...f, n: optionCounts.role?.[f.id] ?? 0 })),
+  },
+  {
+    axis: 'brand',
+    legend: 'Brand',
+    /* THE ONE AXIS THAT IS A LOOKUP, NOT A QUESTION. Everything above helps a
+       reader refine what they want; this one answers what they already came
+       in with — "do you have a Travelpro". Until now the only way to find out
+       was to scroll the whole catalogue reading names off cards.
+
+       So it gets a search box and its own scroll region, and it is LAST:
+       someone who knows the brand goes straight to it, and someone who does
+       not is never made to scroll past 32 names to reach the weights. */
+    search: true,
+    options: brands.map((b) => ({ ...b, n: optionCounts.brand?.[b.id] ?? 0 })),
   },
 ]
   .map((s) => ({ ...s, options: s.options.filter((o) => o.n > 0) }))
@@ -127,9 +146,30 @@ const live = SECTIONS.length > 0;
              bg-surface p-5 shadow-panel"
     >
       {SECTIONS.map((s) => (
-        <fieldset class="mb-5 last:mb-0 border-0 p-0">
+        <fieldset class="mb-5 last:mb-0 border-0 p-0" data-facet-section={s.axis}>
           <legend class="mb-1 text-[0.9375rem] font-semibold text-ink">{s.legend}</legend>
           {s.note && <p class="mb-2 text-[0.8125rem] leading-snug text-muted">{s.note}</p>}
+          {/* PAST ABOUT A DOZEN OPTIONS, SCANNING IS SLOWER THAN TYPING — and a
+              brand list is the only axis here that gets that long. Gated on the
+              actual count rather than hard-coded to this axis, so it appears
+              and disappears with the catalogue.
+
+              A plain input, not a search form: it filters the labels already on
+              screen and never leaves the page. `type="search"` would hand the
+              reader a browser-drawn clear button we do not control the styling
+              of, next to the one below. */}
+          {s.search && s.options.length > 12 && (
+            <input
+              type="text"
+              data-facet-search={s.axis}
+              autocomplete="off"
+              placeholder={`Search ${s.options.length} brands…`}
+              aria-label={`Search ${s.legend.toLowerCase()}`}
+              class="mb-2 w-full rounded-chip border border-rule-strong bg-surface px-3 py-1.5
+                     text-[0.875rem] text-ink placeholder:text-muted
+                     hover:border-blue focus:border-blue focus:outline-none"
+            />
+          )}
           {s.noteCap && (
             <p class="mb-2 text-[0.8125rem] leading-snug text-muted">
               Several Asian carriers cap cabin weight at{' '}
@@ -137,8 +177,13 @@ const live = SECTIONS.length > 0;
             </p>
           )}
 
+          {/* A LONG LIST SCROLLS INSIDE ITSELF rather than pushing "Clear all"
+              and "Done" off the bottom of a popover that is already capped to
+              the viewport. Only the long ones: a two-option fieldset in a
+              scroll box looks broken. */}
+          <div class={s.options.length > 12 ? 'max-h-56 overflow-y-auto pr-1' : ''}>
           {s.options.map((o) => (
-            <label class="flex cursor-pointer items-start gap-2.5 rounded-chip py-1.5 hover:bg-surface-2">
+            <label data-facet-option class="flex cursor-pointer items-start gap-2.5 rounded-chip py-1.5 hover:bg-surface-2">
               <input
                 type="checkbox"
                 data-facet={s.axis}
@@ -172,6 +217,14 @@ const live = SECTIONS.length > 0;
               </span>
             </label>
           ))}
+          </div>
+          {/* Says so when the search matches nothing, rather than leaving an
+              empty box the reader has to interpret. */}
+          {s.search && (
+            <p data-facet-empty={s.axis} hidden class="py-1.5 text-[0.8125rem] text-muted">
+              No brand by that name. We hold {s.options.length} of them.
+            </p>
+          )}
         </fieldset>
       ))}
 

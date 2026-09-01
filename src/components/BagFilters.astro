@@ -3,16 +3,9 @@
  *
  * Matching the approved mockup: a "Show" label, pill-shaped buttons, a solid
  * blue selected state with a ring, and a blue-wash panel underneath carrying a
- * note about the shape you just picked.
- *
- * The note is the point. A pill labelled "2-wheel rollers" tells you nothing;
- * the note tells you what that shape costs you at an airport. It is editorial
- * that appears only when it is relevant, which beats a wall of prose at the
- * bottom of the page nobody scrolls to.
- *
- * Groups, not raw types: a reader thinks "spinner", not "hardside spinner" and
- * "softside spinner" as separate ideas. The catalogue keeps the finer types;
- * this maps several onto one pill.
+ * note about the shape you just picked. The pills and their editorial live in
+ * lib/bag-shapes.mjs; the reason they are a module rather than literals in this
+ * file is written down there, and it is not tidiness.
  *
  * TWO CONTROLS, ONE STATE. The shape pills stay visible because they carry the
  * editorial notes and they are the axis people actually browse by. Everything
@@ -23,45 +16,17 @@
  * Progressive enhancement — every bag is already in the HTML. Without
  * JavaScript nothing is hidden and no filter lies about what is on the page.
  */
-import { FACET_MATCH } from '../lib/bag-facets.mjs';
 import BagFacetPanel from './BagFacetPanel.astro';
+import { GROUPS, NOTES } from '../lib/bag-shapes.mjs';
 
-const { counts, optionCounts, total } = Astro.props;
+/* Re-exported so /bags can count each pill's stock from one definition. */
+export { GROUPS };
 
-export const GROUPS = [
-  { id: 'spinner', label: 'Spinners', types: ['hardside spinner', 'softside spinner'] },
-  { id: 'roller', label: '2-wheel rollers', types: ['2-wheel roller'] },
-  { id: 'backpack', label: 'Backpacks', types: ['backpack'] },
-  { id: 'duffel', label: 'Duffels', types: ['duffel'] },
-  { id: 'underseat', label: 'Under-seat', types: ['underseat'] },
-];
-
-const NOTES = {
-  spinner: {
-    lead: 'What most people want, and for good reason.',
-    body: 'You push a spinner alongside you instead of dragging it behind — the difference between a pleasant walk and a miserable one across a long terminal. The trade-off: the wheels sit below the shell, so a spinner tends to stand 1–2 cm taller than the same bag on two wheels. Worth knowing before you buy, not a reason to avoid them.',
-  },
-  roller: {
-    lead: 'Better on anything rougher than a polished floor.',
-    body: 'You drag these rather than push them, which is more work across a terminal. But Pack Hacker rolled every bag over cobblestones and grass and found the second pair of wheels stops helping the moment the surface does — their highest score on brick went to a two-wheeler. The wheels are also recessed into the corners, so a roller sometimes clears a limit the spinner version of the same bag fails.',
-  },
-  backpack: {
-    lead: 'Nothing sticking out to count against the limit.',
-    body: 'No wheels, no telescoping handle, so the bag measures what it measures. Stairs, cobbles and kerbs stop being a problem. You carry the weight, which is the whole trade.',
-  },
-  duffel: {
-    lead: 'The most forgiving shape under a sizer.',
-    body: 'A soft duffel compresses into a frame in a way a hard shell never will, which is why the one bag in our catalogue that clears every airline has no wheels at all. It is also the least convenient thing to move any real distance.',
-  },
-  underseat: {
-    lead: 'A different allowance, not a small carry-on.',
-    body: 'Sized for the space under the seat in front of you. On a budget-airline basic fare this is often the only bag included — no overhead bag at any size — which makes it the right answer to a question the carry-on shelves cannot help with.',
-  },
-};
+const { counts, optionCounts, total, brands } = Astro.props;
 
 const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
 ---
-<div data-filters class="border-y border-rule py-4">
+<div data-filters data-total={total} class="border-y border-rule py-4">
   <div class="flex flex-wrap items-center gap-2">
     <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by bag type">
       <span class="mr-1 text-[0.9375rem] text-muted">Show</span>
@@ -87,7 +52,7 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
       ))}
     </div>
 
-    <div class="ml-auto"><BagFacetPanel optionCounts={optionCounts} total={total} /></div>
+    <div class="ml-auto"><BagFacetPanel optionCounts={optionCounts} total={total} brands={brands} /></div>
   </div>
 
   {/* Active facets, in the open. The panel closes over its own state, so
@@ -107,8 +72,22 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
   </div>
 </div>
 
-<script define:vars={{ NOTES, GROUPS, FACET_MATCH, total }}>
+<script>
+  /* A BUNDLED MODULE SCRIPT, NOT define:vars — see lib/bag-shapes.mjs.
+
+     define:vars makes a script inline, and an inline script cannot import, so
+     every value had to be serialised through that attribute and every FUNCTION
+     had to be written out again inside here. That is how the facet matching
+     rule ended up duplicated beside the counting rule it has to agree with.
+
+     The one runtime value this needs — the catalogue total — comes off a data
+     attribute instead, which is the other way data legitimately reaches a
+     bundled script. */
+  import { matchesFacets } from '../lib/bag-facets.mjs';
+  import { NOTES, typesFor } from '../lib/bag-shapes.mjs';
+
   const root = document.querySelector('[data-filters]');
+  const total = Number(root.dataset.total);
   const panel = root.querySelector('[data-filter-note]');
   const lead = root.querySelector('[data-note-lead]');
   const body = root.querySelector('[data-note-body]');
@@ -124,7 +103,6 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
 
   let shape = 'all';
 
-  const typesFor = (id) => GROUPS.find((g) => g.id === id)?.types ?? [];
   const checked = () => boxes.filter((b) => b.checked);
 
   /* Selected values grouped by axis. Within an axis the test is OR (budget
@@ -137,21 +115,33 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
     return sel;
   }
 
-  /* An option can stand for SEVERAL stamped values — the weight options are
-     cumulative, so "under 3.5 kg" also matches a bag under 2.5 kg.
-     FACET_MATCH is imported rather than restated: the panel counts with it and
-     this matches with it, so a count can never describe a different set of
-     bags than the filter returns. */
-  const valuesFor = (axis, id) => FACET_MATCH[axis]?.[id] ?? [id];
+  /* THE MATCHING RULE IS IMPORTED, NOT RESTATED.
+
+     An option can stand for several stamped values — the weight options are
+     cumulative, so "under 3.5 kg" also matches a bag under 2.5 kg — and within
+     an axis the test is OR while across axes it is AND. All of that used to
+     live here, inline, where no test could reach it. The panel counted with
+     FACET_MATCH and this matched with a hand-rolled loop beside it, which is
+     precisely how a count starts describing a different set of bags than the
+     filter returns.
+
+     Brand is the axis that forced the issue: an error here would be invisible,
+     because nobody knows off-hand how many Travelpros we hold. On weight you
+     would notice. */
+  const AXIS_KEY = {
+    weight: 'bagWeight',
+    shell: 'bagShell',
+    price: 'bagPrice',
+    role: 'bagRole',
+    brand: 'bagBrand',
+  };
 
   function matches(card, sel) {
     if (shape !== 'all' && !typesFor(shape).includes(card.dataset.bagType)) return false;
-    for (const [axis, chosen] of Object.entries(sel)) {
-      const key = { weight: 'bagWeight', shell: 'bagShell', price: 'bagPrice', role: 'bagRole' }[axis];
-      const wanted = new Set([...chosen].flatMap((id) => valuesFor(axis, id)));
-      if (!wanted.has(card.dataset[key] ?? '')) return false;
-    }
-    return true;
+    const values = Object.fromEntries(
+      Object.keys(AXIS_KEY).map((axis) => [axis, card.dataset[AXIS_KEY[axis]] ?? ''])
+    );
+    return matchesFacets(values, sel);
   }
 
   function apply() {
@@ -245,6 +235,34 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
     }
   }
 
+  /* ---------- searching a long facet ---------- */
+
+  /* Filters the LABELS on screen. It does not touch the checkboxes, which is
+     the whole design: a brand ticked and then typed out of view stays ticked,
+     stays counted in the badge, and stays visible as a chip in the open. That
+     is the panel's existing rule — a filter you cannot see is a filter you
+     forget you set — and a search box is the easiest way to break it, because
+     hiding a control looks like clearing it.
+
+     Matched on `includes`, not `startsWith`. Someone hunting for Briggs &
+     Riley may well type "riley", and a prefix match would tell them we do not
+     stock it. */
+  for (const input of root.querySelectorAll('[data-facet-search]')) {
+    const axis = input.dataset.facetSearch;
+    const section = root.querySelector(`[data-facet-section="${axis}"]`);
+    const empty = root.querySelector(`[data-facet-empty="${axis}"]`);
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let shown = 0;
+      for (const label of section.querySelectorAll('[data-facet-option]')) {
+        const hit = !q || label.textContent.toLowerCase().includes(q);
+        label.hidden = !hit;
+        if (hit) shown += 1;
+      }
+      if (empty) empty.hidden = shown > 0;
+    });
+  }
+
   /* ---------- the popover ---------- */
 
   /* EDGE DETECTION. The panel is anchored to the button's right edge, which is
@@ -325,6 +343,15 @@ const groups = GROUPS.filter((g) => (counts[g.id] ?? 0) > 0);
      reader still staring at nothing, having done what the page told them. */
   function clearAll() {
     for (const b of boxes) b.checked = false;
+    /* The search box is a VIEW of the option list, not a filter on the
+       catalogue, so "Clear all" has to reset it too — otherwise a reader who
+       typed "tum", cleared everything, and reopened the panel finds one brand
+       listed and 31 apparently gone. Reset by dispatching the same event a
+       keystroke would, so the show/hide logic lives in exactly one place. */
+    for (const input of root.querySelectorAll('[data-facet-search]')) {
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+    }
     shape = 'all';
     apply();
   }

@@ -103,6 +103,37 @@ export const FACET_MATCH = {
   ),
 };
 
+/** Every stamped value one chosen option stands for. Cumulative axes expand;
+ *  everything else is identity. */
+export const valuesFor = (axis, id) => FACET_MATCH[axis]?.[id] ?? [id];
+
+/**
+ * Does a bag's stamped facet values satisfy a selection?
+ *
+ * WITHIN an axis the test is OR — budget OR midrange. ACROSS axes it is AND —
+ * budget AND softside. That is what every faceted search does, and getting it
+ * backwards makes each additional tick return fewer results until nothing is
+ * left, which reads as a broken catalogue rather than a broken rule.
+ *
+ * Lives here, beside FACET_MATCH and optionCount, because the file's own
+ * header states the principle: two copies of the matching rule is exactly how
+ * a count starts describing a different set of bags than the filter returns.
+ * It was inline in BagFilters.astro, where nothing could reach it — and the
+ * brand axis is the first one where a mistake would be invisible rather than
+ * obvious, since nobody knows off-hand how many Travelpros we hold.
+ *
+ * @param {Record<string, string|null>} values  stamped facets for one bag
+ * @param {Record<string, Iterable<string>>} selection  chosen option ids by axis
+ */
+export function matchesFacets(values, selection) {
+  for (const [axis, chosen] of Object.entries(selection)) {
+    const wanted = new Set([...chosen].flatMap((id) => valuesFor(axis, id)));
+    if (!wanted.size) continue; // an axis with nothing ticked constrains nothing
+    if (!wanted.has(values?.[axis] ?? '')) return false;
+  }
+  return true;
+}
+
 /** Bags satisfying one option — used for its count, so the number beside a
  *  checkbox is the number of cards ticking it will actually leave on screen. */
 export const optionCount = (facets, axis, id) => {
@@ -124,6 +155,71 @@ export const ROLE_FACETS = [
   { id: 'underseat', label: 'Under-seat', hint: 'A different allowance, not a small carry-on.' },
 ];
 
+/* BRAND — the one axis a reader arrives already knowing the answer to.
+ *
+ * Every other facet here is a QUESTION the page helps them refine: how heavy,
+ * how much, hard or soft. Brand is a lookup. Someone owns a Travelpro, or their
+ * partner swears by Briggs & Riley, or a review sent them here for the Monos —
+ * and until now the only way to find out whether we hold it was to scroll 57
+ * cards reading names.
+ *
+ * THAT DIFFERENCE CHANGES TWO OF THE PANEL'S OWN RULES, and both changes are
+ * deliberate rather than oversights:
+ *
+ *   1. A ONE-BAG OPTION IS STILL WORTH SHOWING. Elsewhere an option matching a
+ *      single bag is close to a wasted click. Here, 20 of the 32 brands have
+ *      exactly one bag, and "we have one Rimowa" is a complete and useful
+ *      answer to the question actually being asked. Refusing to list it would
+ *      make the catalogue look like it holds nothing by that maker.
+ *
+ *   2. ALPHABETICAL, NOT BY COUNT. Every other axis is ordered by meaning —
+ *      light to heavy, cheap to dear. Nobody scans brands by inventory. They
+ *      scan for a NAME, and a name is findable in one order only.
+ *
+ * The ids are slugs because a brand name contains spaces, ampersands and
+ * apostrophes ("Briggs & Riley", "Bric's"), and these values ride in a data
+ * attribute and a checkbox value.
+ */
+export const brandId = (name) =>
+  String(name ?? '')
+    /* DECOMPOSE FIRST, so an accent becomes a separable mark rather than a
+       character the class below deletes outright. Béis slugged to `b-is`
+       without this: the é was stripped and left a gap. Harmless while it is
+       unique, and a silent merge the moment the catalogue holds two brands
+       that differ only in their accents — ticking one would return the other's
+       bags. `Beis` is also what somebody types when searching for it. */
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
+/** The brand options, derived from the catalogue rather than listed. A typed
+ *  list would go stale the first time a bag is added — silently, since a brand
+ *  nobody declared simply never appears. */
+export function brandFacets(entries) {
+  const byId = new Map();
+  for (const { bag } of entries) {
+    if (!bag.brand) continue;
+    const id = brandId(bag.brand);
+    const seen = byId.get(id);
+    /* TWO BRANDS ON ONE ID IS A CORRECTNESS BUG, NOT A COSMETIC ONE. The
+       filter matches on the id, so a collision silently returns one maker's
+       bags under another's name — and the count beside the checkbox would be
+       right, which makes it invisible. Loud, because this is exactly the kind
+       of thing a future catalogue addition causes and nobody re-reads. */
+    if (seen && seen.label !== bag.brand) {
+      throw new Error(
+        `two brands slug to "${id}": "${seen.label}" and "${bag.brand}" — ` +
+          'the filter would return one under the other'
+      );
+    }
+    if (!seen) byId.set(id, { id, label: bag.brand });
+  }
+  return [...byId.values()].sort((a, b) => a.label.localeCompare(b.label));
+}
+
 export const PRICE_HINTS = {
   budget: 'The least expensive bags that reviewers still stand behind.',
   midrange: 'The middle third of the catalogue.',
@@ -132,7 +228,7 @@ export const PRICE_HINTS = {
 
 /** Every axis the panel can offer. One list, so adding an axis cannot leave
  *  one of the three places that iterate them behind. */
-export const AXES = ['weight', 'shell', 'price', 'role'];
+export const AXES = ['weight', 'shell', 'price', 'role', 'brand'];
 
 /**
  * Stamp every facet value onto each bag, once, at build time.
@@ -148,6 +244,7 @@ export function facetsFor(entries) {
       shell: shellFacet(bag.record),
       price: bandOf(bag.record, cuts),
       role: bag.record?.role ?? null,
+      brand: bag.brand ? brandId(bag.brand) : null,
     });
   }
   return out;
