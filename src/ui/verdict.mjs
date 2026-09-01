@@ -156,10 +156,69 @@ export function bandLabel(band) {
 /** The honest label, from the whole result. Every null band has a reason and
  *  the reasons are not interchangeable: one is a fact about the airline, the
  *  others are facts about us. */
+/**
+ * THE VERDICT FOR A CHIP WITH NO SENTENCE AROUND IT — or NOTHING, which is
+ * usually the right answer.
+ *
+ * Frank, twice. First: "the 'No size published' label makes no sense next to
+ * the 'Own bag' options." I made the wording vaguer, shipped "No answer", and
+ * got the obvious follow-up: "I'm not understanding the 'no answer' label. It
+ * looks off. Why is it there?"
+ *
+ * Because I fixed the sentence instead of the decision. The real question was
+ * never how to word it — it was whether a STATUS BADGE belongs in a slot that
+ * has no status.
+ *
+ * resultLabel() is written for places where the AIRLINE is named in the same
+ * breath: the per-leg table has the carrier in the adjacent column, the verdict
+ * card has a sentence under it beginning "Aegean publishes no size…". There,
+ * "No size published" has a subject and is worth reading.
+ *
+ * This chip has neither. It sits against the reader's own shape selector and
+ * the dimensions they are still typing, so the nearest subject is THE BAG — and
+ * a grey pill reading "No answer" is a badge announcing the absence of a badge,
+ * attached to the control they are in the middle of using. It looks like an
+ * error they caused.
+ *
+ * So: a chip only when there is something to report about the bag.
+ *
+ *   it was measured   -> Fits / Tight / Probably fine / Risky / Over
+ *   the fare grants none -> "Not allowed"  (true of the bag, and worth a badge)
+ *   anything else     -> null, and the row renders no chip at all
+ *
+ * The reason is not lost. It moves to where there is room to give it a subject:
+ * the answer card says which airline publishes nothing, and why that means no
+ * website can tell them. Silence in the chip is not us hiding a finding; it is
+ * us declining to shout a fact we cannot fit into two words.
+ *
+ * @returns {string|null} null means render no chip
+ */
+export function chipLabel(result) {
+  if (!result) return null;
+  if (result.no_cabin_bag || result.no_personal_item) return 'Not allowed';
+  if (result.band) return bandLabel(result.band);
+  return null;
+}
+
 export function resultLabel(result) {
   if (!result) return 'No answer';
   if (result.not_flying) return 'Ceased';
   if (result.no_cabin_bag) return 'No cabin bag';
+  if (result.no_personal_item) return 'No personal item';
+  /* "UNKNOWN" BLAMED US FOR A FACT ABOUT THE AIRLINE.
+   *
+   * Delta, Southwest, Qatar, Aegean and four others were READ, and found to
+   * publish no under-seat dimensions at all — because the true limit is the
+   * space beneath one seat on one aircraft, which varies. `unpublished` is that
+   * finding; `unknown` is our own gap. The engine has kept them apart since
+   * roles landed and the leg table says so, but this label — the biggest word
+   * on the card, in display type — flattened both to "Unknown".
+   *
+   * Which is the wrong way round. "Unknown" reads as "nobody has done the
+   * work", and on these carriers somebody did: the work is what established
+   * that no number exists. Naming it correctly is also the only way the reader
+   * can tell that checking back later will not help. */
+  if (result.unpublished) return 'No size published';
   if (result.unknown) return 'Unknown';
   return bandLabel(result.band);
 }

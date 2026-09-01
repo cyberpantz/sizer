@@ -50,6 +50,42 @@ anything that would not fit — that report is more valuable than the JSON.
 
 ---
 
+## Two records to re-read: `count: 2` with nowhere to put a personal item
+
+Found on 2026-08-31 while wiring the piece-count check, and worth stating as a
+pattern rather than as two corrections.
+
+Five cabin rows carry `count: 2`. Two of them are solid:
+
+- **Eurowings BIZclass** has `count: 2` on the cabin row **and a separate
+  personal row** (40 × 30 × 25). That fare really is two 55 × 40 × 23 bags plus
+  an under-seat item, and the record says so unambiguously.
+- **Ural business** says it in words on the row itself: *"Two pieces with a
+  combined maximum weight of 15 kg."*
+
+The other three are ambiguous, and identically so:
+
+- **Azerbaijan Airlines** — premium economy and business
+- **Air Astana** — business
+
+Each has `count: 2` on the cabin row, **no personal row at all**, and no note.
+With nowhere else to record an under-seat item, `count: 2` may be a researcher
+folding "carry-on **plus** personal item" into a single cabin row. Nothing in
+the record can settle it.
+
+**The lesson for the brief, which is the point of writing this down:** a piece
+COUNT and a piece TYPE are different facts, and a count is unreadable without
+knowing what is being counted. When a fare grants two cabin pieces, the record
+must also say what the personal-item allowance is — including `permitted: false`
+or an `absence`, if the answer is none. A cabin row reading `count: 2` beside a
+missing personal row is not a finding; it is two possible findings wearing the
+same clothes.
+
+Same shape as the failure at the top of this file: the airline published
+something true, and the record had no slot that could hold it unambiguously.
+
+---
+
 ## Which airlines, in what order
 
 **The first 58 are done** — all cite a source and a date.

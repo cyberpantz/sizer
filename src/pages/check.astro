@@ -140,8 +140,18 @@ const RISK = [
   import { h, render } from 'preact';
   import Picker from '../components/Picker.jsx';
   import { createEngine, desc, engine as DEFAULT } from '../engine/fit.mjs';
-  import { toBag, toCarrier } from '../engine/normalize.mjs';
+  import { isPromotable, toBag, toCarrier } from '../engine/normalize.mjs';
+  import { defaultRoleForNew, pieceOverages } from '../ui/bag-set.mjs';
   import { fareLabel } from '../ui/fare.mjs';
+  import {
+    decodeCustom,
+    defaultShape,
+    encodeCustom,
+    isCustom,
+    shapeOf,
+    shapesFor,
+    toCustomRecord,
+  } from '../ui/custom-bag.mjs';
   import {
     asRole,
     decodeSlot,
@@ -159,8 +169,15 @@ const RISK = [
     strictnessIcon,
     tierIndex,
   } from '../ui/strictness.mjs';
+  import { tripEnvelope, SHOWN } from '../ui/trip-envelope.mjs';
   import { createUnits } from '../ui/units.mjs';
-  import { advisoryLine, bandLabel, resultLabel } from '../ui/verdict.mjs';
+  import {
+    advisoryLine,
+    bandLabel,
+    chipLabel,
+    fitsWithinLimit,
+    resultLabel,
+  } from '../ui/verdict.mjs';
 
   const root = document.querySelector('[data-check]');
   const U = createUnits();
@@ -240,6 +257,15 @@ const RISK = [
     CARRIER_ITEMS = DATA.carriers.map((c) => ({ value: c.iata, name: c.name, code: c.iata }));
     /* Brand and model in one searchable string, so "away big" and "briggs"
        both land. No code — a bag has no equivalent of an IATA code. */
+    /* NOT IN THIS LIST. "Describe your own bag" was an item here for about an
+       hour, and Frank's reaction — "sorry how do I create a custom bag?" — is
+       the whole review it needed.
+
+       search() sorts an empty query by NAME, so it sat alphabetically between
+       Calpak and Eagle Creek, styled identically to a product, reading as a bag
+       we sell called "Describe your own bag…". A control you can only find by
+       already knowing it is there is not a control. It is now a button beside
+       the picker, where the page already puts its other verbs. */
     BAG_ITEMS = DATA.bags.map((b) => ({ value: b.slug, name: `${b.brand} ${b.model}` }));
 
     /* Registered once, here, NOT in renderInputs — that runs on every state
@@ -292,7 +318,11 @@ const RISK = [
       .split(',')
       .filter(Boolean)
       .map(decodeSlot)
-      .filter((x) => DATA.bags.some((b) => b.slug === x.slug))
+      /* A custom bag validates itself — decodeCustom returns null on anything a
+         URL can mangle, and a slug we do not hold is dropped exactly as before.
+         Both cases fail the same way: the slot disappears rather than the page
+         throwing on someone else's link. */
+      .filter((x) => (isCustom(x.slug) ? decodeCustom(x.slug) !== null : DATA.bags.some((b) => b.slug === x.slug)))
       .map((x) => ({ ...x, role: asRole(x.role) }));
     const legs = (p.get('legs') ?? '')
       .split(',')
@@ -323,10 +353,21 @@ const RISK = [
 
   /* ---------- model ---------- */
 
-  const bagOf = (slug) => DATA.bags.find((b) => b.slug === slug);
+  /* A CUSTOM BAG IS A BAG. Resolved here rather than special-cased at every
+     call site, so score(), the card header, the comparator and the leg table
+     all work on it without knowing it was typed rather than chosen. The shape
+     is the same shape the catalogue ships. */
+  const bagOf = (slug) => {
+    if (isCustom(slug)) {
+      const rec = toCustomRecord(slug);
+      return rec && { ...rec, external_cm: rec.external_cm.v, weight_kg: null };
+    }
+    return DATA.bags.find((b) => b.slug === slug);
+  };
   const carrierOf = (iata) => DATA.carriers.find((c) => c.iata === iata);
 
-  const toEngineBag = (b) => toBag({ ...b, external_cm: { v: b.external_cm } });
+  const toEngineBag = (b) =>
+    toBag({ ...b, external_cm: { v: b.external_cm }, dim_source: b.dim_source ?? undefined });
 
   /* THE ALLOWANCE THIS SLOT IS BEING JUDGED AGAINST.
      One helper, because six places on this page draw or explain "the limit" and
@@ -381,6 +422,98 @@ const RISK = [
 
      Rendered only once a bag is chosen. On an empty slot it would be a control
      for an object that does not exist yet. */
+  /* THE ONE PLACE ON THIS SITE A READER TYPES A MEASUREMENT.
+
+     Three inputs and a shape selector. The shape PREFILLS the inputs and then
+     gets out of the way — it saves typing, it is not a claim about what a tote
+     measures, and the value reaching the engine is whatever is left in the
+     boxes. That distinction is why this feature is allowed to exist at all on a
+     site whose rule is that we never print a figure we cannot source: we are
+     not sourcing it, the reader is.
+
+     IN THE READER'S OWN UNITS. Someone with the toggle on imperial types 16,
+     not 40.6, and U.toCm sends centimetres to the engine — the one conversion
+     factor on the site, so a bag typed in inches cannot end up judged in
+     centimetres. That failure would be invisible: 22 would simply read "Over"
+     everywhere and look like an answer.
+
+     `step` is 0.5 in centimetres and 0.25 in inches — fine enough to matter at
+     a gate, coarse enough not to imply a tape measure nobody used. */
+  /* THE WAY IN, AND THE WAY BACK OUT.
+     
+     A visible button under the picker, in the idiom this page already uses for
+     its verbs ("+ Add another flight"). It replaced a line item in the bag
+     dropdown, which Frank could not find — because search() orders an empty
+     query by name, so it sat between Calpak and Eagle Creek looking like a
+     product we sell.
+     
+     THE REVERSE LINK MATTERS AS MUCH. Once a slot is custom, the picker is
+     showing shapes rather than the catalogue, and without a way back a reader
+     who clicked this by accident is stuck describing a bag they did not want to
+     describe. Every door on this page opens both ways. */
+  const customToggle = (slot, i) =>
+    isCustom(slot.slug)
+      ? `<button type="button" data-uncustom="${i}"
+           class="mt-1.5 cursor-pointer rounded-chip bg-transparent px-0 py-0.5 text-[0.8125rem] text-blue hover:underline underline-offset-2">
+           Pick from our catalogue instead</button>`
+      : `<button type="button" data-customise="${i}"
+           class="mt-1.5 cursor-pointer rounded-chip bg-transparent px-0 py-0.5 text-[0.8125rem] text-blue hover:underline underline-offset-2">
+           ${slot.slug ? 'Describe a different bag' : 'Describe your own bag'}</button>`;
+
+  /** The label the picker would have shown in this slot. One definition, so
+   *  the two modes cannot describe the same row differently. */
+  const bagLabel = (i) => (state.bags.length > 1 ? `Bag ${i + 1}` : 'Your bag');
+
+  const customEditor = (slot, i) => {
+    const parsed = decodeCustom(slot.slug);
+    if (!parsed) return '';
+    const step = U.unit === 'cm' ? 0.5 : 0.25;
+    const axis = ['Longest', 'Second', 'Shortest'];
+    /* STYLED AS THE PRIMARY CONTROL, because in this mode it IS the primary
+       control — it stands where the combobox stands, carries the same label,
+       and its select takes the same weight as the picker's input. An inset
+       grey panel would read as a detail attached to something else, and there
+       is nothing else: the picker is not rendered while this is. */
+    return `<label class="block text-[0.8125rem] font-medium text-muted" for="shape-${i}">${esc(bagLabel(i))}</label>
+      <select id="shape-${i}" data-shape="${i}"
+        class="mt-1 w-full cursor-pointer rounded-chip border border-rule-strong bg-surface py-2 pr-3 pl-3 text-[1.03125rem] font-semibold text-ink hover:border-blue focus:border-blue focus:outline-none">
+        ${/* The role's own shapes, PLUS whatever they already picked. A duffel
+             is not an answer to "what is your personal item", so the list is
+             filtered — but a reader who described a tote and then switched the
+             role to Carry-on must not find their own choice missing from the
+             control describing it. Their dimensions survive a role change
+             untouched; only which allowance they are measured against moves. */
+          [
+            ...shapesFor(slot.role),
+            ...(shapeOf(parsed.shape) && shapeOf(parsed.shape).role !== slot.role
+              ? [shapeOf(parsed.shape)]
+              : []),
+          ]
+            .map(
+              (sh) =>
+                `<option value="${esc(sh.id)}"${sh.id === parsed.shape ? ' selected' : ''}>${esc(sh.label)}</option>`
+            )
+            .join('')}
+      </select>
+      <div class="mt-2 grid grid-cols-3 gap-2">
+        ${parsed.cm
+          .map(
+            (cm, ax) => `<label class="block">
+              <span class="block text-[0.75rem] text-muted">${axis[ax]}</span>
+              <input type="number" inputmode="decimal" min="1" step="${step}"
+                data-dim="${i}" data-axis="${ax}" value="${U.len(cm)}"
+                aria-label="${axis[ax]} side in ${esc(U.lenLabel())}"
+                class="mt-0.5 w-full rounded-chip border border-rule-strong bg-surface px-2 py-1.5 text-right font-mono text-[0.875rem] hover:border-blue focus:border-blue focus:outline-none" />
+            </label>`
+          )
+          .join('')}
+      </div>
+      <p class="mt-1.5 text-[0.75rem] leading-snug text-muted">
+        ${esc(U.lenLabel())}. These are your figures, not ours — measure the outside,
+        handles and wheels included, the way a gate does.
+      </p>`;
+  };
+
   const roleControl = (slot, i) =>
     `<div role="group" aria-label="What ${esc(bagOf(slot.slug)?.model ?? 'this bag')} is on this trip"
        class="mt-2 inline-flex overflow-hidden rounded-chip border border-rule">
@@ -412,14 +545,35 @@ const RISK = [
           const b = slot.slug ? bagOf(slot.slug) : null;
           const { worst } = b ? score(slot) : { worst: null };
           const band = worst?.result.band;
+          /* ONE SLOT, ONE INPUT.
+
+             Frank: "It doesn't make sense to both show the Baggage combobox and
+             the custom bag form. If one is active the other is inactive."
+
+             Both were rendered, both were live, and the combobox would happily
+             overwrite a described bag with a catalogue one — two controls
+             fighting over a single answer, with no way to tell which was in
+             charge. A slot is now in exactly one MODE: the picker, or the
+             description. `customToggle` is the switch between them, and it is
+             the only thing on the row that appears in both. */
+          const custom = isCustom(slot.slug);
+          const chip = b ? chipLabel(worst?.result) : null;
           return `<div class="border-b border-rule py-3 last:border-b-0">
             <div class="flex items-start gap-2">
-              <div class="min-w-0 flex-1" data-bag-mount="${i}"></div>
+              <div class="min-w-0 flex-1">
+                ${custom ? customEditor(slot, i) : `<div data-bag-mount="${i}"></div>`}
+                ${customToggle(slot, i)}
+              </div>
               ${
-                b
+                /* NO CHIP WHEN THERE IS NO STATUS. chipLabel returns null for
+                   an airline that publishes nothing, an unresearched leg or a
+                   defunct carrier — none of which is a fact about this bag, and
+                   none of which fits in a pill. The answer card below says
+                   which airline and why. */
+                chip
                   ? `<span class="mt-6 shrink-0 rounded-full px-2.5 py-1 text-[0.875rem] font-semibold ${
                       band ? TAG[band] : UNKNOWN_TAG
-                    }">${esc(worst ? resultLabel(worst.result) : bandLabel(band))}</span>`
+                    }">${esc(chip)}</span>`
                   : ''
               }
               ${
@@ -431,9 +585,19 @@ const RISK = [
             </div>
             ${
               b
-                ? `<p class="mt-1 font-mono text-[0.84375rem] text-muted">${esc(U.dims(b.external_cm))}${
-                    b.weight_kg ? ` · ${esc(U.mass(b.weight_kg))} ${esc(U.massLabel())} empty` : ''
-                  }</p>
+                ? `${
+                    /* The dimensions line is a READOUT of the catalogue's
+                       figure. On a described bag the same numbers are already
+                       sitting in the inputs above, editable — printing them
+                       again underneath is the row telling you twice. */
+                    custom
+                      ? ''
+                      : `<p class="mt-1 font-mono text-[0.84375rem] text-muted">${esc(U.dims(b.external_cm))}${
+                          b.weight_kg
+                            ? ` · ${esc(U.mass(b.weight_kg))} ${esc(U.massLabel())} empty`
+                            : ''
+                        }</p>`
+                  }
                    ${roleControl(slot, i)}`
                 : ''
             }
@@ -492,6 +656,79 @@ const RISK = [
     /* By INDEX, not by slug. Filtering on slug removed every copy of a bag, so
        picking the same model into two slots to compare fares — a perfectly
        reasonable thing to do — made one × delete both. */
+    for (const b of root.querySelectorAll('[data-customise]')) {
+      b.addEventListener('click', () => {
+        const i = +b.dataset.customise;
+        /* Seeded from the role the slot is ALREADY in, so a reader who set
+           "Personal item" and then chose to describe it gets tote-sized
+           defaults rather than suitcase-sized ones. */
+        const role = state.bags[i]?.role ?? 'cabin';
+        const shape = shapeOf(defaultShape(role));
+        state.bags[i] = { ...state.bags[i], slug: encodeCustom({ shape: shape.id, cm: shape.cm }) };
+        draw();
+      });
+    }
+    for (const b of root.querySelectorAll('[data-uncustom]')) {
+      b.addEventListener('click', () => {
+        const i = +b.dataset.uncustom;
+        /* Back to an EMPTY slot, not to whatever they had before. We did not
+           keep the old choice, and restoring a bag they have not asked for
+           since would be inventing an intention. An empty picker asks the
+           question again, which is the honest state. */
+        state.bags[i] = { ...state.bags[i], slug: '' };
+        draw();
+      });
+    }
+
+    /* CHANGING THE SHAPE RESETS THE SIZE, and that is the right call rather
+       than an oversight. Someone switching "tote bag" to "small backpack" is
+       telling us they described the wrong thing; keeping tote dimensions under
+       a backpack label would answer a question they just withdrew. If they had
+       typed their own figures they will type them again, which is cheap — and
+       far cheaper than a silently wrong answer. */
+    for (const sel of root.querySelectorAll('[data-shape]')) {
+      sel.addEventListener('change', () => {
+        const i = +sel.dataset.shape;
+        const shape = shapeOf(sel.value);
+        if (!shape) return;
+        state.bags[i] = {
+          ...state.bags[i],
+          slug: encodeCustom({ shape: shape.id, cm: shape.cm }),
+        };
+        draw();
+      });
+    }
+
+    /* ON `change`, NOT `input`. draw() rebuilds this whole panel, so redrawing
+       per keystroke would tear the field out from under the person using it —
+       the same reason the bag picker filters locally and only calls back on
+       commit. `change` fires on blur or Enter, by which point they have
+       finished the number.
+
+       A value that will not parse leaves the state alone and the field is
+       repainted from it, so a half-typed or nonsense entry cannot produce a
+       verdict. U.toCm carries the unit: this is the only inbound conversion on
+       the site. */
+    for (const input of root.querySelectorAll('[data-dim]')) {
+      input.addEventListener('change', () => {
+        const i = +input.dataset.dim;
+        const ax = +input.dataset.axis;
+        const parsed = decodeCustom(state.bags[i]?.slug);
+        const cm = U.toCm(input.value);
+        if (!parsed || cm === null) {
+          draw();
+          return;
+        }
+        const next = [...parsed.cm];
+        next[ax] = cm;
+        state.bags[i] = {
+          ...state.bags[i],
+          slug: encodeCustom({ shape: parsed.shape ?? defaultShape(state.bags[i].role), cm: next }),
+        };
+        draw();
+      });
+    }
+
     for (const b of root.querySelectorAll('[data-role]')) {
       b.addEventListener('click', () => {
         state.bags[+b.dataset.slot].role = b.dataset.role;
@@ -513,7 +750,11 @@ const RISK = [
     root.querySelector('[data-addbag]').addEventListener('click', () => {
       /* An empty slot, not "the next bag we happen to have". Silently adding a
          product is the same accidental endorsement as preselecting one. */
-      state.bags.push({ slug: '', role: 'cabin' });
+      /* THE SECOND BAG IS ALMOST NEVER A SECOND CARRY-ON. This defaulted to
+         'cabin' every time, which is how Frank ended up with two carry-ons
+         without asking for either. See ui/bag-set.mjs — it is a default, not a
+         rule, and a Eurowings business passenger flips it back in one click. */
+      state.bags.push({ slug: '', role: defaultRoleForNew(state.bags) });
       draw();
     });
     root.querySelector('[data-addleg]').addEventListener('click', () => {
@@ -542,7 +783,7 @@ const RISK = [
         h(Picker, {
           items: BAG_ITEMS,
           value: state.bags[i].slug,
-          label: state.bags.length > 1 ? `Bag ${i + 1}` : 'Your bag',
+          label: bagLabel(i),
           kind: 'bag',
           index: i,
           placeholder: 'Choose the bag you own…',
@@ -1002,13 +1243,228 @@ const RISK = [
     </div>`;
   }
 
+  /* ---------- bags that would work instead ---------- */
+
+  /* THE GRID HAD NO LABEL, NO LIMIT, AND NO DESTINATION.
+
+     Frank: "it seems like it wasn't really thought out, you can't click on
+     them, it's not clear if they are filtered by bags that would actually fit."
+
+     All three were true, and the second was the tell. The cards sat directly
+     under a heading about DIMENSIONS — "the biggest bag that works on this
+     whole trip" — so nothing on screen said what the cards below it were. A
+     reader could reasonably have read them as the catalogue, as a promotion, or
+     as bags that do NOT fit. They were in fact a filtered set, and a filter
+     whose existence you cannot see is indistinguishable from no filter at all.
+
+     So: its own heading naming the set, a count, the sort order stated, a cap,
+     and every card a link. A bag card that is not a link is a dead end on a
+     site where every other bag card leads to that bag's page — and here it is
+     worse than a dead end, because a reader who wants to know which of the two
+     Away Carry-Ons this is has nowhere to go and find out.
+
+     SIX, then a way to see the rest. Forty-three cards is not a shortlist, it
+     is the catalogue with extra steps, and it buried the copy-link row under a
+     screen and a half of scrolling. */
+  function bagList(fits, heldBack, personal) {
+    if (!fits.length) {
+      return `<p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-red">No bag we can recommend clears every leg of this trip.${
+        personal
+          ? ' Under-seat space is the tightest allowance any airline sells, and we hold few bags built for it — a soft tote or a laptop sleeve is what gets through.'
+          : ' On a trip this tight you are looking at an under-seat bag, or checking one.'
+      }${
+        heldBack
+          ? ` ${heldBack} would fit on ${heldBack > 1 ? 'their' : 'its'} published figures, but ${heldBack > 1 ? 'those figures are' : 'that figure is'} not the manufacturer's own, so we will not put ${heldBack > 1 ? 'them' : 'it'} forward.`
+          : ''
+      }</p>`;
+    }
+
+    const card = (x) =>
+      /* Linked, like every other bag card on the site. Also how a reader tells
+         the aluminium Away Carry-On from the polycarbonate one, which share a
+         brand and a model name and differ by six millimetres. */
+      `<a href="/bags/${esc(x.slug)}/"
+         class="flex flex-col gap-1.5 rounded-card border border-rule bg-surface p-4 no-underline hover:border-blue">
+         <span class="text-base font-semibold leading-tight text-ink">${esc(x.brand)} ${esc(x.model)}</span>
+         <span class="font-mono text-[0.84375rem] text-muted">${esc(U.dims(x.external_cm))}</span>
+       </a>`;
+
+    return `<div class="mt-5 border-t border-blue/20 pt-4">
+      <p class="text-[0.875rem] font-semibold text-ink">
+        ${fits.length === 1 ? 'One bag we hold' : `${fits.length} bags we hold`} ${
+          fits.length === 1 ? 'clears' : 'clear'
+        } every leg${fits.length > SHOWN ? `, roomiest ${SHOWN} first` : ''}
+      </p>
+      <p class="mt-0.5 max-w-[58ch] text-[0.8125rem] text-muted">
+        Checked the same way as the answer above, on each airline's own limit${
+          heldBack
+            ? `. ${heldBack} more would fit, held back because ${heldBack > 1 ? 'their figures are' : 'its figure is'} not the manufacturer's own`
+            : ''
+        }.
+      </p>
+      <div class="mt-3.5 grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(13rem,1fr))]">
+        ${fits.slice(0, SHOWN).map(card).join('')}
+      </div>
+      ${
+        fits.length > SHOWN
+          ? `<p class="mt-3.5 text-[0.875rem]"><a href="/bags/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">Browse all ${fits.length} &rarr;</a></p>`
+          : ''
+      }
+    </div>`;
+  }
+
+  /* Its own function rather than a ternary inside the answer template. The
+     first version nested a `barred ? … : …` around an existing `env ? … : …`
+     and the indentation stopped describing the structure — correct code that
+     nobody, including me a week from now, could read to check. */
+  function envelopePanel({ barred, env, setters, fits, heldBack, personal }) {
+    const item = personal ? 'personal item' : 'cabin bag';
+
+    /* NO SIZE ANSWERS THIS. A fare including no cabin bag is not a tight limit,
+       it is the absence of one, and an envelope is the wrong shape of answer
+       entirely. Names the leg and gives the actual remedy, because buying up a
+       fare or checking the bag is something the reader can act on today —
+       whereas a list of bags is a way through that does not exist. */
+    const inner = barred.length
+      ? `<p class="text-[0.875rem] font-semibold text-red">There is no size that works on this trip</p>
+         <p class="mt-1.5 max-w-[58ch] text-[1.03125rem] text-ink-2">
+           <b class="font-semibold text-ink">${esc(
+             barred
+               .map(
+                 (x) =>
+                   `${x.carrier.name} (${fareLabel(x.leg.fare, carrierOf(x.leg.iata)?.fare_names?.[x.leg.fare])})`
+               )
+               .join(' and ')
+           )}</b>
+           ${barred.length > 1 ? 'include' : 'includes'} no ${item} at any size, so no bag we could
+           suggest would get through. Buying up a fare class, or checking the bag, is what changes that.
+         </p>
+         <p class="mt-1.5 text-[0.8125rem]">Check it yourself: ${barred.map((x) => source(x.leg.iata)).join(' · ')}</p>`
+      : env
+        ? `<p class="text-[0.875rem] font-semibold text-blue">The biggest ${
+            personal ? 'personal item' : 'bag'
+          } that works on this whole trip</p>
+           <p class="mt-1.5 text-[clamp(1.9rem,4.6vw,2.7rem)] font-bold leading-none tracking-tight tabular-nums">${env
+             .map((v) => esc(U.len(v)))
+             .join(
+               '<span class="px-1.5 text-[0.66em] text-muted">×</span>'
+             )}<span class="ml-1.5 text-[0.42em] font-normal text-muted">${esc(U.lenLabel())}</span></p>
+           <p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-ink-2">Set by <b class="font-semibold text-ink">${esc(
+             setters.map((x) => x.name).join(' and ')
+           )}</b> — the tightest limit on your itinerary. This is a size comparison only: fare entitlement, packed weight and the aircraft's own bins still need checking.</p>
+           <p class="mt-1.5 text-[0.8125rem]">Check it yourself: ${setters.map((x) => source(x.iata)).join(' · ')}</p>
+           ${bagList(fits, heldBack, personal)}`
+        : `<p class="text-[0.875rem] font-semibold text-blue">The biggest ${
+            personal ? 'personal item' : 'bag'
+          } that works on this whole trip</p>
+           <p class="mt-1.5 max-w-[58ch] text-[1.03125rem] text-ink-2">We cannot draw one yet — no leg on this trip has ${
+             personal ? 'a published under-seat size' : 'an allowance we have read'
+           }.</p>`;
+
+    return `<div class="mt-6 rounded-card ${
+      barred.length ? 'bg-red-wash' : 'bg-blue-wash'
+    } px-6 py-[1.375rem]">${inner}</div>`;
+  }
+
+  /* ONE CARD PER BAG, and it took a bug report to notice there was only ever
+     one.
+
+     Frank: "if I add more than a single piece of luggage the right side panel
+     does not evaluate both only the first one."
+
+     renderAnswer() opened with `state.bags.find(x => x.slug)` and everything
+     below it described that bag. The others got a verdict chip in the left
+     column and nothing else — so adding a personal item beside your carry-on
+     made the carry-on's answer vanish.
+
+     That was defensible exactly once: when bags were ALTERNATIVES. The add
+     button still says "add another bag to compare", and comparing two rollers
+     one at a time is a coherent thing to build. Roles broke that assumption
+     without anyone updating this function — a carry-on and a personal item are
+     not alternatives, they are a set you carry at the same time, which is the
+     whole premise of docs/27.
+
+     WHAT THIS STILL DOES NOT ANSWER, and the limitation is worth naming
+     rather than leaving to be discovered: whether the two bags work TOGETHER.
+     Piece counts, and the shared cabin weight cap that Air France, KLM,
+     Cathay, JAL, ANA and Scoot apply across both bags at once, are set-level
+     facts and no stack of per-bag cards can express them. That is docs/27
+     phase 4. This fixes the disappearing bag; it does not fix the set. */
+  function answerCard(slot) {
+    const { rows, worst, bag: bagOfEngine, role } = score(slot);
+    const b = bagOf(slot.slug);
+    const band = worst.result.band;
+    const advisories = worst.result.advisories.map((a) => advisoryLine(a, U)).filter(Boolean);
+
+    return `<div class="rounded-card border border-rule border-l-[6px] bg-surface p-[1.625rem] shadow-panel ${
+      band ? EDGE[band] : 'border-l-rule-strong'
+    }">
+      <p class="text-[0.875rem] text-muted">${esc(b.brand)} ${esc(b.model)} · <b class="font-semibold text-ink-2">${esc(roleLabel(role))}</b> · ${esc(U.dims(b.external_cm))} · ${rows.length} flight${rows.length > 1 ? 's' : ''}</p>
+      <p class="mt-1 text-[clamp(2rem,5vw,3rem)] font-bold leading-none tracking-tight ${
+        band ? WORD[band] : 'text-muted'
+      }">${esc(resultLabel(worst.result))}</p>
+      <p class="mt-3 max-w-[56ch] text-lg text-ink-2">${explain(worst, rows)}</p>
+      <p class="mt-2 max-w-[56ch] text-[0.9375rem] text-muted">
+        Answered on <b class="font-semibold text-ink">${esc(RISK_LABEL[state.risk])}</b>.
+        ${riskEffect(bagOfEngine, worst.carrier, band, role)}
+      </p>
+
+      ${strictnessCallout(worst.leg.iata, worst.carrier, role)}
+
+      ${comparator(b, bagOfEngine, worst.carrier, band, role)}
+
+      <div class="mt-6 overflow-hidden rounded-card border border-rule">
+        ${rows.map((x) => legRow(x, worst)).join('')}
+      </div>
+
+      ${
+        advisories.length
+          ? `<ul class="mt-4 space-y-2">${advisories
+              .map(
+                (line) =>
+                  `<li class="rounded-chip bg-surface-2 px-4 py-3 text-[0.9375rem] text-ink-2">${esc(line)}</li>`
+              )
+              .join('')}</ul>`
+          : ''
+      }
+    </div>`;
+  }
+
+  /* THE FIRST SET-LEVEL FINDING THIS SITE CAN STATE.
+     
+     No stack of per-bag verdicts can reach it: each bag can fit its box
+     perfectly and the pair still be refused, because the limit being broken is
+     a COUNT rather than a size. That is docs/27's whole argument for modelling
+     a kit instead of a bag, and it is why this sits ABOVE the cards rather than
+     inside one — it is not true of either bag on its own.
+     
+     Amber, not red. The reader is not wrong about their bags; they are over on
+     an allowance, and the fix is a fare or a gate check rather than a different
+     suitcase. */
+  function pieceNotice(over) {
+    if (!over.length) return '';
+    const line = (o) =>
+      `<b class="font-semibold text-ink">${esc(o.carrier.name)} (${esc(
+        fareLabel(o.leg.fare, carrierOf(o.leg.iata)?.fare_names?.[o.leg.fare])
+      )})</b> grants ${o.granted === 1 ? 'one' : o.granted} ${
+        o.role === 'personal' ? 'personal item' : 'cabin bag'
+      }${o.granted === 1 ? '' : 's'}; you have ${o.carrying}`;
+    return `<div class="rounded-card border border-amber/30 bg-amber-wash px-5 py-4">
+      <p class="text-[0.875rem] font-semibold text-amber">More bags than the fare allows</p>
+      <p class="mt-1 max-w-[58ch] text-[0.9375rem] text-ink-2">
+        ${over.map(line).join('. ')}. Size is not the problem here — the extra bag has no
+        allowance at all on ${over.length > 1 ? 'those legs' : 'that leg'}, whatever it measures.
+      </p>
+    </div>`;
+  }
+
   function renderAnswer() {
-    const primary = state.bags.find((x) => x.slug);
+    const chosen = state.bags.filter((x) => x.slug);
 
     /* Nothing chosen yet. Say what the page will do rather than showing an
        empty panel — and say it in terms of the thing that makes this tool
        different from a per-airline lookup. */
-    if (!primary) {
+    if (!chosen.length) {
       el('[data-answer]').innerHTML = `
         <div class="rounded-card border border-dashed border-rule-strong bg-surface p-[1.625rem]">
           <p class="text-lg font-semibold text-ink">Choose a bag to see the answer</p>
@@ -1020,114 +1476,49 @@ const RISK = [
         </div>`;
       return;
     }
-    const { rows, worst, bag: bagOfEngine, role } = score(primary);
-    const b = bagOf(primary.slug);
-    const band = worst.result.band;
-    const personal = role === 'personal';
 
-    /* The envelope is what this page has that a per-airline lookup never will:
-       one box that survives the entire itinerary. Legs we cannot answer for are
-       excluded from it rather than treated as unlimited — an envelope built on
-       a guess is worse than no envelope.
+    /* THE ENVELOPE IS A FACT ABOUT THE TRIP, NOT ABOUT ONE BAG, so it moves out
+       of the card and renders once per ROLE the reader is actually carrying.
+       Two carry-ons would otherwise print the same box twice, and a carry-on
+       plus a personal item needs both boxes — they are wildly different
+       numbers and only one of them was ever shown.
 
-       PER ROLE, and across the catalogue the under-seat one comes to
-       40 × 25 × 10 — dramatically smaller than the [40, 30, 20] this codebase
-       used to assume was a floor. Showing the cabin envelope while answering
-       the under-seat question would hand the reader a box 8 litres too
-       generous under a verdict computed from the real one. */
-    const scorable = rows.filter((x) => !x.result.unknown && allowanceFor(x.carrier, role));
-    const env = personal
-      ? DEFAULT.personalEnvelope(scorable.map((x) => x.carrier))
-      : DEFAULT.envelope(scorable.map((x) => x.carrier));
-    /* Carried as {name, iata} rather than a bare name, because every airline
-       named as the reason for a number now has to be linkable back to the page
-       that number came from. A Set of strings cannot do that. */
-    const setters = env
-      ? dedupeBy(
-          scorable
-            .filter((x) => allowanceFor(x.carrier, role)?.max_cm)
-            .filter((x) =>
-              desc(allowanceFor(x.carrier, role).max_cm).some((v, i) => v === env[i])
-            )
-            .map((x) => ({ name: x.carrier.name, iata: x.leg.iata })),
-          (x) => x.iata
-        )
-      : [];
-    const fits = env
-      ? DATA.bags.filter((x) => desc(x.external_cm).every((v, i) => v <= env[i]))
-      : [];
+       Every bag the reader already has is excluded from the suggestions, not
+       just the first: offering someone back a bag they told us they own is the
+       same mistake in a smaller costume. */
+    const owned = chosen.map((x) => x.slug);
+    const rolesInUse = [...new Set(chosen.map((x) => x.role))];
+    const envelopes = rolesInUse.map((role) => {
+      /* Any bag in this role will do for the ROWS. tripEnvelope reads only the
+         parts of a result that describe the ticket — no cabin bag, no personal
+         item, not researched — and those are facts about the carrier, the fare
+         and the role, not about which bag was measured against them. Stated
+         because passing "one of the reader's bags" to compute a trip-level box
+         otherwise looks like a bug. */
+      const sample = chosen.find((x) => x.role === role);
+      return envelopePanel(
+        tripEnvelope({
+          rows: score(sample).rows,
+          role,
+          bags: DATA.bags,
+          toEngineBag,
+          engine: ENGINES[state.risk] ?? ENGINES.balanced,
+          ownSlugs: owned,
+        })
+      );
+    });
 
-    const advisories = worst.result.advisories
-      .map((a) => advisoryLine(a, U))
-      .filter(Boolean);
+    /* Computed from the FIRST bag's rows — the legs and fares are the same for
+       every bag on the trip, and the check is about how many bags there are,
+       not which. */
+    const overages = pieceOverages({ slots: chosen, rows: score(chosen[0]).rows });
 
     el('[data-answer]').innerHTML = `
-      <div class="rounded-card border border-rule border-l-[6px] bg-surface p-[1.625rem] shadow-panel ${
-        band ? EDGE[band] : 'border-l-rule-strong'
-      }">
-        <p class="text-[0.875rem] text-muted">${esc(b.brand)} ${esc(b.model)} · <b class="font-semibold text-ink-2">${esc(roleLabel(role))}</b> · ${esc(U.dims(b.external_cm))} · ${rows.length} flight${rows.length > 1 ? 's' : ''}</p>
-        <p class="mt-1 text-[clamp(2rem,5vw,3rem)] font-bold leading-none tracking-tight ${
-          band ? WORD[band] : 'text-muted'
-        }">${esc(resultLabel(worst.result))}</p>
-        <p class="mt-3 max-w-[56ch] text-lg text-ink-2">${explain(worst, rows)}</p>
-        <p class="mt-2 max-w-[56ch] text-[0.9375rem] text-muted">
-          Answered on <b class="font-semibold text-ink">${esc(RISK_LABEL[state.risk])}</b>.
-          ${riskEffect(bagOfEngine, worst.carrier, band, role)}
-        </p>
-
-        ${strictnessCallout(worst.leg.iata, worst.carrier, role)}
-
-        ${comparator(b, bagOfEngine, worst.carrier, band, role)}
-
-        <div class="mt-6 overflow-hidden rounded-card border border-rule">
-          ${rows.map((x) => legRow(x, worst)).join('')}
-        </div>
-
-        ${
-          advisories.length
-            ? `<ul class="mt-4 space-y-2">${advisories
-                .map(
-                  (line) =>
-                    `<li class="rounded-chip bg-surface-2 px-4 py-3 text-[0.9375rem] text-ink-2">${esc(line)}</li>`
-                )
-                .join('')}</ul>`
-            : ''
-        }
-
-        <div class="mt-6 rounded-card bg-blue-wash px-6 py-[1.375rem]">
-          <p class="text-[0.875rem] font-semibold text-blue">The biggest ${
-            personal ? 'personal item' : 'bag'
-          } that works on this whole trip</p>
-          ${
-            env
-              ? `<p class="mt-1.5 text-[clamp(1.9rem,4.6vw,2.7rem)] font-bold leading-none tracking-tight tabular-nums">${env
-                  .map((v) => esc(U.len(v)))
-                  .join('<span class="px-1.5 text-[0.66em] text-muted">×</span>')}<span class="ml-1.5 text-[0.42em] font-normal text-muted">${esc(U.lenLabel())}</span></p>
-                 <p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-ink-2">Set by <b class="font-semibold text-ink">${esc(setters.map((x) => x.name).join(' and '))}</b> — the tightest limit on your itinerary. This is a size comparison only: fare entitlement, packed weight and the aircraft's own bins still need checking.</p>
-                 <p class="mt-1.5 text-[0.8125rem]">Check it yourself: ${setters.map((x) => source(x.iata)).join(' · ')}</p>
-                 ${
-                   fits.length
-                     ? `<div class="mt-5 grid gap-3.5 [grid-template-columns:repeat(auto-fill,minmax(13rem,1fr))]">${fits
-                         .map(
-                           (x) => `<div class="flex flex-col gap-1.5 rounded-card border border-rule bg-surface p-4">
-                             <span class="text-base font-semibold leading-tight">${esc(x.brand)} ${esc(x.model)}</span>
-                             <span class="font-mono text-[0.84375rem] text-muted">${esc(U.dims(x.external_cm))}</span>
-                           </div>`
-                         )
-                         .join('')}</div>`
-                     : `<p class="mt-2.5 max-w-[58ch] text-[1.03125rem] text-red">No bag in our catalogue fits this envelope on its published dimensions.${
-                         personal
-                           ? ' Under-seat space is the tightest allowance any airline sells, and we hold few bags built for it — a soft tote or a laptop sleeve is what clears this.'
-                           : ' On a trip this tight you are looking at an under-seat bag, or checking one.'
-                       }</p>`
-                 }`
-              : `<p class="mt-1.5 max-w-[58ch] text-[1.03125rem] text-ink-2">We cannot draw one yet — no leg on this trip has ${
-                  personal ? 'a published under-seat size' : 'an allowance we have read'
-                }.</p>`
-          }
-        </div>
-
-        <div class="mt-[1.375rem] flex flex-wrap items-center gap-3">
+      <div class="space-y-4">
+        ${pieceNotice(overages)}
+        ${chosen.map(answerCard).join('')}
+        ${envelopes.join('')}
+        <div class="flex flex-wrap items-center gap-3 pt-1">
           <button type="button" data-copy
             class="min-h-[2.875rem] cursor-pointer rounded-full border border-rule-strong px-[1.125rem] py-2.5 font-semibold hover:border-blue hover:text-blue">Copy link to this trip</button>
           <span class="font-mono text-[0.84375rem] break-all text-muted" data-permalink></span>

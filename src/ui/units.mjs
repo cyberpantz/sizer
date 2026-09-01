@@ -89,6 +89,27 @@ export function createUnits({ storage, navigator: nav, server = !isBrowser() } =
     len(cm) {
       return unit === CM ? round(cm, 1) : round(cm / 2.54, 1);
     },
+
+    /** THE INVERSE, for the one place a reader TYPES a length.
+     *
+     * Everything else on this site converts one way: the engine holds
+     * centimetres and the page renders them. A reader describing their own bag
+     * reverses that — they type into whichever unit the toggle is showing, and
+     * the number has to come back as cm before the engine ever sees it.
+     *
+     * It lives here rather than at the input, so 2.54 appears exactly once in
+     * the codebase. Two copies of a conversion factor is how a bag typed in
+     * inches gets judged in centimetres, and the reader would have no way to
+     * tell: 22 would simply come out "Over" everywhere.
+     *
+     * NOT rounded. len() rounds for display, which is right for reading and
+     * wrong for storing — round on the way in and a value round-trips
+     * differently every time the toggle moves. */
+    toCm(value) {
+      const n = Number(value);
+      if (!Number.isFinite(n) || n <= 0) return null;
+      return unit === CM ? n : n * 2.54;
+    },
     mass(kg) {
       return unit === CM ? round(kg, 1) : round(kg * 2.20462, 1);
     },

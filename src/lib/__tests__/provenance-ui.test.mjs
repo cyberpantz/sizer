@@ -55,13 +55,18 @@ describe('provenance in the UI', () => {
        wording change gets "fixed" by deleting it, and then the rule it was
        protecting goes unwatched.
 
-       Three surfaces name an airline as the cause of an answer: the per-leg
-       table, the comparator heading, and the envelope's "set by". Each must
-       call source() inside its own render function. */
+       FOUR surfaces name an airline as the cause of an answer, and each must
+       call source() inside its own render function. The fourth is new: a trip
+       with a leg that grants no cabin bag now names that airline and fare as
+       the reason nothing can be suggested — which is the strongest claim on the
+       page, since it tells someone their ticket is the problem. A claim that
+       strong needs its citation more than the others, not less. */
     for (const [surface, fn] of [
       ['the per-leg table', 'function legRow'],
       ['the comparator', 'function comparator'],
-      ['the envelope', 'function renderAnswer'],
+      /* Was 'function renderAnswer' until the envelope moved into its own
+         function. The rule did not change; only where it lives did. */
+      ['the envelope', 'function envelopePanel'],
     ]) {
       const start = page.indexOf(fn);
       assert.ok(start > -1, `${fn} is gone — does ${surface} still exist?`);

@@ -158,9 +158,14 @@ describe('the page never mixes the two limits', () => {
   test('the envelope is per role', () => {
     /* The under-seat intersection is dramatically smaller than the overhead
        one. Showing the cabin envelope under an under-seat verdict would hand
-       the reader a box far too generous, in the expensive direction. */
-    assert.match(code, /personalEnvelope/, 'the personal envelope is never used');
-    assert.match(code, /personal\s*\n?\s*\?\s*DEFAULT\.personalEnvelope/);
+       the reader a box far too generous, in the expensive direction.
+
+       Asserted against ui/trip-envelope.mjs, which is where this moved when the
+       panel became testable — and asserted on the ENGINE call, because the
+       first draft of that module took the per-axis minimum itself. */
+    const panel = readFileSync('src/ui/trip-envelope.mjs', 'utf8');
+    assert.match(panel, /engine\.personalEnvelope/, 'the personal envelope is never used');
+    assert.match(panel, /personal \? engine\.personalEnvelope\(carriers\) : engine\.envelope\(carriers\)/);
   });
 
   test('the answer names which question it answered', () => {
@@ -189,5 +194,145 @@ describe('an absence is never dressed as a measurement', () => {
        item, and saying so is the single most useful thing we know about that
        ticket. */
     assert.match(code, /no_cabin_bag[\s\S]{0,900}?Personal item/);
+  });
+});
+
+/* EVERY BAG GETS AN ANSWER.
+ *
+ * Frank: "if I add more than a single piece of luggage the right side panel
+ * does not evaluate both only the first one."
+ *
+ * renderAnswer() opened with `state.bags.find(x => x.slug)` and described that
+ * bag alone. The others got a verdict chip in the left column and nothing else,
+ * so adding a personal item beside your carry-on made the carry-on's answer
+ * disappear.
+ *
+ * It was defensible exactly once, when bags were ALTERNATIVES — the add button
+ * still says "add another bag to compare", and comparing two rollers one at a
+ * time is coherent. Roles broke that assumption without anyone revisiting this
+ * function: a carry-on and a personal item are not alternatives, they are a set
+ * you carry at once.
+ *
+ * Source-level, because renderAnswer cannot be imported — check.astro's script
+ * pulls in a .jsx component. What CAN be pinned is the shape of the mistake:
+ * a singular pick where a plural belongs.
+ */
+describe('more than one bag', () => {
+  test('the answer iterates the bags rather than picking one', () => {
+    /* `.find(` on state.bags in the answer path is the bug itself. */
+    const answer = code.slice(code.indexOf('function renderAnswer'));
+    assert.doesNotMatch(
+      answer.slice(0, 2000),
+      /state\.bags\.find\(/,
+      'the answer panel picks a single bag again — every chosen bag needs a card'
+    );
+    assert.match(code, /chosen\.map\(answerCard\)/, 'nothing renders a card per bag');
+  });
+
+  test('the envelope is a trip fact, rendered once per role in use', () => {
+    /* Two carry-ons would otherwise print the same box twice, and a carry-on
+       plus a personal item needs both — they are wildly different numbers and
+       only one of them was ever shown. */
+    assert.match(code, /rolesInUse/, 'the envelope is not computed per role');
+    assert.match(code, /new Set\(chosen\.map\(\(x\) => x\.role\)\)/);
+  });
+
+  test('every bag the reader owns is excluded from the suggestions', () => {
+    /* The same off-by-a-set mistake as the answer: the panel excluded one bag
+       and would have offered the second one back to them. */
+    assert.match(code, /ownSlugs: owned/, 'only one bag is excluded from the suggestions');
+    const panel = readFileSync('src/ui/trip-envelope.mjs', 'utf8');
+    assert.match(panel, /!ownSlugs\.includes\(b\.slug\)/);
+  });
+});
+
+/* AN ABSENCE THE AIRLINE OWNS IS NOT AN ABSENCE WE OWN.
+ *
+ * The engine has kept `unpublished` and `unknown` apart since roles landed, and
+ * the leg table has said so — but resultLabel(), which produces the biggest
+ * word on the card in display type, flattened both to "Unknown".
+ *
+ * That is the wrong way round. On Delta, Southwest, Qatar and Aegean somebody
+ * DID the work, and the work is what established that no number exists. It is
+ * also the only way a reader can tell that checking back later will not help.
+ */
+describe('the headline word', () => {
+  test('a published absence is not reported as our ignorance', async () => {
+    const { resultLabel } = await import('../verdict.mjs');
+    assert.equal(resultLabel({ unknown: true, unpublished: true }), 'No size published');
+    assert.equal(resultLabel({ unknown: true }), 'Unknown');
+  });
+
+  test('a fare granting no personal item says so', () => {
+    /* Distinct from "Over": every bag fails equally, and the reason is the
+       ticket rather than the tape measure. */
+    assert.match(code, /no_personal_item/, 'the page cannot see a barred personal item');
+  });
+});
+
+/* A STATUS BADGE NEEDS A STATUS.
+ *
+ * Frank, twice on the same chip. First: "the 'No size published' label makes no
+ * sense next to the 'Own bag' options." I made the wording vaguer, shipped "No
+ * answer", and got the obvious follow-up: "I'm not understanding the 'no
+ * answer' label. It looks off. Why is it there?"
+ *
+ * Because I had fixed the sentence instead of the decision. The question was
+ * never how to word it. It was whether a badge belongs in a slot that has no
+ * status — and a grey pill reading "No answer", sitting against the shape
+ * selector and the dimensions someone is still typing, reads as an error they
+ * caused.
+ *
+ * resultLabel() works where the AIRLINE is named in the same breath: the leg
+ * table has the carrier in the next column, the verdict card has a sentence
+ * under it beginning "Aegean publishes no size…". This chip has neither, so it
+ * says something about the bag or it says nothing.
+ */
+describe('the bag-row chip', () => {
+  test('renders nothing when there is no verdict', async () => {
+    /* An airline that publishes no under-seat size, a leg nobody has
+       researched, a defunct carrier: none is a fact about this bag, and none
+       fits in a pill. The answer card carries all three, with a subject. */
+    const { chipLabel } = await import('../verdict.mjs');
+    for (const [what, result] of [
+      ['a researched absence', { band: null, unknown: true, unpublished: true }],
+      ['our own gap', { band: null, unknown: true }],
+      ['a defunct airline', { band: null, not_flying: true }],
+      ['nothing at all', null],
+    ]) {
+      assert.equal(chipLabel(result), null, `${what} should render no chip`);
+    }
+  });
+
+  test('a fare granting no bag DOES earn a badge, about the bag', async () => {
+    /* This one is worth shouting: the bag cannot go, and the reader can act on
+       it by buying up a fare. "Not allowed" is true of the bag; "No cabin bag"
+       is true of the fare and beside a bag reads as "this is not a cabin bag". */
+    const { chipLabel } = await import('../verdict.mjs');
+    assert.equal(chipLabel({ band: 'wont', no_cabin_bag: true }), 'Not allowed');
+    assert.equal(chipLabel({ band: 'wont', no_personal_item: true }), 'Not allowed');
+  });
+
+  test('a measured verdict is unchanged — those already describe the bag', async () => {
+    const { chipLabel } = await import('../verdict.mjs');
+    assert.equal(chipLabel({ band: 'clears' }), 'Fits');
+    assert.equal(chipLabel({ band: 'line' }), 'Tight');
+    assert.equal(chipLabel({ band: 'wont' }), 'Over');
+  });
+
+  test('the row omits the element entirely rather than rendering it empty', () => {
+    /* An empty pill is still a pill: padding, a background, a shape where a
+       verdict should be. The span has to not exist. */
+    const bagRow = code.slice(code.indexOf("el('[data-bagbox]')"), code.indexOf('data-addbag'));
+    assert.match(bagRow, /const chip = b \? chipLabel\(worst\?\.result\) : null;/);
+    assert.match(bagRow, /chip\s*\?\s*`<span/, 'the chip renders unconditionally');
+    assert.doesNotMatch(bagRow, /resultLabel\(/, 'the bag row is back to the sentenced wording');
+  });
+
+  test('the leg table keeps the fuller wording, because it has room', () => {
+    /* Flattening those would throw away the finding-versus-gap distinction in
+       one of the two places with space to state it. */
+    const legRow = code.slice(code.indexOf('function legRow'), code.indexOf('function legRow') + 1800);
+    assert.match(legRow, /resultLabel\(/, 'the leg table lost its fuller wording');
   });
 });

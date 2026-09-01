@@ -346,6 +346,9 @@ export const ALLOWANCE_FIELDS = [
   'allowance_group',
   'applies_to',
   'cabin_absence',
+  /* How many pieces this row grants. Almost always 1; business class on
+     Eurowings, Azerbaijan, Air Astana and Ural grants 2. */
+  'count',
   /* Why a PERSONAL row has no size — the finding/gap distinction. */
   'absence',
 ];
@@ -796,6 +799,21 @@ function buildAllowance(row, subject, rows = []) {
        Scoot, and instead of one by Singapore. The stricter constraint binds. */
     linear_max_cm: typeof row.linear_max_cm === 'number' ? row.linear_max_cm : null,
     max_kg: row.max_kg ?? null,
+    /* HOW MANY PIECES THIS ROW GRANTS — in the data since the intake, read by
+       nothing until now.
+
+       Almost every row is one. Five are not: Eurowings BIZclass, Azerbaijan
+       premium economy and business, Air Astana business and Ural business each
+       grant two cabin pieces. Ural says so in words on the row ("Two pieces
+       with a combined maximum weight of 15 kg"), and Eurowings is unambiguous
+       because it ALSO carries a separate personal row — so that fare is two
+       55 x 40 x 23 bags plus an under-seat item.
+
+       Defaults to 1 rather than null. A row that grants an allowance grants at
+       least one piece, and treating silence as "unknown" would make the piece
+       check unanswerable on 256 of 261 rows — which is the same failure as
+       reading an absent figure as permission. */
+    count: typeof row.count === 'number' ? row.count : 1,
     /* IS THAT WEIGHT CAP FOR THIS BAG, OR FOR BOTH BAGS?
 
        Air France, KLM, Cathay, JAL, ANA and Scoot publish ONE cabin weight
