@@ -724,10 +724,26 @@ export function initFitVisualizer(opts: InitOptions): () => void {
 
   const outlineBtn = root.querySelector('[data-outline-toggle]') as HTMLButtonElement | null;
   outlineBtn?.setAttribute('aria-pressed', 'false');
-  const onOutlineToggle = () => {
-    const on = !bagScene.envelope.visible;
+  /* OUTLINE REPLACES THE BAG, IT DOES NOT DECORATE IT.
+   *
+   * This only ever switched the wireframe ON. The solid stayed, so the box sat
+   * on top of the bag it was meant to show instead of the bag — which reads as
+   * a stray highlight rather than a mode, and hides the one thing the mode is
+   * for: seeing the MEASURED envelope against the frame with nothing in the
+   * way. A bag's corners are rounded and its wheels stick out; the box the
+   * airline actually judges is the one you cannot see while the bag is drawn.
+   *
+   * Safe to hide the solid only because the frustum no longer refits on a
+   * change — otherwise removing the bag from the visible set would resize the
+   * whole scene, which is the growing-and-collapsing bug wearing a hat. */
+  const setOutline = (on: boolean) => {
     bagScene.envelope.visible = on;
+    bagScene.exterior.visible = !on;
+    if (bagScene.packing) bagScene.packing.visible = !on;
     outlineBtn?.setAttribute('aria-pressed', String(on));
+  };
+  const onOutlineToggle = () => {
+    setOutline(!bagScene.envelope.visible);
     scheduleRender();
   };
   outlineBtn?.addEventListener('click', onOutlineToggle);
@@ -859,6 +875,12 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     overlay: root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null,
   };
   stageParts.panel?.setAttribute('hidden', '');
+  /* Outline is a view mode, and a remount is a new view: a reader who left it
+     on for one fare should not silently get a wireframe for the next. */
+  bagScene.envelope.visible = false;
+  bagScene.exterior.visible = true;
+  if (bagScene.packing) bagScene.packing.visible = true;
+  root.querySelector('[data-outline-toggle]')?.setAttribute('aria-pressed', 'false');
   stageParts.controls?.removeAttribute('hidden');
   stageParts.overlay?.removeAttribute('hidden');
   canvas.style.removeProperty('display');

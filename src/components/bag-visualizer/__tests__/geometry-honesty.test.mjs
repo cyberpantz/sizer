@@ -648,3 +648,34 @@ describe('a remount leaves no trace of the previous fare', () => {
     }
   });
 });
+
+describe('Outline is a mode, not an overlay', () => {
+  const src = code(client);
+
+  test('turning it on hides the solid', () => {
+    /* It only ever switched the wireframe ON, so the box sat on top of the bag
+       instead of replacing it — a stray highlight rather than a mode, and it
+       obscured the one thing the mode exists for: the MEASURED envelope
+       against the frame with nothing in the way. A bag's corners are rounded
+       and its wheels stick out; the box the airline judges is exactly the one
+       you cannot see while the bag is drawn over it. */
+    assert.match(src, /bagScene\.exterior\.visible = !on/, 'the solid is never hidden');
+    assert.match(src, /bagScene\.envelope\.visible = on/, 'the wireframe is never shown');
+  });
+
+  test('the packing volume goes with it', () => {
+    /* Otherwise the inner box survives into a mode whose whole point is one
+       box, and the reader gets two wireframes with no way to tell them apart. */
+    assert.match(src, /bagScene\.packing\.visible = !on/, 'the packing volume outlives the solid');
+  });
+
+  test('a remount starts with it off', () => {
+    /* Same rule as the rest of the stage: set the state, never inherit it. A
+       reader who left Outline on for one fare should not silently get a
+       wireframe for the next. */
+    const reset = src.slice(src.indexOf('const stageParts'), src.indexOf('if (!canDrawSizer)'));
+    assert.match(reset, /bagScene\.envelope\.visible = false/, 'outline survives a fare change');
+    assert.match(reset, /bagScene\.exterior\.visible = true/, 'the solid may stay hidden');
+    assert.match(reset, /aria-pressed', 'false'/, 'the button still reads as pressed');
+  });
+});
