@@ -115,21 +115,37 @@ function addWheels(
   }
 }
 
+/* THE TELESCOPING HANDLE, RETRACTED — inside the height, never above it.
+ *
+ * The grip used to sit at `max + height * 0.055`: on a 55 cm bag, 3 cm of
+ * handle standing proud of the top. `external_cm` ALREADY includes wheels and
+ * handles — that is the argument the whole site is built on, and the reason
+ * `includes_wheels` and the maker_overall / maker_packing rungs exist. Drawing
+ * the handle on top double-counts precisely the gap the rest of the codebase
+ * is careful about, and a bag that genuinely clears the limit was rendered
+ * sticking out of the gate sizer.
+ *
+ * The grip now finishes flush with the top face and the pole sits under it,
+ * which is both honest and what a retracted handle actually looks like — and
+ * retracted is how a bag goes through a sizer. */
 function addHandle(body: THREE.Mesh, width: number, materials: MaterialSet) {
   const { max, height } = meshBoundsLocalY(body);
-  const pole = new THREE.Mesh(
-    new THREE.BoxGeometry(width * 0.04, height * 0.06, width * 0.04),
-    materials.accent
-  );
-  pole.position.set(0, max + height * 0.025, -width * 0.02);
-  body.add(pole);
+  const gripH = width * 0.025;
+  const poleH = height * 0.06;
 
   const grip = new THREE.Mesh(
-    new THREE.BoxGeometry(width * 0.18, width * 0.025, width * 0.05),
+    new THREE.BoxGeometry(width * 0.18, gripH, width * 0.05),
     materials.accent
   );
-  grip.position.set(0, max + height * 0.055, -width * 0.02);
+  grip.position.set(0, max - gripH * 0.5, -width * 0.02);
   body.add(grip);
+
+  const pole = new THREE.Mesh(
+    new THREE.BoxGeometry(width * 0.04, poleH, width * 0.04),
+    materials.accent
+  );
+  pole.position.set(0, max - gripH - poleH * 0.5, -width * 0.02);
+  body.add(pole);
 }
 
 function addRibs(
@@ -260,12 +276,26 @@ function buildUnderseat(
 
   if (wheelCount > 0) addWheels(body, dims, 2, materials);
 
+  /* THE HANDLE LIVES INSIDE THE HEIGHT, NEVER ON TOP OF IT.
+   *
+   * It used to sit at `max + h * 0.02` — the top of the body plus 2% — which
+   * made the drawn bag about 1 cm taller than the number printed beside it.
+   * That is the one thing this drawing must never do: `external_cm` ALREADY
+   * includes wheels and handles. It is the whole argument of the site, the
+   * reason `includes_wheels` exists and the reason the dimension ladder ranks
+   * maker_overall above maker_packing. Adding height on top double-counts the
+   * exact gap we spend the rest of the codebase being careful about, and a bag
+   * that genuinely fits was drawn poking out of the gate sizer.
+   *
+   * Recessed into the body instead, which is also what a telescoping handle
+   * does when it is down — and down is how it goes through a sizer. */
+  const handleH = h * 0.04;
   const handle = new THREE.Mesh(
-    new THREE.BoxGeometry(w * 0.35, h * 0.04, d * 0.06),
+    new THREE.BoxGeometry(w * 0.35, handleH, d * 0.06),
     materials.accent
   );
   const { max } = meshBoundsLocalY(body);
-  handle.position.set(0, max + h * 0.02, -d * 0.1);
+  handle.position.set(0, max - handleH * 0.5, -d * 0.1);
   body.add(handle);
 
   addRibs(body, dims, profile, materials);
