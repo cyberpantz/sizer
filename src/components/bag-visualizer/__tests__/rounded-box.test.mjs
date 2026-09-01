@@ -18,6 +18,7 @@
  * can be imported and the real bounding box measured. That is why roundedBox
  * lives in its own module with no local imports: so this test can reach it. */
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { describe, test } from 'node:test';
 import * as THREE from 'three';
 import { EPS_CM } from '../../../engine/constants.mjs';
@@ -104,5 +105,42 @@ describe('it degrades sensibly rather than inverting', () => {
     assert.ok(Math.abs(size.y - 40) < 1e-3);
     assert.ok(Math.abs(size.z - 20) < 1e-3);
     assert.ok(Math.abs(base) < 1e-3);
+  });
+});
+
+describe('the measured envelope is drawn as a measurement', () => {
+  /* A dashed line is the drafting convention for something MEASURED rather
+     than something built. The gate sizer is a real frame you could touch; this
+     box is a limit laid over the world, and when the two sit a centimetre
+     apart the reader needs to know which is which at a glance. */
+  const src = readFileSync('src/components/bag-visualizer/createBagGeometry.ts', 'utf8');
+  const body = src.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  test('it is dashed', () => {
+    assert.match(body, /LineDashedMaterial/, 'the envelope is back to a solid line');
+    assert.doesNotMatch(
+      body,
+      /createMeasurementEnvelope[\s\S]{0,400}?LineBasicMaterial/,
+      'the envelope has reverted to a basic material'
+    );
+  });
+
+  test('computeLineDistances is called', () => {
+    /* Without it every dash length is zero and the line renders SOLID — a
+       silent failure that looks exactly like "the dashes did not work", which
+       is why it belongs beside the material rather than in the caller. */
+    assert.match(
+      body,
+      /line\.computeLineDistances\(\)/,
+      'dashes will render solid: LineDashedMaterial needs line distances'
+    );
+  });
+
+  test('the dash scales with the bag', () => {
+    /* So a 40 cm under-seat case and a 55 cm roller show the same rhythm,
+       rather than one reading as finer than the other. */
+    assert.match(body, /const unit = Math\.min\(widthCm, heightCm, depthCm\)/);
+    assert.match(body, /dashSize: unit \* [\d.]+/);
+    assert.match(body, /gapSize: unit \* [\d.]+/);
   });
 });

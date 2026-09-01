@@ -162,10 +162,20 @@ export function initFitVisualizer(opts: InitOptions): () => void {
    * for interactive, and this is not interactive.
    *
    * Grey when the engine declined to answer, which is not a mild green. */
-  (bagScene.envelope.material as THREE.LineBasicMaterial).color.setHex(
-    sizeVerdict(result) === null ? UNANSWERED_HEX : bandHex(result.band)
-  );
-  (bagScene.envelope.material as THREE.LineBasicMaterial).opacity = 1;
+  /* DARKENED TOWARD INK. The band colours are tuned to sit on a pale card
+     behind 15px text; as a hairline on a lit 3D stage they read washed out and
+     the box stops looking like a drawn limit. Blended 45% toward the ink the
+     rest of the site uses, which keeps the verdict legible — green still reads
+     green, red still reads red — while giving the line the weight of something
+     ruled rather than glowing. */
+  {
+    const mat = bagScene.envelope.material as THREE.LineDashedMaterial;
+    const band = new THREE.Color(
+      sizeVerdict(result) === null ? UNANSWERED_HEX : bandHex(result.band)
+    );
+    mat.color.copy(band).lerp(new THREE.Color(0x1c1a17), 0.45);
+    mat.opacity = 1;
+  }
   bagRig.add(bagScene.root);
   content.add(bagRig);
 

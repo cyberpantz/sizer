@@ -446,14 +446,35 @@ export function createBagGeometry(
 }
 
 /** Wireframe of the exact exterior dimensions — what the arrows measure. */
+/* THE MEASURED ENVELOPE — dashed, because it is a DRAWN limit and not an
+ * object. The gate sizer is a real frame you could touch; this box is a
+ * measurement laid over the world, and the drafting convention for that is a
+ * broken line. It also stops the two reading as the same kind of thing when
+ * they sit a centimetre apart.
+ *
+ * LineDashedMaterial needs computeLineDistances() or every dash length comes
+ * out zero and the line renders solid — a silent failure that looks exactly
+ * like "the dashes did not work", which is why it is called here rather than
+ * left to the caller. */
 export function createMeasurementEnvelope(dims: BagDimensions): THREE.LineSegments {
   const { heightCm, widthCm, depthCm } = dims;
   const geom = new THREE.BoxGeometry(widthCm, heightCm, depthCm);
   geom.translate(0, heightCm / 2, 0);
-  return new THREE.LineSegments(
-    new THREE.EdgesGeometry(geom),
-    new THREE.LineBasicMaterial({ color: 0x736c63, transparent: true, opacity: 0.7 })
+  const edges = new THREE.EdgesGeometry(geom);
+
+  /* Dash scaled to the bag, so a 40 cm under-seat case and a 55 cm roller show
+     the same rhythm rather than one reading as finer than the other. */
+  const unit = Math.min(widthCm, heightCm, depthCm);
+  const line = new THREE.LineSegments(
+    edges,
+    new THREE.LineDashedMaterial({
+      color: 0x2f2b26,
+      dashSize: unit * 0.09,
+      gapSize: unit * 0.055,
+    })
   );
+  line.computeLineDistances();
+  return line;
 }
 
 /** Normalised bounding box for measurement projection. Y=height, X=width, Z=depth. */

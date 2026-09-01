@@ -129,8 +129,12 @@ describe('the ladder reaches every surface that states a verdict', () => {
     /* The envelope is the bag's exterior drawn as a box — the thing being
        judged. A fixed slate blue made the Outline view the one place that said
        nothing about the answer, and blue is reserved for interactive. */
-    assert.match(client, /envelope\.material as THREE\.LineBasicMaterial\)\.color\.setHex\(/);
+    /* Now a DASHED material, darkened toward ink: the band colours are tuned
+       for 15px text on a pale card and read washed out as a hairline on a lit
+       3D stage. Blended, not replaced — green still reads green. */
+    assert.match(client, /THREE\.LineDashedMaterial/, 'the envelope is no longer a dashed line');
     assert.match(client, /sizeVerdict\(result\) === null \? UNANSWERED_HEX : bandHex/);
+    assert.match(client, /lerp\(new THREE\.Color\(0x1c1a17\)/, 'the darkening is gone');
   });
 
   test('a finding that is not about size takes no size colour, anywhere', () => {
