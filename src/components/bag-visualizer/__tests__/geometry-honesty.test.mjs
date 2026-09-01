@@ -583,3 +583,31 @@ describe('the bag and the frame are drawn on the same axes', () => {
     }
   });
 });
+
+describe('the badge bar reads subject-then-verdict', () => {
+  const bar = stage.match(/<div\s+data-viz-badge\b[\s\S]*?<\/div>/)?.[0] ?? '';
+
+  test('the airline comes before the verdict chip', () => {
+    /* The chip led and the airline trailed in muted grey, which put the answer
+       before the question — "Fits · Aer Lingus Basic" reads as a label looking
+       for something to label. Every other verdict on this site names the
+       flight first. */
+    assert.ok(bar, 'the badge bar has moved; this guard needs rewriting');
+    assert.ok(
+      bar.indexOf('data-viz-badge-note') < bar.indexOf('data-viz-badge-chip'),
+      'the verdict chip is back in front of the flight it describes'
+    );
+  });
+
+  test('the chip is pushed right and cannot be squashed', () => {
+    const chip = bar.match(/<span[\s\S]*?data-viz-badge-chip[\s\S]*?>/)?.[0] ?? '';
+    assert.match(chip, /ml-auto/, 'the chip no longer sits at the end of the line');
+    assert.match(chip, /shrink-0/, 'a long airline name will squash the verdict');
+  });
+
+  test('the flight is the emphasised half', () => {
+    const note = bar.match(/<span data-viz-badge-note[^>]*>/)?.[0] ?? '';
+    assert.match(note, /font-semibold/, 'the flight is no longer emphasised');
+    assert.doesNotMatch(note, /text-muted/, 'the flight is greyed out again');
+  });
+});

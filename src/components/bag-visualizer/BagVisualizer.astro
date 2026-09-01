@@ -120,13 +120,21 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
   <div
     data-viz-badge
     hidden
-    class="flex items-center gap-2 border-b border-rule bg-surface px-4 py-3"
+    class="flex items-center gap-3 border-b border-rule bg-surface px-4 py-3"
   >
+    {/* SUBJECT LEFT, VERDICT RIGHT — the reading order of a result line.
+        The chip led and the airline trailed it in muted grey, which put the
+        answer before the question: "Fits · Aer Lingus Basic" reads as a label
+        looking for something to label. Naming the flight first and letting the
+        verdict land at the end of the line matches how the sentence underneath
+        is built, and how every other verdict on the site is read.
+        ml-auto rather than justify-between, so the chip still sits beside a
+        short airline name instead of drifting to the far edge on its own. */}
+    <span data-viz-badge-note class="text-[0.9375rem] font-semibold text-ink"></span>
     <span
       data-viz-badge-chip
-      class="rounded-chip border px-2.5 py-1 text-[0.8125rem] font-semibold"
+      class="ml-auto shrink-0 rounded-chip border px-2.5 py-1 text-[0.8125rem] font-semibold"
     ></span>
-    <span data-viz-badge-note class="text-[0.8125rem] text-muted"></span>
   </div>
 
   <div data-viz-shell class="bg-surface-2 px-3 py-4">
