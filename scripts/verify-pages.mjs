@@ -92,13 +92,38 @@ const routes = new Set(
   )
 );
 
+/* A DYNAMIC LINK IS STILL A LINK WORTH CHECKING.
+
+   `/bags/${slug}/` can never equal a literal route, and the first version of
+   this check simply failed it — which would have pushed the next person to
+   either delete the link or add an exception, when what they want is for the
+   check to do its job on the interesting case.
+
+   So a link is split into segments, an interpolated segment matches a `[param]`
+   segment, and everything else must match literally. That still catches the
+   real mistakes — a typo in the fixed part, a missing dynamic route, the wrong
+   depth — while letting `/bags/${slug}/` resolve to `/bags/[slug]/`. */
+const segments = (path) => path.replace(/^\/|\/$/g, '').split('/').filter(Boolean);
+const WILDCARD = /^(\$\{.*\}|\[.*\])$/;
+
+const resolves = (href) => {
+  if (routes.has(href) || routes.has(`${href}/`)) return true;
+  const want = segments(href);
+  return [...routes].some((route) => {
+    const have = segments(route);
+    if (have.length !== want.length) return false;
+    return have.every((seg, i) => seg === want[i] || (WILDCARD.test(seg) && WILDCARD.test(want[i])));
+  });
+};
+
 for (const f of walkAll('src')) {
   if (!f.endsWith('.astro')) continue;
   const src = readFileSync(f, 'utf8');
-  for (const m of src.matchAll(/href[=:]\s*['"](\/[^'"#?]*)['"]/g)) {
+  /* `[^'"#?]` used to exclude `$` implicitly by excluding nothing — an
+     interpolated href matched fine and then failed the lookup. */
+  for (const m of src.matchAll(/href[=:]\s*['"`](\/[^'"`#?]*)['"`]/g)) {
     const href = m[1];
-    if (!routes.has(href) && !routes.has(`${href}/`))
-      fail(f, `links to ${href}, which is not a route`);
+    if (!resolves(href)) fail(f, `links to ${href}, which is not a route`);
   }
 }
 
