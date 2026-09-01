@@ -315,3 +315,37 @@ describe('the verdict is stated above the drawing, in words', () => {
     );
   });
 });
+
+describe('the bag comes to rest centred in the slot', () => {
+  const anim = readFileSync('src/components/bag-visualizer/fitAnimation.ts', 'utf8');
+  const body = anim.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  test('the end position is the centre, not flush against the back', () => {
+    /* It used to seat the bag's back face against the sizer's rear, which is
+       what you physically do at a gate and the wrong thing for a MEASUREMENT
+       drawing: in the side view Z maps to screen X, so the bag read as shoved
+       against one side with all the clearance piled up on the other. That
+       looks like a bag that barely made it, whatever the numbers say.
+
+       Centred, the margin falls equally front and back — which is what the
+       figures mean — and a bag too deep overhangs symmetrically rather than
+       poking out of one end. */
+    assert.match(body, /const endZ = 0;/, 'the bag is seated off-centre in the slot again');
+    assert.doesNotMatch(
+      body,
+      /endZ = -\(sizerHd - bagBd\)/,
+      'the flush-to-back seat is back; the side view will look lopsided'
+    );
+  });
+
+  test('nothing protrudes further than the deck it stands on', () => {
+    /* The entry lip sat past the front of the base and read as a stray nub
+       hanging off the bottom corner in side view. */
+    const src = code(sizer);
+    assert.doesNotMatch(
+      src,
+      /lip\.position\.set\(0, [^,]+, hd \+/,
+      'the lip hangs off the front of the deck again'
+    );
+  });
+});

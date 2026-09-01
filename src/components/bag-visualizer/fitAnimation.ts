@@ -12,8 +12,19 @@ export function createFitAnimation(opts: FitAnimationOptions) {
   const bagBd = bd / 2;
   const gap = Math.max(bd, sd) * 0.28;
   const startZ = sizerHd + bagBd + gap;
-  /** Back of bag near the rear of the sizer — fully inside the depth slot. */
-  const endZ = -(sizerHd - bagBd);
+  /* CENTRED IN THE SLOT, NOT SHOVED TO THE BACK.
+   *
+   * This used to seat the bag's back face flush with the sizer's rear — which
+   * is what you physically do at a gate, and the wrong thing for a MEASUREMENT
+   * drawing. In the side view Z maps to screen X, so the bag read as pushed
+   * hard against one side of the frame with all the clearance piled up on the
+   * other. That looks like a bag that barely made it, whatever the numbers say.
+   *
+   * Centred, the margin falls equally front and back — which is what the
+   * figures actually mean — and a bag too deep for the slot overhangs
+   * symmetrically instead of poking out one end. The end state should look
+   * like the answer. */
+  const endZ = 0;
 
   const CYCLE_MS = 5200;
 

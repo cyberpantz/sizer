@@ -88,8 +88,12 @@ export function createGateSizer(dims: BagDimensions): THREE.Group {
   base.position.set(0, -tube * 1.2, 0);
   group.add(base);
 
+  /* The entry lip, tucked INSIDE the deck's own footprint. It used to sit at
+     hd + tube * 1.5, past the front of the base — in the side view that read
+     as a stray nub hanging off the bottom corner rather than part of the
+     frame. Nothing should protrude further than the deck it stands on. */
   const lip = new THREE.Mesh(new THREE.BoxGeometry(w * 0.96, tube * 2, tube * 3), frame);
-  lip.position.set(0, -tube * 1.2, hd + tube * 1.5);
+  lip.position.set(0, -tube * 1.2, d * 0.55 - tube * 1.5);
   group.add(lip);
 
   return group;
