@@ -77,22 +77,49 @@ const lastUpdated = dates.length
   <div class="mx-auto max-w-page px-6">
 
     <section class="pt-12 pb-6">
-      {/* The mockup read "Bags we've put a tape measure on". That is no longer
-          true — we are not measuring bags. The claim we can actually make is
-          narrower and still worth making. See docs/19. */}
+      {/* A BIG TITLE HAS TO LAND WITHOUT THE PARAGRAPH UNDER IT.
+
+          It read "Bags checked against the airline's own limit", and Frank was
+          right to stop at it. Two things in six words need explaining before it
+          means anything: WHICH airline — the reader has named none — and what
+          "own" is doing, which is quietly arguing against reseller listings, a
+          case they have not heard yet.
+
+          It also described OUR PROCESS rather than what the reader gets. Every
+          other headline on the site is the reader's job in plain words: "Check
+          your whole trip", "Why bags get stopped at the gate", "How we work it
+          out". This was the only one that wasn't, which is why it was the one
+          that read as a puzzle.
+
+          The mockup's version was "Bags we've put a tape measure on" — dropped
+          long ago because we do not measure bags (docs/19). The replacement
+          reached for a defensible claim and landed on an unreadable one. Both
+          the claim and the reading matter, and the claim below is just as
+          careful: "ranked" describes the ordering, so it stays true of the low
+          shelf too, where the bags fit almost nothing.
+
+          It also finishes the sentence the home page starts. That card says
+          "Bags ranked by how many airlines they fit"; arriving here on a
+          headline that says the same thing is how a reader knows the link did
+          what they expected. */}
       <h1 class="max-w-2xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-        Bags checked against the airline's own limit
+        Carry-on bags, ranked by how many airlines they fit
       </h1>
+      {/* The service statement first, the provenance under it. Same order as
+          the home page, and for the same reason: someone still deciding whether
+          they are in the right place is not yet asking where our numbers came
+          from. */}
       <p class="mt-5 max-w-2xl text-lg text-ink-2">
-        Dimensions come from each manufacturer's own product page — never a
-        marketplace listing, where the same bag turns up with different numbers
-        from different sellers. Where a manufacturer publishes both the packing
-        size and the <strong class="text-ink">outside</strong> size, we use the
-        outside one, because that is what an airline measures: wheels, handle and all.
+        Each one measured on its outside — wheels and handle included, the way a
+        gate measures it — against {answerable} airlines, fare by fare.
       </p>
       <p class="mt-3 max-w-2xl text-ink-2">
-        Where they publish both, we show you both — the gap between them is
-        usually where the trouble starts.
+        Dimensions come from each manufacturer's own product page, never a
+        marketplace listing where the same bag turns up with different numbers
+        from different sellers. Where a manufacturer publishes both the packing
+        size and the <strong class="text-ink">outside</strong> size we use the
+        outside one — and where they publish both, we show you both. The gap
+        between them is usually where the trouble starts.
       </p>
       <p class="mt-4 font-mono text-[0.875rem] text-muted">
         {bags.length} bags · checked against {answerable} airlines{lastUpdated && ` · last updated ${lastUpdated}`}
