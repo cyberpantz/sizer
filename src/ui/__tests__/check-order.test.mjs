@@ -119,3 +119,58 @@ describe('the empty states follow the order of the questions', () => {
     );
   });
 });
+
+/* "ANOTHER" IS A LIE WHEN THERE IS NO FIRST ONE.
+ *
+ * Frank: "Why are we showing the 'Add another flight' button when I haven't
+ * even selected the first one?" — and then, about the bag panel, "Same with the
+ * luggage."
+ *
+ * Both panels offered "+ Add another…" beside a slot that was still empty.
+ * Three faults at once: the word is false, the affordance competes with the
+ * control the reader is actually meant to use, and clicking it stacks empty
+ * rows nobody asked for.
+ *
+ * So the rule is not "hide it until the first is chosen". It is that nothing
+ * offers a SECOND empty slot while an empty one already exists — one condition
+ * covering both the opening state and the stacking case.
+ *
+ * Worth recording that I had this screenshot in front of me one message earlier
+ * and answered about the panel's COPY instead. The false affordance was the
+ * larger fault and the more visible one.
+ */
+describe('nothing offers a second empty slot', () => {
+  test('both add buttons are gated on every slot being filled', () => {
+    assert.match(code, /const allFilled = \(slots, key\) =>/);
+    assert.match(code, /allFilled\(state\.bags, 'slug'\)\s*\n?\s*\?/, 'the bag button is ungated');
+    assert.match(code, /allFilled\(state\.legs, 'iata'\)\s*\n?\s*\?/, 'the flight button is ungated');
+  });
+
+  test('the gate requires a slot to exist AND be filled', () => {
+    /* `[].every(...)` is true, so a bare `.every` would show the button on an
+       empty array — which is the opening state on a page that has no slots at
+       all, and exactly the case this is meant to catch. */
+    assert.match(code, /slots\.length > 0 && slots\.every/);
+  });
+
+  test('the listeners tolerate the button not being there', () => {
+    /* wireInputs runs on every draw, including the draws where the button is
+       absent. An unguarded querySelector would throw on the opening render and
+       take the whole panel with it. */
+    assert.match(code, /\[data-addbag\]'\)\?\.addEventListener/);
+    assert.match(code, /\[data-addleg\]'\)\?\.addEventListener/);
+  });
+});
+
+describe('the bag panel describes a set, not a comparison', () => {
+  test('the old comparison copy is gone from both places', () => {
+    /* "Add the ones you're choosing between" and "+ Add another bag to
+       compare" described the model roles replaced. A carry-on and a personal
+       item are carried at the same time — the second bag defaults to the
+       personal role and the piece check counts them together — so the panel was
+       describing a behaviour it no longer had. */
+    const visible = page.replace(/\{\/\*[\s\S]*?\*\/\}/g, '').replace(/\/\*[\s\S]*?\*\//g, '');
+    assert.doesNotMatch(visible, /choosing between/, 'the panel still frames bags as alternatives');
+    assert.doesNotMatch(visible, /bag to compare/, 'the add button still promises a comparison');
+  });
+});

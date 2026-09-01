@@ -111,7 +111,14 @@ const RISK = [
           <section class="mt-4 rounded-card border border-rule bg-surface shadow-panel">
             <div class="border-b border-rule px-5 py-4">
               <h2 class="text-lg font-semibold">Your bags</h2>
-              <p class="mt-0.5 text-[0.9375rem] text-muted" data-bagbox-hint>Add the ones you're choosing between.</p>
+              {/* "Add the ones you're choosing between" described the OLD
+                  model, where bags were alternatives and the button below said
+                  "add another bag to compare". Roles ended that: a carry-on and
+                  a personal item are carried at the same time, the second bag
+                  now defaults to the personal role, and the piece check counts
+                  them against what the fare grants. The panel was describing a
+                  behaviour it no longer had. */}
+              <p class="mt-0.5 text-[0.9375rem] text-muted">Everything you are taking on board.</p>
             </div>
             <div class="relative z-10 px-5 pt-4 pb-[1.125rem]" data-bagbox></div>
           </section>
@@ -568,6 +575,22 @@ const RISK = [
       ).join('')}
     </div>`;
 
+  /* "ANOTHER" IS A LIE WHEN THERE IS NO FIRST ONE.
+
+     Frank: "Why are we showing the 'Add another flight' button when I haven't
+     even selected the first one?" — and the same on the bag panel.
+
+     Both offered "+ Add another…" beside a slot that was still empty, which is
+     three faults at once: the word is false, the affordance competes with the
+     control the reader is meant to use, and clicking it three times stacks
+     three empty rows nobody asked for.
+
+     So the rule is not merely "hide it until the first is chosen" — it is that
+     nothing offers a SECOND empty slot while an empty one already exists. Both
+     panels are gated on every slot being filled, which covers the opening
+     state and the stacking case with one condition. */
+  const allFilled = (slots, key) => slots.length > 0 && slots.every((s) => s[key]);
+
   function renderInputs() {
     /* THE BAG IS A CONTROL, NOT A CAPTION.
 
@@ -644,9 +667,11 @@ const RISK = [
           </div>`;
         })
         .join('') +
-      `<button type="button" data-addbag
+      (allFilled(state.bags, 'slug')
+        ? `<button type="button" data-addbag
          class="mt-3 min-h-12 w-full cursor-pointer rounded-chip border border-dashed border-rule-strong p-3 font-semibold text-blue hover:border-blue hover:bg-blue-wash">
-         + Add another bag to compare</button>`;
+         + Add another bag</button>`
+        : '');
 
     el('[data-legbox]').innerHTML =
       state.legs
@@ -689,9 +714,11 @@ const RISK = [
           </div>`;
         })
         .join('') +
-      `<button type="button" data-addleg
+      (allFilled(state.legs, 'iata')
+        ? `<button type="button" data-addleg
          class="mt-3 min-h-12 w-full cursor-pointer rounded-chip border border-dashed border-rule-strong p-3 font-semibold text-blue hover:border-blue hover:bg-blue-wash">
-         + Add another flight</button>`;
+         + Add another flight</button>`
+        : '');
 
     el('[data-riskwhy]').textContent = riskWhy(state.risk);
     for (const b of el('[data-risk]').querySelectorAll('[data-r]')) {
@@ -795,7 +822,7 @@ const RISK = [
         draw();
       });
     }
-    root.querySelector('[data-addbag]').addEventListener('click', () => {
+    root.querySelector('[data-addbag]')?.addEventListener('click', () => {
       /* An empty slot, not "the next bag we happen to have". Silently adding a
          product is the same accidental endorsement as preselecting one. */
       /* THE SECOND BAG IS ALMOST NEVER A SECOND CARRY-ON. This defaulted to
@@ -805,7 +832,7 @@ const RISK = [
       state.bags.push({ slug: '', role: defaultRoleForNew(state.bags) });
       draw();
     });
-    root.querySelector('[data-addleg]').addEventListener('click', () => {
+    root.querySelector('[data-addleg]')?.addEventListener('click', () => {
       /* Empty, for the same reason the first one is. */
       state.legs.push({ iata: '', fare: '' });
       draw();
@@ -1425,9 +1452,11 @@ const RISK = [
      column and nothing else — so adding a personal item beside your carry-on
      made the carry-on's answer vanish.
 
-     That was defensible exactly once: when bags were ALTERNATIVES. The add
-     button still says "add another bag to compare", and comparing two rollers
-     one at a time is a coherent thing to build. Roles broke that assumption
+     That was defensible exactly once: when bags were ALTERNATIVES — the panel
+     read "add the ones you're choosing between" and the button said "add
+     another bag to compare", and comparing two rollers one at a time is a
+     coherent thing to build. Both strings are gone now. Roles broke that
+     assumption
      without anyone updating this function — a carry-on and a personal item are
      not alternatives, they are a set you carry at the same time, which is the
      whole premise of docs/27.
