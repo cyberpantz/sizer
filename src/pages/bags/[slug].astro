@@ -76,6 +76,8 @@ const promotable = isPromotable(bag);
    the way the dataset is keyed. */
 const REGIONS = [
   ['NA', 'North America'],
+  ['CA', 'Central America'],
+  ['SA', 'South America'],
   ['EU', 'Europe'],
   ['AS', 'Asia'],
   ['ME', 'Middle East'],
@@ -185,8 +187,13 @@ const SOURCE_IS_WEAK = (rung) =>
 
 const SOURCE_LINE = {
   [DIM_SOURCE.MEASURED]: 'We measured this one ourselves.',
+  /* The badge above already says "Manufacturer's figure, wheels and handle
+     included", so restating that here spent the reader's attention on a
+     sentence they had just read. This adds the part the badge cannot fit: the
+     manufacturer LABELLED it as the outside, we did not infer it. That
+     distinction is the whole ladder. */
   [DIM_SOURCE.MAKER_OVERALL]:
-    "This is the manufacturer's own figure for the outside of the bag — wheels and handle included, which is what an airline measures.",
+    'The manufacturer labels this as the outside of the bag, not the packing space inside. It is the measurement a gate agent takes.',
   [DIM_SOURCE.REVIEW]:
     'This figure comes from a review publication, not the manufacturer. We attribute it and are replacing it at source; until then this bag is shown rather than recommended.',
   [DIM_SOURCE.MAKER_UNSPECIFIED]:
@@ -384,7 +391,15 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
               <summary
                 class="inline-flex cursor-pointer list-none items-center gap-1 text-[0.875rem] font-semibold text-blue hover:text-blue-hover hover:underline underline-offset-2 [&::-webkit-details-marker]:hidden"
               >
-                <span class="group-open:hidden">Where these figures come from</span>
+                {/* "Where these figures come from" promised something the line
+                    directly above it already gives — the product page, and the
+                    date it was read. So the toggle restated the visible and
+                    then delivered something else: what the number includes and
+                    why it is the one that decides. "Figures" is also stiff for
+                    a control someone taps. This asks the reader's actual
+                    question and works on every rung of the ladder, including
+                    the ones where the answer is "a review measured it". */}
+                <span class="group-open:hidden">How we know this</span>
                 <span class="hidden group-open:inline">Show less</span>
                 <span aria-hidden="true" class="transition-transform group-open:rotate-180">▾</span>
               </summary>
@@ -401,14 +416,27 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                       <Fragment>{i > 0 && ', '}<span data-cm={v}>{v} cm</span></Fragment>
                     ))}
                   </strong>{' '}
-                  over the packing figure.
+                  {/* "over the packing figure" left three bare numbers with
+                      nothing saying what each belonged to. Naming them is not
+                      an option: this site deliberately refuses height/width/
+                      depth, because a bag turns and the maker's labels for its
+                      sides are not a constraint — the comparator on /check says
+                      so in as many words. "to its three sides" tells the reader
+                      what the list IS without claiming which is which, and
+                      keeps the order matching the table directly above. */}
+                  to its three sides.
                 </p>
               )}
               {gap && (
                 <p class="mt-2 text-[0.875rem] text-muted">
-                  That difference is the whole reason a bag sold as carry-on size
-                  gets stopped: the brochure figure measures the packing space,
-                  and the gate measures the outside.
+                  {/* Was: "That difference is the whole reason a bag sold as
+                      carry-on size gets stopped: the brochure figure measures
+                      the packing space, and the gate measures the outside."
+                      Thirty words, and it introduced "brochure figure" one line
+                      after "packing figure" — two names for one thing, in a
+                      panel whose entire job is telling two things apart. */}
+                  That gap is why a bag sold as carry-on size gets stopped: the
+                  box measures the space inside, the gate measures the outside.
                 </p>
               )}
               {(record.conflicts ?? []).length > 0 && (
@@ -469,9 +497,21 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
         <div class="mt-7">
           <h3 class="text-lg font-semibold">{group.label}</h3>
           <div class="mt-2 overflow-hidden rounded-card border border-rule">
+            {/* THREE COLUMNS ONLY WHEN THERE IS ROOM FOR THREE.
+                On a 375px phone the two fixed columns (9rem + 8.5rem) plus
+                gaps need 304px against 293px of content width, so the
+                minmax(0,1fr) name column resolved to LITERALLY 0px — the
+                browser reported `0px 144px 136px`. The airline name then
+                spilled out of a zero-width box and rendered on top of the
+                margin text: "American" and "0.05 cm too deep" overlapping.
+                minmax(0,…) is what made it silent rather than an overflow, so
+                nothing scrolled sideways and no guard would have caught it.
+
+                Below sm: the name and the verdict pill share row one, and the
+                margin drops to row two under the name. Above sm: as before. */}
             {group.rows.map(({ carrier, record: cRecord, result }) => (
-              <div class="grid grid-cols-[minmax(0,1fr)_9rem_8.5rem] items-center gap-3 border-b border-rule px-4 py-3 text-[0.9375rem] last:border-b-0">
-                <span>
+              <div class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 border-b border-rule px-4 py-3 text-[0.9375rem] last:border-b-0 sm:grid-cols-[minmax(0,1fr)_9rem_8.5rem] sm:gap-3">
+                <span class="col-start-1 row-start-1">
                   <span class="font-semibold">{carrier.name}</span>
                   <span class="flex flex-wrap items-center gap-x-1 text-[0.8125rem] text-muted">
                     {fareLabel(carrier.fare_class)}
@@ -498,7 +538,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                     )}
                   </span>
                 </span>
-                <span class="font-mono text-[0.8125rem] text-ink-2">
+                <span class="col-start-1 row-start-2 font-mono text-[0.8125rem] text-ink-2 sm:col-start-2 sm:row-start-1">
                   {result.band === null
                     ? 'not researched'
                     : result.no_cabin_bag
@@ -510,7 +550,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                 {/* whitespace-nowrap so a label can never wrap inside its
                     pill, whatever wording we settle on. The column is sized
                     for the longest one rather than the shortest. */}
-                <span class={`rounded-full px-2.5 py-1 text-center text-[0.875rem] font-semibold whitespace-nowrap ${
+                <span class={`col-start-2 row-start-1 rounded-full px-2.5 py-1 text-center text-[0.875rem] font-semibold whitespace-nowrap sm:col-start-3 ${
                   result.band ? TAG[result.band] : 'bg-surface-2 text-muted'
                 }`}>{resultLabel(result)}</span>
               </div>

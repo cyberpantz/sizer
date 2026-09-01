@@ -1,0 +1,44 @@
+{
+  "iata": "G3",
+  "name": "GOL Linhas Aéreas",
+  "region": "SA",
+  "type": "lcc",
+  "status": "operating",
+  "source_url": "https://www.voegol.com.br/en-US/web/guest/nh/bagagens",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": null,
+  "sizer": { "at_gate": null, "cabin_cm": null, "personal_cm": null },
+  "strictness": { "score": 7, "score_basis": "type_region_prior_only", "contested": false, "evidence": [], "components": {}, "note": "LCC type prior only. No South America enforcement adjustment has been researched." },
+  "allowances": [
+    {
+      "fare_class": "basic", "fare_name": "Basic", "type": "cabin",
+      "cabin_absence": "not_permitted", "max_cm": null,
+      "source_url": "https://www.voegol.com.br/en-US/web/guest/nh/bagagens", "verified_at": "2026-09-01",
+      "note": "For tickets purchased from 14 October 2025, Basic includes only the personal item; the small overhead bag is available for purchase."
+    },
+    {
+      "fare_class": "basic", "fare_name": "Basic", "type": "personal",
+      "max_cm": [43, 32, 22], "max_kg": 10, "includes_wheels": null, "count": 1,
+      "source_url": "https://www.voegol.com.br/en-US/web/guest/nh/bagagens", "verified_at": "2026-09-01"
+    },
+    {
+      "fare_class": "light", "fare_name": "Light", "type": "cabin",
+      "max_cm": [55, 35, 25], "max_kg": 12, "includes_wheels": true, "count": 1,
+      "source_url": "https://www.voegol.com.br/en-US/web/guest/nh/bagagens", "verified_at": "2026-09-01",
+      "note": "Tickets purchased from 14 October 2025: Light and higher fares include the small overhead bag."
+    },
+    {
+      "fare_class": "light", "fare_name": "Light", "type": "personal",
+      "max_cm": [43, 32, 22], "max_kg": 10, "includes_wheels": null, "count": 1,
+      "source_url": "https://www.voegol.com.br/en-US/web/guest/nh/bagagens", "verified_at": "2026-09-01"
+    }
+  ],
+  "research_scope": "Current Basic and Light cabin entitlements for tickets purchased from 14 October 2025.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Official GOL baggage and fare pages read directly. Basic excludes the overhead bag while Light includes it under the post-14-October-2025 policy. Older tickets use a different rule. Checked baggage remains fare-dependent and unresearched.",
+  "research_dossier": "resources/carriers/G3-gol.md"
+}

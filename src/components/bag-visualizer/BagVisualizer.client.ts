@@ -121,6 +121,10 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   let turnTo = { yaw, pitch };
   let turnStart = 0;
   const TURN_MS = 620;
+  /* Orbit state. Declared beside the other camera state rather than next to
+     its button, because the render loop is what consumes it. */
+  let orbiting = false;
+  let orbitLast = 0;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xf5f2ed);
@@ -625,6 +629,12 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   }
 
   function setView(name: ViewPreset) {
+    /* Choosing a face ends the orbit. Both write `yaw`; leaving orbit running
+       would have the two of them arguing over the camera every frame, and the
+       reader asked to look at something specific. Turning it off HERE rather
+       than in each caller means the buttons, the number keys and any future
+       caller all inherit the behaviour. */
+    if (orbiting) setOrbit(false);
     activePreset = name;
     turnFrom = { yaw, pitch };
     turnTo = { yaw: PRESETS[name].yaw, pitch: PRESETS[name].pitch };
@@ -680,6 +690,26 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       }
     }
 
+    /* ORBIT ADVANCES ON WALL-CLOCK TIME, not per frame. A fixed increment per
+       frame runs at whatever rate the display happens to have — half speed on
+       a throttled tab, double on 120 Hz. Delta time makes the turn take twelve
+       seconds everywhere. Clamped because a backgrounded tab returns one
+       enormous delta, which would otherwise teleport the bag a third of a turn
+       the instant you look back at it. */
+    if (orbiting) {
+      const now = performance.now();
+      const dt = Math.min(now - orbitLast, 100);
+      orbitLast = now;
+      yaw += dt * ORBIT_RATE;
+      if (yaw > Math.PI) yaw -= Math.PI * 2;
+      targetYaw = yaw;
+      applyView();
+      renderer.render(scene, camera);
+      updateOverlay();
+      if (visible) scheduleRender();
+      return;
+    }
+
     const elapsed = performance.now() - turnStart;
     const viewMoving = elapsed < TURN_MS;
 
@@ -732,31 +762,58 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     btn.addEventListener('click', () => setView(btn.getAttribute('data-view') as ViewPreset));
   }
 
-  const outlineBtn = root.querySelector('[data-outline-toggle]') as HTMLButtonElement | null;
-  outlineBtn?.setAttribute('aria-pressed', 'false');
-  /* OUTLINE REPLACES THE BAG, IT DOES NOT DECORATE IT.
+  /* ORBIT — a continuous turn, not a fourth camera position.
    *
-   * This only ever switched the wireframe ON. The solid stayed, so the box sat
-   * on top of the bag it was meant to show instead of the bag — which reads as
-   * a stray highlight rather than a mode, and hides the one thing the mode is
-   * for: seeing the MEASURED envelope against the frame with nothing in the
-   * way. A bag's corners are rounded and its wheels stick out; the box the
-   * airline actually judges is the one you cannot see while the bag is drawn.
+   * Front, Side and Top are drafting elevations: each squares up to a face so
+   * a dimension can be read off it. Orbit is the opposite kind of control. It
+   * answers "what does this thing actually look like", which is the one
+   * question an orthographic still cannot answer, because without perspective
+   * a static box is ambiguous about its own depth.
    *
-   * Safe to hide the solid only because the frustum no longer refits on a
-   * change — otherwise removing the bag from the visible set would resize the
-   * whole scene, which is the growing-and-collapsing bug wearing a hat. */
-  const setOutline = (on: boolean) => {
-    bagScene.envelope.visible = on;
-    bagScene.exterior.visible = !on;
-    if (bagScene.packing) bagScene.packing.visible = !on;
-    outlineBtn?.setAttribute('aria-pressed', String(on));
-  };
-  const onOutlineToggle = () => {
-    setOutline(!bagScene.envelope.visible);
+   * IT DRIVES `yaw` DIRECTLY rather than going through setView(). setView
+   * animates from A to B over TURN_MS and then settles; orbit has no B. Both
+   * write yaw, so orbit has to be stopped whenever a preset is chosen or the
+   * two fight over the same variable and the camera stutters.
+   *
+   * PITCH IS PARKED AT THE THREE-QUARTER ANGLE and left alone. Orbiting the
+   * pitch as well produces the tumbling-in-space look that makes a viewer lose
+   * which way is up — and for luggage, up is meaningful: wheels belong at the
+   * bottom. Turning about the vertical axis is how you walk around an object
+   * on the floor, which is the motion being imitated.
+   */
+  const orbitBtn = root.querySelector('[data-orbit-toggle]') as HTMLButtonElement | null;
+  const orbitLabel = root.querySelector('[data-orbit-label]') as HTMLElement | null;
+  /* A full turn in twelve seconds. Slow enough to read a face on the way past,
+     and slow enough not to pull the eye away from the verdict beside it —
+     this sits next to a number someone is trying to read. */
+  const ORBIT_RATE = (Math.PI * 2) / 12000;
+
+  const setOrbit = (on: boolean) => {
+    orbiting = on;
+    orbitBtn?.setAttribute('aria-pressed', String(on));
+    if (orbitLabel) orbitLabel.textContent = on ? 'Stop' : 'Orbit';
+    if (on) {
+      /* Start from where the camera already is, so pressing it never jumps. */
+      orbitLast = performance.now();
+      pitch = PRESETS.default.pitch;
+      targetPitch = pitch;
+      /* No preset describes a moving camera, so none stays lit. */
+      for (const b of root.querySelectorAll('[data-view]')) {
+        (b as HTMLButtonElement).setAttribute('aria-pressed', 'false');
+      }
+      activePreset = 'default';
+      if (statusEl) statusEl.textContent = 'Orbiting the bag';
+      /* Past the settle branch, or the first frame snaps back to targetYaw. */
+      turnStart = performance.now() - TURN_MS;
+      settled = true;
+    }
     scheduleRender();
   };
-  outlineBtn?.addEventListener('click', onOutlineToggle);
+  /* Named, not an inline arrow, so dispose() can actually remove it. An
+     anonymous handler is unremovable, and this component remounts on every
+     fare change — the listeners would accumulate one per mount. */
+  const onOrbitToggle = () => setOrbit(!orbiting);
+  orbitBtn?.addEventListener('click', onOrbitToggle);
 
   const ro = new ResizeObserver(() => {
     fitCamera();
@@ -885,12 +942,20 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     overlay: root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null,
   };
   stageParts.panel?.setAttribute('hidden', '');
-  /* Outline is a view mode, and a remount is a new view: a reader who left it
-     on for one fare should not silently get a wireframe for the next. */
+  /* The envelope wireframe still exists in the scene graph — it is what the
+     measurement overlay projects against — but nothing shows it now that
+     Outline is gone. Pinned off explicitly rather than assumed off, because a
+     remount reuses the scene. */
   bagScene.envelope.visible = false;
   bagScene.exterior.visible = true;
   if (bagScene.packing) bagScene.packing.visible = true;
-  root.querySelector('[data-outline-toggle]')?.setAttribute('aria-pressed', 'false');
+  /* Orbit is a view mode, and a remount is a new view: a reader who left the
+     bag spinning for one fare should not find the next one already turning. */
+  root.querySelector('[data-orbit-toggle]')?.setAttribute('aria-pressed', 'false');
+  {
+    const l = root.querySelector('[data-orbit-label]');
+    if (l) l.textContent = 'Orbit';
+  }
   stageParts.controls?.removeAttribute('hidden');
   stageParts.overlay?.removeAttribute('hidden');
   canvas.style.removeProperty('display');
@@ -954,7 +1019,11 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     ro.disconnect();
     io.disconnect();
     focusTarget?.removeEventListener('keydown', onKeyDown);
-    outlineBtn?.removeEventListener('click', onOutlineToggle);
+    orbitBtn?.removeEventListener('click', onOrbitToggle);
+    /* Stop the loop as well as the listener. A disposed component whose
+       `orbiting` flag is still true would keep asking for frames through the
+       render function's own tail call. */
+    orbiting = false;
     cancelAnimationFrame(renderId);
     bagScene.dispose();
     materials.dispose();

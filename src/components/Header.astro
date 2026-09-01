@@ -29,18 +29,38 @@ const nav = [
   { href: '/check/', label: 'Check your trip' },
 ];
 ---
+{/* TWO ROWS ON A PHONE, AND DELIBERATELY SO.
+    This was one row at every width, and on a 375px screen the parts need
+    about 476px: 48 for the wordmark, 225 for three labels and their gaps,
+    139 for the unit toggle, plus 64 of gaps — against 327 once the page
+    padding is off. There is no combination of smaller gaps that fits, so
+    tightening them would only have moved the break.
+    What actually happened was that "Check your trip" wrapped inside its own
+    link, making the bar a ragged two lines while `h-16` still claimed it was
+    64px tall. That is an accidental second row. This is an intentional one:
+    wordmark and units on top, the three links beneath, back to a single row
+    from 640px up. Nothing is hidden and no label is shortened — with three
+    items a hamburger would cost a tap to reveal what already fits. */}
 <header class="border-b border-rule bg-surface">
-  <div class="mx-auto max-w-page px-6 flex items-center gap-8 h-16">
+  <div
+    class="mx-auto max-w-page px-6 flex flex-wrap items-center gap-x-8 gap-y-3 py-3
+           sm:h-16 sm:flex-nowrap sm:py-0"
+  >
     <a href="/" class="font-bold text-lg tracking-tight text-ink no-underline hover:text-blue">Sizer</a>
-    <nav class="flex gap-6 mr-auto">
+
+    {/* order-last + w-full drops the nav onto its own line below 640px. */}
+    <nav class="order-last flex w-full gap-6 sm:order-none sm:mr-auto sm:w-auto">
       {nav.map((n) => (
         <a
           href={n.href}
           aria-current={path.startsWith(n.href) ? 'page' : undefined}
-          class="text-[0.9375rem] no-underline text-ink-2 hover:text-blue aria-[current=page]:text-ink aria-[current=page]:font-semibold"
+          class="whitespace-nowrap text-[0.9375rem] no-underline text-ink-2 hover:text-blue aria-[current=page]:text-ink aria-[current=page]:font-semibold"
         >{n.label}</a>
       ))}
     </nav>
-    <UnitToggle />
+
+    {/* ml-auto pins the toggle to the right of the top row on mobile; from
+        sm: the nav's mr-auto does that job instead. */}
+    <div class="ml-auto sm:ml-0"><UnitToggle /></div>
   </div>
 </header>

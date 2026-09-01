@@ -359,9 +359,16 @@ const describe = `${type} measuring ${fmt(dimensions.heightCm)} by ${fmt(dimensi
       class="min-h-9 cursor-pointer rounded-chip border border-rule px-2.5 py-1.5 text-[0.8125rem] font-semibold text-ink-2 hover:border-ink-2 hover:text-ink aria-pressed:border-blue aria-pressed:bg-blue-wash aria-pressed:text-blue">
       Top
     </button>
-    <button type="button" data-outline-toggle aria-pressed="false"
+    {/* ORBIT, WHERE OUTLINE USED TO BE.
+        Frank: "I want to remove the outline functionality. It is not useful."
+        Outline swapped the solid for its measurement envelope — a true picture
+        of the box an airline judges, and one nobody needed, because the frame
+        beside it already draws that limit. Orbit answers the question people
+        actually have of a 3D view: what does the whole thing look like.
+        A toggle, not a one-shot: it runs until you stop it or pick a face. */}
+    <button type="button" data-orbit-toggle aria-pressed="false"
       class="min-h-9 cursor-pointer rounded-chip border border-rule px-2.5 py-1.5 text-[0.8125rem] font-semibold text-ink-2 hover:border-ink-2 hover:text-ink aria-pressed:border-blue aria-pressed:bg-blue-wash aria-pressed:text-blue">
-      Outline
+      <span data-orbit-label>Orbit</span>
     </button>
   </div>
   </div>

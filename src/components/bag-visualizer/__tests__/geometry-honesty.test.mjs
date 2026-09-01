@@ -649,34 +649,66 @@ describe('a remount leaves no trace of the previous fare', () => {
   });
 });
 
-describe('Outline is a mode, not an overlay', () => {
+/* ORBIT REPLACED OUTLINE. Frank: "I want to remove the outline functionality.
+ * It is not useful." Outline swapped the solid for its measurement envelope,
+ * which was a true picture of the box an airline judges and a redundant one,
+ * because the frame drawn beside it already IS that limit. These tests replace
+ * the three that guarded it. */
+describe('orbit turns the bag without fighting the presets', () => {
   const src = code(client);
 
-  test('turning it on hides the solid', () => {
-    /* It only ever switched the wireframe ON, so the box sat on top of the bag
-       instead of replacing it — a stray highlight rather than a mode, and it
-       obscured the one thing the mode exists for: the MEASURED envelope
-       against the frame with nothing in the way. A bag's corners are rounded
-       and its wheels stick out; the box the airline judges is exactly the one
-       you cannot see while the bag is drawn over it. */
-    assert.match(src, /bagScene\.exterior\.visible = !on/, 'the solid is never hidden');
-    assert.match(src, /bagScene\.envelope\.visible = on/, 'the wireframe is never shown');
+  test('outline is gone entirely, not merely unlinked', () => {
+    /* A dead toggle left in the source is worse than either keeping or
+       removing the feature: the next person cannot tell which it was. */
+    for (const ghost of ['data-outline-toggle', 'setOutline', 'onOutlineToggle']) {
+      assert.ok(!src.includes(ghost), `${ghost} survived the removal`);
+    }
   });
 
-  test('the packing volume goes with it', () => {
-    /* Otherwise the inner box survives into a mode whose whole point is one
-       box, and the reader gets two wireframes with no way to tell them apart. */
-    assert.match(src, /bagScene\.packing\.visible = !on/, 'the packing volume outlives the solid');
+  test('choosing a face stops the orbit', () => {
+    /* Both write `yaw`. Left running, the orbit and the preset animation
+       argue over the camera every frame and it visibly stutters — and the
+       reader has just asked to look at one specific face. Stopped inside
+       setView so the buttons, the number keys and any future caller all
+       inherit it, rather than at three call sites that can drift apart. */
+    const setView = src.slice(src.indexOf('function setView'), src.indexOf('function scheduleRender'));
+    assert.match(setView, /if \(orbiting\) setOrbit\(false\)/, 'setView leaves the orbit running');
   });
 
-  test('a remount starts with it off', () => {
+  test('the turn is measured in wall-clock time, not frames', () => {
+    /* A fixed step per frame runs at whatever rate the display has — half
+       speed in a throttled tab, double on a 120 Hz panel. And the delta must
+       be clamped, or a backgrounded tab returns one enormous gap and the bag
+       teleports a third of a turn the moment you look back. */
+    assert.match(src, /Math\.min\(now - orbitLast, \d+\)/, 'the orbit delta is unclamped');
+    assert.match(src, /yaw \+= dt \* ORBIT_RATE/, 'the orbit does not advance on elapsed time');
+  });
+
+  test('pitch is parked, so the bag never tumbles', () => {
+    /* Orbiting pitch as well loses the viewer's sense of which way is up, and
+       for luggage up is meaningful — wheels belong on the floor. */
+    const setOrbit = src.slice(src.indexOf('const setOrbit'), src.indexOf('orbitBtn?.addEventListener'));
+    assert.match(setOrbit, /pitch = PRESETS\.default\.pitch/, 'orbit does not park the pitch');
+  });
+
+  test('the listener can be removed, and the loop stops on dispose', () => {
+    /* This component remounts on every fare change. An anonymous arrow cannot
+       be removed, so the handlers would accumulate one per mount; and a
+       disposed component still flagged `orbiting` keeps asking for frames
+       through the render function's own tail call. */
+    assert.match(src, /const onOrbitToggle = /, 'the orbit handler is anonymous and unremovable');
+    const dispose = src.slice(src.indexOf('disposed = true'));
+    assert.match(dispose, /removeEventListener\('click', onOrbitToggle\)/, 'the orbit listener leaks');
+    assert.match(dispose, /orbiting = false/, 'the orbit loop survives dispose');
+  });
+
+  test('a remount starts still', () => {
     /* Same rule as the rest of the stage: set the state, never inherit it. A
-       reader who left Outline on for one fare should not silently get a
-       wireframe for the next. */
+       reader who left the bag spinning for one fare should not find the next
+       one already turning. */
     const reset = src.slice(src.indexOf('const stageParts'), src.indexOf('if (!canDrawSizer)'));
-    assert.match(reset, /bagScene\.envelope\.visible = false/, 'outline survives a fare change');
-    assert.match(reset, /bagScene\.exterior\.visible = true/, 'the solid may stay hidden');
-    assert.match(reset, /aria-pressed', 'false'/, 'the button still reads as pressed');
+    assert.match(reset, /\[data-orbit-toggle\][\s\S]{0,60}aria-pressed', 'false'/, 'orbit survives a fare change');
+    assert.match(reset, /bagScene\.envelope\.visible = false/, 'the envelope wireframe may still be showing');
   });
 });
 

@@ -1,9 +1,9 @@
 {
- "generated": "2026-08-31",
- "count": 75,
+ "generated": "2026-09-01",
+ "count": 83,
  "target": 100,
- "verified": 75,
- "note": "All 75 carrier records have official allowance research; no mockup size placeholders remain. Research covers the documented scope, not every fare or checked-bag rule. Enforcement, sizers, shared-weight and other publication limitations remain in audit notes and dossiers.",
+ "verified": 83,
+ "note": "All 83 carrier records have official allowance research; no mockup size placeholders remain. Research covers the documented scope, not every fare or checked-bag rule. Enforcement, sizers, shared-weight and other publication limitations remain in audit notes and dossiers.",
  "carriers": [
   "5J",
   "6E",
@@ -12,6 +12,8 @@
   "AF",
   "AI",
   "AK",
+  "AM",
+  "AV",
   "AY",
   "AZ",
   "B6",
@@ -20,6 +22,7 @@
   "BT",
   "CA",
   "CI",
+  "CM",
   "CX",
   "CZ",
   "DE",
@@ -28,9 +31,12 @@
   "EI",
   "EK",
   "EW",
+  "FD",
   "F9",
   "FI",
   "FR",
+  "G3",
+  "GA",
   "GQ",
   "HU",
   "HV",
@@ -43,6 +49,7 @@
   "KC",
   "KE",
   "KL",
+  "LA",
   "LH",
   "LO",
   "LS",
@@ -62,6 +69,7 @@
   "SN",
   "SQ",
   "SV",
+  "TG",
   "TK",
   "TP",
   "TR",
@@ -90,7 +98,7 @@
    "note": "Record deleted rather than flagged — nobody should be shown a carrier that no longer flies. Research retained at resources/carriers/NK-spirit.md."
   }
  ],
- "researched": 75,
+ "researched": 83,
  "placeholders": 0,
- "pending_publication_review": 75
+ "pending_publication_review": 83
 }

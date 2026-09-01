@@ -536,7 +536,28 @@ const RISK = [
   const customEditor = (slot, i) => {
     const parsed = decodeCustom(slot.slug);
     if (!parsed) return '';
-    const step = U.unit === 'cm' ? 0.5 : 0.25;
+    /* THE STEP MUST EQUAL THE DISPLAYED PRECISION, or the arrows do nothing.
+     *
+     * Frank: "when I try to increment the number fields it does not appear to
+     * allow me to change the value. When I just type a new number it works."
+     *
+     * It was 0.25 in imperial while len() renders one decimal place. 55.2 cm
+     * shows as 21.7 in, which is NOT on the 1 + 0.25n grid, so the browser's
+     * stepUp() snapped to the nearest grid point — 21.75, a rise of 0.05 in
+     * rather than a step of 0.25. 0.05 in is 0.13 cm, and the permalink stores
+     * one decimal of a centimetre, so 21.75 re-encoded to 55.2: the identical
+     * value it started from. The panel then re-rendered from that unchanged
+     * state and put 21.7 back in the box. Every press was a round trip to
+     * nowhere. Typing worked because a typed number is a large enough jump to
+     * survive the rounding.
+     *
+     * Matching the step to len()'s one decimal fixes it in both units and
+     * makes the control honest: one press moves the number you can see by
+     * exactly one digit. 0.1 cm is a millimetre, 0.1 in is 2.5 mm — both finer
+     * than any tape measure held against a soft bag, which is the accuracy
+     * this form actually has.
+     */
+    const step = 0.1;
     const axis = ['Longest', 'Second', 'Shortest'];
     /* STYLED AS THE PRIMARY CONTROL, because in this mode it IS the primary
        control — it stands where the combobox stands, carries the same label,
@@ -1560,10 +1581,47 @@ const RISK = [
   /* Two empty states now, in the order the page asks its questions. Each says
      what the NEXT step buys the reader rather than merely naming it — an empty
      panel that says "choose a bag" is a label on a hole. */
-  const emptyPanel = (title, body) => `
+  /* AN ICON FOR THE THING WE ARE ASKING FOR, not decoration.
+   *
+   * Frank: "the empty state could be a bit more graphical with tasteful use of
+   * icons". The restraint that keeps it tasteful is that each glyph names the
+   * INPUT that is missing — a plane when we need flights, a suitcase when we
+   * need bags — so it reads as part of the instruction rather than as a
+   * spot illustration. Nothing here is a mascot.
+   *
+   * Drawn to the house line: 2.2 stroke, currentColor, fill none, round caps,
+   * same as BagSilhouette. aria-hidden because the heading beside it already
+   * says the same thing, and a screen reader announcing "airplane" before
+   * "Start with your flights" is noise, not information.
+   */
+  /* ONE CLOSED PATH EACH, on the 24 grid.
+     My first attempt drew the plane as four separate strokes meant to imply a
+     side view. Rendered at 26px it was an unreadable squiggle — separate
+     strokes do not become a silhouette just because they are near each other.
+     A single closed outline is legible at this size; the tail-on view is the
+     conventional one and survives being small. */
+  const EMPTY_ICON = {
+    flights: `<path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z" />`,
+    bags: `<rect x="3" y="7" width="18" height="13" rx="2.5" /><path d="M8.5 7V5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2" /><path d="M8 20v1.5" /><path d="M16 20v1.5" />`,
+  };
+
+  const emptyPanel = (title, body, icon) => `
     <div class="rounded-card border border-dashed border-rule-strong bg-surface p-[1.625rem]">
-      <p class="text-lg font-semibold text-ink">${title}</p>
-      <p class="mt-2 max-w-[56ch] text-ink-2">${body}</p>
+      <div class="flex items-start gap-4">
+        ${
+          EMPTY_ICON[icon]
+            ? `<span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-surface-2 text-muted">
+                 <svg viewBox="0 0 24 24" class="h-[1.625rem] w-[1.625rem]" fill="none" stroke="currentColor"
+                      stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                 >${EMPTY_ICON[icon]}</svg>
+               </span>`
+            : ''
+        }
+        <div class="min-w-0">
+          <p class="text-lg font-semibold text-ink">${title}</p>
+          <p class="mt-2 max-w-[56ch] text-ink-2">${body}</p>
+        </div>
+      </div>
     </div>`;
 
   function renderAnswer() {
@@ -1579,7 +1637,8 @@ const RISK = [
         'Start with your flights',
         `Add every leg and the fare you booked. The fare decides more than the bag does —
          on some tickets there is no cabin bag at any size, and we can tell you that
-         before you go looking for a suitcase.`
+         before you go looking for a suitcase.`,
+        'flights'
       );
       return;
     }
@@ -1588,7 +1647,8 @@ const RISK = [
       el('[data-answer]').innerHTML = emptyPanel(
         'Now add your bags',
         `We check each one against every leg, name the flight that decides the trip, and
-         draw the biggest bag that survives all of them.`
+         draw the biggest bag that survives all of them.`,
+        'bags'
       );
       return;
     }

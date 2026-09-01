@@ -1,0 +1,74 @@
+{
+  "iata": "TG",
+  "name": "Thai Airways",
+  "region": "AS",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.thaiairways.com/en-lk/content/baggage/carry-on-baggage/",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": null,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 6,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy Class",
+      "type": "cabin",
+      "max_cm": [56, 45, 25],
+      "max_in": [22, 18, 10],
+      "linear_max_cm": null,
+      "max_kg": 7,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.thaiairways.com/en-lk/content/baggage/carry-on-baggage/",
+      "verified_at": "2026-09-01",
+      "note": "Thai Airways states that the dimensions include wheels, handles and side pockets."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy Class",
+      "type": "personal",
+      "max_cm": [37.5, 25, 12.5],
+      "max_in": [15, 10, 5],
+      "linear_max_cm": 75,
+      "max_kg": 1.5,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.thaiairways.com/en-lk/content/baggage/carry-on-baggage/",
+      "verified_at": "2026-09-01",
+      "note": "Free item described as a handbag, wallet, purse, notebook or portable personal computer."
+    },
+    {
+      "fare_class": "standard",
+      "fare_name": "Economy Standard",
+      "type": "checked",
+      "linear_max_cm": 158,
+      "max_kg": 23,
+      "free_pieces": 1,
+      "system": "piece",
+      "applies_to": { "regions": ["international"] },
+      "source_url": "https://www.thaiairways.com/en-gb/content/baggage/checked-baggage/",
+      "verified_at": "2026-09-01",
+      "note": "For international travel commencing on or after 2 March 2026. Standard receives one 23 kg piece; Full Flex and Flexi receive two. Each bag is limited to 158 cm including wheels and handles."
+    }
+  ],
+  "research_scope": "Standard adult Economy cabin and personal item allowances plus the current international Economy Standard checked allowance.",
+  "checked_allowance_status": "partially_researched",
+  "audit_note": "Official carry-on and checked-baggage pages read directly. Checked entitlements vary by fare, class and route; only the international Economy Standard row is active here. Enforcement and physical sizer dimensions remain unresearched.",
+  "research_dossier": "resources/carriers/TG-thai-airways.md"
+}

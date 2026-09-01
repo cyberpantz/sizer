@@ -1,0 +1,57 @@
+{
+  "iata": "CM",
+  "name": "Copa Airlines",
+  "region": "CA",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.copaair.com/assets/carry-on-baggage-policy-update.pdf",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": null,
+  "sizer": { "at_gate": null, "cabin_cm": null, "personal_cm": null },
+  "strictness": {
+    "score": 5,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Full-service type prior only. No Central America enforcement adjustment has been researched."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Economy Basic",
+      "type": "cabin",
+      "max_cm": [56, 36, 26],
+      "max_in": [22, 14, 10],
+      "linear_max_cm": 118,
+      "max_kg": 10,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.copaair.com/assets/carry-on-baggage-policy-update.pdf",
+      "verified_at": "2026-09-01",
+      "note": "Copa's June 2025 policy update applies this allowance to Main Cabin and Business Class passengers."
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Economy Basic",
+      "type": "personal",
+      "max_cm": [43, 25, 22],
+      "max_in": [17, 10, 9],
+      "linear_max_cm": 90,
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.copaair.com/assets/carry-on-baggage-policy-update.pdf",
+      "verified_at": "2026-09-01",
+      "note": "One handbag, backpack, briefcase or laptop bag beneath the seat."
+    }
+  ],
+  "research_scope": "Current Main Cabin carry-on and personal-item allowance from Copa's June 2025 policy update.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Official Copa policy-update PDF read directly. The page publishes both axis boxes and linear totals. Checked allowance varies among Economy Basic, Classic and Full and remains outside this pass. Enforcement and physical sizer dimensions remain unresearched.",
+  "research_dossier": "resources/carriers/CM-copa-airlines.md"
+}

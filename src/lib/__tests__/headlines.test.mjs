@@ -179,7 +179,14 @@ describe('a link and the page it opens agree', () => {
     assert.ok(bagsHeadline, '/bags has no headline');
     /* The shared claim, not the whole sentence — the card is allowed to be
        phrased differently, it is not allowed to promise something else. */
-    const claim = 'how many airlines they fit';
+    /* Updated from "how many airlines they fit" when Frank reworded the card.
+       The constant is deliberately hard-coded rather than derived from either
+       page: derive it and the test degrades into "the two files agree with
+       whatever they currently say", which passes even when both drift away
+       from the promise. Changing the wording SHOULD mean editing this line —
+       that edit is the moment someone confirms the new phrasing is the claim
+       we want to make. */
+    const claim = 'how many airlines they can fly on';
     assert.match(bagsHeadline, new RegExp(claim, 'i'), `/bags headline: "${bagsHeadline}"`);
     const card = home.slice(home.indexOf('href="/bags/"'), home.indexOf('href="/bags/"') + 700);
     assert.match(card, new RegExp(claim, 'i'), 'the home page card promises something else');

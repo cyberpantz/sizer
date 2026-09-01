@@ -1,0 +1,64 @@
+{
+  "iata": "FD",
+  "name": "Thai AirAsia",
+  "region": "AS",
+  "type": "lcc",
+  "status": "operating",
+  "source_url": "https://support.airasia.com/s/article/What-are-the-rules-for-cabin-baggage-on-board?language=th",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": false,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 7,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Low Fare",
+      "type": "cabin",
+      "max_cm": [56, 36, 23],
+      "linear_max_cm": null,
+      "max_kg": null,
+      "includes_wheels": true,
+      "count": 1,
+      "allowance_group": "cabin_total",
+      "group_max_kg": 7,
+      "group_max_count": 2,
+      "source_url": "https://support.airasia.com/s/article/What-are-the-rules-for-cabin-baggage-on-board?language=th",
+      "verified_at": "2026-09-01",
+      "note": "One cabin bag. AirAsia states that the dimensions include handles, wheels and side pockets; the two cabin items share a 7 kg total."
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Low Fare",
+      "type": "personal",
+      "max_cm": [40, 30, 10],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "allowance_group": "cabin_total",
+      "group_max_kg": 7,
+      "group_max_count": 2,
+      "source_url": "https://support.airasia.com/s/article/What-are-the-rules-for-cabin-baggage-on-board?language=th",
+      "verified_at": "2026-09-01",
+      "note": "One laptop bag, handbag, backpack or other small bag that fits beneath the seat; combined cabin-item weight is 7 kg."
+    }
+  ],
+  "research_scope": "Standard adult free cabin and personal-item allowance on Thai AirAsia flights.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "AirAsia's official Thai support article was read directly. It names Thai AirAsia and confirms the shared two-piece cabin rule. Checked baggage is purchased in variable weight bands and remains outside this record until fare/add-on scope is researched. Xtra Carry-On is also a paid entitlement and is not included in the base fare rows. Enforcement and physical sizer dimensions remain unresearched.",
+  "research_dossier": "resources/carriers/FD-thai-airasia.md"
+}

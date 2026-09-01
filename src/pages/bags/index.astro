@@ -103,23 +103,17 @@ const lastUpdated = dates.length
           headline that says the same thing is how a reader knows the link did
           what they expected. */}
       <h1 class="max-w-2xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-        Carry-on bags, ranked by how many airlines they fit
+        Bags ranked by how many airlines they can fly on
       </h1>
       {/* The service statement first, the provenance under it. Same order as
           the home page, and for the same reason: someone still deciding whether
           they are in the right place is not yet asking where our numbers came
           from. */}
       <p class="mt-5 max-w-2xl text-lg text-ink-2">
-        Each one measured on its outside — wheels and handle included, the way a
-        gate measures it — against {answerable} airlines, fare by fare.
+        We determine fit by comparing airline sizing rules with external bag dimensions — wheels and handle included. This is the way airlines measure them. 
       </p>
       <p class="mt-3 max-w-2xl text-ink-2">
-        Dimensions come from each manufacturer's own product page, never a
-        marketplace listing where the same bag turns up with different numbers
-        from different sellers. Where a manufacturer publishes both the packing
-        size and the <strong class="text-ink">outside</strong> size we use the
-        outside one — and where they publish both, we show you both. The gap
-        between them is usually where the trouble starts.
+        Dimensions come from each manufacturer's own product page, or review sites when manufacturer data is unavailable. We are transparent about where are data comes from and rigorously publish our sources. 
       </p>
       <p class="mt-4 font-mono text-[0.875rem] text-muted">
         {bags.length} bags · checked against {answerable} airlines{lastUpdated && ` · last updated ${lastUpdated}`}
@@ -168,18 +162,19 @@ const lastUpdated = dates.length
       </button>
     </p>
 
-    {stats.bags_promotable < stats.bags_sized && (
+    
+ {stats.bags_promotable < stats.bags_sized && (
       <p class="py-8 text-[0.875rem] text-muted">
-        {stats.bags_maker_sourced} of these use the manufacturer's own published
-        figures; for {stats.bags_promotable} the manufacturer states it is the
-        outside of the bag, and only those are recommended.{' '}
+        <strong>{stats.bags_maker_sourced}</strong> of these use the manufacturer's own published
+        bag dimensions; We only promote bags where the manufacturer publishes outside measurements.
         {stats.bags_review_only > 0 && (
-          <>{stats.bags_review_only} rest on a review publication's measurement,
-          named on the card.{' '}</>
+          <><b>{stats.bags_review_only}</b> rely on measurements found within reviews, blogs, reddit, etc so are less reliable. We may list bags that only have a 3rd party measurement, but we will never reccomend them.</>
         )}
-        <a href="/methodology/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">How we work it out →</a>
+
+        <a href="/methodology/" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">Out methodology →</a>
       </p>
     )}
+
 
   </div>
 </Base>

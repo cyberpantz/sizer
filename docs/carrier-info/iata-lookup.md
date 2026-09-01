@@ -1,6 +1,6 @@
 # Airline IATA code lookup
 
-The 75 carriers currently in `data/carriers`, sorted by IATA code. Some abbreviated dataset names are expanded for clarity.
+The 83 carriers currently in `data/carriers`, sorted by IATA code. Some abbreviated dataset names are expanded for clarity.
 
 | IATA code | Common airline name |
 | --- | --- |
@@ -11,6 +11,8 @@ The 75 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | AF | Air France |
 | AI | Air India |
 | AK | AirAsia Malaysia |
+| AM | Aeroméxico |
+| AV | Avianca |
 | AY | Finnair |
 | AZ | ITA Airways |
 | B6 | JetBlue |
@@ -19,6 +21,7 @@ The 75 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | BT | airBaltic |
 | CA | Air China |
 | CI | China Airlines |
+| CM | Copa Airlines |
 | CX | Cathay Pacific |
 | CZ | China Southern Airlines |
 | DE | Condor |
@@ -27,9 +30,12 @@ The 75 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | EI | Aer Lingus |
 | EK | Emirates |
 | EW | Eurowings |
+| FD | Thai AirAsia |
 | F9 | Frontier Airlines |
 | FI | Icelandair |
 | FR | Ryanair |
+| G3 | GOL Linhas Aéreas |
+| GA | Garuda Indonesia |
 | GQ | SKY express |
 | HU | Hainan Airlines |
 | HV | Transavia |
@@ -42,6 +48,7 @@ The 75 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | KC | Air Astana |
 | KE | Korean Air |
 | KL | KLM |
+| LA | LATAM Airlines |
 | LH | Lufthansa |
 | LO | LOT Polish Airlines |
 | LS | Jet2.com |
@@ -61,6 +68,7 @@ The 75 carriers currently in `data/carriers`, sorted by IATA code. Some abbrevia
 | SN | Brussels Airlines |
 | SQ | Singapore Airlines |
 | SV | Saudia |
+| TG | Thai Airways |
 | TK | Turkish Airlines |
 | TP | TAP Air Portugal |
 | TR | Scoot |

@@ -1,0 +1,58 @@
+{
+  "iata": "GA",
+  "name": "Garuda Indonesia",
+  "region": "AS",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.garuda-indonesia.com/static/en/garuda-indonesia-experience/baggage-info.html?lang=en&loc=id&v=817585f2-55a7-4803-a169-e699dc0d956d",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": true,
+  "sizer": {
+    "at_gate": null,
+    "cabin_cm": null,
+    "personal_cm": null
+  },
+  "strictness": {
+    "score": 6,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Existing type/region prior, not a researched enforcement rating."
+  },
+  "allowances": [
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy Class",
+      "type": "cabin",
+      "max_cm": [56, 36, 23],
+      "linear_max_cm": 115,
+      "max_kg": 7,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.garuda-indonesia.com/static/en/garuda-indonesia-experience/baggage-info.html?lang=en&loc=id&v=817585f2-55a7-4803-a169-e699dc0d956d",
+      "verified_at": "2026-09-01",
+      "note": "Standard aircraft allowance. Garuda states that dimensions include wheels, handles and side pockets. Economy flights operated by CRJ or ATR aircraft instead use 41 × 34 × 17 cm and 92 cm linear, which the current aircraft-agnostic schema cannot select safely."
+    },
+    {
+      "fare_class": "economy",
+      "fare_name": "Economy Class",
+      "type": "personal",
+      "max_cm": null,
+      "max_kg": null,
+      "count": 1,
+      "absence": "not_published",
+      "source_url": "https://www.garuda-indonesia.com/static/en/garuda-indonesia-experience/baggage-info.html?lang=en&loc=id&v=817585f2-55a7-4803-a169-e699dc0d956d",
+      "verified_at": "2026-09-01",
+      "note": "Garuda lists a laptop bag, handbag, purse or pocketbook as a free carry-on item but does not publish a separate numeric personal-item box."
+    }
+  ],
+  "research_scope": "Standard adult Economy cabin and personal-item policy; the aircraft-specific CRJ/ATR cabin limit is documented but not activated.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Official Garuda baggage page read directly. The main cabin rule has both per-axis and 115 cm linear limits. A smaller Economy allowance applies on CRJ and ATR aircraft, but the carrier schema cannot express aircraft applicability. Checked tables are route- and market-dependent and remain unresearched. Enforcement and physical sizer dimensions remain unresearched.",
+  "research_dossier": "resources/carriers/GA-garuda-indonesia.md"
+}

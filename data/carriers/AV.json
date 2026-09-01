@@ -1,0 +1,80 @@
+{
+  "iata": "AV",
+  "name": "Avianca",
+  "region": "SA",
+  "type": "hybrid",
+  "status": "operating",
+  "source_url": "https://ayuda.avianca.com/hc/en-us/articles/13080259544219-What-is-carry-on-baggage-and-how-can-I-purchase-it",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": null,
+  "sizer": { "at_gate": null, "cabin_cm": null, "personal_cm": null },
+  "strictness": {
+    "score": 6,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Hybrid-carrier type prior only. No South America enforcement adjustment has been researched."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "cabin",
+      "cabin_absence": "not_permitted",
+      "max_cm": null,
+      "applies_to": { "regions": ["domestic"] },
+      "source_url": "https://www.avianca.com/en/about-us/corporate-news/2026/february-2",
+      "verified_at": "2026-09-01",
+      "note": "Avianca says domestic Basic continues to include one personal item; carry-on is available as a purchase."
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "personal",
+      "max_cm": [45, 35, 20],
+      "max_in": [18, 14, 8],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://ayuda.avianca.com/hc/en-us/articles/13080081545243-What-is-a-personal-item",
+      "verified_at": "2026-09-01",
+      "note": "All Avianca fares include one personal item."
+    },
+    {
+      "fare_class": "light",
+      "fare_name": "Light",
+      "type": "cabin",
+      "max_cm": [55, 35, 25],
+      "max_in": [22, 14, 10],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "applies_to": { "regions": ["international"] },
+      "source_url": "https://www.avianca.com/en/about-us/corporate-news/2026/february-2",
+      "verified_at": "2026-09-01",
+      "note": "International Americas Light tickets purchased from 27 January 2026 include carry-on; dimensions come from Avianca's official carry-on help page."
+    },
+    {
+      "fare_class": "light",
+      "fare_name": "Light",
+      "type": "personal",
+      "max_cm": [45, 35, 20],
+      "max_in": [18, 14, 8],
+      "max_kg": null,
+      "includes_wheels": null,
+      "count": 1,
+      "applies_to": { "regions": ["international"] },
+      "source_url": "https://ayuda.avianca.com/hc/en-us/articles/13080081545243-What-is-a-personal-item",
+      "verified_at": "2026-09-01"
+    }
+  ],
+  "research_scope": "Domestic Basic and international-Americas Light cabin entitlements for tickets under Avianca's current 2026 fare policy.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Official Avianca help and corporate policy pages read directly. Fare inclusion changed for tickets purchased from 27 January 2026. Domestic Basic and international Light are deliberately separate. Checked baggage and other fare families remain unresearched. Enforcement and physical sizer dimensions remain unresearched.",
+  "research_dossier": "resources/carriers/AV-avianca.md"
+}

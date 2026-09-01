@@ -1,0 +1,77 @@
+{
+  "iata": "LA",
+  "name": "LATAM Airlines",
+  "region": "SA",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://www.latamairlines.com/gb/en/help-center/faq/baggage/included/dimensions-weight",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": null,
+  "sizer": { "at_gate": null, "cabin_cm": null, "personal_cm": null },
+  "strictness": {
+    "score": 5,
+    "score_basis": "type_region_prior_only",
+    "contested": false,
+    "evidence": [],
+    "components": {},
+    "note": "Full-service type prior only. No South America enforcement adjustment has been researched."
+  },
+  "allowances": [
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "cabin",
+      "cabin_absence": "not_permitted",
+      "max_cm": null,
+      "applies_to": { "regions": ["domestic"] },
+      "source_url": "https://www.latamairlines.com/us/en/help-center/faq/purchases/asistance/ticket-fares",
+      "verified_at": "2026-09-01",
+      "note": "For flights within Chile, Peru, Colombia and Ecuador, LATAM says Basic includes one handbag but not a 10 kg suitcase."
+    },
+    {
+      "fare_class": "basic",
+      "fare_name": "Basic",
+      "type": "personal",
+      "max_cm": [45, 35, 20],
+      "max_in": [17.8, 13.8, 7.9],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.latamairlines.com/gb/en/help-center/faq/baggage/included/dimensions-weight",
+      "verified_at": "2026-09-01",
+      "note": "Small bag or backpack; LATAM says measurements include pockets, wheels and handle."
+    },
+    {
+      "fare_class": "light",
+      "fare_name": "Light",
+      "type": "cabin",
+      "max_cm": [55, 35, 25],
+      "max_kg": 12,
+      "includes_wheels": null,
+      "count": 1,
+      "source_url": "https://www.latamairlines.com/gb/en/help-center/faq/baggage/included/dimensions-weight",
+      "verified_at": "2026-09-01",
+      "note": "Economy cabin maximum is 12 kg; LATAM's fare page says Light includes carry-on baggage."
+    },
+    {
+      "fare_class": "light",
+      "fare_name": "Light",
+      "type": "personal",
+      "max_cm": [45, 35, 20],
+      "max_in": [17.8, 13.8, 7.9],
+      "max_kg": 10,
+      "includes_wheels": true,
+      "count": 1,
+      "source_url": "https://www.latamairlines.com/gb/en/help-center/faq/baggage/included/dimensions-weight",
+      "verified_at": "2026-09-01"
+    }
+  ],
+  "research_scope": "Basic and Light adult Economy cabin entitlements and published cabin dimensions.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Official LATAM dimension and fare pages read directly. Basic's no-overhead rule is scoped by LATAM to flights within Chile, Peru, Colombia and Ecuador, but the carrier schema cannot name individual countries. Checked inclusion varies by fare and route. Enforcement and physical sizer dimensions remain unresearched.",
+  "research_dossier": "resources/carriers/LA-latam-airlines.md"
+}

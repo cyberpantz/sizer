@@ -1,0 +1,120 @@
+{
+ "variant": "Outline Pro Global Carry-On Spinner, Midnight Black; item1373921548",
+ "line": null,
+ "role": "overhead",
+ "claimed_packing_cm": {
+  "unit": "cm",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/outline-pro-global-carry-on-spinner/137392XXXX.html?dwvar_137392XXXX_color=1373921548",
+  "at": "2026-09-01",
+  "note": "Separately labelled packing/interior dimensions. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "v": [
+   50.8,
+   35.052,
+   22.86
+  ],
+  "conversion": {
+   "from_field": "claimed_packing_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "claimed_cm": null,
+ "measured_cm": null,
+ "measured_at": null,
+ "reviews": [],
+ "conflicts": [],
+ "mentions": 0,
+ "needs_measurement": true,
+ "slug": "samsonite-outline-pro",
+ "brand": "Samsonite",
+ "model": "Outline Pro Global Carry-On Spinner",
+ "type": "hardside spinner",
+ "soft": 0,
+ "wheels": 4,
+ "manufacturer_source": {
+  "url": "https://shop.samsonite.com/luggage-carry-on-luggage/outline-pro-global-carry-on-spinner/137392XXXX.html?dwvar_137392XXXX_color=1373921548",
+  "retrieved": "2026-09-01",
+  "title": "Samsonite Outline Pro Global Carry-On Spinner",
+  "local": "resources/bags/2026-09-01-samsonite-outline-pro.md"
+ },
+ "notes": "Specifications table and description agree on the external figure. Wheel count not given numerically; description says dual spinner wheels, recorded as 4 spinner positions to match catalogue convention. Current USD167.99 and Comp. Value USD209.99; comparison price may be same or similar goods elsewhere, so not treated as regular list price. Metric dimensions, capacity, expansion amount and explicit empty-weight wording not found.",
+ "external_in": {
+  "unit": "in",
+  "quote": "External Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/outline-pro-global-carry-on-spinner/137392XXXX.html?dwvar_137392XXXX_color=1373921548",
+  "at": "2026-09-01",
+  "note": "Specifications table labels this External and the packing figure Internal; description repeats the same figure as Exterior Dimensions. Wheels-and-handles inclusion not restated on this page, but the sibling Proxis page uses the same template and states it explicitly.",
+  "v": [
+   22,
+   14,
+   9
+  ]
+ },
+ "claimed_packing_in": {
+  "unit": "in",
+  "quote": "Internal Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/outline-pro-global-carry-on-spinner/137392XXXX.html?dwvar_137392XXXX_color=1373921548",
+  "at": "2026-09-01",
+  "note": "Separately labelled packing/interior dimensions.",
+  "v": [
+   20,
+   13.8,
+   9
+  ]
+ },
+ "weight_lb": {
+  "v": 6.1,
+  "unit": "lbs",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/outline-pro-global-carry-on-spinner/137392XXXX.html?dwvar_137392XXXX_color=1373921548",
+  "at": "2026-09-01"
+ },
+ "external_cm": {
+  "unit": "cm",
+  "quote": "External Dimensions",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/outline-pro-global-carry-on-spinner/137392XXXX.html?dwvar_137392XXXX_color=1373921548",
+  "at": "2026-09-01",
+  "note": "Specifications table labels this External and the packing figure Internal; description repeats the same figure as Exterior Dimensions. Wheels-and-handles inclusion not restated on this page, but the sibling Proxis page uses the same template and states it explicitly. Derived from the manufacturer's published in figure using factor 2.54; not a manufacturer-published metric value. Converted by the build, not by the source.",
+  "v": [
+   55.88,
+   35.56,
+   22.86
+  ],
+  "conversion": {
+   "from_field": "external_in",
+   "factor": "2.54",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  }
+ },
+ "weight_kg": {
+  "v": 2.766899,
+  "unit": "kg",
+  "quote": "Weight",
+  "src": "manufacturer",
+  "ref": "https://shop.samsonite.com/luggage-carry-on-luggage/outline-pro-global-carry-on-spinner/137392XXXX.html?dwvar_137392XXXX_color=1373921548",
+  "at": "2026-09-01",
+  "conversion": {
+   "from_field": "weight_lb",
+   "factor": "0.45359",
+   "rounded": false,
+   "by": "build-bags.mjs"
+  },
+  "note": "Derived from the manufacturer's published lbs figure using factor 0.45359; not a manufacturer-published metric value. Converted by the build, not by the source."
+ },
+ "compliance_claimed": false,
+ "wheel_handle_delta_cm": [
+  5.1,
+  0.5,
+  0
+ ],
+ "observed": [],
+ "compliance_unbacked": false
+}

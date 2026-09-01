@@ -45,6 +45,26 @@ describe('why a cabin row is missing', () => {
     assert.equal(evaluate(b, c).band, 'wont');
   });
 
+  test('a dedicated cabin absence row is resolved without inventing dimensions', () => {
+    const c = toCarrier(
+      {
+        ...base,
+        allowances: [
+          {
+            type: 'cabin',
+            fare_class: 'basic',
+            cabin_absence: CABIN_ABSENCE.NOT_PERMITTED,
+          },
+          { type: 'personal', fare_class: 'basic', max_cm: [40, 30, 20] },
+        ],
+      },
+      'basic'
+    );
+    assert.equal(c.no_cabin_bag, true);
+    assert.equal(c.allowance, null);
+    assert.equal(evaluate(b, c).band, 'wont');
+  });
+
   test('a fare nobody researched is UNKNOWN, not banned', () => {
     const c = toCarrier(base, 'flex');
     assert.equal(c.cabin_absence, CABIN_ABSENCE.NOT_RESEARCHED);

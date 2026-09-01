@@ -1,0 +1,48 @@
+{
+  "iata": "AM",
+  "name": "Aeroméxico",
+  "region": "NA",
+  "type": "full_service",
+  "status": "operating",
+  "source_url": "https://beta.aeromexico.com/en-us/travel-information/baggage",
+  "verified_at": "2026-09-01",
+  "verified_by": "codex (official policy read)",
+  "research_status": "official_allowances_researched",
+  "publication_ready": false,
+  "placeholder": false,
+  "operates_regional_jets": true,
+  "sizer": { "at_gate": null, "cabin_cm": null, "personal_cm": null },
+  "strictness": { "score": 5, "score_basis": "type_region_prior_only", "contested": false, "evidence": [], "components": {}, "note": "Existing North America full-service type/region prior; enforcement remains unresearched." },
+  "allowances": [
+    {
+      "fare_class": "light", "fare_name": "Light", "type": "cabin",
+      "cabin_absence": "not_permitted", "max_cm": null,
+      "source_url": "https://beta.aeromexico.com/en-us/travel-information/fare-types-and-tickets", "verified_at": "2026-09-01",
+      "note": "Aeroméxico states that carry-on is available at additional cost on Light."
+    },
+    {
+      "fare_class": "light", "fare_name": "Light", "type": "personal",
+      "max_cm": null, "max_kg": null, "count": 1, "absence": "not_published",
+      "source_url": "https://beta.aeromexico.com/en-us/travel-information/fare-types-and-tickets", "verified_at": "2026-09-01",
+      "note": "Aeroméxico includes a personal item but describes 45 × 35 × 20 cm and 3 kg only as a recommendation, not a mandatory maximum."
+    },
+    {
+      "fare_class": "basic", "fare_name": "Basic", "type": "cabin",
+      "max_cm": [55, 40, 25], "max_kg": null, "includes_wheels": true, "count": 1,
+      "allowance_group": "cabin_total", "group_max_kg": 10, "group_max_count": 2,
+      "source_url": "https://www.aeromexico.com/es-mx/blog-de-viajes-inspirate/especificaciones-equipaje-a-bordo", "verified_at": "2026-09-01",
+      "note": "Basic includes carry-on. The 10 kg limit applies to carry-on plus personal item together."
+    },
+    {
+      "fare_class": "basic", "fare_name": "Basic", "type": "personal",
+      "max_cm": null, "max_kg": null, "count": 1, "absence": "not_published",
+      "allowance_group": "cabin_total", "group_max_kg": 10, "group_max_count": 2,
+      "source_url": "https://beta.aeromexico.com/en-us/travel-information/fare-types-and-tickets", "verified_at": "2026-09-01",
+      "note": "Included personal item; 45 × 35 × 20 cm and 3 kg are recommendations rather than published maximums."
+    }
+  ],
+  "research_scope": "Current Main Cabin Light and Basic cabin entitlements and published carry-on dimensions.",
+  "checked_allowance_status": "not_researched",
+  "audit_note": "Official Aeroméxico baggage and fare-family pages read directly. Light excludes carry-on; Basic includes it. The personal-item figure is explicitly phrased as a recommendation and is therefore not stored as a maximum. Checked inclusion varies by fare and route.",
+  "research_dossier": "resources/carriers/AM-aeromexico.md"
+}

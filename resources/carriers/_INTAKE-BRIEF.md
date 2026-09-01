@@ -249,7 +249,8 @@ against Alaska's own site before recording it either way.
 >
 > **On the carrier**
 >
-> - `region`: one of `EU` `NA` `AS` `ME`
+> - `region`: one of `EU` `NA` `CA` `SA` `AS` `ME` (`CA` is Central America;
+>   `SA` is South America)
 > - `type`: one of `full_service` `lcc` `ulcc` `hybrid`
 > - `status`: `operating` unless you find otherwise. `ceased` needs `ceased_at`;
 >   `merged` needs `successor`; either needs `status_evidence: {url, at}`.

@@ -29,6 +29,10 @@ for (const { file, rec } of records) {
   if (!rec.iata || !rec.name) bad(`${file}: missing iata or name`);
   if (rec.iata && file !== `${rec.iata}.json`)
     bad(`${file}: filename does not match iata ${rec.iata}`);
+  const CARRIER_REGIONS = ['EU', 'NA', 'CA', 'SA', 'AS', 'ME'];
+  if (!CARRIER_REGIONS.includes(rec.region)) {
+    bad(`${id}: unknown carrier region "${rec.region}"`);
+  }
 
   const score = rec.strictness?.score;
   if (typeof score !== 'number' || score < 1 || score > 10)
@@ -163,6 +167,7 @@ for (const { file, rec } of records) {
      failed the gate for holding the airline's actual published rule. One of the
      two must exist, and that is what is checked. */
   for (const a of cabin) {
+    if (a.cabin_absence) continue;
     const linear = typeof a.linear_max_cm === 'number';
     if (!Array.isArray(a.max_cm) || a.max_cm.length !== 3) {
       if (!linear)

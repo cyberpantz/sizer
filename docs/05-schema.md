@@ -114,7 +114,13 @@ Three rules:
 | Basic, transatlantic | at the line — 55.88 × 35 × 22.86 |
 | Basic, route not asked | **no verdict** — `route_dependent` |
 
-`validate-carriers.mjs` rejects an unknown region name, an empty `applies_to`, and a row carrying both `regions[]` and `except[]`. A typo in a region silently makes a row apply nowhere, which reads as "no allowance" — the expensive direction again.
+`validate-carriers.mjs` rejects an unknown route-region name, an unknown carrier
+region (`EU`, `NA`, `CA`, `SA`, `AS`, or `ME`), an empty `applies_to`, and a row
+carrying both `regions[]` and `except[]`. `CA` means Central America and `SA`
+means South America. Carrier regions describe where an airline is based; route
+regions inside `applies_to` describe where a particular itinerary travels. A
+typo in a route region silently makes a row apply nowhere, which reads as "no
+allowance" — the expensive direction again.
 
 ### Fares are three axes, not one string
 

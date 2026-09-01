@@ -587,6 +587,8 @@ export function resolveFare(record, booking) {
     if (hit) return { row: hit, matched: 'addon', addon };
   }
   const byFare = reachable.find((a) => eq(a.fare_class, b.fare) || eq(a.fare_brand, b.fare));
+  if (byFare?.cabin_absence)
+    return { row: null, matched: 'fare', absence: byFare.cabin_absence };
   if (byFare) return { row: byFare, matched: 'fare' };
   /* A known Basic fare must not inherit regular Economy's overhead bag.
      Purchased add-ons above can override it; a cabin-class fallback cannot. */
@@ -601,6 +603,8 @@ export function resolveFare(record, booking) {
     return { row: null, matched: 'fare', absence: namedFare.cabin_absence };
   }
   const byClass = reachable.find((a) => eq(a.cabin_class, b.class) || eq(a.fare_class, b.class));
+  if (byClass?.cabin_absence)
+    return { row: null, matched: 'class', absence: byClass.cabin_absence };
   if (byClass) return { row: byClass, matched: 'class' };
 
   /* NOTHING IS NAMED FOR THE CLASS — fall back to the cheapest tier OF it.
@@ -658,6 +662,8 @@ export function resolveFare(record, booking) {
     };
     const cheapest = [...tierNames].sort((x, y) => entitlement(x) - entitlement(y))[0];
     const row = economyRows.find((a) => a.type === 'cabin' && a.fare_class === cheapest);
+    if (row?.cabin_absence)
+      return { row: null, matched: 'class', absence: row.cabin_absence, tier: cheapest };
     if (row) return { row, matched: 'class', tier: cheapest };
     /* The cheapest tier has no cabin row of its own — easyJet Basic and
        Ryanair Basic both look like this. Fall through to the paywall and
