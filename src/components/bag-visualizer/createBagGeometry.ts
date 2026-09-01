@@ -40,6 +40,21 @@ function roundedBox(
   return geom;
 }
 
+/* HOW FAR THE RUNNING GEAR DROPS BELOW THE BODY, as a multiple of the wheel
+ * radius. ONE constant, used by both the builder that carves the space and the
+ * pod that fills it — they were two numbers before, and they disagreed.
+ *
+ *   wheelZone (carved out)  2.15r
+ *   leg + wheel (drawn)     1.55r
+ *
+ * So 0.6r of the stated height was allocated to running gear and then left
+ * empty. On a 53.3 cm bag with a 2.13 cm wheel that is 1.28 cm of the bag
+ * simply missing: the drawn bag measured 52.02 against a record saying 53.3.
+ * Small, and exactly the kind of small this file cannot afford — EPS_CM is
+ * 0.3, so the drawing was off by four times the tolerance the engine agonises
+ * over, and the bag sat floating above the deck by the difference. */
+const WHEEL_DROP = 1.55;
+
 /** Wheel puck plus a corner leg using the body material so it reads as one piece. */
 function addWheelPod(
   body: THREE.Mesh,
@@ -51,7 +66,9 @@ function addWheelPod(
 ) {
   const centerLocalY = bodyBottomLocalY - radius;
 
-  const legH = bodyBottomLocalY - centerLocalY + radius * 0.55;
+  /* radius + 0.55r = WHEEL_DROP * radius. Kept as the shared constant so the
+     space carved out and the space filled cannot drift apart again. */
+  const legH = radius * WHEEL_DROP;
   const leg = new THREE.Mesh(
     new THREE.BoxGeometry(radius * 1.7, legH, radius * 1.7),
     materials.body
@@ -186,11 +203,14 @@ function buildSpinner(
   const group = new THREE.Group();
   const corner = Math.min(w, d) * (CORNER_SCALE[profile.cornerRadius ?? 'small'] ?? 0.06);
   const r = wheels > 0 ? wheelRadius(dims) : 0;
-  const wheelZone = wheels > 0 ? r * 2.15 : h * 0.04;
-  const bodyH = h - wheelZone;
+  /* The body gives up EXACTLY what the running gear occupies — no more. The old
+     2.15r carved out more than addWheelPod drew, leaving a gap that made every
+     wheeled bag 0.6r shorter than its record and floating above the deck. */
+  const drop = wheels > 0 ? r * WHEEL_DROP : h * 0.04;
+  const bodyH = h - drop;
 
   const body = new THREE.Mesh(roundedBox(w, bodyH, d, corner), materials.body);
-  body.position.y = wheelZone;
+  body.position.y = drop;
   group.add(body);
 
   if (wheels > 0) addWheels(body, dims, wheels, materials);
@@ -341,11 +361,14 @@ function buildUnderseat(
   const corner = Math.min(w, d) * (CORNER_SCALE[profile.cornerRadius ?? 'small'] ?? 0.1);
   const wheelCount = wheels >= 2 ? 2 : 0;
   const r = wheelCount > 0 ? wheelRadius(dims) : 0;
-  const wheelZone = wheelCount > 0 ? r * 2.15 : h * 0.06;
-  const bodyH = h - wheelZone;
+  /* Same WHEEL_DROP as the spinner. This carried its own copy of the 2.15
+     carve-out and had the identical gap — found by the arithmetic guard rather
+     than by looking, which is the point of writing it that way. */
+  const drop = wheelCount > 0 ? r * WHEEL_DROP : h * 0.06;
+  const bodyH = h - drop;
 
   const body = new THREE.Mesh(roundedBox(w, bodyH, d, corner), materials.body);
-  body.position.y = wheelZone;
+  body.position.y = drop;
   group.add(body);
 
   if (wheelCount > 0) addWheels(body, dims, 2, materials);
