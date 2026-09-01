@@ -116,6 +116,26 @@ const better = (await loadBags())
   .sort((a, b) => b.cov.pass - a.cov.pass)
   .slice(0, 3);
 
+/* THE RUNG IN TWO OR THREE WORDS.
+ *
+ * The long sentence folds away now, so this is what a reader sees at a glance —
+ * and it has to carry the QUALIFICATION, not just the provenance. "Review
+ * figure" and "the maker's own" are different claims about how much the number
+ * beside them can be trusted, and a reader who never opens the panel must
+ * still get that difference. */
+const SOURCE_BADGE = {
+  [DIM_SOURCE.MEASURED]: 'We measured it',
+  [DIM_SOURCE.MAKER_OVERALL]: "Maker's overall figure",
+  [DIM_SOURCE.REVIEW]: 'Review figure, not the maker',
+  [DIM_SOURCE.MAKER_UNSPECIFIED]: 'Maker figure, wheels unstated',
+  [DIM_SOURCE.MAKER_PACKING]: 'Packing size, not the outside',
+  [DIM_SOURCE.RESELLER]: 'Retail listing',
+};
+
+/** Anything below maker_overall qualifies the number rather than backing it. */
+const SOURCE_IS_WEAK = (rung) =>
+  rung !== DIM_SOURCE.MEASURED && rung !== DIM_SOURCE.MAKER_OVERALL;
+
 const SOURCE_LINE = {
   [DIM_SOURCE.MEASURED]: 'We measured this one ourselves.',
   [DIM_SOURCE.MAKER_OVERALL]:
@@ -156,6 +176,10 @@ const sourceLinkText =
       ? `${sourceReview.publication}'s review`
       : 'the page this came from';
 const gap = record.wheel_handle_delta_cm ?? null;
+/* Anything below the maker's own overall figure qualifies the number rather
+   than backing it, and the badge says so in amber — the same colour the
+   "shown, not recommended" note uses, because it is the same finding. */
+const weakSource = SOURCE_IS_WEAK(bag.dim_source);
 const dims = (cm) => cm.map((v) => v.toFixed(1).replace(/\.0$/, '')).join(' × ');
 const pct = cov.of ? Math.round((cov.pass / cov.of) * 100) : 0;
 const tone = pct >= 80 ? 'green' : pct >= 40 ? 'amber' : 'red';
@@ -273,56 +297,66 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
         {/* The mockup put a photograph of a tape measure here. We do not
             measure bags, so this says where the number came from instead. */}
         <div class="rounded-card border border-rule bg-surface-2 p-5">
-          <p class="text-[0.9375rem] font-semibold text-ink">Where this number comes from</p>
-          <p class="mt-1.5 text-[0.9375rem] text-ink-2">
-            {SOURCE_LINE[bag.dim_source] ?? 'Source not recorded.'}
-          </p>
-          {ref && (
-            <p class="mt-2 text-[0.9375rem]">
-              <a href={ref} rel="nofollow noopener noreferrer" target="_blank" class="text-blue hover:text-blue-hover hover:underline underline-offset-2">
-                {sourceLinkText} ↗
-              </a>
-              {at && <span class="text-muted"> · read {at}</span>}
-            </p>
-          )}
-          {gap && (
-            <p class="mt-2 text-[0.875rem] text-muted">
-              Wheels, handle and feet add{' '}
-              {/* One span per figure, each with its own data-cm hook. Joined
-                  here rather than in a single string so the units toggle can
-                  reach them — and this is the only emitter of [data-cm], a
-                  loop that had been iterating an empty set. */}
-              <strong class="text-ink">
-                {gap.filter((v) => v > 0).map((v, i) => (
-                  <Fragment>{i > 0 && ', '}<span data-cm={v}>{v} cm</span></Fragment>
-                ))}
-              </strong>{' '}
-              over the packing figure.
-            </p>
-          )}
+          {/* ONE LINE OPEN, THE REST FOLDED.
+              This card had grown to five stacked paragraphs and was pushing the
+              airline picker — the thing a reader actually came to use — down
+              the page. Frank: "we really want to reduce the vertical space."
 
-          {/* WHY A <details>, AND WHY THE HEADLINE STAYS OUT OF IT.
-              This card grew until it pushed the airline picker below the fold —
-              and the picker is the thing a reader came to use. But the fix is
-              not to cut the explanation: "where did this number come from" is
-              the question the whole site answers, and a source you have to ask
-              for twice is a source we are quietly hiding.
-              So the CLAIM and the LINK stay visible — they are what make the
-              number checkable — and the reasoning folds away. Native <details>,
-              so it needs no JavaScript, is keyboard-operable for free, and its
-              content is in the DOM even while closed, which is what keeps the
-              [data-cm] hooks reachable by the units toggle and the text
-              findable by in-page search. */}
-          {(gap || (record.conflicts ?? []).length > 0) && (
-            <details class="group mt-2">
+              WHAT STAYS VISIBLE IS A JUDGEMENT, NOT A LENGTH BUDGET. Earlier I
+              argued the source sentence and the link must never fold, on the
+              grounds that collapsing an explanation is editing and collapsing a
+              citation is hiding. That still holds — so the collapse keeps the
+              part that QUALIFIES the number:
+
+                Review figure, not the maker  ·  Travel + Leisure ↗
+
+              Two or three words and a link. A reader who never opens the panel
+              still learns that the figure above is not the manufacturer's, and
+              can still click through to check it. The prose that explains WHY
+              that matters is the part that folds, because it is an explanation.
+
+              "This number" was also wrong: the panel covers dimensions AND
+              weight, and for many bags several figures with different sources.
+              "These figures" is what it has always described. */}
+          <div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <span class={`text-[0.875rem] font-semibold ${weakSource ? 'text-amber' : 'text-ink'}`}>
+              {SOURCE_BADGE[bag.dim_source] ?? 'Source not recorded'}
+            </span>
+            {ref && (
+              <a
+                href={ref}
+                rel="nofollow noopener noreferrer"
+                target="_blank"
+                class="text-[0.875rem] text-blue hover:text-blue-hover hover:underline underline-offset-2"
+              >{sourceLinkText} ↗</a>
+            )}
+            {at && <span class="text-[0.8125rem] text-muted">· read {at}</span>}
+          </div>
+
+          <details class="group mt-1.5">
               <summary
                 class="inline-flex cursor-pointer list-none items-center gap-1 text-[0.875rem] font-semibold text-blue hover:text-blue-hover hover:underline underline-offset-2 [&::-webkit-details-marker]:hidden"
               >
-                <span class="group-open:hidden">Why that matters</span>
+                <span class="group-open:hidden">Where these figures come from</span>
                 <span class="hidden group-open:inline">Show less</span>
                 <span aria-hidden="true" class="transition-transform group-open:rotate-180">▾</span>
               </summary>
 
+              <p class="mt-2 text-[0.9375rem] text-ink-2">
+                {SOURCE_LINE[bag.dim_source] ?? 'Source not recorded.'}
+              </p>
+
+              {gap && (
+                <p class="mt-2 text-[0.875rem] text-muted">
+                  Wheels, handle and feet add{' '}
+                  <strong class="text-ink">
+                    {gap.filter((v) => v > 0).map((v, i) => (
+                      <Fragment>{i > 0 && ', '}<span data-cm={v}>{v} cm</span></Fragment>
+                    ))}
+                  </strong>{' '}
+                  over the packing figure.
+                </p>
+              )}
               {gap && (
                 <p class="mt-2 text-[0.875rem] text-muted">
                   That difference is the whole reason a bag sold as carry-on size
@@ -337,8 +371,7 @@ const INK = { green: 'text-green', amber: 'text-amber', red: 'text-red' };
                   ))}
                 </ul>
               )}
-            </details>
-          )}
+          </details>
         </div>
       </div>
 
