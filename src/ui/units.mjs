@@ -99,6 +99,23 @@ export function createUnits({ storage, navigator: nav, server = !isBrowser() } =
       return unit === CM ? 'kg' : 'lb';
     },
 
+    /** A NON-ZERO MARGIN THAT ROUNDS TO ZERO MUST NOT PRINT AS ZERO.
+     *
+     * len() rounds to one decimal, and one decimal of an inch is 2.5 mm. A bag
+     * clearing Aegean by 0.1 cm rendered as "0 in to spare" — which is the
+     * sentence resultLine() has a SEPARATE branch for, and means something
+     * different: exactly on the limit, no margin whatsoever.
+     *
+     * The reader cannot act on the difference, but they can be misled by it:
+     * "0 to spare" invites a shrug, "under 0.1 in" invites packing thin. So
+     * the display admits that it ran out of precision instead of rounding a
+     * real margin away. */
+    lenText(cm) {
+      const v = this.len(cm);
+      if (v !== 0 || cm === 0) return `${v} ${this.lenLabel()}`;
+      return `under 0.1 ${this.lenLabel()}`;
+    },
+
     /** TWO FIGURES THAT MUST NOT LOOK EQUAL WHEN THEY ARE NOT.
      *
      * A bag 0.2 cm over Air China's limit rendered as `21.7 in` against

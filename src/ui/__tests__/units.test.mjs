@@ -198,3 +198,39 @@ describe('lenPair — a table may not contradict the verdict beside it', () => {
     assert.ok(decimals(b) <= 3, `${b} carries more than three decimals`);
   });
 });
+
+describe('lenText — a real margin never prints as none', () => {
+  /* THE BUG. A bag clearing Aegean by 0.1 cm rendered as "0 in to spare".
+     One decimal of an inch is 2.5 mm, so len() rounded a genuine margin to
+     nothing — and "0 to spare" is the sentence resultLine() has a SEPARATE
+     branch for, meaning something else entirely: exactly on the limit.
+
+     The reader cannot act on a millimetre either way. They can be misled by
+     it: "0 to spare" invites a shrug, "under 0.1 in" invites packing thin. */
+  const inches = () => {
+    const u = createUnits({ storage: undefined, server: true });
+    u.set('in');
+    return u;
+  };
+
+  test('a margin too small to display says so, rather than showing zero', () => {
+    assert.equal(inches().lenText(0.1), 'under 0.1 in');
+  });
+
+  test('a true zero is still zero — the two states stay distinguishable', () => {
+    assert.equal(inches().lenText(0), '0 in');
+  });
+
+  test('anything displayable is displayed normally', () => {
+    assert.equal(inches().lenText(2.54), '1 in');
+    assert.equal(inches().lenText(5), '2 in');
+  });
+
+  test('metric hits it too, just further down', () => {
+    const u = createUnits({ storage: undefined, server: true });
+    u.set('cm');
+    assert.equal(u.lenText(0.04), 'under 0.1 cm');
+    assert.equal(u.lenText(0.4), '0.4 cm');
+    assert.equal(u.lenText(0), '0 cm');
+  });
+});

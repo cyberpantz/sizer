@@ -534,7 +534,7 @@ const RISK = [
           ? 'no cabin bag on this fare'
           : delta > 0
             ? `${esc(U.len(delta))} ${esc(U.lenLabel())} too ${esc(x.result.dimension)}`
-            : `${esc(U.len(Math.abs(delta)))} ${esc(U.lenLabel())} to spare`;
+            : `${esc(U.lenText(Math.abs(delta)))} to spare`;
     const weight = x.result.advisories.find((a) => a.id === 'weight');
     return `<div class="grid grid-cols-[1.75rem_1fr_8.75rem_6.75rem] items-center gap-3 border-b border-rule px-4 py-3 last:border-b-0${
       bind ? ' bg-red-wash' : ''

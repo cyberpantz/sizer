@@ -123,14 +123,14 @@ export function verdictLine(result, U) {
      a smaller bag rather than a different orientation. */
   if (result.basis === 'linear') {
     if (d > 0)
-      return `${U.len(d)} ${U.lenLabel()} over their limit on the three sides added together.`;
+      return `${U.lenText(d)} over their limit on the three sides added together.`;
     if (d === 0) return 'Exactly on their total-size limit.';
-    return `${U.len(Math.abs(d))} ${U.lenLabel()} to spare on their total-size limit.`;
+    return `${U.lenText(Math.abs(d))} to spare on their total-size limit.`;
   }
 
-  if (d > 0) return `${U.len(d)} ${U.lenLabel()} too ${result.dimension}.`;
+  if (d > 0) return `${U.lenText(d)} too ${result.dimension}.`;
   if (d === 0) return 'Exactly on the limit.';
-  return `${U.len(Math.abs(d))} ${U.lenLabel()} to spare.`;
+  return `${U.lenText(Math.abs(d))} to spare.`;
 }
 
 /** Advisory copy. Engine returns figures; sentences are built here. */
