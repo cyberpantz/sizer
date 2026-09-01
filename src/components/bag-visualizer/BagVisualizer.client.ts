@@ -498,7 +498,15 @@ export function initFitVisualizer(opts: InitOptions): () => void {
     const labels = root.querySelector('[data-measure-labels]') as HTMLElement;
     if (!lines || !labels) return;
 
-    const projected = projectMeasurements(session.dimensions, camera, width, height, bagRig, measureBox);
+    const projected = projectMeasurements(
+      session.dimensions,
+      camera,
+      width,
+      height,
+      bagRig,
+      measureBox,
+      bagScene.axes
+    );
     /* THE VERDICT COLOURS THE WHOLE DRAWING, not only the failures.
      *
      * The band tint used to appear ONLY when a bag was over — everything else

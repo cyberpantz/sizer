@@ -5,6 +5,16 @@ import { resolveWheelCount } from './visualProfile';
 
 const CORNER_SCALE = { small: 0.1, medium: 0.15, large: 0.2 };
 
+/** Which SCREEN axis each labelled dimension runs along, per shape.
+ *
+ *  Everything upright uses the obvious mapping. A duffel lies down, so its
+ *  longest dimension — the one the record labels `heightCm`, because the record
+ *  sorts largest-first — runs across the screen. Without this the leader lines
+ *  keep pointing at the axes of a bag that is no longer standing up. */
+export type AxisMap = Record<'height' | 'width' | 'depth', 'x' | 'y' | 'z'>;
+export const UPRIGHT_AXES: AxisMap = { height: 'y', width: 'x', depth: 'z' };
+export const DUFFEL_AXES: AxisMap = { height: 'x', width: 'z', depth: 'y' };
+
 function roundedBox(
   w: number,
   h: number,
@@ -240,50 +250,82 @@ function buildBackpack(
 /* THE DUFFEL IGNORED TWO OF ITS THREE DIMENSIONS.
  *
  * It was a CYLINDER: radius d/2, length w — so `heightCm` never reached the
- * geometry at all, and the drawn bag was a barrel 21.6 cm across standing in
- * for a 50 cm bag. A cylinder cannot fill a box with a rectangular
- * cross-section anyway; there is no radius that is both 31.8 and 21.6.
+ * geometry, and a 50 cm bag drew as a 21.6 cm barrel. A cylinder cannot fill a
+ * box with a rectangular cross-section anyway: there is no radius that is both
+ * 31.8 and 21.6.
  *
- * And the handle sat at `h * 0.85` — an absolute fraction of the STATED box
- * rather than a position on the body. With the barrel topping out at 35.8 and
- * the handle placed at 42.5, the arc floated in mid-air beside a sphere. That
- * is the same bug as the spinner's grip, in the form the guard did not catch:
- * `max + ...` is easy to spot, `h * 0.85` looks like a layout constant.
+ * The first correction over-rotated. A rounded box with the radius clamped at
+ * half the smallest face is a LOZENGE, and Frank was right that a Black Hole is
+ * nothing like one — it is a soft rectangular box that bulges slightly, with a
+ * reinforced base and webbing running over it. So: a modest corner radius, a
+ * base band, and straps. The silhouette should be recognisable as the product
+ * without becoming a portrait of it (docs/23: we do not do the manufacturer's
+ * presentation).
  *
- * A rounded box fills the dimensions exactly — which is the rule this whole
- * file exists for — and a generous corner radius reads as soft-sided without
- * pretending to a shape the numbers do not describe. */
+ * The handle used to sit at `h * 0.85` — a fraction of the STATED box rather
+ * than a position on the body — so it floated 6.7 cm clear of a barrel that
+ * stopped short. Everything here anchors to meshBoundsLocalY() instead. */
 function buildDuffel(dims: BagDimensions, materials: MaterialSet): THREE.Group {
-  const { heightCm: h, widthCm: w, depthCm: d } = dims;
+  /* A DUFFEL LIES DOWN. Its longest side is horizontal — it has no wheels and
+     no telescoping handle to stand on, and nobody stores one on end.
+     `dimensions` arrives sorted largest-first and LABELLED height/width/depth,
+     which is right for a roller and upends a holdall: the Black Hole was drawn
+     as a 50 cm tower when the photograph is a wide, low box.
+     So the geometry takes the axes in the order the OBJECT uses them —
+     longest across, smallest vertical — and DUFFEL_AXES below tells the
+     measurement overlay where each labelled dimension now points, so "Height
+     19.7 in" still lands on the 50 cm edge. */
+  const w = dims.heightCm; // longest, across the screen
+  const d = dims.widthCm; // middle, into the screen
+  const h = dims.depthCm; // smallest, vertical
   const group = new THREE.Group();
+  const small = Math.min(w, d, h);
 
-  /* roundedBox clamps the radius to just under half the smaller face, so
-     asking for half gives the roundest honest shape. */
-  const body = new THREE.Mesh(roundedBox(w, h, d, Math.min(w, d) * 0.5, 8), materials.body);
+  /* Soft, but square: a duffel packed full is a box with eased edges. */
+  const body = new THREE.Mesh(roundedBox(w, h, d, small * 0.16, 8), materials.body);
   group.add(body);
 
-  const { max } = meshBoundsLocalY(body);
+  const { min, max } = meshBoundsLocalY(body);
 
-  /* Grab handles, anchored to the body's ACTUAL top and lying flush with it —
-     external_cm already includes them, so nothing may stand proud. */
-  const strapR = Math.min(w, d) * 0.32;
-  const handle = new THREE.Mesh(
-    new THREE.TorusGeometry(strapR, Math.min(w, d) * 0.035, 8, 20, Math.PI),
+  /* The reinforced base — the darker wrap the real bag has, and the reason it
+     stands up rather than slumping. Inset so it reads as a skin on the body
+     rather than a separate slab. */
+  const baseH = h * 0.3;
+  const base = new THREE.Mesh(
+    roundedBox(w * 0.995, baseH, d * 0.995, small * 0.16, 6),
     materials.accent
   );
-  handle.rotation.y = Math.PI / 2;
-  handle.position.set(0, max - strapR, 0);
-  group.add(handle);
+  base.position.y = min;
+  group.add(base);
 
-  /* A seam down each end, so the soft shape still reads as a bag rather than a
-     lozenge. Inside the silhouette, never outside it. */
-  for (const x of [-w * 0.34, w * 0.34]) {
-    const seam = new THREE.Mesh(
-      new THREE.BoxGeometry(Math.min(w, d) * 0.02, h * 0.9, d * 0.02),
+  /* Webbing: two straps over the body, meeting a flat grab handle. Flush with
+     the top face, because external_cm already counts them. */
+  const strapW = small * 0.14;
+  for (const x of [-w * 0.2, w * 0.2]) {
+    const strap = new THREE.Mesh(
+      new THREE.BoxGeometry(strapW, h * 0.98, d * 1.01),
       materials.accent
     );
-    seam.position.set(x, max - h * 0.5, d * 0.48);
-    group.add(seam);
+    strap.position.set(x, min + h * 0.5, 0);
+    group.add(strap);
+  }
+
+  const gripH = small * 0.06;
+  const grip = new THREE.Mesh(
+    new THREE.BoxGeometry(w * 0.34, gripH, d * 0.22),
+    materials.accent
+  );
+  grip.position.set(0, max - gripH * 0.5, 0);
+  group.add(grip);
+
+  /* End compression straps, on the two short faces. */
+  for (const z of [-d * 0.5, d * 0.5]) {
+    const end = new THREE.Mesh(
+      new THREE.BoxGeometry(w * 0.62, small * 0.06, d * 0.02),
+      materials.accent
+    );
+    end.position.set(0, min + h * 0.62, z);
+    group.add(end);
   }
 
   return group;
@@ -340,6 +382,8 @@ export type BagScene = {
   exterior: THREE.Group;
   envelope: THREE.LineSegments;
   packing: THREE.Group | null;
+  /** Which screen axis each labelled dimension runs along for THIS shape. */
+  axes: AxisMap;
   bounds: THREE.Box3;
   dispose: () => void;
 };
@@ -413,6 +457,7 @@ export function createBagGeometry(
     exterior,
     envelope,
     packing,
+    axes: type === 'duffel' ? DUFFEL_AXES : UPRIGHT_AXES,
     bounds,
     dispose() {
       root.traverse((obj) => {
