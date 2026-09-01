@@ -26,6 +26,7 @@ import {
   BAND_ORDER,
   bandHex,
   fitsWithinLimit,
+  sizeVerdict,
   UNANSWERED_HEX,
 } from '../verdict.mjs';
 
@@ -123,11 +124,39 @@ describe('the ladder reaches every surface that states a verdict', () => {
     /* The envelope is the bag's exterior drawn as a box — the thing being
        judged. A fixed slate blue made the Outline view the one place that said
        nothing about the answer, and blue is reserved for interactive. */
-    assert.match(
-      client,
-      /envelope\.material as THREE\.LineBasicMaterial\)\.color\.setHex\(bandHex/,
-      'the envelope is back to a fixed colour'
-    );
+    assert.match(client, /envelope\.material as THREE\.LineBasicMaterial\)\.color\.setHex\(/);
+    assert.match(client, /sizeVerdict\(result\) === null \? UNANSWERED_HEX : bandHex/);
+  });
+
+  test('a finding that is not about size takes no size colour, anywhere', () => {
+    /* evaluate() reports `wont` for a fare that grants no cabin bag — correctly,
+       since the answer is no. But that is a fact about the TICKET: on Air France
+       Basic a handbag gets the same verdict as a wardrobe trunk. Painting the
+       bag red states a claim we never made — "your bag is oversize" — while the
+       badge directly above it says "No cabin bag". The drawing and the label
+       must not disagree.
+
+       sizeVerdict() is the gate. Every surface that takes a colour goes through
+       it: the bag body, the envelope, the measurement overlay. */
+    assert.equal(sizeVerdict({ no_cabin_bag: true, band: 'wont' }), null);
+    assert.equal(sizeVerdict({ unknown: true, band: 'wont' }), null);
+    assert.equal(sizeVerdict({ not_flying: true, band: 'wont' }), null);
+    assert.equal(sizeVerdict({ band: 'wont' }), false, 'a real overage is still an overage');
+    assert.equal(sizeVerdict({ band: 'clears' }), true);
+
+    for (const call of ['fits: sizeVerdict(result)', 'const fits = sizeVerdict(result)']) {
+      assert.ok(client.includes(call), `a surface bypasses the gate: expected ${call}`);
+    }
+  });
+
+  test('the drawing is put away entirely when there is nothing to compare', () => {
+    /* Frank: "there should be an informational empty state sort of thing
+       displayed instead of a red tinted bag." The 3D view is the vocabulary of
+       "does it fit" — a measured envelope, three orthogonal views, a bag
+       sliding into a frame. Shown where fit is not the question, it implies we
+       measured something and found an answer. */
+    assert.match(client, /if \(!canDrawSizer\)/, 'the apparatus renders with nothing to compare');
+    assert.match(client, /data-no-compare/, 'there is no stated finding to show in its place');
   });
 
   test('band chip classes are written out, never assembled', () => {

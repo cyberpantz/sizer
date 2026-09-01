@@ -105,6 +105,27 @@ export const OVER_BANDS = new Set(['likely', 'gamble', 'wont']);
 export const fitsWithinLimit = (band) =>
   FITTING_BANDS.has(band) ? true : OVER_BANDS.has(band) ? false : null;
 
+/* IS THIS A FINDING ABOUT THE BAG'S SIZE AT ALL?
+ *
+ * fitsWithinLimit() reads a BAND, and evaluate() reports `wont` for a fare that
+ * grants no cabin bag — correctly, since the answer is no. But "no cabin bag on
+ * this fare" is a fact about the TICKET. The bag is not too big; Air France
+ * Basic simply includes nothing to put it in, and a 30-litre backpack gets the
+ * same answer as a wardrobe trunk.
+ *
+ * So anything that colours the DRAWING has to ask this instead. Painting the
+ * bag red there states a claim we did not make and cannot support: it says
+ * "your bag is oversize" when the truth is "your fare has no allowance". The
+ * badge already got this right and the geometry did not, which is how a
+ * drawing ends up disagreeing with the label directly above it.
+ *
+ * Same for `unknown` and `not_flying`: no measurement was made, so no
+ * measurement colour. */
+export function sizeVerdict(result) {
+  if (!result || result.no_cabin_bag || result.unknown || result.not_flying) return null;
+  return fitsWithinLimit(result.band);
+}
+
 /** Every class the ladder can apply, so a caller can clear before it sets. */
 export const ALL_BAND_CHIP_CLASSES = Object.values(BAND_CHIP).flat();
 

@@ -11,9 +11,11 @@ import { deriveVisualProfile } from './visualProfile';
 import { createUnits } from '../../ui/units.mjs';
 import {
   ALL_BAND_CHIP_CLASSES,
+  UNANSWERED_HEX,
   BAND_CHIP,
   fitsWithinLimit,
   resultLabel,
+  sizeVerdict,
 } from '../../ui/verdict.mjs';
 import type { BagVisualizerProps, ViewPreset } from './types';
 
@@ -138,7 +140,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   const materials = createMaterials(profile.material, {
     bodyOpacity: 0.78,
     fitVisual: true,
-    fits: fitsWithinLimit(result.band),
+    fits: sizeVerdict(result),
   });
   const bagScene = createBagGeometry(session, profile, materials);
   bagScene.envelope.visible = false;
@@ -151,7 +153,9 @@ export function initFitVisualizer(opts: InitOptions): () => void {
    * for interactive, and this is not interactive.
    *
    * Grey when the engine declined to answer, which is not a mild green. */
-  (bagScene.envelope.material as THREE.LineBasicMaterial).color.setHex(bandHex(result.band));
+  (bagScene.envelope.material as THREE.LineBasicMaterial).color.setHex(
+    sizeVerdict(result) === null ? UNANSWERED_HEX : bandHex(result.band)
+  );
   (bagScene.envelope.material as THREE.LineBasicMaterial).opacity = 1;
   bagRig.add(bagScene.root);
   content.add(bagRig);
@@ -189,7 +193,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
    * `null` — an unanswered leg — still arms nothing. We have no finding to
    * announce, and a frame that goes green because we did not check would be
    * the worst thing on this page. */
-  const fits = fitsWithinLimit(result.band);
+  const fits = sizeVerdict(result);
   /* prefers-reduced-motion gets the finding without the flash: the frame sits
      permanently red rather than pulsing. The information is not the animation,
      and a reader who has asked for less movement has not asked for less
@@ -471,7 +475,7 @@ export function initFitVisualizer(opts: InitOptions): () => void {
      * `line` (Tight) is exactly the case that needs its own: legal, inside the
      * limit, with no margin at all. */
     const hex = (n: number) => `#${n.toString(16).padStart(6, '0')}`;
-    const bandColor = result.band ? hex(bandHex(result.band)) : null;
+    const bandColor = sizeVerdict(result) === null ? null : hex(bandHex(result.band));
     const bindingHex = bandColor;
 
     lines.innerHTML = projected
@@ -662,11 +666,10 @@ export function initFitVisualizer(opts: InitOptions): () => void {
   applyView();
   updateLimitsPanel();
   updateVerdictCopy();
+  /* No drawing, no caption describing one. The stated finding IS the content
+     now, and a legend for an absent picture is furniture. */
   const caption = root.querySelector('[data-stage-caption]') as HTMLElement | null;
-  if (caption && !canDrawSizer) {
-    caption.innerHTML =
-      '<strong class="text-ink">Blue tint</strong> — your bag. No gate sizer applies for this fare.';
-  }
+  if (caption && !canDrawSizer) caption.setAttribute('hidden', '');
   if (bindingAxis && overflowCm > 0) {
     root.dataset.bindingAxis = bindingAxis;
     const overlayWrap = root.querySelector('[data-measure-overlay-wrap]') as HTMLElement | null;
@@ -697,6 +700,53 @@ export function initFitVisualizer(opts: InitOptions): () => void {
       root.querySelector('[data-fare-select]')?.selectedOptions?.[0]?.textContent?.trim() ??
       session.fare.replace(/_/g, ' ')
     }`;
+  }
+
+  /* THE APPARATUS IS PUT AWAY WHEN IT HAS NOTHING TO SAY.
+   *
+   * canDrawSizer is already false for all three: a fare granting no cabin bag,
+   * an unresearched carrier, and a carrier publishing only a linear sum. What
+   * was still rendering was the BAG — alone, rotatable, dimension-labelled, in
+   * a frame built to answer a question this fare does not ask. A reader sees a
+   * suitcase being measured and concludes we measured it.
+   *
+   * The finding is worth more than the picture here, and it is the finding a
+   * competitor cannot state at all. */
+  if (!canDrawSizer) {
+    const panel = root.querySelector('[data-no-compare]') as HTMLElement | null;
+    const title = root.querySelector('[data-no-compare-title]') as HTMLElement | null;
+    const body = root.querySelector('[data-no-compare-body]') as HTMLElement | null;
+    const note = root.querySelector('[data-no-compare-note]') as HTMLElement | null;
+    if (panel && title && body) {
+      if (result.no_cabin_bag) {
+        title.textContent = `${session.carrierName} includes no cabin bag on this fare.`;
+        body.textContent =
+          'Not "too big" — nothing is allowed in the overhead locker at any size, so your ' +
+          'bag\u2019s dimensions do not come into it. A handbag gets the same answer.';
+        if (note) {
+          note.textContent = carrier.allowances?.personal?.max_cm
+            ? `You do get an under-seat personal item: ${carrier.allowances.personal.max_cm.join(' \u00d7 ')} cm.`
+            : '';
+        }
+      } else if (result.basis === 'linear' || carrier.allowance?.linear_max_cm) {
+        title.textContent = `${session.carrierName} publishes a total, not a box.`;
+        body.textContent =
+          'Their rule is the three sides added together, so there is no frame to draw. ' +
+          'The comparison beside this says whether your bag is under it.';
+        if (note) note.textContent = '';
+      } else {
+        title.textContent = `We have not researched ${session.carrierName} ${session.fare} yet.`;
+        body.textContent =
+          'Rather than draw a limit we cannot cite, we are saying so. Nothing here is a ' +
+          'measurement of your bag against this airline.';
+        if (note) note.textContent = '';
+      }
+      panel.removeAttribute('hidden');
+    }
+    /* Nothing to rotate through, so the view controls would be furniture. */
+    root.querySelector('[data-view-controls]')?.setAttribute('hidden', '');
+    canvas.style.display = 'none';
+    root.querySelector('[data-measure-overlay-wrap]')?.setAttribute('hidden', '');
   }
 
   setView('default');

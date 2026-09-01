@@ -349,3 +349,27 @@ describe('the bag comes to rest centred in the slot', () => {
     );
   });
 });
+
+describe('the legend describes what is actually drawn', () => {
+  test('nothing is called blue any more', () => {
+    /* The caption read "Blue tint — your bag · Slate frame — the gate sizer"
+       long after both stopped being true: the bag takes green or red from the
+       verdict, and the frame pulses. A legend that names colours the drawing
+       does not use is worse than none — a reader looking for the blue thing
+       finds a red one and doubts the rest. */
+    const src = stage.replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
+    assert.doesNotMatch(src, /Blue tint/, 'the caption still names a colour nothing uses');
+    assert.doesNotMatch(code(client), /Blue tint/, 'the fallback caption still names it');
+  });
+
+  test('the legend states what the frame IS, not what colour it is', () => {
+    /* The frame's meaning is the claim worth making: its opening is the
+       airline's published box, exactly. That is the thing no competitor draws
+       and the thing the whole geometry pass was about. */
+    assert.match(
+      stage,
+      /the opening is the box, exactly/,
+      'the caption no longer says what the frame represents'
+    );
+  });
+});
